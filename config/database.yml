@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: nebill
+  password: nebill
+  timeout: 5000
+
+development:
+  <<: *default
+  database: nebill_development
+
+test:
+  <<: *default
+  database: nebill_test
+
+production:
+  <<: *default
+  database: nebill
+  username: <%= ENV['RAILS_DATABASE_USER'] %>
+  password: <%= ENV['RAILS_DATABASE_PASSWORD'] %>
