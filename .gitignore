@@ -7,3 +7,4 @@
 spec/examples.txt
 
 /vendor
+!/vendor/assets/bower.json

@@ -11,6 +11,7 @@ gem 'pg'
 gem 'slim'
 gem 'enumerize'
 gem 'bourbon'
+gem 'bower-rails'
 
 group :development do
   gem 'web-console', '~> 2.0'

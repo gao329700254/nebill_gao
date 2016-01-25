@@ -4,7 +4,28 @@ neat + bill = nebill
 
 ## 環境構築手順
 
-**TODO**
+### node/bowerのインストール(bower-railsを使うために必要)
+
+```
+brew install nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+nodebrew install-binary stable
+nodebrew use stable
+npm install bower -g
+```
+
+### db:create
+
+```sh
+bundle exec rake db:create
+```
+
+### install
+
+```sh
+bundle install --path=vendor/bundle
+bundle exec rake bower:install
+```
 
 ## 開発ルール
 
