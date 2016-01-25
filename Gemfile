@@ -14,8 +14,6 @@ gem 'bourbon'
 
 group :development do
   gem 'web-console', '~> 2.0'
-  gem 'spring'
-  gem 'spring-commands-rspec'
   gem 'pry'
   gem 'pry-rails'
   gem 'pry-doc'
