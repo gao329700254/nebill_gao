@@ -4,4 +4,6 @@
 !/log/.keep
 /tmp
 
+spec/examples.txt
+
 /vendor
