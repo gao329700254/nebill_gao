@@ -1,0 +1,21 @@
+.sidemenu {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  background-color: $light-black-bg-color;
+  color: $light-black-ft-color;
+
+  .sidemenu__list {
+    @include display(flex);
+    @include flex-direction(column);
+    a { text-decoration: none; }
+  }
+  .sidemenu__item {
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+    @include padding($base-spacing null);
+    color: $light-black-ft-non-accent-color;
+    &:hover { color: $light-black-ft-color; }
+  }
+}

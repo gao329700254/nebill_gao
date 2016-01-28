@@ -1,0 +1,8 @@
+.footer {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  @include padding($base-spacing);
+  background-color: $black-bg-color;
+  color: $black-ft-color;
+}

@@ -1,0 +1,39 @@
+.header {
+  /*** variables **************************************************************/
+  $header-height: 50px;
+  $header-logo-whight: 180px;
+  /****************************************************************************/
+
+  @include display(flex);
+  height: $header-height;
+
+  .header__logo {
+    @include flex(0 0 $header-logo-whight);
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+    background-color: $theme-bg-color;
+    color: $theme-ft-color;
+    font-weight: bold;
+  }
+
+  .header__title {
+    @include flex(1);
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(flex-start);
+    @include padding(null $base-spacing);
+    background-color: $black-bg-color;
+    color: $black-ft-color;
+  }
+
+  .header__menu {
+    @include flex(2);
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(flex-end);
+    @include padding(null $base-spacing);
+    background-color: $black-bg-color;
+    color: $black-ft-color;
+  }
+}

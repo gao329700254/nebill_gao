@@ -5,6 +5,7 @@
 /tmp
 
 spec/examples.txt
+/coverage
 
 /vendor
 !/vendor/assets/bower.json

@@ -1,0 +1,14 @@
+.body {
+  /*** variables **************************************************************/
+  $body-sidemenu-whight: 180px;
+  /****************************************************************************/
+  @include display(flex);
+  @include justify-content(stretch);
+
+  .body__sidemenu {
+    @include flex(0 0 $body-sidemenu-whight);
+  }
+  .body__main {
+    @include flex(1);
+  }
+}

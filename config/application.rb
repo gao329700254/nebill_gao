@@ -31,5 +31,9 @@ module Nebill
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.annotations.register_extensions('scss')   { |annotation| %r{//\s*(#{annotation}):?\s*(.*?)$} }
+    config.annotations.register_extensions('slim')   { |annotation|  %r{/\s*(#{annotation}):?\s*(.*?)$} }
+    config.annotations.register_extensions('coffee') { |annotation|    /#\s*(#{annotation}):?\s*(.*?)$/ }
   end
 end
