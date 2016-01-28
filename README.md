@@ -4,6 +4,12 @@ neat + bill = nebill
 
 ## 環境構築手順
 
+### phantomjs(featureテストを実行するために必要)
+
+```sh
+brew install phantomjs
+```
+
 ### node/bowerのインストール(bower-railsを使うために必要)
 
 ```
@@ -14,17 +20,23 @@ nodebrew use stable
 npm install bower -g
 ```
 
+### install
+
+```sh
+bundle install --path=vendor/bundle
+bundle exec rake bower:install
+```
+
 ### db:create
 
 ```sh
 bundle exec rake db:create
 ```
 
-### install
+### sample data
 
 ```sh
-bundle install --path=vendor/bundle
-bundle exec rake bower:install
+bundle exec rake db:sample:populate
 ```
 
 ## 開発ルール

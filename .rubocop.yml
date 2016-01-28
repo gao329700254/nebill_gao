@@ -1,7 +1,6 @@
 # ver: 0.8.0
 
 inherit_from:
-  - .rubocop_project_original.yml
   - .rubocop_todo.yml
 AllCops:
   Exclude:
