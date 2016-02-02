@@ -10,6 +10,8 @@ RSpec.describe 'projects request' do
           project: {
             key: 'key',
             name: 'name',
+            contracted: 'true',
+            contract_on: '2015-01-01',
             contract_type: 'lump_sum',
             start_on: '2015-01-01',
             end_on:   '2015-10-31',
@@ -53,6 +55,8 @@ RSpec.describe 'projects request' do
           project: {
             key: '',
             name: 'name',
+            contracted: 'true',
+            contract_on: '2015-01-01',
             contract_type: 'lump_sum',
             start_on: '2015-01-01',
             end_on:   '2015-10-31',

@@ -3,8 +3,10 @@ class CreateProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.string   :key                    , null: false
       t.string   :name                   , null: false
-      t.string   :contract_type          , null: false
-      t.date     :start_on               , null: false, index: true
+      t.boolean  :contracted             , null: false
+      t.date     :contract_on            , null: false
+      t.string   :contract_type          , null: true
+      t.date     :start_on               , null: true
       t.date     :end_on                 , null: true
       t.integer  :amount                 , null: true
       t.string   :billing_company_name   , null: true

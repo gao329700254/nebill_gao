@@ -19,8 +19,10 @@ ActiveRecord::Schema.define(version: 20160126045155) do
   create_table "projects", force: :cascade do |t|
     t.string   "key",                     null: false
     t.string   "name",                    null: false
-    t.string   "contract_type",           null: false
-    t.date     "start_on",                null: false
+    t.boolean  "contracted",              null: false
+    t.date     "contract_on",             null: false
+    t.string   "contract_type"
+    t.date     "start_on"
     t.date     "end_on"
     t.integer  "amount"
     t.string   "billing_company_name"
@@ -40,6 +42,5 @@ ActiveRecord::Schema.define(version: 20160126045155) do
   end
 
   add_index "projects", ["key"], name: "index_projects_on_key", unique: true, using: :btree
-  add_index "projects", ["start_on"], name: "index_projects_on_start_on", using: :btree
 
 end

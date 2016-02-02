@@ -6,8 +6,10 @@
 #  id                      :integer          not null, primary key
 #  key                     :string           not null
 #  name                    :string           not null
-#  contract_type           :string           not null
-#  start_on                :date             not null
+#  contracted              :boolean          not null
+#  contract_on             :date             not null
+#  contract_type           :string
+#  start_on                :date
 #  end_on                  :date
 #  amount                  :integer
 #  billing_company_name    :string
@@ -27,17 +29,12 @@
 #
 # Indexes
 #
-#  index_projects_on_key       (key) UNIQUE
-#  index_projects_on_start_on  (start_on)
+#  index_projects_on_key  (key) UNIQUE
 #
 
 class Project < ActiveRecord::Base
   extend Enumerize
-
-  validates :key          , presence: true, uniqueness: { case_sensitive: false }
-  validates :contract_type, presence: true
-  validates :start_on     , presence: true
-  validates :amount       , numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  include ProjectValidates
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate]
 

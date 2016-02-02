@@ -11,8 +11,10 @@ namespace :db do
 
     def populate_projects(num = 10)
       puts "populate projects"
+      un_contracted_project_count = 2
       Project.destroy_all
-      FactoryGirl.create_list(:project, num)
+      FactoryGirl.create_list(:contracted_project, num - un_contracted_project_count)
+      FactoryGirl.create_list(:un_contracted_project, un_contracted_project_count)
     end
   end
 end
