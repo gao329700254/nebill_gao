@@ -29,7 +29,7 @@ $base-line-height: 1.5;
 $heading-line-height: 1.2;
 
 // Other Sizes
-$base-border-radius: 4px;
+$base-border-radius: 2px;
 $base-spacing: $base-line-height * 1em;
 $large-spacing: $base-spacing * 3;
 $small-spacing: $base-spacing / 3;
@@ -73,6 +73,9 @@ $white-bg-color:             $white;
 $white-ft-color:             $black;
 $white-ft-non-accent-color: lighten($white-ft-color, 10%);
 $white-ft-accent-color:      $theme-color;
+//// Base
+$base-bg-color: $white-bg-color;
+$base-border-color: $light-grey;
 
 // Border
 $base-border: 1px solid $light-grey;

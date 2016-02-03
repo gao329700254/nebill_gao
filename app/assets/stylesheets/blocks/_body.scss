@@ -7,8 +7,12 @@
 
   .body__sidemenu {
     @include flex(0 0 $body-sidemenu-whight);
+    background-color: $light-black-bg-color;
+    color: $light-black-ft-color;
   }
   .body__main {
     @include flex(1);
+    background-color: $white-bg-color;
+    color: $white-ft-color;
   }
 }

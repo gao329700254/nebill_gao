@@ -11,6 +11,7 @@ gem 'pg'
 gem 'slim'
 gem 'enumerize'
 gem 'bourbon'
+gem 'neat'
 gem 'bower-rails'
 
 group :development do
