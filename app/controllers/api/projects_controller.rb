@@ -18,22 +18,24 @@ private
     params.require(:project).permit(
       :key,
       :name,
+      :contracted,
+      :contract_on,
       :contract_type,
       :start_on,
       :end_on,
       :amount,
       :billing_company_name,
       :billing_department_name,
-      :billing_personnel_names,
       :billing_address,
       :billing_zip_code,
       :billing_memo,
       :orderer_company_name,
       :orderer_department_name,
-      :orderer_personnel_names,
       :orderer_address,
       :orderer_zip_code,
       :orderer_memo,
+      billing_personnel_names: [],
+      orderer_personnel_names: [],
     )
   end
 end
