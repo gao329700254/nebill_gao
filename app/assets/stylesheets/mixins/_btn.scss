@@ -1,0 +1,25 @@
+@mixin btn--default {
+  background-color: $white;
+  border: solid 1px $action-color;
+  color: $action-color;
+
+  &:hover,
+  &:focus {
+    border: solid 1px darken($action-color, 20%);
+    background-color: darken($action-color, 20%);
+    color: $white;
+  }
+}
+
+@mixin btn--primary {
+  background-color: $action-color;
+  border: solid 1px $action-color;
+  color: $white;
+
+  &:hover,
+  &:focus {
+    border: solid 1px darken($action-color, 20%);
+    background-color: darken($action-color, 20%);
+    color: $white;
+  }
+}

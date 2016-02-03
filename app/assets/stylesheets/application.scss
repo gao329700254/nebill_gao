@@ -1,5 +1,9 @@
 @import 'sanitize-css/sanitize.css';
 @import 'bourbon';
-
 @import 'variables';
+@import 'grid_settings';
+@import 'neat';
+
+@import 'base/**/*';
+@import 'mixins/**/*';
 @import 'blocks/**/*';

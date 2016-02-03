@@ -2,4 +2,5 @@
 //= require jquery_ujs
 //= require underscore/underscore
 //= require vue/dist/vue
-//= require_tree .
+
+//= require_tree ./view_models
