@@ -1,6 +1,7 @@
 class Api::ProjectsController < Api::ApiController
   def index
-    # TODO(ishida): implement after `create` implemented.
+    @projects = Project.all
+    render json: @projects, status: :ok
   end
 
   def create
