@@ -1,0 +1,16 @@
+= javascript_include_tag 'view_models/project_new'
+
+- provide(:title, t('page.project_new.title'))
+
+#project_new.project_new
+  = form_tag api_projects_path, class: 'project_new__form'
+    .project_new__form__container
+      .project_new__form__container__group
+        == render 'project_new__form__basic'
+    .project_new__form__container
+      .project_new__form__container__group
+        == render 'project_new__form__orderer'
+      .project_new__form__container__group
+        == render 'project_new__form__billing'
+    = button_tag t('page.project_new.copy'), 'v-on:click.prevent' => 'copy'  , class: 'project_new__form__copy_btn'
+    = submit_tag t('helpers.submit.create'), 'v-on:click.prevent' => 'submit', class: 'project_new__form__submit_btn'

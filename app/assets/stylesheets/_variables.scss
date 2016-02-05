@@ -44,15 +44,17 @@ $grey:        rgb(103,104,109);
 $light-grey:  rgb(126,127,132);
 $red:         rgb(244, 90, 64);
 $light-red:   rgb(255,103, 79);
+$blue:        rgb(  0,134,171);
+$green:       rgb(  0,146, 80);
+$yellow:      rgb(246,202,  6);
 $white:       rgb(248,248,248);
 $theme-color: $red;
 $theme-lighen-color: $light-red;
 $action-color: $theme-color;
-// TODO(ishida): implement when use flash message.
-// $info-color:    $blue;
-// $success-color: $green;
-// $warning-color: $yellow;
-// $error-color:   $red;
+$info-color:    $blue;
+$success-color: $green;
+$warning-color: $yellow;
+$error-color:   $red;
 //// Theme
 $theme-bg-color:             $theme-color;
 $theme-ft-color:             $white;

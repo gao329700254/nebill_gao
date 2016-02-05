@@ -23,6 +23,7 @@ SimpleCov.minimum_coverage 90
 
 RSpec.configure do |config|
   config.include RequestHelper, type: :request
+  config.include FeatureHelper, type: :feature
 
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!

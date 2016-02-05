@@ -1,0 +1,7 @@
+#toast-container > div    { @include shadow(1); }
+#toast-container > :hover { @include shadow(2); }
+
+.toast-info    { background-color: $info-color; }
+.toast-success { background-color: $success-color; }
+.toast-warning { background-color: $warning-color; }
+.toast-error   { background-color: $error-color; }

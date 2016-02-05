@@ -2,6 +2,6 @@ class PagesController < ApplicationController
   def home
   end
 
-  def new_project
+  def project_new
   end
 end

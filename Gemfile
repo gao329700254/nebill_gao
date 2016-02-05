@@ -13,6 +13,7 @@ gem 'enumerize'
 gem 'bourbon'
 gem 'neat'
 gem 'bower-rails'
+gem 'font-awesome-rails'
 
 group :development do
   gem 'web-console', '~> 2.0'

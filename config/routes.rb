@@ -4,7 +4,7 @@
 #     teaspoon      /teaspoon               Teaspoon::Engine
 #         root GET  /                       pages#home
 #         home GET  /home(.:format)         pages#home
-#  new_project GET  /projects/new(.:format) pages#new_project
+#  project_new GET  /projects/new(.:format) pages#project_new
 # api_projects GET  /api/projects(.:format) api/projects#index
 #              POST /api/projects(.:format) api/projects#create
 #
@@ -20,6 +20,6 @@ Rails.application.routes.draw do
 
   get 'home', to: 'pages#home'
   scope path: 'projects' do
-    get 'new', to: 'pages#new_project', as: 'new_project'
+    get 'new', to: 'pages#project_new', as: 'project_new'
   end
 end
