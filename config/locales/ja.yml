@@ -245,3 +245,5 @@ ja:
     project_new:
       title: プロジェクト新規作成
       copy: 受注先から請求先に値をコピー
+    project_list:
+      title: プロジェクト一覧
