@@ -1,0 +1,30 @@
+.project_new {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  padding: $base-spacing;
+  background-color: $white-bg-color;
+  color: $white-ft-color;
+
+  &__form {
+    &__container {
+      @include outer-container;
+      &__group {
+        @include span-columns(6);
+      }
+    }
+    &__item {
+      margin-bottom: $small-spacing;
+      &--key {
+        @extend .project_new__form__item;
+        width: 8em;
+      }
+    }
+    &__copy_btn {
+      @include btn--default;
+    }
+    &__submit_btn {
+      @include btn--primary;
+    }
+  }
+}

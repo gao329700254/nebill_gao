@@ -9,4 +9,10 @@ RSpec.describe PagesController do
 
     it { is_expected.to render_template :home }
   end
+
+  describe 'GET #project_new' do
+    before { get :project_new }
+
+    it { is_expected.to render_template :project_new }
+  end
 end

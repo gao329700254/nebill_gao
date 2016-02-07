@@ -1,6 +1,8 @@
 nav.sidemenu
   ul.sidemenu__list
-    = link_to '#'
-      li.sidemenu__item TODO1
+    = link_to project_new_path
+      li.sidemenu__item
+        = fa_icon 'pencil 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = t('page.project_new.title')
     = link_to '#'
       li.sidemenu__item TODO2
