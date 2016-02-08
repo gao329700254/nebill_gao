@@ -1,0 +1,55 @@
+.project_list {
+
+  @include outer-container;
+  padding: $base-spacing;
+
+  &__tbl {
+    border-collapse: collapse;
+    text-align: left;
+
+    &__head {
+      border-bottom: $bold-border;
+    }
+
+    &__tr {
+      @include row(table);
+      margin-top: $base-spacing;
+      margin-bottom: $base-spacing;
+
+      &__th {
+        &:first-child { padding-left: $base-spacing; }
+        &--key {
+          @extend .project_list__tbl__tr__th;
+          @include span-columns(2);
+        }
+        &--project_name {
+          @include span-columns(2);
+        }
+        &--orderer_company {
+          @include span-columns(2);
+        }
+        &--start_on {
+          @include span-columns(2);
+        }
+        &--end_on {
+          @include span-columns(2);
+        }
+        &--contract_on {
+          @include span-columns(2);
+        }
+      }
+
+      &__td {
+        border-bottom: $base-border;
+        &:first-child { padding-left: $base-spacing; }
+        &--key {
+          @extend .project_list__tbl__tr__td;
+        }
+      }
+    }
+
+    &__body {
+      font-size: $small-font-size;
+    }
+  }
+}

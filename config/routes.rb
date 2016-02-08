@@ -5,8 +5,9 @@
 #         root GET  /                       pages#home
 #         home GET  /home(.:format)         pages#home
 #  project_new GET  /projects/new(.:format) pages#project_new
-# api_projects GET  /api/projects(.:format) api/projects#index
-#              POST /api/projects(.:format) api/projects#create
+# project_list GET  /projects/list(.:format) pages#project_list
+# api_projects GET  /api/projects(.:format)  api/projects#index
+#              POST /api/projects(.:format)  api/projects#create
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index
@@ -21,5 +22,6 @@ Rails.application.routes.draw do
   get 'home', to: 'pages#home'
   scope path: 'projects' do
     get 'new', to: 'pages#project_new', as: 'project_new'
+    get 'list', to: 'pages#project_list', as: 'project_list'
   end
 end
