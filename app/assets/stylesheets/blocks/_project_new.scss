@@ -7,8 +7,9 @@
   color: $white-ft-color;
 
   &__form {
+    @include outer-container;
     &__container {
-      @include outer-container;
+      @include row;
       &__group {
         @include span-columns(6);
       }
