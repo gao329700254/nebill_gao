@@ -1,0 +1,9 @@
+{
+  "engines": {
+    "node": "5.4.1",
+    "npm": "3.3.12"
+  },
+  "dependencies": {
+    "bower": "1.7.7"
+  }
+}
