@@ -1,13 +1,14 @@
 # == Route Map
 #
-#       Prefix Verb URI Pattern             Controller#Action
-#     teaspoon      /teaspoon               Teaspoon::Engine
-#         root GET  /                       pages#home
-#         home GET  /home(.:format)         pages#home
-#  project_new GET  /projects/new(.:format) pages#project_new
-# project_list GET  /projects/list(.:format) pages#project_list
-# api_projects GET  /api/projects(.:format)  api/projects#index
-#              POST /api/projects(.:format)  api/projects#create
+#       Prefix Verb URI Pattern                 Controller#Action
+#     teaspoon      /teaspoon                   Teaspoon::Engine
+#         root GET  /                           pages#home
+#         home GET  /home(.:format)             pages#home
+#  project_new GET  /projects/new(.:format)     pages#project_new
+# project_list GET  /projects/list(.:format)    pages#project_list
+# api_projects GET  /api/projects(.:format)     api/projects#index
+#              POST /api/projects(.:format)     api/projects#create
+#  api_project GET  /api/projects/:id(.:format) api/projects#show
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index
