@@ -7,4 +7,5 @@ begin
     t.quiet = false
   end
 rescue LoadError
+  puts 'slim_lint load error'
 end

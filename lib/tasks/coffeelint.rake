@@ -13,4 +13,5 @@ begin
     fail "Lint!" unless failures == 0
   end
 rescue LoadError
+  puts 'coffeelint load error'
 end
