@@ -4,7 +4,7 @@ RSpec.describe 'projects request' do
   describe 'GET /api/projects' do
     let!(:project1) { create(:contracted_project) }
     let!(:project2) { create(:contracted_project) }
-    let!(:project3) { create(:un_contracted_project) }
+    let!(:project3) { create(:uncontracted_project) }
     let(:path) { "/api/projects" }
 
     it 'return a list of projects' do

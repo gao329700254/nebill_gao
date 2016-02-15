@@ -4,4 +4,6 @@
 //= require vue/dist/vue
 //= require toastr/toastr
 
+//= require core
 //= require_directory .
+//= require_tree ./mixins

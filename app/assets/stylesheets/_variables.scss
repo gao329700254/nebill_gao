@@ -30,7 +30,7 @@ $heading-line-height: 1.2;
 
 // Other Sizes
 $base-border-radius: 2px;
-$base-spacing: $base-line-height * 1em;
+$base-spacing: $base-line-height * 1rem;
 $large-spacing: $base-spacing * 3;
 $small-spacing: $base-spacing / 3;
 $base-z-index: 0;
@@ -87,3 +87,5 @@ $bold-border: 1.5px solid $black;
 $form-box-shadow: inset 0 1px 3px rgba(#000, 0.06);
 $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
 
+// Utils
+$all-text-inputs-disabled:  assign-inputs($text-inputs-list, disabled);

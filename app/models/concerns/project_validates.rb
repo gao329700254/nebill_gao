@@ -35,5 +35,13 @@ module ProjectValidates
       un_contracted.validates :end_on              , absence: true
       un_contracted.validates :amount              , absence: true
     end
+
+    validate :can_not_change_from_contracted_to_uncontracted, on: :update
+  end
+
+private
+
+  def can_not_change_from_contracted_to_uncontracted
+    errors.add(:contracted, I18n.t('errors.messages.change', value: false)) if !contracted && contracted_was
   end
 end

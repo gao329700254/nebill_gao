@@ -158,6 +158,7 @@ ja:
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
       other_than: は%{count}以外の値にしてください
+      change: は%{value}にすることはできません
     template:
       body: 次の項目を確認してください
       header:
@@ -170,6 +171,9 @@ ja:
       create: 登録
       submit: 保存
       update: 更新
+    edit: 編集
+    cancel: キャンセル
+    back: 戻る
   number:
     currency:
       format:
@@ -255,3 +259,5 @@ ja:
       copy: 受注先から請求先に値をコピー
     project_list:
       title: プロジェクト一覧
+    project_show:
+      title: プロジェクト詳細

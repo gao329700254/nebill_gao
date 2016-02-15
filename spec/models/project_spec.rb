@@ -49,6 +49,11 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:orderer_zip_code) }
     it { is_expected.to validate_presence_of(:orderer_memo) }
 
+    it 'should require contracted to not change to uncontracted' do
+      project.contracted = false
+      is_expected.to be_invalid
+    end
+
     describe '#billing' do
       subject { project.billing }
       its(:company_name)    { is_expected.to eq project.billing_company_name }
@@ -71,7 +76,7 @@ RSpec.describe Project do
   end
 
   describe 'Uncontracted Project' do
-    let(:project) { build(:un_contracted_project) }
+    let(:project) { build(:uncontracted_project) }
     subject { project }
 
     it { is_expected.to be_valid }

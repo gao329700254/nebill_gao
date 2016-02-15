@@ -5,18 +5,23 @@
 #project_list.project_list
   table.project_list__tbl
     thead.project_list__tbl__head
-      tr.project_list__tbl__tr
-        th.project_list__tbl__tr__th--key = t('activerecord.attributes.project.key')
-        th.project_list__tbl__tr__th--project_name = t('activerecord.attributes.project.name')
-        th.project_list__tbl__tr__th--orderer_company = t('activerecord.attributes.project.orderer_company_name')
-        th.project_list__tbl__tr__th--start_on = t('activerecord.attributes.project.start_on')
-        th.project_list__tbl__tr__th--end_on = t('activerecord.attributes.project.end_on')
-        th.project_list__tbl__tr__th--contract_on = t('activerecord.attributes.project.contract_on')
+      tr.project_list__tbl__head__row
+        th.project_list__tbl__item--key             = t('activerecord.attributes.project.key')
+        th.project_list__tbl__item--project_name    = t('activerecord.attributes.project.name')
+        th.project_list__tbl__item--orderer_company = t('activerecord.attributes.project.orderer_company_name')
+        th.project_list__tbl__item--start_on        = t('activerecord.attributes.project.start_on')
+        th.project_list__tbl__item--end_on          = t('activerecord.attributes.project.end_on')
+        th.project_list__tbl__item--contract_on     = t('activerecord.attributes.project.contract_on')
     tbody.project_list__tbl__body
-      tr.project_list__tbl__tr v-for="project in list | orderBy sortKey"
-        td.project_list__tbl__tr__td--key v-text='project.key'
-        td.project_list__tbl__tr__td v-text='project.name'
-        td.project_list__tbl__tr__td v-text='project.orderer_company_name'
-        td.project_list__tbl__tr__td v-text='project.start_on'
-        td.project_list__tbl__tr__td v-text='project.end_on'
-        td.project_list__tbl__tr__td v-text='project.contract_on'
+      tr.project_list__tbl__body__row [
+        v-for      = "project in list | orderBy sortKey"
+        id         = "project-{{project.id}}"
+        v-on:click = "linkToShow(project.id)"
+        track-by   = "id"
+      ]
+        td.project_list__tbl__item--key             v-text='project.key'
+        td.project_list__tbl__item--project_name    v-text='project.name'
+        td.project_list__tbl__item--orderer_company v-text='project.orderer_company_name'
+        td.project_list__tbl__item--start_on        v-text='project.start_on'
+        td.project_list__tbl__item--end_on          v-text='project.end_on'
+        td.project_list__tbl__item--contract_on     v-text='project.contract_on'
