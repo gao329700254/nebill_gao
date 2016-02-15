@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160126045155
+# Schema version: 20160211072226
 #
 # Table name: projects
 #
@@ -26,6 +26,8 @@
 #  orderer_memo            :text
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  contractual_coverage    :string
+#  is_using_ses            :boolean
 #
 # Indexes
 #
@@ -36,7 +38,8 @@ class Project < ActiveRecord::Base
   extend Enumerize
   include ProjectValidates
 
-  enumerize :contract_type, in: [:lump_sum, :uasimandate]
+  enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
+  enumerize :contractual_coverage, in: [:development, :maintenance]
 
   serialize :billing_personnel_names, Array
   serialize :orderer_personnel_names, Array

@@ -14,6 +14,12 @@
   .project_new__form__item v-if='project.contracted'
     = label_tag :contract_type, t('activerecord.attributes.project.contract_type')
     = select_tag :contract_type, options_for_select(Project.contract_type.options), 'v-model' => 'project.contract_type'
+  .project_new__form__item v-if='project.contracted'
+    = label_tag :is_using_ses, t('activerecord.attributes.project.is_using_ses')
+    = check_box_tag :is_using_ses, true, false, 'v-model' => 'project.is_using_ses'
+  .project_new__form__item v-if='project.contracted'
+    = label_tag :contractual_coverage, t('activerecord.attributes.project.contractual_coverage')
+    = select_tag :contractual_coverage, options_for_select(Project.contractual_coverage.options), 'v-model' => 'project.contractual_coverage'
   .project_new__form__container v-if='project.contracted'
     .project_new__form__container__group
       .project_new__form__item

@@ -46,6 +46,8 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
         is_expected.not_to have_field 'contract_type'
+        is_expected.not_to have_field 'is_using_ses'
+        is_expected.not_to have_field 'contractual_coverage'
         is_expected.not_to have_field 'start_on'
         is_expected.not_to have_field 'end_on'
         is_expected.not_to have_field 'amount'
@@ -154,6 +156,8 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
         is_expected.to     have_field 'contract_type'
+        is_expected.to     have_field 'is_using_ses'
+        is_expected.to     have_field 'contractual_coverage'
         is_expected.to     have_field 'start_on'
         is_expected.to     have_field 'end_on'
         is_expected.to     have_field 'amount'
@@ -177,7 +181,9 @@ RSpec.feature 'Project New Page', js: true do
         fill_in :key        , with: '0000001'
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
-        select '準委任', from: :contract_type
+        select '委託', from: :contract_type
+        check   :is_using_ses
+        select '保守', from: :contractual_coverage
         fill_in :start_on   , with: '2016-02-01'
         fill_in :end_on     , with: '2016-03-30'
         fill_in :amount     , with: 1_000_000
