@@ -1,4 +1,6 @@
 class Api::ProjectsController < Api::ApiController
+  before_action :set_project, only: [:show]
+
   def index
     @projects = Project.all
     render json: @projects, status: :ok
@@ -13,7 +15,15 @@ class Api::ProjectsController < Api::ApiController
     render_action_model_fail_message(@project, :create)
   end
 
+  def show
+    render json: @project, status: :ok
+  end
+
 private
+
+  def set_project
+    @project = Project.find(params[:id])
+  end
 
   def project_param
     params.require(:project).permit(

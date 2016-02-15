@@ -133,4 +133,38 @@ RSpec.describe 'projects request' do
     end
   end
 
+  describe 'GET /api/project/:id' do
+    let(:project) { create(:contracted_project) }
+    let(:path) { "/api/projects/#{project.id}" }
+
+    it 'return a project' do
+      get path
+
+      expect(response).to be_success
+      expect(response.status).to eq 200
+      expect(json['id']).to                       eq project.id
+      expect(json['key']).to                      eq project.key
+      expect(json['name']).to                     eq project.name
+      expect(json['contracted']).to               eq project.contracted
+      expect(json['contract_on']).to              eq project.contract_on.strftime("%Y-%m-%d")
+      expect(json['contract_type']).to            eq project.contract_type
+      expect(json['start_on']).to                 eq project.start_on.strftime("%Y-%m-%d")
+      expect(json['end_on']).to                   eq project.end_on.strftime("%Y-%m-%d")
+      expect(json['amount']).to                   eq project.amount
+      expect(json['billing_company_name']).to     eq project.billing_company_name
+      expect(json['billing_department_name']).to  eq project.billing_department_name
+      expect(json['billing_personnel_names']).to  eq project.billing_personnel_names
+      expect(json['billing_address']).to          eq project.billing_address
+      expect(json['billing_zip_code']).to         eq project.billing_zip_code
+      expect(json['billing_memo']).to             eq project.billing_memo
+      expect(json['orderer_company_name']).to     eq project.orderer_company_name
+      expect(json['orderer_department_name']).to  eq project.orderer_department_name
+      expect(json['orderer_personnel_names']).to  eq project.orderer_personnel_names
+      expect(json['orderer_address']).to          eq project.orderer_address
+      expect(json['orderer_zip_code']).to         eq project.orderer_zip_code
+      expect(json['orderer_memo']).to             eq project.orderer_memo
+      expect(json['created_at']).to               eq project.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+      expect(json['updated_at']).to               eq project.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+    end
+  end
 end
