@@ -36,7 +36,6 @@ $ ->
         @project.billing_personnel_names_str = @project.orderer_personnel_names_str
         @project.billing_address             = @project.orderer_address
         @project.billing_zip_code            = @project.orderer_zip_code
-        @project.billing_memo                = @project.orderer_memo
       submit: ->
         try
           submit = $('.project_new__form__submit_btn')

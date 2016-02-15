@@ -34,7 +34,8 @@ RSpec.feature 'Project New Page', js: true do
       is_expected.to have_field 'billing_personnel_names' , with: 'test person1, test person2'
       is_expected.to have_field 'billing_address'         , with: 'test orderer address'
       is_expected.to have_field 'billing_zip_code'        , with: '1234567'
-      is_expected.to have_field 'billing_memo'            , with: 'test orderer memo'
+      is_expected.to have_field 'billing_memo'            , with: ''
+      is_expected.not_to have_field 'billing_memo'        , with: 'test orderer memo'
     end
 
     context "when 'contracted' is unchecked" do
