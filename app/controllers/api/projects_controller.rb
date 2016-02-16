@@ -32,6 +32,8 @@ private
       :contracted,
       :contract_on,
       :contract_type,
+      :is_using_ses,
+      :contractual_coverage,
       :start_on,
       :end_on,
       :amount,

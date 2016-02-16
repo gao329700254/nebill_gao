@@ -9,6 +9,8 @@ RSpec.describe Project do
   it { is_expected.to respond_to(:contracted?) }
   it { is_expected.to respond_to(:contract_on) }
   it { is_expected.to respond_to(:contract_type) }
+  it { is_expected.to respond_to(:is_using_ses) }
+  it { is_expected.to respond_to(:contractual_coverage) }
   it { is_expected.to respond_to(:start_on) }
   it { is_expected.to respond_to(:end_on) }
   it { is_expected.to respond_to(:amount) }
@@ -30,6 +32,7 @@ RSpec.describe Project do
     it { is_expected.to be_valid }
 
     it { is_expected.to validate_presence_of(:contract_type) }
+    it { is_expected.to validate_presence_of(:contractual_coverage) }
     it { is_expected.to validate_presence_of(:start_on) }
     it { is_expected.to validate_presence_of(:end_on) }
     it { is_expected.to validate_presence_of(:amount) }
@@ -74,6 +77,7 @@ RSpec.describe Project do
     it { is_expected.to be_valid }
 
     it { is_expected.to validate_absence_of(:contract_type) }
+    it { is_expected.to validate_absence_of(:contractual_coverage) }
     it { is_expected.to validate_absence_of(:start_on) }
     it { is_expected.to validate_absence_of(:end_on) }
     it { is_expected.to validate_absence_of(:amount) }

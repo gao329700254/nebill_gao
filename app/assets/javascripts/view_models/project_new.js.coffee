@@ -8,6 +8,8 @@ $ ->
         name: ''
         contract_on: ''
         contract_type: 'lump_sum'
+        is_using_ses: false
+        contractual_coverage: 'development'
         start_on: ''
         end_on: ''
         amount: ''
@@ -44,14 +46,16 @@ $ ->
           if @project.contracted
             postData =
               project:
-                contracted:    @project.contracted
-                key:           @project.key
-                name:          @project.name
-                contract_on:   @project.contract_on
-                contract_type: @project.contract_type
-                start_on:      @project.start_on
-                end_on:        @project.end_on
-                amount:        @project.amount
+                contracted:           @project.contracted
+                key:                  @project.key
+                name:                 @project.name
+                contract_on:          @project.contract_on
+                contract_type:        @project.contract_type
+                is_using_ses:         @project.is_using_ses
+                contractual_coverage: @project.contractual_coverage
+                start_on:             @project.start_on
+                end_on:               @project.end_on
+                amount:               @project.amount
                 orderer_company_name:    @project.orderer_company_name
                 orderer_department_name: @project.orderer_department_name
                 orderer_personnel_names: @orderer_personnel_names

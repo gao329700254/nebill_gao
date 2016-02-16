@@ -16,6 +16,8 @@ ja:
         contracted: 契約済
         contract_on: 契約日
         contract_type: 契約形態
+        is_using_ses: SES
+        contractual_coverage: 契約内容
         start_on: 開始日
         end_on:   終了日
         amount:   金額
@@ -239,6 +241,10 @@ ja:
       contract_type:
         lump_sum:    一括請負
         uasimandate: 準委任
+        consignment: 委託
+      contractual_coverage:
+        development: 開発
+        maintenance: 保守
   page:
     home:
       title: ホーム
