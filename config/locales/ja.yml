@@ -7,6 +7,8 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+        internal_server_error: "サーバー内部エラーです"
+        not_found: "リソースが見つかりませんでした"
     models:
       project: プロジェクト
     attributes:

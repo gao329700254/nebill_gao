@@ -1,5 +1,5 @@
 class Api::ProjectsController < Api::ApiController
-  before_action :set_project, only: [:show]
+  before_action :set_project, only: [:show, :update]
 
   def index
     @projects = Project.all
@@ -11,12 +11,21 @@ class Api::ProjectsController < Api::ApiController
     @project.save!
 
     render_action_model_success_message(@project, :create)
-  rescue
+  rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@project, :create)
   end
 
   def show
     render json: @project, status: :ok
+  end
+
+  def update
+    @project.attributes = project_param
+    @project.save!
+
+    render_action_model_success_message(@project, :update)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@project, :update)
   end
 
 private

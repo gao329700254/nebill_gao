@@ -1,4 +1,15 @@
 class Api::ApiController < ApplicationController
+  rescue_from Exception                   , with: :handle_internal_server_error
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
+
+  def handle_internal_server_error(_ = nil)
+    render_internal_server_error_message
+  end
+
+  def handle_not_found(_ = nil)
+    render_not_found_message
+  end
+
 private
 
   def render_action_model_success_message(model, action)
@@ -18,6 +29,24 @@ private
         errors: { messages: model.errors.messages, full_messages: model.errors.full_messages },
       },
       status: :unprocessable_entity,
+    )
+  end
+
+  def render_internal_server_error_message
+    render(
+      json: {
+        message: t('activerecord.errors.messages.internal_server_error'),
+      },
+      status: :internal_server_error,
+    )
+  end
+
+  def render_not_found_message
+    render(
+      json: {
+        message: t('activerecord.errors.messages.not_found'),
+      },
+      status: :not_found,
     )
   end
 end
