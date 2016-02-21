@@ -27,7 +27,7 @@ FactoryGirl.define do
       orderer_memo            { Faker::Lorem.sentence }
     end
 
-    factory :un_contracted_project do
+    factory :uncontracted_project do
       contracted false
       contract_type        nil
       is_using_ses         nil

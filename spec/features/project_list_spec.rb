@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.feature 'Project List Page', js: true do
 
-  let!(:project1) { create(:contracted_project,    contract_on: 5.days.ago) }
-  let!(:project2) { create(:contracted_project,    contract_on: 2.days.ago) }
-  let!(:project3) { create(:contracted_project,    contract_on: 4.days.ago) }
-  let!(:project4) { create(:un_contracted_project, contract_on: 3.days.ago) }
-  let!(:project5) { create(:un_contracted_project, contract_on: 1.day.ago) }
+  let!(:project1) { create(:contracted_project,   contract_on: 5.days.ago) }
+  let!(:project2) { create(:contracted_project,   contract_on: 2.days.ago) }
+  let!(:project3) { create(:contracted_project,   contract_on: 4.days.ago) }
+  let!(:project4) { create(:uncontracted_project, contract_on: 3.days.ago) }
+  let!(:project5) { create(:uncontracted_project, contract_on: 1.day.ago) }
 
   background { visit project_list_path }
 
@@ -34,10 +34,16 @@ RSpec.feature 'Project List Page', js: true do
     is_expected.to have_content project4.key
     is_expected.to have_content project5.key
 
-    expect(all('.project_list__tbl__tr td:first-child')[0]).to have_text project1.key
-    expect(all('.project_list__tbl__tr td:first-child')[1]).to have_text project3.key
-    expect(all('.project_list__tbl__tr td:first-child')[2]).to have_text project4.key
-    expect(all('.project_list__tbl__tr td:first-child')[3]).to have_text project2.key
-    expect(all('.project_list__tbl__tr td:first-child')[4]).to have_text project5.key
+    expect(all('.project_list__tbl__body__row td:first-child')[0]).to have_text project1.key
+    expect(all('.project_list__tbl__body__row td:first-child')[1]).to have_text project3.key
+    expect(all('.project_list__tbl__body__row td:first-child')[2]).to have_text project4.key
+    expect(all('.project_list__tbl__body__row td:first-child')[3]).to have_text project2.key
+    expect(all('.project_list__tbl__body__row td:first-child')[4]).to have_text project5.key
+  end
+
+  scenario 'link to a project show page when click row' do
+    find("#project-#{project1.id}").click
+
+    is_expected.to have_header_title 'プロジェクト詳細'
   end
 end

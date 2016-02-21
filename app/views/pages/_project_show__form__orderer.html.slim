@@ -1,0 +1,19 @@
+fieldset.project_show__form__orderer
+  .project_show__form__item
+    = label_tag :orderer_company_name, t('activerecord.attributes.project.orderer_company_name')
+    = text_field_tag :orderer_company_name, nil, 'v-model' => 'project.orderer_company_name', ':disabled' => '!editMode'
+  .project_show__form__item
+    = label_tag :orderer_department_name, t('activerecord.attributes.project.orderer_department_name')
+    = text_field_tag :orderer_department_name, nil, 'v-model' => 'project.orderer_department_name', ':disabled' => '!editMode'
+  .project_show__form__item
+    = label_tag :orderer_personnel_names, t('activerecord.attributes.project.orderer_personnel_names')
+    = text_field_tag :orderer_personnel_names, nil, 'v-model' => 'project_orderer_personnel_names_str', ':disabled' => '!editMode'
+  .project_show__form__item
+    = label_tag :orderer_address, t('activerecord.attributes.project.orderer_address')
+    = text_field_tag :orderer_address, nil, 'v-model' => 'project.orderer_address', ':disabled' => '!editMode'
+  .project_show__form__item
+    = label_tag :orderer_zip_code, t('activerecord.attributes.project.orderer_zip_code')
+    = text_field_tag :orderer_zip_code, nil, 'v-model' => 'project.orderer_zip_code', ':disabled' => '!editMode'
+  .project_show__form__item
+    = label_tag :orderer_memo, t('activerecord.attributes.project.orderer_memo')
+    = text_area_tag :orderer_memo, nil, 'v-model' => 'project.orderer_memo', ':disabled' => '!editMode'

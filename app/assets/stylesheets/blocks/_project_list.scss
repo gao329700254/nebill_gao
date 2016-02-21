@@ -1,55 +1,59 @@
 .project_list {
 
-  @include outer-container;
   padding: $base-spacing;
 
   &__tbl {
+    @include outer-container;
     border-collapse: collapse;
     text-align: left;
 
     &__head {
-      border-bottom: $bold-border;
-    }
-
-    &__tr {
-      @include row(table);
-      margin-top: $base-spacing;
-      margin-bottom: $base-spacing;
-
-      &__th {
-        &:first-child { padding-left: $base-spacing; }
-        &--key {
-          @extend .project_list__tbl__tr__th;
-          @include span-columns(2);
-        }
-        &--project_name {
-          @include span-columns(2);
-        }
-        &--orderer_company {
-          @include span-columns(2);
-        }
-        &--start_on {
-          @include span-columns(2);
-        }
-        &--end_on {
-          @include span-columns(2);
-        }
-        &--contract_on {
-          @include span-columns(2);
-        }
-      }
-
-      &__td {
-        border-bottom: $base-border;
-        &:first-child { padding-left: $base-spacing; }
-        &--key {
-          @extend .project_list__tbl__tr__td;
-        }
+      &__row {
+        @include row(table);
+        border-bottom: $bold-border;
       }
     }
 
     &__body {
       font-size: $small-font-size;
+      &__row {
+        @include row(table);
+        border-bottom: $base-border;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
+      }
+    }
+
+    &__item {
+      @include padding($small-spacing $base-spacing $small-spacing);
+
+      &--key {
+        @extend .project_list__tbl__item;
+        @include span-columns(2);
+      }
+      &--project_name {
+        @extend .project_list__tbl__item;
+        @include span-columns(2);
+      }
+      &--orderer_company {
+        @extend .project_list__tbl__item;
+        @include span-columns(2);
+      }
+      &--start_on {
+        @extend .project_list__tbl__item;
+        @include span-columns(2);
+      }
+      &--end_on {
+        @extend .project_list__tbl__item;
+        @include span-columns(2);
+      }
+      &--contract_on {
+        @extend .project_list__tbl__item;
+        @include span-columns(2);
+      }
     }
   }
 }
