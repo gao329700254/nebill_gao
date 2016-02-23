@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :project do
+    association :group, factory: :project_group
+
     sequence(:key) { |n| "KEY-#{n}" }
     name { Faker::App.name }
     contracted false
