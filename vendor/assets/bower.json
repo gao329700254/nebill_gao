@@ -4,6 +4,7 @@
     "underscore": "1.8.3",
     "vue": "1.0.15",
     "sanitize-css": "3.0.0",
-    "toastr": "2.1.2"
+    "toastr": "2.1.2",
+    "sortable": "git://github.com/RubaXa/Sortable#1.4.2"
   }
 }

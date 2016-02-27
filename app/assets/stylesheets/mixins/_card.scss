@@ -1,0 +1,41 @@
+//// card
+@mixin card($shadow_depth: 1) {
+  border-radius: $base-border-radius;
+  @include shadow($shadow_depth);
+  overflow: hidden;
+}
+
+//// card__title
+@mixin card__title {
+  padding: $small-spacing;
+}
+
+@mixin card__title--theme {
+  @include card__title;
+  background-color: $theme-bg-color;
+  color: $theme-ft-color;
+}
+
+@mixin card__title--white {
+  @include card__title;
+  background-color: $white-bg-color;
+  color: $white-ft-color;
+}
+
+//// card__body
+@mixin card__body {
+  padding: $small-spacing;
+}
+
+@mixin card__body--theme {
+  @include card__body;
+  background-color: $theme-bg-color;
+  color: $theme-ft-color;
+}
+
+@mixin card__body--white {
+  @include card__body;
+  background-color: $white-bg-color;
+  color: $white-ft-color;
+}
+

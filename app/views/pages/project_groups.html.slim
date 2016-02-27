@@ -1,0 +1,33 @@
+= javascript_include_tag 'view_models/project_groups'
+
+- provide(:title, t('page.project_groups.title'))
+
+#project_groups.project_groups
+  .project_groups__new
+    .project_groups__new__input
+      = text_field_tag :name, nil, 'v-model' => 'projectGroup.name', class: 'project_groups__new__input__field'
+      = button_tag t('helpers.submit.create'), 'v-on:click.prevent' => 'createProjectGroup', class: 'project_groups__new__input__btn'
+
+  .project_groups__list
+    component [
+      :is                 = "'projectGroupsItem'"
+      :project-group-id   = "0"
+    ]
+    component [
+      :is                 = "'projectGroupsItem'"
+      :project-group-id   = "projectGroup.id"
+      :project-group-name = "projectGroup.name"
+      v-for               = "projectGroup in projectGroupList"
+      track-by            = "id"
+    ]
+
+    script type='text/x-template' id='project_groups__item'
+      .project_groups__item id="project_group-{{projectGroupId}}"
+        h1.project_groups__item__title v-text="projectGroupName" v-if="projectGroupName != undefined"
+        ul.project_groups__item__project_list id="project_groups__sortable-{{projectGroupId}}"
+          li.project_groups__item__project_list__item [
+            v-for = "project in projectList"
+            id    = "project-{{project.id}}"
+          ]
+            span.project_groups__item__project_list__item__col--key  v-text="project.key"
+            span.project_groups__item__project_list__item__col--name v-text="project.name"

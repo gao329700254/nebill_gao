@@ -2,7 +2,12 @@ class Api::ProjectsController < Api::ApiController
   before_action :set_project, only: [:show, :update]
 
   def index
-    @projects = Project.all
+    @projects = if params.key? :group_id
+                  Project.where(group_id: params[:group_id].presence)
+                else
+                  Project.all
+                end
+
     render json: @projects, status: :ok
   end
 

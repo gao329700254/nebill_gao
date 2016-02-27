@@ -1,0 +1,60 @@
+.project_groups {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  padding: $base-spacing;
+  background-color: $white-bg-color;
+  color: $white-ft-color;
+
+  &__new {
+    &__input {
+      @include display(flex);
+      max-width: 30em;
+      &__field {
+        @include flex(1);
+      }
+      &__btn {
+        @include btn--default;
+      }
+    }
+  }
+
+  &__list {
+    @include display(flex);
+    @include flex-flow(row wrap);
+    @include justify-content(flex-start);
+    @include align-items(flex-start);
+  }
+
+  &__item {
+    margin-right: $base-spacing;
+    margin-top: $base-spacing;
+
+    min-width: 10em;
+
+    @include card;
+
+    &__title {
+      @include card__title--theme;
+    }
+
+    &__project_list {
+      @include card__body--white;
+
+      min-height: 1em;
+
+      &__item {
+        list-style: none;
+        cursor: move;
+
+        &--chosen {
+          @include transform(rotate(-2deg));
+        }
+
+        &__col {
+          &--key::after { content: " : "; }
+        }
+      }
+    }
+  }
+}

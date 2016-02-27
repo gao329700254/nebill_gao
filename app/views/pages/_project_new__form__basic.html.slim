@@ -2,6 +2,9 @@
   .project_new__form__item
     = label_tag :contracted, t('activerecord.attributes.project.contracted')
     = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted'
+  .project_new__form__item
+    = label_tag :group_id, t('activerecord.attributes.project.group')
+    = select_tag :group_id, options_from_collection_for_select(ProjectGroup.all, :id, :name), include_blank: true, 'v-model' => 'project.group_id'
   .project_new__form__item--key
     = label_tag :key, t('activerecord.attributes.project.key')
     = text_field_tag :key, nil, 'v-model' => 'project.key', maxlength: 7
