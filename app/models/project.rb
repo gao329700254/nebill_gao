@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160211072226
+# Schema version: 20160223062029
 #
 # Table name: projects
 #
@@ -28,6 +28,7 @@
 #  updated_at              :datetime         not null
 #  contractual_coverage    :string
 #  is_using_ses            :boolean
+#  group_id                :integer
 #
 # Indexes
 #
@@ -37,6 +38,8 @@
 class Project < ActiveRecord::Base
   extend Enumerize
   include ProjectValidates
+
+  belongs_to :group, class_name: 'ProjectGroup'
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
   enumerize :contractual_coverage, in: [:development, :maintenance]

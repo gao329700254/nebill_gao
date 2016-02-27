@@ -17,6 +17,8 @@ RSpec.describe Project do
   it { is_expected.to respond_to(:billing) }
   it { is_expected.to respond_to(:orderer) }
 
+  it { is_expected.to belong_to(:group).class_name('ProjectGroup') }
+
   it { is_expected.to validate_presence_of(:key) }
   it { is_expected.to validate_uniqueness_of(:key) }
   it { is_expected.to validate_presence_of(:name) }

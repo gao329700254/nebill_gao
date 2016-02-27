@@ -15,6 +15,7 @@ RSpec.describe 'projects request' do
       expect(json.count).to eq 3
 
       expect(json[0]['id']).to                       eq project1.id
+      expect(json[0]['group_id']).to                 eq project1.group_id
       expect(json[0]['key']).to                      eq project1.key
       expect(json[0]['name']).to                     eq project1.name
       expect(json[0]['contracted']).to               eq project1.contracted
@@ -49,6 +50,7 @@ RSpec.describe 'projects request' do
       let(:params) do
         {
           project: {
+            group_id: 1,
             key: 'key',
             name: 'name',
             contracted: true,
@@ -81,6 +83,7 @@ RSpec.describe 'projects request' do
         end.to change(Project, :count).by(1)
 
         project = Project.first
+        expect(project.group_id).to eq 1
         expect(project.key).to eq  'KEY'
         expect(project.name).to eq  'name'
         expect(project.contracted).to eq  true
@@ -120,6 +123,7 @@ RSpec.describe 'projects request' do
       let(:params) do
         {
           project: {
+            group_id: 1,
             key: '',
             name: 'name',
             contracted: 'true',
@@ -168,12 +172,13 @@ RSpec.describe 'projects request' do
       let(:project) { create(:contracted_project) }
       let(:path) { "/api/projects/#{project.id}" }
 
-      it 'return a project' do
+      it 'return the project' do
         get path
 
         expect(response).to be_success
         expect(response.status).to eq 200
         expect(json['id']).to                       eq project.id
+        expect(json['group_id']).to                 eq project.group_id
         expect(json['key']).to                      eq project.key
         expect(json['name']).to                     eq project.name
         expect(json['contracted']).to               eq project.contracted
@@ -224,6 +229,7 @@ RSpec.describe 'projects request' do
         let(:params) do
           {
             project: {
+              group_id: 1,
               key: 'key',
               name: 'name',
               contracted: true,
@@ -250,11 +256,12 @@ RSpec.describe 'projects request' do
           }
         end
 
-        it 'update a project' do
+        it 'update the project' do
           expect do
             patch path, params
           end.to change { project.reload && project.updated_at }
 
+          expect(project.group_id).to eq  1
           expect(project.key).to eq  'KEY'
           expect(project.name).to eq  'name'
           expect(project.contracted).to eq  true
@@ -294,6 +301,7 @@ RSpec.describe 'projects request' do
         let(:params) do
           {
             project: {
+              group_id: 1,
               key: '',
               name: 'name',
               contracted: true,
@@ -320,7 +328,7 @@ RSpec.describe 'projects request' do
           }
         end
 
-        it 'do not update a project' do
+        it 'do not update the project' do
           expect do
             patch path, params
           end.not_to change { project.reload && project.updated_at }

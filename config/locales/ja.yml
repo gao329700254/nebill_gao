@@ -11,6 +11,7 @@ ja:
         not_found: "リソースが見つかりませんでした"
     models:
       project: プロジェクト
+      project_group: プロジェクトグループ
     attributes:
       project:
         key: ID
