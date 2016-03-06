@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.feature 'Project Show Page', js: true do
   describe 'that is uncorrected project' do
-    let!(:project) { create(:uncontracted_project) }
+    given!(:project_group1) { create(:project_group, name: 'Group1') }
+    given!(:project_group2) { create(:project_group, name: 'Group2') }
+    given!(:project) { create(:uncontracted_project, group: project_group1) }
     background { visit project_show_path(project) }
 
     subject { page }
@@ -15,6 +17,7 @@ RSpec.feature 'Project Show Page', js: true do
       subject { find('#project_show .project_show__form') }
 
       scenario 'should show project attributes' do
+        is_expected.to     have_field 'group_id'               , disabled: true, with: project.group_id
         is_expected.to     have_field 'key'                    , disabled: true, with: project.key
         is_expected.to     have_field 'name'                   , disabled: true, with: project.name
         is_expected.to     have_field 'contract_on'            , disabled: true, with: project.contract_on
@@ -45,6 +48,7 @@ RSpec.feature 'Project Show Page', js: true do
         background { click_button '編集' }
 
         scenario 'should have edit project fields' do
+          is_expected.to     have_field 'group_id'               , disabled: false, with: project.group_id
           is_expected.to     have_field 'key'                    , disabled: false, with: project.key
           is_expected.to     have_field 'name'                   , disabled: false, with: project.name
           is_expected.to     have_field 'contract_on'            , disabled: false, with: project.contract_on
@@ -72,6 +76,7 @@ RSpec.feature 'Project Show Page', js: true do
         end
 
         scenario 'should do not update when click cancel button' do
+          original_group                   =  project.group_id
           original_key                     =  project.key
           original_name                    =  project.name
           original_contract_on             =  project.contract_on
@@ -88,6 +93,7 @@ RSpec.feature 'Project Show Page', js: true do
           original_billing_zip_code        =  project.billing_zip_code
           original_billing_memo            =  project.billing_memo
 
+          select 'Group2', from: :group_id
           fill_in :key        , with: '0000001'
           fill_in :name       , with: 'test project'
           fill_in :contract_on, with: '2016-01-01'
@@ -109,6 +115,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.not_to change { project.reload && project.updated_at }
 
+          is_expected.to     have_field 'group_id'               , disabled: true, with: original_group
           is_expected.to     have_field 'key'                    , disabled: true, with: original_key
           is_expected.to     have_field 'name'                   , disabled: true, with: original_name
           is_expected.to     have_field 'contract_on'            , disabled: true, with: original_contract_on
@@ -127,6 +134,7 @@ RSpec.feature 'Project Show Page', js: true do
         end
 
         scenario 'should update when click submit button with correct values' do
+          select 'Group2', from: :group_id
           fill_in :key        , with: '0000001'
           fill_in :name       , with: 'test project'
           fill_in :contract_on, with: '2016-01-01'
@@ -148,6 +156,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.to change { project.reload && project.updated_at }
 
+          is_expected.to     have_field 'group_id'               , disabled: true, with: project_group2.id
           is_expected.to     have_field 'key'                    , disabled: true, with: '0000001'
           is_expected.to     have_field 'name'                   , disabled: true, with: 'test project'
           is_expected.to     have_field 'contract_on'            , disabled: true, with: '2016-01-01'
@@ -166,6 +175,7 @@ RSpec.feature 'Project Show Page', js: true do
         end
 
         scenario 'should not update when click submit button with uncorrent values' do
+          select 'Group2', from: :group_id
           fill_in :key        , with: '  '
           fill_in :name       , with: 'test project'
           fill_in :contract_on, with: '2016-01-01'
@@ -187,6 +197,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.not_to change { project.reload && project.updated_at }
 
+          is_expected.to     have_field 'group_id'               , disabled: false, with: project_group2.id
           is_expected.to     have_field 'key'                    , disabled: false, with: '  '
           is_expected.to     have_field 'name'                   , disabled: false, with: 'test project'
           is_expected.to     have_field 'contract_on'            , disabled: false, with: '2016-01-01'

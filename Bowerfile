@@ -2,3 +2,4 @@ asset 'underscore', '1.8.3'
 asset 'vue', '1.0.15'
 asset 'sanitize-css', '3.0.0'
 asset 'toastr', '2.1.2'
+asset 'sortable', '1.4.2', github: "RubaXa/Sortable"

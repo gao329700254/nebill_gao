@@ -7,6 +7,7 @@
 #        project_new GET   /projects/new(.:format)              pages#project_new
 #       project_list GET   /projects/list(.:format)             pages#project_list
 #       project_show GET   /projects/:project_id/show(.:format) pages#project_show
+#     project_groups GET   /project_groups(.:format)            pages#project_groups
 #       api_projects GET   /api/projects(.:format)              api/projects#index
 #                    POST  /api/projects(.:format)              api/projects#create
 #        api_project GET   /api/projects/:id(.:format)          api/projects#show
@@ -35,4 +36,5 @@ Rails.application.routes.draw do
   scope path: 'projects/:project_id' do
     get 'show', to: 'pages#project_show', as: 'project_show'
   end
+  get 'project_groups', to: 'pages#project_groups'
 end

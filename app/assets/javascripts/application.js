@@ -3,7 +3,9 @@
 //= require underscore/underscore
 //= require vue/dist/vue
 //= require toastr/toastr
+//= require sortable/Sortable
 
 //= require core
 //= require_directory .
 //= require_tree ./mixins
+//= require_tree ./components

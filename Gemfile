@@ -30,7 +30,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'byebug'
+  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'rspec-its'
   gem 'faker'

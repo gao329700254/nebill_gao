@@ -6,7 +6,7 @@ Vue.modules.projectHelper = {
         exist: {contracted: false, uncontracted: false}
       group_id:
         init: ''
-        exist: {contracted: false, uncontracted: false}
+        exist: {contracted: true, uncontracted: true}
       contracted:
         init: false
         exist: {contracted: true, uncontracted: true}

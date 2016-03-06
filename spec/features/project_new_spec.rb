@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Project New Page', js: true do
+  given!(:project_group) { create(:project_group, name: 'GroupA') }
   background { visit project_new_path }
 
   subject { page }
@@ -42,6 +43,7 @@ RSpec.feature 'Project New Page', js: true do
       background { uncheck 'contracted' }
 
       scenario 'show' do
+        is_expected.to     have_field 'group_id'
         is_expected.to     have_field 'key'
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
@@ -68,6 +70,7 @@ RSpec.feature 'Project New Page', js: true do
       end
 
       scenario 'click submit button with correct values' do
+        select 'GroupA', from: :group_id
         fill_in :key        , with: '0000001'
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
@@ -90,6 +93,7 @@ RSpec.feature 'Project New Page', js: true do
         end.to change(Project, :count).by(1)
 
         is_expected.to have_unchecked_field 'contracted'
+        is_expected.to have_field 'group_id'                , with: ''
         is_expected.to have_field 'key'                     , with: ''
         is_expected.to have_field 'name'                    , with: ''
         is_expected.to have_field 'contract_on'             , with: ''
@@ -108,6 +112,7 @@ RSpec.feature 'Project New Page', js: true do
       end
 
       scenario 'click submit button with uncorrect values' do
+        select 'GroupA', from: :group_id
         fill_in :key        , with: ' '
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
@@ -130,6 +135,7 @@ RSpec.feature 'Project New Page', js: true do
         end.not_to change(Project, :count)
 
         is_expected.to have_unchecked_field 'contracted'
+        select 'GroupA', from: :group_id
         is_expected.to have_field 'key'                     , with: ' '
         is_expected.to have_field 'name'                    , with: 'test project'
         is_expected.to have_field 'contract_on'             , with: '2016-01-01'
@@ -152,6 +158,7 @@ RSpec.feature 'Project New Page', js: true do
       background { check 'contracted' }
 
       scenario 'show' do
+        is_expected.to     have_field 'group_id'
         is_expected.to     have_field 'key'
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
@@ -178,6 +185,7 @@ RSpec.feature 'Project New Page', js: true do
       end
 
       scenario 'click submit button with correct values' do
+        select 'GroupA', from: :group_id
         fill_in :key        , with: '0000001'
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
@@ -206,6 +214,7 @@ RSpec.feature 'Project New Page', js: true do
         end.to change(Project, :count).by(1)
 
         is_expected.to have_unchecked_field 'contracted'
+        is_expected.to have_field 'group_id'                , with: ''
         is_expected.to have_field 'key'                     , with: ''
         is_expected.to have_field 'name'                    , with: ''
         is_expected.to have_field 'contract_on'             , with: ''

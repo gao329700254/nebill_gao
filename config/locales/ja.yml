@@ -14,6 +14,7 @@ ja:
       project_group: プロジェクトグループ
     attributes:
       project:
+        group: グループ
         key: ID
         name: 名前
         contracted: 契約済
@@ -36,6 +37,8 @@ ja:
         orderer_address:         受注先住所
         orderer_zip_code:        受注先郵便番号
         orderer_memo:            受注先メモ
+      project_group:
+        name: 名前
   date:
     abbr_day_names:
     - 日
@@ -262,3 +265,5 @@ ja:
       title: プロジェクト一覧
     project_show:
       title: プロジェクト詳細
+    project_groups:
+      title: プロジェクトグループ
