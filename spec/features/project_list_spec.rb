@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.feature 'Project List Page', js: true do
+  given!(:user) { create(:user) }
+  given!(:project1) { create(:contracted_project,   contract_on: 5.days.ago) }
+  given!(:project2) { create(:contracted_project,   contract_on: 2.days.ago) }
+  given!(:project3) { create(:contracted_project,   contract_on: 4.days.ago) }
+  given!(:project4) { create(:uncontracted_project, contract_on: 3.days.ago) }
+  given!(:project5) { create(:uncontracted_project, contract_on: 1.day.ago) }
 
-  let!(:project1) { create(:contracted_project,   contract_on: 5.days.ago) }
-  let!(:project2) { create(:contracted_project,   contract_on: 2.days.ago) }
-  let!(:project3) { create(:contracted_project,   contract_on: 4.days.ago) }
-  let!(:project4) { create(:uncontracted_project, contract_on: 3.days.ago) }
-  let!(:project5) { create(:uncontracted_project, contract_on: 1.day.ago) }
-
+  background { login user, with_capybara: true }
   background { visit project_list_path }
 
   subject { page }

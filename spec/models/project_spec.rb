@@ -20,7 +20,7 @@ RSpec.describe Project do
   it { is_expected.to belong_to(:group).class_name('ProjectGroup') }
 
   it { is_expected.to validate_presence_of(:key) }
-  it { is_expected.to validate_uniqueness_of(:key) }
+  it { is_expected.to validate_uniqueness_of(:key).case_insensitive }
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:contract_on) }
   it { is_expected.to validate_numericality_of(:amount).only_integer }

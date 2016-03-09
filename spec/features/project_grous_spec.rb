@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.feature 'Project Groups Page', js: true do
+  given!(:user) { create(:user) }
   given!(:project_group1) { create(:project_group, name: 'Group1') }
   given!(:project_group2) { create(:project_group, name: 'Group2') }
   given!(:project1) { create(:project, group: project_group1) }
   given!(:project2) { create(:project, group: project_group2) }
   given!(:project3) { create(:project, group: nil) }
 
+  background { login user, with_capybara: true }
   background { visit project_groups_path }
 
   subject { page }

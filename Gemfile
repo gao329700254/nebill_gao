@@ -10,10 +10,13 @@ gem 'jbuilder', '~> 2.0'
 gem 'pg'
 gem 'slim'
 gem 'enumerize'
+gem 'authlogic'
+gem 'omniauth-google-oauth2'
 gem 'bourbon'
 gem 'neat'
 gem 'bower-rails'
 gem 'font-awesome-rails'
+gem 'highline'
 
 group :development do
   gem 'web-console', '~> 2.0'

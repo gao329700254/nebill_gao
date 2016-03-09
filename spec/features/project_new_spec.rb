@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.feature 'Project New Page', js: true do
+  given!(:user) { create(:user) }
   given!(:project_group) { create(:project_group, name: 'GroupA') }
+
+  background { login user, with_capybara: true }
   background { visit project_new_path }
 
   subject { page }

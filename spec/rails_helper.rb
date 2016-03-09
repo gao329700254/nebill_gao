@@ -22,6 +22,7 @@ SimpleCov.start 'rails'
 SimpleCov.minimum_coverage 90
 
 RSpec.configure do |config|
+  config.include SessionHelper
   config.include RequestHelper, type: :request
   config.include FeatureHelper, type: :feature
 

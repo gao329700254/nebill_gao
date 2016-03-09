@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'projects request' do
+  let!(:user) { create(:user) }
+
+  before { login(user) }
+
   describe 'GET /api/projects' do
     let!(:project1) { create(:contracted_project) }
     let!(:project2) { create(:contracted_project) }

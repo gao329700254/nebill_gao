@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Project Show Page', js: true do
+  given!(:user) { create(:user) }
+  background { login user, with_capybara: true }
+
   describe 'that is uncorrected project' do
     given!(:project_group1) { create(:project_group, name: 'Group1') }
     given!(:project_group2) { create(:project_group, name: 'Group2') }
