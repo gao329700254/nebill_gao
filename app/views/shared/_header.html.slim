@@ -4,4 +4,9 @@ header#header.header
   .header__title
     = yield(:title)
   .header__menu
-    / TODO(ishida): implement when user login function is implemented.
+    ul.header__menu__list
+    - if logged_in?
+      li.header__menu__item = @current_user.name
+      li.header__menu__item = link_to t('helpers.logout'), logout_path, method: :delete, class: 'header__menu__link'
+    - else
+      li.header__menu__item = link_to t('helpers.login'), '/auth/google_oauth2', class: 'header__menu__link'

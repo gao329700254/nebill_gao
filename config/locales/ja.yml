@@ -10,9 +10,14 @@ ja:
         internal_server_error: "サーバー内部エラーです"
         not_found: "リソースが見つかりませんでした"
     models:
+      user: ユーザ
       project: プロジェクト
       project_group: プロジェクトグループ
     attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        is_admin: 管理者
       project:
         group: グループ
         key: ID
@@ -178,6 +183,8 @@ ja:
     edit: 編集
     cancel: キャンセル
     back: 戻る
+    login: ログイン
+    logout: ログアウト
   number:
     currency:
       format:
@@ -246,6 +253,12 @@ ja:
     destroy:
       success: '%{model}を削除しました'
       fail: '%{model}が削除できませんでした'
+    login:
+      success: ログインしました
+      fail: ログインできませんでした
+    logout:
+      success: ログアウトしました
+      fail: ログアウトできませんでした
   enumerize:
     defaults:
       contract_type:
@@ -267,3 +280,6 @@ ja:
       title: プロジェクト詳細
     project_groups:
       title: プロジェクトグループ
+    admin:
+      users:
+        title: ユーザ管理

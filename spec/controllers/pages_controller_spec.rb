@@ -11,14 +11,32 @@ RSpec.describe PagesController do
   end
 
   describe 'GET #project_new' do
-    before { get :project_new }
+    context 'when not logged in' do
+      before { get :project_new }
 
-    it { is_expected.to render_template :project_new }
+      it { is_expected.to redirect_to root_path }
+    end
+    context 'when logged in' do
+      let(:user) { create(:user) }
+      before { login(user) }
+      before { get :project_new }
+
+      it { is_expected.to render_template :project_new }
+    end
   end
 
   describe 'GET #project_list' do
-    before { get :project_list }
+    context 'when not logged in' do
+      before { get :project_list }
 
-    it { is_expected.to render_template :project_list }
+      it { is_expected.to redirect_to root_path }
+    end
+    context 'when logged in' do
+      let(:user) { create(:user) }
+      before { login(user) }
+      before { get :project_list }
+
+      it { is_expected.to render_template :project_list }
+    end
   end
 end

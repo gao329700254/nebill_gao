@@ -6,11 +6,16 @@ html
     = javascript_include_tag 'application'
     = csrf_meta_tags
   body
+    == render partial: 'shared/flash_toastr', flash: flash
+
     == render partial: 'shared/header'
 
     .body
       .body__sidemenu
-        == render partial: 'shared/sidemenu'
+        - if controller.is_a? Admin::PagesController
+          == render partial: 'shared/sidemenu_admin'
+        - else
+          == render partial: 'shared/sidemenu'
       .body__main
         == yield
 

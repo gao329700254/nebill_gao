@@ -1,0 +1,6 @@
+javascript:
+  flash = #{raw flash.to_json};
+coffee:
+  $ ->
+    $.each flash, (index, message) ->
+      toastr[message[0]]('', message[1])

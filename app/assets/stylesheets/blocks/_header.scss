@@ -7,7 +7,10 @@
   @include display(flex);
   height: $header-height;
 
-  .header__logo {
+  background-color: $black-bg-color;
+  color: $black-ft-color;
+
+  &__logo {
     @include flex(0 0 $header-logo-whight);
     @include display(flex);
     @include align-items(center);
@@ -17,23 +20,30 @@
     font-weight: bold;
   }
 
-  .header__title {
+  &__title {
     @include flex(1);
     @include display(flex);
     @include align-items(center);
     @include justify-content(flex-start);
     @include padding(null $base-spacing);
-    background-color: $black-bg-color;
-    color: $black-ft-color;
   }
 
-  .header__menu {
+  &__menu {
     @include flex(2);
     @include display(flex);
     @include align-items(center);
     @include justify-content(flex-end);
     @include padding(null $base-spacing);
-    background-color: $black-bg-color;
-    color: $black-ft-color;
+
+    &__item {
+      list-style-type: none;
+      margin-left: $small-spacing;
+    }
+
+    &__link {
+      @include transition(all .2s ease-out);
+      color: $black-ft-color;
+      &:hover { color: $theme-color; }
+    }
   }
 }

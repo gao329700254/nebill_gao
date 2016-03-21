@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'project groups request' do
+  let!(:user) { create(:user) }
+
+  before { login(user) }
+
   describe 'GET /api/project_groups' do
     let!(:project_group1) { create(:project_group) }
     let!(:project_group2) { create(:project_group) }
