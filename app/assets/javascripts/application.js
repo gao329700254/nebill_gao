@@ -9,3 +9,4 @@
 //= require_directory .
 //= require_tree ./mixins
 //= require_tree ./components
+//= require_tree ./filters

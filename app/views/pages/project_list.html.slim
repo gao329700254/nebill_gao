@@ -3,6 +3,7 @@
 - provide(:title, t('page.project_list.title'))
 
 #project_list.project_list
+  input.project_list__search type="text" name="search" v-model="searchKeywords" placeholder="search" lazy='true'
   table.project_list__tbl
     thead.project_list__tbl__head
       tr.project_list__tbl__head__row
@@ -14,7 +15,7 @@
         th.project_list__tbl__item--contract_on     = t('activerecord.attributes.project.contract_on')
     tbody.project_list__tbl__body
       tr.project_list__tbl__body__row [
-        v-for      = "project in list | orderBy sortKey"
+        v-for      = "project in list | selectBy searchKeywords selectSchema | orderBy sortKey"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"
         track-by   = "id"

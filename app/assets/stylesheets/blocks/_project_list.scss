@@ -2,6 +2,10 @@
 
   padding: $base-spacing;
 
+  &__search {
+    margin-bottom: $base-spacing;
+  }
+
   &__tbl {
     @include outer-container;
     border-collapse: collapse;
