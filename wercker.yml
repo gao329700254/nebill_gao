@@ -1,0 +1,43 @@
+box: ruby:2.3.0
+services:
+    - postgres
+build:
+    steps:
+        - script:
+          name: install Nodejs
+          code: |
+            sudo apt-get update -y
+            sudo apt-get install nodejs npm -y
+            sudo update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+        - script:
+          name: install Bower
+          code: sudo npm install bower -g
+        - kazukiyamaguchi/install-phantomjs-v2.0.0@0.0.2
+        - script:
+            name: setting Bundler
+            code: bundle config build.nokogiri --use-system-libraries
+        - bundle-install
+        - script:
+            name: bower install
+            code: bundle exec rake bower:install['--allow-root'] bower:clean['--allow-root']
+        - rails-database-yml
+        - script:
+            name: set up db
+            code: |
+                RAILS_ENV='test' bundle exec rake db:create
+                RAILS_ENV='test' bundle exec rake db:schema:load
+        - script:
+            name: exec rspec
+            code: bundle exec rspec --order rand
+        - script:
+            name: exec teaspoon
+            code: RAILS_ENV=test bundle exec teaspoon
+        - script:
+            name: exec rubocop
+            code: bundle exec rubocop --format simple
+        - script:
+            name: exec coffeelint
+            code: bundle exec rake coffeelint
+        - script:
+            name: exec slimlint
+            code: bundle exec rake slim_lint
