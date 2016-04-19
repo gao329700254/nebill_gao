@@ -5,6 +5,7 @@ namespace :db do
       ActiveRecord::Base.transaction do
         populate_project_groups
         populate_projects
+        populate_bills
       end
     end
 
@@ -26,6 +27,17 @@ namespace :db do
       end
       un_contracted_project_count.times do
         FactoryGirl.create(:uncontracted_project, group: ProjectGroup.all.sample)
+      end
+    end
+
+    def populate_bills
+      puts 'populate bills'
+      Bill.destroy_all
+
+      Project.all.each do |project|
+        rand(3).times do |_|
+          FactoryGirl.create(:bill, project: project)
+        end
       end
     end
   end

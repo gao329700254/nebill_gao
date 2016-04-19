@@ -60,4 +60,4 @@ Style/ExtraSpacing:
 Style/ClassAndModuleChildren:
   Enabled: false
 Style/AsciiComments:
-  Enabled: true
+  Enabled: false
