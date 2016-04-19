@@ -40,6 +40,7 @@ class Project < ActiveRecord::Base
   include ProjectValidates
 
   belongs_to :group, class_name: 'ProjectGroup'
+  has_many :bills
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
   enumerize :contractual_coverage, in: [:development, :maintenance]

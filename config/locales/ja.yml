@@ -13,6 +13,7 @@ ja:
       user: ユーザ
       project: プロジェクト
       project_group: プロジェクトグループ
+      bill: 請求
     attributes:
       user:
         name: 名前
@@ -44,6 +45,15 @@ ja:
         orderer_memo:            受注先メモ
       project_group:
         name: 名前
+      bill:
+        project: プロジェクト
+        key: ID
+        delivery_on:    納品日
+        acceptance_on:  検収日
+        payment_type:   支払条件
+        payment_on:     支払日
+        bill_on:        請求日
+        deposit_on:     入金日
   date:
     abbr_day_names:
     - 日
@@ -268,6 +278,11 @@ ja:
       contractual_coverage:
         development: 開発
         maintenance: 保守
+      payment_type:
+        end_of_the_delivery_date_next_month:          納品日翌月末
+        end_of_the_acceptance_on_date_next_month:     検収日翌月末
+        15th_of_the_delivery_date_month_after_next:   納品日翌々月15日
+        15th_of_the_acceptance_date_month_after_next: 検収日翌々月15日
   page:
     home:
       title: ホーム

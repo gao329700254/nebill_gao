@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304050206) do
+ActiveRecord::Schema.define(version: 20160412071317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bills", force: :cascade do |t|
+    t.integer  "project_id",    null: false
+    t.string   "key",           null: false
+    t.date     "delivery_on",   null: false
+    t.date     "acceptance_on", null: false
+    t.string   "payment_type",  null: false
+    t.date     "payment_on",    null: false
+    t.date     "bill_on"
+    t.date     "deposit_on"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "bills", ["key"], name: "index_bills_on_key", unique: true, using: :btree
 
   create_table "project_groups", force: :cascade do |t|
     t.string   "name",       null: false
