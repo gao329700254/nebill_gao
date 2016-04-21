@@ -22,6 +22,7 @@
 #                    POST   /api/project_groups(.:format)        api/project_groups#create
 #  api_project_group PATCH  /api/project_groups/:id(.:format)    api/project_groups#update
 #                    PUT    /api/project_groups/:id(.:format)    api/project_groups#update
+#          api_bills GET    /api/bills(.:format)                 api/bills#index
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index
