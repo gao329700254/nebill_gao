@@ -3,5 +3,6 @@ Rails.application.routes.draw do
     resources :users, only: [:create]
     resources :projects, only: [:index, :create, :show, :update]
     resources :project_groups, only: [:index, :create, :update]
+    resources :bills, only: [:index]
   end
 end
