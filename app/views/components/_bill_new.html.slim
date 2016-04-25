@@ -1,0 +1,28 @@
+script type='text/x-template' id='bill_new'
+  .bill_new
+    = form_tag api_project_bills_path, class: 'bill_new__form'
+      .bill_new__form__container
+        .bill_new__form__container__group
+          .bill_new__form__item--key
+            = label_tag :key, t('activerecord.attributes.bill.key')
+            = text_field_tag :key, nil, 'v-model' => 'bill.key'
+          .bill_new__form__item
+            = label_tag :delivery_on, t('activerecord.attributes.bill.delivery_on')
+            = text_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on'
+          .bill_new__form__item
+            = label_tag :acceptance_on, t('activerecord.attributes.bill.acceptance_on')
+            = text_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on'
+          .bill_new__form__item
+            = label_tag :payment_on, t('activerecord.attributes.bill.payment_on')
+            = text_field_tag :payment_on, nil, 'v-model' => 'bill.payment_on'
+          .bill_new__form__item
+            = label_tag :bill_on, t('activerecord.attributes.bill.bill_on')
+            = text_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on'
+          .bill_new__form__item
+            = label_tag :deposit_on, t('activerecord.attributes.bill.deposit_on')
+            = text_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on'
+          .bill_new__form__item
+            = label_tag :memo, t('activerecord.attributes.bill.memo')
+            = text_area_tag :memo, nil, 'v-model' => 'bill.memo'
+
+      = submit_tag t('helpers.submit.create') , 'v-on:click.prevent' => 'submit', class: 'bill_new__form__submit_btn'

@@ -50,10 +50,10 @@ ja:
         key: ID
         delivery_on:    納品日
         acceptance_on:  検収日
-        payment_type:   支払条件
         payment_on:     支払日
         bill_on:        請求日
         deposit_on:     入金日
+        memo:           メモ
   date:
     abbr_day_names:
     - 日
@@ -292,7 +292,10 @@ ja:
     project_list:
       title: プロジェクト一覧
     project_show:
-      title: プロジェクト詳細
+      title: プロジェクト情報
+      view:
+        project_detail: プロジェクト詳細
+        bill_new: 請求新規作成
     project_groups:
       title: プロジェクトグループ
     admin:

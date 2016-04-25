@@ -6,35 +6,33 @@
   background-color: $white-bg-color;
   color: $white-ft-color;
 
-  &__form {
-    @include outer-container;
-    &__container {
-      @include row;
-      &__group {
-        @include span-columns(6);
-      }
+  &__menu_bar {
+    margin-bottom: $base-spacing;
+
+    &__list {
+      @include display(flex);
+      @include flex-direction(row);
+      @include flex-wrap(nowrap);
+      @include align-items(stretch);
+      @include justify-content(flex-start);
     }
+
     &__item {
-      margin-bottom: $small-spacing;
-      &--key {
-        @extend .project_show__form__item;
-        width: 8em;
-      }
-      #{$all-text-inputs-disabled},
-      select:disabled,
-      textarea:disabled {
-        background-color: $white-bg-color;
-        border-color: $white-bg-color;
-        border-bottom: $base-border;
-        border-radius: 0;
-        box-shadow: none;
+      @include padding($base-spacing $small-spacing);
+      list-style-type: none;
+      color: $white-ft-color;
+
+      &--active {
+        @extend .project_show__menu_bar__item;
+        color: $theme-color;
       }
     }
-    &__edit_btn, &__cancel_btn {
-      @include btn--default;
-    }
-    &__submit_btn {
-      @include btn--primary;
-    }
+  }
+
+  &__content--transition {
+    @include transition(all .2s ease-out);
+  }
+  &__content--enter, &__content--leave {
+    opacity: 0;
   }
 }

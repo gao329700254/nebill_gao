@@ -1,40 +1,40 @@
-fieldset.project_show__form__basic
-  .project_show__form__item
+fieldset.project_detail__form__basic
+  .project_detail__form__item
     = label_tag :contracted, t('activerecord.attributes.project.contracted')
     = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', ':disabled' => '!editMode || projectOriginal.contracted'
-  .project_show__form__item
+  .project_detail__form__item
     = label_tag :group_id, t('activerecord.attributes.project.group')
     = select_tag :group_id, options_from_collection_for_select(ProjectGroup.all, :id, :name), include_blank: true,
                  'v-model' => 'project.group_id', ':disabled' => '!editMode'
-  .project_show__form__item--key
+  .project_detail__form__item--key
     = label_tag :key, t('activerecord.attributes.project.key')
     = text_field_tag :key, nil, 'v-model' => 'project.key', ':disabled' => '!editMode', maxlength: 7
-  .project_show__form__item
+  .project_detail__form__item
     = label_tag :name, t('activerecord.attributes.project.name')
     = text_field_tag :name, nil, 'v-model' => 'project.name', ':disabled' => '!editMode'
-  .project_show__form__item
+  .project_detail__form__item
     = label_tag :contract_on, t('activerecord.attributes.project.contract_on')
     = text_field_tag :contract_on, nil, 'v-model' => 'project.contract_on', ':disabled' => '!editMode'
-  .project_show__form__item v-if='project.contracted'
+  .project_detail__form__item v-if='project.contracted'
     = label_tag :contract_type, t('activerecord.attributes.project.contract_type')
     = select_tag :contract_type, options_for_select(Project.contract_type.options), include_blank: true,
                  'v-model' => 'project.contract_type', ':disabled' => '!editMode'
-  .project_show__form__item v-if='project.contracted'
+  .project_detail__form__item v-if='project.contracted'
     = label_tag :is_using_ses, t('activerecord.attributes.project.is_using_ses')
     = check_box_tag :is_using_ses, true, false, 'v-model' => 'project.is_using_ses', ':disabled' => '!editMode'
-  .project_show__form__item v-if='project.contracted'
+  .project_detail__form__item v-if='project.contracted'
     = label_tag :contractual_coverage, t('activerecord.attributes.project.contractual_coverage')
     = select_tag :contractual_coverage, options_for_select(Project.contractual_coverage.options), include_blank: true,
                  'v-model' => 'project.contractual_coverage', ':disabled' => '!editMode'
-  .project_show__form__container v-if='project.contracted'
-    .project_show__form__container__group
-      .project_show__form__item
+  .project_detail__form__container v-if='project.contracted'
+    .project_detail__form__container__group
+      .project_detail__form__item
         = label_tag :start_on, t('activerecord.attributes.project.start_on')
         = text_field_tag :start_on, nil, 'v-model' => 'project.start_on', ':disabled' => '!editMode'
-    .project_show__form__container__group
-      .project_show__form__item
+    .project_detail__form__container__group
+      .project_detail__form__item
         = label_tag :end_on, t('activerecord.attributes.project.end_on')
         = text_field_tag :end_on, nil, 'v-model' => 'project.end_on', ':disabled' => '!editMode'
-  .project_show__form__item v-if='project.contracted'
+  .project_detail__form__item v-if='project.contracted'
     = label_tag :amount, t('activerecord.attributes.project.amount')
     = number_field_tag :amount, nil, min: 0, step: 10, 'v-model' => 'project.amount', ':disabled' => '!editMode'

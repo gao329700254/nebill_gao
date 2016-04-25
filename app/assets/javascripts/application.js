@@ -4,6 +4,7 @@
 //= require vue/dist/vue
 //= require toastr/toastr
 //= require sortable/Sortable
+//= require page/page
 
 //= require core
 //= require_directory .

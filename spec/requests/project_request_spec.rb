@@ -91,12 +91,12 @@ RSpec.describe 'projects request' do
         expect(project.key).to eq  'KEY'
         expect(project.name).to eq  'name'
         expect(project.contracted).to eq  true
-        expect(project.contract_on).to eq  Date.parse('2015-01-01')
+        expect(project.contract_on.to_s).to eq  '2015-01-01'
         expect(project.contract_type).to eq  'lump_sum'
         expect(project.is_using_ses).to eq  true
         expect(project.contractual_coverage).to eq  'development'
-        expect(project.start_on).to eq  Date.parse('2015-01-01')
-        expect(project.end_on).to eq    Date.parse('2015-10-31')
+        expect(project.start_on.to_s).to eq '2015-01-01'
+        expect(project.end_on.to_s).to eq   '2015-10-31'
         expect(project.amount).to eq    123
         expect(project.billing_company_name).to eq     'billing_company_name'
         expect(project.billing_department_name).to eq  'billing_department_name'
@@ -269,12 +269,12 @@ RSpec.describe 'projects request' do
           expect(project.key).to eq  'KEY'
           expect(project.name).to eq  'name'
           expect(project.contracted).to eq  true
-          expect(project.contract_on).to eq  Date.parse('2015-01-01')
+          expect(project.contract_on.to_s).to eq  '2015-01-01'
           expect(project.contract_type).to eq  'lump_sum'
           expect(project.is_using_ses).to eq  true
           expect(project.contractual_coverage).to eq  'development'
-          expect(project.start_on).to eq  Date.parse('2015-01-01')
-          expect(project.end_on).to eq    Date.parse('2015-10-31')
+          expect(project.start_on.to_s).to eq '2015-01-01'
+          expect(project.end_on.to_s).to eq   '2015-10-31'
           expect(project.amount).to eq    123
           expect(project.billing_company_name).to eq     'billing_company_name'
           expect(project.billing_department_name).to eq  'billing_department_name'
