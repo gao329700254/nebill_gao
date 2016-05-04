@@ -4,15 +4,15 @@
 
 #project_show.project_show
   = hidden_field_tag :project_id, @project.id, 'v-model' => 'projectId'
-  = form_tag api_project_path(@project), class: 'project_show__form'
-    .project_show__form__container
-      .project_show__form__container__group
-        == render 'project_show__form__basic'
-    .project_show__form__container
-      .project_show__form__container__group
-        == render 'project_show__form__orderer'
-      .project_show__form__container__group
-        == render 'project_show__form__billing'
-    = button_tag t('helpers.edit')          , 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'project_show__form__edit_btn'
-    = submit_tag t('helpers.cancel')        , 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'project_show__form__cancel_btn'
-    = submit_tag t('helpers.submit.update') , 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'project_show__form__submit_btn'
+
+  == render 'project_show_menu_bar'
+
+  component [
+    :is         = "currentView"
+    :project-id = "projectId"
+    keep-alive  = true
+    transition  = "project_show__content-"
+  ]
+
+  == render 'components/project_detail'
+  == render 'components/bill_new'

@@ -1,0 +1,8 @@
+.project_show__menu_bar
+  ul.project_show__menu_bar__list
+    = link_to nil, 'v-on:click.prevent' => "viewShow('project_detail')"
+      li :class = "currentView === 'projectDetail' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
+        span.project_show__menu_bar__item__title = t('page.project_show.view.project_detail')
+    = link_to nil, 'v-on:click.prevent' => "viewShow('bill_new')"
+      li :class = "currentView === 'billNew' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
+        span.project_show__menu_bar__item__title = t('page.project_show.view.bill_new')

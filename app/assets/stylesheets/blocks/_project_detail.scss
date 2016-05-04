@@ -1,0 +1,36 @@
+.project_detail {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  &__form {
+    @include outer-container;
+    &__container {
+      @include row;
+      &__group {
+        @include span-columns(6);
+      }
+    }
+    &__item {
+      margin-bottom: $small-spacing;
+      &--key {
+        @extend .project_detail__form__item;
+        width: 8em;
+      }
+      #{$all-text-inputs-disabled},
+      select:disabled,
+      textarea:disabled {
+        background-color: $white-bg-color;
+        border-color: $white-bg-color;
+        border-bottom: $base-border;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+    &__edit_btn, &__cancel_btn {
+      @include btn--default;
+    }
+    &__submit_btn {
+      @include btn--primary;
+    }
+  }
+}

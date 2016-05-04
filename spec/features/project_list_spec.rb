@@ -102,6 +102,6 @@ RSpec.feature 'Project List Page', js: true do
   scenario 'link to a project show page when click row' do
     find("#project-#{project1.id}").click
 
-    is_expected.to have_header_title 'プロジェクト詳細'
+    is_expected.to have_header_title 'プロジェクト情報'
   end
 end

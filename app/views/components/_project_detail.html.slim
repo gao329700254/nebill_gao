@@ -1,0 +1,14 @@
+script type='text/x-template' id='project_detail'
+  .project_detail
+    = form_tag api_project_path(@project), class: 'project_detail__form'
+      .project_detail__form__container
+        .project_detail__form__container__group
+          == render 'components/project_detail__form__basic'
+      .project_detail__form__container
+        .project_detail__form__container__group
+          == render 'components/project_detail__form__orderer'
+        .project_detail__form__container__group
+          == render 'components/project_detail__form__billing'
+      = button_tag t('helpers.edit')          , 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'project_detail__form__edit_btn'
+      = submit_tag t('helpers.cancel')        , 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'project_detail__form__cancel_btn'
+      = submit_tag t('helpers.submit.update') , 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'project_detail__form__submit_btn'
