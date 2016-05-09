@@ -1,0 +1,35 @@
+= javascript_include_tag 'view_models/bill_show'
+
+- provide(:title, t('page.bill_show.title'))
+
+#bill_show.bill_show
+  = hidden_field_tag :bill_id, @bill.id, 'v-model' => 'billId'
+
+  = form_tag nil, class: 'bill_show__form'
+    .bill_show__form__container
+      .bill_show__form__container__group
+        fieldset.bill_show__form__basic
+          .bill_show__form__item
+            = label_tag :contracted, t('activerecord.attributes.bill.key')
+            = text_field_tag :key, nil, 'v-model' => 'bill.key', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :contracted, t('activerecord.attributes.bill.delivery_on')
+            = text_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :contracted, t('activerecord.attributes.bill.acceptance_on')
+            = text_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :contracted, t('activerecord.attributes.bill.payment_on')
+            = text_field_tag :payment_on, nil, 'v-model' => 'bill.payment_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :contracted, t('activerecord.attributes.bill.bill_on')
+            = text_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :contracted, t('activerecord.attributes.bill.deposit_on')
+            = text_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :contracted, t('activerecord.attributes.bill.memo')
+            = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
+    = button_tag t('helpers.edit')          , 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'bill_show__form__edit_btn'
+    = submit_tag t('helpers.cancel')        , 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__cancel_btn'
+    = submit_tag t('helpers.submit.update') , 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__submit_btn'

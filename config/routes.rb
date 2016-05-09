@@ -11,10 +11,14 @@
 #       project_list GET    /projects/list(.:format)                  pages#project_list
 #       project_show GET    /projects/:project_id/show(.:format)      pages#project_show
 #          bill_list GET    /bills/list(.:format)                     pages#bill_list
+#          bill_show GET    /bills/:bill_id/show(.:format)            pages#bill_show
 #     project_groups GET    /project_groups(.:format)                 pages#project_groups
 #        admin_users GET    /admin/users(.:format)                    admin/pages#users
 #          api_users POST   /api/users(.:format)                      api/users#create
 #  api_project_bills POST   /api/projects/:project_id/bills(.:format) api/bills#create
+#           api_bill GET    /api/bills/:id(.:format)                  api/bills#show
+#                    PATCH  /api/bills/:id(.:format)                  api/bills#update
+#                    PUT    /api/bills/:id(.:format)                  api/bills#update
 #       api_projects GET    /api/projects(.:format)                   api/projects#index
 #                    POST   /api/projects(.:format)                   api/projects#create
 #        api_project GET    /api/projects/:id(.:format)               api/projects#show
@@ -51,6 +55,9 @@ Rails.application.routes.draw do
   end
   scope path: 'bills' do
     get 'list', to: 'pages#bill_list', as: 'bill_list'
+  end
+  scope path: 'bills/:bill_id' do
+    get 'show', to: 'pages#bill_show', as: 'bill_show'
   end
   get 'project_groups', to: 'pages#project_groups'
 

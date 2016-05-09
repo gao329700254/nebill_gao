@@ -75,4 +75,11 @@ RSpec.feature 'Bill List Page', js: true do
       is_expected.not_to have_content bill3.key
     end
   end
+
+  scenario 'link to a bill show page when click row' do
+    find("#bill-#{bill1.id}").click
+
+    is_expected.to have_header_title '請求情報'
+  end
+
 end

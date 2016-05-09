@@ -9,6 +9,8 @@ $ ->
         'project.billing_company_name': 'like'
       list: undefined
       searchKeywords: undefined
+    methods:
+      linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
     compiled: ->
       $.ajax '/api/bills.json'
         .done (response) =>

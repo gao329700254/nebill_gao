@@ -1,0 +1,37 @@
+.bill_show {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  padding: $base-spacing;
+  background-color: $white-bg-color;
+  color: $white-ft-color;
+
+  &__form {
+    @include outer-container;
+    &__container {
+      @include row;
+      &__group {
+        @include span-columns(6);
+      }
+    }
+    &__item {
+      margin-bottom: $small-spacing;
+
+      #{$all-text-inputs-disabled},
+      select:disabled,
+      textarea:disabled {
+        background-color: $white-bg-color;
+        border-color: $white-bg-color;
+        border-bottom: $base-border;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+    &__edit_btn, &__cancel_btn {
+      @include btn--default;
+    }
+    &__submit_btn {
+      @include btn--primary;
+    }
+  }
+}
