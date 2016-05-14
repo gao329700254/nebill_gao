@@ -2,9 +2,9 @@ class Api::BillsController < Api::ApiController
   before_action :set_project, only: [:create]
 
   def index
-    @bills = Bill.all
+    @bills = Bill.all.includes(:project)
 
-    render json: @bills, status: :ok
+    render json: @bills, include: { project: { only: bill_index_project_cols } }, status: :ok
   end
 
   def create
@@ -32,5 +32,13 @@ private
       :deposit_on,
       :memo,
     )
+  end
+
+  def bill_index_project_cols
+    [
+      :name,
+      :billing_company_name,
+      :amount,
+    ]
   end
 end

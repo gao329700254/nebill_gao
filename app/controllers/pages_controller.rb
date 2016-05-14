@@ -17,6 +17,9 @@ class PagesController < ApplicationController
   def project_groups
   end
 
+  def bill_list
+  end
+
 private
 
   def set_project

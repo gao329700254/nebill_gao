@@ -47,7 +47,7 @@ ja:
         name: 名前
       bill:
         project: プロジェクト
-        key: ID
+        key: 請求番号
         delivery_on:    納品日
         acceptance_on:  検収日
         payment_on:     支払日
@@ -298,6 +298,8 @@ ja:
         bill_new: 請求新規作成
     project_groups:
       title: プロジェクトグループ
+    bill_list:
+      title: 請求一覧
     admin:
       users:
         title: ユーザ管理

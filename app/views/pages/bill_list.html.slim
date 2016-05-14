@@ -1,0 +1,25 @@
+= javascript_include_tag 'view_models/bill_list'
+
+- provide(:title, t('page.bill_list.title'))
+
+#bill_list.bill_list
+  = render partial: 'shared/search_form', locals: { css_class: 'bill_list__search' }
+  table.bill_list__tbl
+    thead.bill_list__tbl__head
+      tr.bill_list__tbl__head__row
+        th.bill_list__tbl__item--key             = t('activerecord.attributes.bill.key')
+        th.bill_list__tbl__item--project_name    = t('activerecord.attributes.bill.project')
+        th.bill_list__tbl__item--billing_company = t('activerecord.attributes.project.billing_company_name')
+        th.bill_list__tbl__item--amount          = t('activerecord.attributes.project.amount')
+        th.bill_list__tbl__item--payment_on      = t('activerecord.attributes.bill.payment_on')
+        th.bill_list__tbl__item--deposit_on      = t('activerecord.attributes.bill.deposit_on')
+    tbody.bill_list__tbl__body
+      tr.bill_list__tbl__body__row [
+        v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
+      ]
+        td.bill_list__tbl__item--key             v-text='bill.key'
+        td.bill_list__tbl__item--project_name    v-text='bill.project.name'
+        td.bill_list__tbl__item--billing_company v-text='bill.project.billing_company_name'
+        td.bill_list__tbl__item--amount          v-text='bill.project.amount'
+        td.bill_list__tbl__item--payment_on      v-text='bill.payment_on'
+        td.bill_list__tbl__item--deposit_on      v-text='bill.deposit_on'

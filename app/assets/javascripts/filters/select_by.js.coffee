@@ -4,11 +4,14 @@ Vue.filter 'selectBy', (list, value, schema) ->
   _.filter list, (item) ->
     _.all value.trim().split(/[\s　]+/), (query) ->
       _.any schema, (cods, col) ->
+        val = item
+        for t in col.split('.')
+          val = val[t]
         switch cods
           when 'eq'
-            return item[col] == query
+            return val == query
           when 'like'
-            if item[col]?
-              return item[col].match(query)
+            if val?
+              return val.match(query)
             else
               return false
