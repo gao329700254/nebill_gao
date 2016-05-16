@@ -3,7 +3,7 @@
 - provide(:title, t('page.project_list.title'))
 
 #project_list.project_list
-  input.project_list__search type="text" name="search" v-model="searchKeywords" placeholder="search" lazy='true'
+  = render partial: 'shared/search_form', locals: { css_class: 'project_list__search' }
   table.project_list__tbl
     thead.project_list__tbl__head
       tr.project_list__tbl__head__row

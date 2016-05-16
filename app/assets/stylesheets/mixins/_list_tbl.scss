@@ -1,0 +1,27 @@
+//// list_tbl
+@mixin list_tbl {
+  @include outer-container;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+//// list_tbl__head
+@mixin list_tbl__head__row {
+  @include row(table);
+  border-bottom: $bold-border;
+}
+
+//// list_tbl__body
+@mixin list_tbl__body {
+  font-size: $small-font-size;
+}
+
+@mixin list_tbl__body__row {
+  @include row(table);
+  border-bottom: $base-border;
+}
+
+//// list_tbl__item
+@mixin list_tbl__item {
+  @include padding($small-spacing $base-spacing $small-spacing);
+}

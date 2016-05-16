@@ -1,4 +1,4 @@
-.project_list {
+.bill_list {
 
   padding: $base-spacing;
 
@@ -18,12 +18,7 @@
     &__body {
       @include list_tbl__body;
       &__row {
-        @include list_tbl__body__row;
-        cursor: pointer;
-
-        &:hover {
-          background-color: $theme-lighen-color;
-        }
+        @include list_tbl__head__row;
       }
     }
 
@@ -31,27 +26,27 @@
       @include list_tbl__item;
 
       &--key {
-        @extend .project_list__tbl__item;
+        @extend .bill_list__tbl__item;
         @include span-columns(2);
       }
       &--project_name {
-        @extend .project_list__tbl__item;
+        @extend .bill_list__tbl__item;
         @include span-columns(2);
       }
-      &--orderer_company {
-        @extend .project_list__tbl__item;
+      &--billing_company {
+        @extend .bill_list__tbl__item;
         @include span-columns(2);
       }
-      &--start_on {
-        @extend .project_list__tbl__item;
+      &--amount {
+        @extend .bill_list__tbl__item;
         @include span-columns(2);
       }
-      &--end_on {
-        @extend .project_list__tbl__item;
+      &--payment_on {
+        @extend .bill_list__tbl__item;
         @include span-columns(2);
       }
-      &--contract_on {
-        @extend .project_list__tbl__item;
+      &--deposit_on {
+        @extend .bill_list__tbl__item;
         @include span-columns(2);
       }
     }

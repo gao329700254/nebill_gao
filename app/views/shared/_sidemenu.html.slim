@@ -12,3 +12,7 @@ nav.sidemenu
       li.sidemenu__item
         = fa_icon 'object-group 2x', class: 'sidemenu__item__icon'
         span.sidemenu__item__page_title = t('page.project_groups.title')
+    = link_to bill_list_path
+      li.sidemenu__item
+        = fa_icon 'files-o 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = t('page.bill_list.title')
