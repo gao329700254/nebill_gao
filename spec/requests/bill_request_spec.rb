@@ -39,6 +39,45 @@ RSpec.describe 'bills request' do
     end
   end
 
+  describe 'GET /api/bills/:id' do
+    context 'with exist bill id' do
+      let!(:bill) { create(:bill) }
+      let(:path) { "/api/bills/#{bill.id}" }
+
+      it 'return the bill' do
+        get path
+
+        expect(response).to be_success
+        expect(response.status).to eq 200
+
+        expect(json['id']).to             eq bill.id
+        expect(json['project_id']).to     eq bill.project_id
+        expect(json['key']).to            eq bill.key
+        expect(json['delivery_on']).to    eq bill.delivery_on.strftime("%Y-%m-%d")
+        expect(json['acceptance_on']).to  eq bill.acceptance_on.strftime("%Y-%m-%d")
+        expect(json['payment_on']).to     eq bill.payment_on.strftime("%Y-%m-%d")
+        expect(json['bill_on']).to        eq bill.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
+        expect(json['deposit_on']).to     eq bill.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
+        expect(json['memo']).to           eq bill.memo
+        expect(json['created_at']).to     eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json['updated_at']).to     eq bill.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+      end
+
+      context 'with not exist bill id' do
+        let(:path) { '/api/bills/0' }
+
+        it 'return 404 Not Found code and message' do
+          get path
+
+          expect(response).not_to be_success
+          expect(response.status).to eq 404
+
+          expect(json['message']).to eq 'リソースが見つかりませんでした'
+        end
+      end
+    end
+  end
+
   describe 'POST /api/projects/:project_id/bill' do
     let(:project) { create(:project) }
     let(:path) { "/api/projects/#{project.id}/bills" }
@@ -97,4 +136,98 @@ RSpec.describe 'bills request' do
       end
     end
   end
+
+  describe 'PATCH /api/bills/:id' do
+    context 'with exist bill id' do
+      let(:project) { create(:project) }
+      let(:bill) { create(:bill, project: project) }
+      let(:path) { "/api/bills/#{bill.id}" }
+
+      context 'with correct parameter' do
+        let(:params) do
+          {
+            bill: {
+              key: 'BILL-1',
+              delivery_on:   '2016-01-01',
+              acceptance_on: '2016-01-02',
+              payment_on:    '2016-01-03',
+              bill_on:       '2016-01-04',
+              deposit_on:    '2016-01-05',
+              memo:          'memo',
+            },
+          }
+        end
+
+        it 'update the bill' do
+          expect do
+            patch path, params
+          end.to change { bill.reload && bill.updated_at }
+
+          expect(bill.project).to             eq project
+          expect(bill.key).to                 eq 'BILL-1'
+          expect(bill.delivery_on.to_s).to    eq '2016-01-01'
+          expect(bill.acceptance_on.to_s).to  eq '2016-01-02'
+          expect(bill.payment_on.to_s).to     eq '2016-01-03'
+          expect(bill.bill_on.to_s).to        eq '2016-01-04'
+          expect(bill.deposit_on.to_s).to     eq '2016-01-05'
+          expect(bill.memo).to                eq 'memo'
+        end
+
+        it 'return success code and message' do
+          patch path, params
+
+          expect(response).to be_success
+          expect(response.status).to eq 201
+
+          expect(json['id']).not_to eq nil
+          expect(json['message']).to eq '請求を更新しました'
+        end
+      end
+
+      context 'with uncorrect parameter' do
+        let(:params) do
+          {
+            bill: {
+              key: '  ',
+              delivery_on:   '2016-01-01',
+              acceptance_on: '2016-01-02',
+              payment_on:    '2016-01-03',
+              bill_on:       '2016-01-04',
+              deposit_on:    '2016-01-05',
+              memo:          'memo',
+            },
+          }
+        end
+
+        it 'do not update the bill' do
+          expect do
+            patch path, params
+          end.not_to change { bill.reload && bill.updated_at }
+        end
+
+        it 'return 422 Unprocessable Entity code and message' do
+          patch path, params
+
+          expect(response).not_to be_success
+          expect(response.status).to eq 422
+
+          expect(json['message']).to eq '請求が更新できませんでした'
+        end
+      end
+    end
+
+    context 'with not exist project id' do
+      let(:path) { '/api/bills/0' }
+
+      it 'return 404 Not Found code and message' do
+        patch path
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+  end
+
 end

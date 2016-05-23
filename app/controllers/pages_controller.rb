@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   skip_before_action :require_login, only: [:home]
   before_action :set_project, only: [:project_show]
+  before_action :set_bill   , only: [:bill_show]
 
   def home
   end
@@ -14,6 +15,9 @@ class PagesController < ApplicationController
   def project_show
   end
 
+  def bill_show
+  end
+
   def project_groups
   end
 
@@ -24,5 +28,9 @@ private
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def set_bill
+    @bill = Bill.find(params[:bill_id])
   end
 end

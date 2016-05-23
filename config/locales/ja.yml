@@ -296,6 +296,8 @@ ja:
       view:
         project_detail: プロジェクト詳細
         bill_new: 請求新規作成
+    bill_show:
+      title: 請求情報
     project_groups:
       title: プロジェクトグループ
     bill_list:

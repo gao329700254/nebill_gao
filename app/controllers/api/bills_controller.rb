@@ -1,5 +1,6 @@
 class Api::BillsController < Api::ApiController
   before_action :set_project, only: [:create]
+  before_action :set_bill   , only: [:show, :update]
 
   def index
     @bills = Bill.all.includes(:project)
@@ -16,10 +17,27 @@ class Api::BillsController < Api::ApiController
     render_action_model_fail_message(@bill, :create)
   end
 
+  def show
+    render json: @bill, status: :ok
+  end
+
+  def update
+    @bill.attributes = bill_param
+    @bill.save!
+
+    render_action_model_success_message(@bill, :update)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@bill, :update)
+  end
+
 private
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def set_bill
+    @bill = Bill.find(params[:id])
   end
 
   def bill_param

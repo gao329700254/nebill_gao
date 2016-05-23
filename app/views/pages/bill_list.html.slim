@@ -16,6 +16,9 @@
     tbody.bill_list__tbl__body
       tr.bill_list__tbl__body__row [
         v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
+        id         = "bill-{{bill.id}}"
+        v-on:click = "linkToShow(bill.id)"
+        track-by   = "id"
       ]
         td.bill_list__tbl__item--key             v-text='bill.key'
         td.bill_list__tbl__item--project_name    v-text='bill.project.name'

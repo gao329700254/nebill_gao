@@ -1,6 +1,6 @@
 script type='text/x-template' id='project_detail'
   .project_detail
-    = form_tag api_project_path(@project), class: 'project_detail__form'
+    = form_tag nil, class: 'project_detail__form'
       .project_detail__form__container
         .project_detail__form__container__group
           == render 'components/project_detail__form__basic'
