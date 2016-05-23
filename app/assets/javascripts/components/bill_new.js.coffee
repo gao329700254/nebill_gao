@@ -19,13 +19,13 @@ $ ->
           $.ajax
             url: "/api/projects/#{@projectId}/bills.json"
             type: 'POST'
-            data: {bill: @bill}
+            data: { bill: @bill }
           .done (response) =>
             toastr.success('', response.message)
             @initializeBill()
           .fail (response) =>
             json = response.responseJSON
-            toastr.error(json.errors.full_messages.join('<br>'), json.message, {timeOut: 0})
+            toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
         finally
           submit.prop('disabled', false)
       initializeBill: ->
