@@ -6,6 +6,8 @@ namespace :db do
         populate_project_groups
         populate_projects
         populate_bills
+        populate_partners
+        populate_members
       end
     end
 
@@ -37,6 +39,23 @@ namespace :db do
       Project.all.each do |project|
         rand(3).times do |_|
           FactoryGirl.create(:bill, project: project)
+        end
+      end
+    end
+
+    def populate_partners(num = 10)
+      puts 'populate partners'
+      Partner.destroy_all
+      FactoryGirl.create_list(:partner, num)
+    end
+
+    def populate_members(num = 5)
+      puts 'populate members'
+      Member.destroy_all
+
+      Project.all.each do |project|
+        Employee.all.sample(num).each do |employee|
+          FactoryGirl.create(:member, employee: employee, project: project)
         end
       end
     end
