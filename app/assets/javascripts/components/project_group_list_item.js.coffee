@@ -9,7 +9,7 @@ $ ->
         groupId = if String(@projectGroupId) == '0' then null else @projectGroupId
         $.ajax
           url: '/api/projects.json'
-          data: {group_id: groupId}
+          data: { group_id: groupId }
         .done (response) =>
           @projectList = response
       setSortable: ->
@@ -27,7 +27,7 @@ $ ->
           url: "/api/projects/#{projectId}.json"
           type: 'PATCH'
           data:
-            project: {group_id: groupId}
+            project: { group_id: groupId }
         .done (response) =>
           toastr.success('', response.message)
     ready: ->

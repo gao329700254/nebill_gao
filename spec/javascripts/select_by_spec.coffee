@@ -9,28 +9,28 @@ describe 'select_by', ->
       describe 'when eq query', ->
         it 'should filter list by eq', ->
           value = 'KEY-1'
-          schema = {key: 'eq'}
+          schema = { key: 'eq' }
           list = [
-            {'key': 'KEY-1'},
-            {'key': 'KEY-2'},
-            {'key': 'KEY-3'},
+            { key: 'KEY-1' },
+            { key: 'KEY-2' },
+            { key: 'KEY-3' },
           ]
           expected_result = [
-            {'key': 'KEY-1'},
+            { key: 'KEY-1' },
           ]
           expect(select_by(list, value, schema)).toEqual expected_result
       describe 'when like query', ->
         it 'should filter list by like', ->
           value = 'la'
-          schema = {'name': 'like'}
+          schema = { name: 'like' }
           list = [
-            {'name': 'Salair'},
-            {'name': 'Solarbreeze'},
-            {'name': 'Cardify'},
+            { name: 'Salair' },
+            { name: 'Solarbreeze' },
+            { name: 'Cardify' },
           ]
           expected_result = [
-            {'name': 'Salair'},
-            {'name': 'Solarbreeze'},
+            { name: 'Salair' },
+            { name: 'Solarbreeze' },
           ]
           expect(select_by(list, value, schema)).toEqual expected_result
 
@@ -38,27 +38,27 @@ describe 'select_by', ->
       describe 'when eq query', ->
         it 'should filter list by eq', ->
           value = 'KEY-2'
-          schema = {'project.key': 'eq'}
+          schema = { 'project.key': 'eq' }
           list = [
-            {project: {'key': 'KEY-1'}},
-            {project: {'key': 'KEY-2'}},
-            {project: {'key': 'KEY-3'}},
+            { project: { key: 'KEY-1' } },
+            { project: { key: 'KEY-2' } },
+            { project: { key: 'KEY-3' } },
           ]
           expected_result = [
-            {project: {'key': 'KEY-2'}},
+            { project: { key: 'KEY-2' } },
           ]
           expect(select_by(list, value, schema)).toEqual expected_result
       describe 'when like query', ->
         it 'should filter list by like', ->
           value = '合名会社'
-          schema = {'bill.project.name': 'like'}
+          schema = { 'bill.project.name': 'like' }
           list = [
-            {bill: {project: {'name': '合名会社斉藤建設'}}},
-            {bill: {project: {'name': '合名会社宮本ガス'}}},
-            {bill: {project: {'name': '酒井電気株式会社'}}},
+            { bill: { project: { name: '合名会社斉藤建設' } } },
+            { bill: { project: { name: '合名会社宮本ガス' } } },
+            { bill: { project: { name: '酒井電気株式会社' } } },
           ]
           expected_result = [
-            {bill: {project: {'name': '合名会社斉藤建設'}}},
-            {bill: {project: {'name': '合名会社宮本ガス'}}},
+            { bill: { project: { name: '合名会社斉藤建設' } } },
+            { bill: { project: { name: '合名会社宮本ガス' } } },
           ]
           expect(select_by(list, value, schema)).toEqual expected_result

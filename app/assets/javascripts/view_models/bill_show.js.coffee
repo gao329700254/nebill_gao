@@ -5,16 +5,16 @@ $ ->
     data:
       billId: undefined
       billSchema:
-        id:             {init: ''}
-        project_id:     {init: ''}
-        key:            {init: ''}
-        delivery_on:    {init: ''}
-        acceptance_on:  {init: ''}
-        payment_on:     {init: ''}
-        bill_on:        {init: ''}
-        deposit_on:     {init: ''}
-        created_at:     {init: ''}
-        updated_at:     {init: ''}
+        id:             { init: '' }
+        project_id:     { init: '' }
+        key:            { init: '' }
+        delivery_on:    { init: '' }
+        acceptance_on:  { init: '' }
+        payment_on:     { init: '' }
+        bill_on:        { init: '' }
+        deposit_on:     { init: '' }
+        created_at:     { init: '' }
+        updated_at:     { init: '' }
       editMode: false
       bill: undefined
       billOriginal: undefined
@@ -56,7 +56,7 @@ $ ->
             @editMode = false
           .fail (response) =>
             json = response.responseJSON
-            toastr.error(json.errors.full_messages.join('<br>'), json.message, {timeOut: 0})
+            toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
         finally
           submit.prop('disabled', false)
     created: -> @initializeBill()
