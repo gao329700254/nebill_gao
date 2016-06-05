@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425091609) do
+ActiveRecord::Schema.define(version: 20160524044507) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,31 @@ ActiveRecord::Schema.define(version: 20160425091609) do
   end
 
   add_index "bills", ["key"], name: "index_bills_on_key", unique: true, using: :btree
+
+  create_table "employees", force: :cascade do |t|
+    t.integer  "actable_id",   null: false
+    t.string   "actable_type", null: false
+    t.string   "name"
+    t.string   "email",        null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
+
+  create_table "members", force: :cascade do |t|
+    t.integer "employee_id", null: false
+    t.integer "project_id",  null: false
+  end
+
+  add_index "members", ["employee_id", "project_id"], name: "index_members_on_employee_id_and_project_id", unique: true, using: :btree
+  add_index "members", ["project_id"], name: "index_members_on_project_id", using: :btree
+
+  create_table "partners", force: :cascade do |t|
+    t.string   "company_name", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "project_groups", force: :cascade do |t|
     t.string   "name",       null: false
@@ -70,8 +95,6 @@ ActiveRecord::Schema.define(version: 20160425091609) do
   create_table "users", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
-    t.string   "name"
-    t.string   "email",                              null: false
     t.string   "persistence_token",                  null: false
     t.integer  "login_count",        default: 0,     null: false
     t.integer  "failed_login_count", default: 0,     null: false
@@ -82,7 +105,6 @@ ActiveRecord::Schema.define(version: 20160425091609) do
     t.datetime "updated_at",                         null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, using: :btree
 
 end

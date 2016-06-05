@@ -10,15 +10,22 @@ ja:
         internal_server_error: "サーバー内部エラーです"
         not_found: "リソースが見つかりませんでした"
     models:
+      employee: 従業員
       user: ユーザ
+      partner: パートナー
       project: プロジェクト
       project_group: プロジェクトグループ
       bill: 請求
     attributes:
-      user:
+      employee: &employee
         name: 名前
         email: メールアドレス
+      user:
+        <<: *employee
         is_admin: 管理者
+      partner:
+        <<: *employee
+        company_name: 会社名
       project:
         group: グループ
         key: ID

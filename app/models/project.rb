@@ -40,6 +40,10 @@ class Project < ActiveRecord::Base
   include ProjectValidates
 
   belongs_to :group, class_name: 'ProjectGroup'
+  has_many :members
+  has_many :employees, through: :members
+  has_many :users    , through: :members
+  has_many :partners , through: :members
   has_many :bills
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
