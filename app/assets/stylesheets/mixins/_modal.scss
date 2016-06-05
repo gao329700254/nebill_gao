@@ -1,0 +1,41 @@
+//// modal__outer
+@mixin modal__outer {
+  @include transition(opacity 0.25s ease);
+  @include position(fixed, 0);
+  padding-top: 10em;
+  background-color: rgba(#000, 0.85);
+  text-align: left;
+  z-index: 100;
+}
+
+//// modal__outer__inner
+@mixin modal__outer__inner {
+  border-radius: $base-border-radius;
+  margin-top: 0;
+  margin: auto;
+  max-height: 95%;
+  overflow: auto;
+  position: relative;
+  width: 50%;
+}
+@mixin modal__outer__inner--large {
+  @include modal__outer__inner;
+  width: 80%;
+}
+@mixin modal__outer__inner--extra-large {
+  @include modal__outer__inner;
+  width: 95%;
+}
+
+//// modal__outer__inner__title
+@mixin modal__outer__inner__title($background_color: $white) {
+  background-color: $background_color;
+  padding: $base-spacing;
+}
+
+//// modal__outer__inner__body
+@mixin modal__outer__inner__body($background_color: $white) {
+  background-color: $background_color;
+  padding: $base-spacing;
+}
+

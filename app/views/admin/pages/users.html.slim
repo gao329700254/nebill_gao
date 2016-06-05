@@ -7,7 +7,7 @@
     = form_tag nil, class: 'admin_users__new__form'
       .admin_users__new__form__item
         = label_tag :email, t('activerecord.attributes.user.email')
-        = text_field_tag :email, nil, 'v-model' => 'user.email'
+        = email_field_tag :email, nil, 'v-model' => 'user.email'
       .admin_users__new__form__item
         = label_tag :is_admin, t('activerecord.attributes.user.is_admin')
         = check_box_tag :is_admin, true, false, 'v-model' => 'user.is_admin'

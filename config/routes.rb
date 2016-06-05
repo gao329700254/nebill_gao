@@ -15,6 +15,7 @@
 #     project_groups GET    /project_groups(.:format)                 pages#project_groups
 #        admin_users GET    /admin/users(.:format)                    admin/pages#users
 #          api_users POST   /api/users(.:format)                      api/users#create
+#       api_partners POST   /api/partners(.:format)                   api/partners#create
 #  api_project_bills POST   /api/projects/:project_id/bills(.:format) api/bills#create
 #           api_bill GET    /api/bills/:id(.:format)                  api/bills#show
 #                    PATCH  /api/bills/:id(.:format)                  api/bills#update

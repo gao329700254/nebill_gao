@@ -1,0 +1,11 @@
+script type='text/x-template' id='partner_new'
+  .partner_new
+    .partner_new__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .partner_new__outer__inner v-on:click.stop=""
+        .partner_new__outer__inner__title
+          h1 = t('component.member_list.new_partner')
+        .partner_new__outer__inner__body
+          == render 'components/partner_new__form'

@@ -1,0 +1,31 @@
+.partner_new {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  &__outer {
+    @include modal__outer;
+
+    &__inner {
+      @include modal__outer__inner;
+
+      &__title {
+        @include modal__outer__inner__title;
+      }
+      &__body {
+        @include modal__outer__inner__body;
+      }
+    }
+  }
+
+  &__form {
+    &__item {
+      margin-bottom: $small-spacing;
+    }
+    &__cancel_btn {
+      @include btn--default;
+    }
+    &__submit_btn {
+      @include btn--primary;
+    }
+  }
+}

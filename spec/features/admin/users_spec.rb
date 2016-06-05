@@ -44,7 +44,7 @@ RSpec.feature 'Admin Users Page', js: true do
     end
 
     scenario 'click create button with uncorrent value' do
-      fill_in :email, with: '  '
+      fill_in :email, with: 'foo@'
       check :is_admin
 
       expect do
@@ -52,7 +52,7 @@ RSpec.feature 'Admin Users Page', js: true do
         wait_for_ajax
       end.not_to change(User, :count)
 
-      is_expected.to have_field 'email', with: '  '
+      is_expected.to have_field 'email', with: 'foo@'
       is_expected.to have_checked_field 'is_admin'
     end
   end
