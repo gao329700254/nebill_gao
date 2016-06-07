@@ -1,0 +1,31 @@
+== render 'components/partner_new'
+
+script type='text/x-template' id='partner_member_list'
+  .partner_member_list
+    table.partner_member_list__tbl
+      thead.partner_member_list__tbl__head
+        tr.partner_member_list__tbl__head__row
+          th.partner_member_list__tbl__item--name         = t('activerecord.attributes.partner.name')
+          th.partner_member_list__tbl__item--email        = t('activerecord.attributes.partner.email')
+          th.partner_member_list__tbl__item--company_name = t('activerecord.attributes.partner.company_name')
+      tbody.partner_member_list__tbl__body
+        tr.partner_member_list__tbl__body__row [
+          v-for    = "partner in partners | orderBy 'company_name' 'name'"
+          id       = "partner-{{partner.id}}"
+          track-by = "id"
+        ]
+          td.partner_member_list__tbl__item--name         v-text='partner.name'
+          td.partner_member_list__tbl__item--email        v-text='partner.email'
+          td.partner_member_list__tbl__item--company_name v-text='partner.company_name'
+
+    .partner_member_list__new_member
+      select.partner_member_list__new_member__list name="partner" v-model="selectedPartnerId"
+        option v-for="partner in selectablePartners" value="{{partner.id}}" {{partner.name}}
+      = button_tag t('helpers.submit.create'), 'v-on:click' => 'addMember', class: 'partner_member_list__new_member__btn'
+
+    = button_tag t('component.member_list.new_partner'), 'v-on:click' => 'showPartnerNew', class: 'partner_member_list__show_partner_new_btn'
+
+    component [
+      :is         = "'partnerNew'"
+      keep-alive  = true
+    ]

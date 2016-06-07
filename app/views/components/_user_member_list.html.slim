@@ -1,0 +1,20 @@
+script type='text/x-template' id='user_member_list'
+  .user_member_list
+    table.user_member_list__tbl
+      thead.user_member_list__tbl__head
+        tr.user_member_list__tbl__head__row
+          th.user_member_list__tbl__item--name  = t('activerecord.attributes.user.name')
+          th.user_member_list__tbl__item--email = t('activerecord.attributes.user.email')
+      tbody.user_member_list__tbl__body
+        tr.user_member_list__tbl__body__row [
+          v-for    = "user in users | orderBy 'name'"
+          id       = "user-{{user.id}}"
+          track-by = "id"
+        ]
+          td.user_member_list__tbl__item--name  v-text='user.name'
+          td.user_member_list__tbl__item--email v-text='user.email'
+
+    .user_member_list__new_member
+      select.user_member_list__new_member__list name="user" v-model="selectedUserId"
+        option v-for="user in selectableUsers" value="{{user.id}}" {{user.name}}
+      = button_tag t('helpers.submit.create'), 'v-on:click' => 'addMember', class: 'user_member_list__new_member__btn'

@@ -80,6 +80,16 @@ RSpec.describe Project do
       its(:zip_code)        { is_expected.to eq project.orderer_zip_code }
       its(:memo)            { is_expected.to eq project.orderer_memo }
     end
+
+    describe '#join!' do
+      let(:user) { create(:user) }
+      before do
+        project.save!
+        project.join!(user.employee)
+      end
+
+      its(:users) { is_expected.to include user }
+    end
   end
 
   describe 'Uncontracted Project' do

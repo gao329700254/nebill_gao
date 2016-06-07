@@ -1,4 +1,16 @@
 class Api::PartnersController < Api::ApiController
+  before_action :set_project, only: [:index], if: -> { params.key? :project_id }
+
+  def index
+    @partners = if @project
+                  @project.partners
+                else
+                  Partner.all
+                end
+
+    render json: @partners, status: :ok
+  end
+
   def create
     @partner = Partner.new(partner_param)
     @partner.save!
@@ -9,6 +21,10 @@ class Api::PartnersController < Api::ApiController
   end
 
 private
+
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
 
   def partner_param
     params.require(:partner).permit(
