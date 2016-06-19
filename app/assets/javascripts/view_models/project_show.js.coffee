@@ -13,3 +13,5 @@ $ ->
     projectShow.currentView = 'projectDetail'
   page 'bill_new', (ctx) ->
     projectShow.currentView = 'billNew'
+  page 'member_list', (ctx) ->
+    projectShow.currentView = 'memberList'

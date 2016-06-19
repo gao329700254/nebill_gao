@@ -14,4 +14,6 @@ RSpec.describe Employee do
   it { is_expected.to validate_uniqueness_of(:provider).scoped_to(:uid).allow_nil }
   it { is_expected.to validate_presence_of(:email) }
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+  it { is_expected.to     allow_value('foo@example.com', 'foo.bar@example.com').for(:email) }
+  it { is_expected.not_to allow_value('foo@example').for(:email) }
 end

@@ -1,0 +1,12 @@
+= form_tag nil, class: 'partner_new__form'
+  .partner_new__form__item
+    = label_tag :email, t('activerecord.attributes.partner.email')
+    = email_field_tag :email, nil, 'v-model' => 'partner.email'
+  .partner_new__form__item
+    = label_tag :name, t('activerecord.attributes.partner.name')
+    = text_field_tag :name, nil, 'v-model' => 'partner.name'
+  .partner_new__form__item
+    = label_tag :company_name, t('activerecord.attributes.partner.company_name')
+    = text_field_tag :company_name, nil, 'v-model' => 'partner.company_name'
+  = button_tag t('helpers.cancel')        , 'v-on:click.prevent' => 'cancel', class: 'partner_new__form__cancel_btn'
+  = submit_tag t('helpers.submit.create') , 'v-on:click.prevent' => 'submit', class: 'partner_new__form__submit_btn'

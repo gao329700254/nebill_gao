@@ -288,5 +288,81 @@ RSpec.feature 'Project Show Page', js: true do
         end
       end
     end
+
+    describe 'Member List View' do
+      background { click_on 'メンバー' }
+
+      describe 'User List' do
+        subject { find('.member_list__user') }
+      end
+
+      describe 'Partner List' do
+        subject { find('.member_list__partner') }
+
+        scenario 'should show modal button' do
+          is_expected.to have_button 'パートナーを新規登録する'
+        end
+
+        scenario 'show Partner New Modal when click show modal button' do
+          is_expected.not_to have_css '.partner_new__outer'
+          click_on 'パートナーを新規登録する'
+          is_expected.to     have_css '.partner_new__outer'
+        end
+
+        describe 'Partner New Modal' do
+          before { click_on 'パートナーを新規登録する' }
+          subject { find('.partner_new') }
+
+          scenario 'show' do
+            is_expected.to have_content 'パートナーを新規登録する'
+          end
+
+          describe 'form' do
+            scenario 'show' do
+              is_expected.to have_field 'email'
+              is_expected.to have_field 'name'
+              is_expected.to have_field 'company_name'
+              is_expected.to have_button 'キャンセル'
+              is_expected.to have_button '登録'
+            end
+
+            scenario 'click submit button with correct values' do
+              fill_in :email       , with: 'foobar@example.com'
+              fill_in :name        , with: 'foo bar'
+              fill_in :company_name, with: 'abc'
+
+              expect do
+                click_button '登録'
+                wait_for_ajax
+              end.to change(Partner, :count).by(1)
+
+              is_expected.not_to have_css '.partner_new__outer'
+            end
+
+            scenario 'click submit button with uncorrect values' do
+              fill_in :email       , with: 'foobar@'
+              fill_in :name        , with: 'foo bar'
+              fill_in :company_name, with: 'abc'
+
+              expect do
+                click_button '登録'
+                wait_for_ajax
+              end.not_to change(Partner, :count)
+
+              is_expected.to have_css '.partner_new__outer'
+              is_expected.to have_field 'email'       , with: 'foobar@'
+              is_expected.to have_field 'name'        , with: 'foo bar'
+              is_expected.to have_field 'company_name', with: 'abc'
+            end
+
+            scenario 'click cancel' do
+              is_expected.to     have_css '.partner_new__outer'
+              click_button 'キャンセル'
+              is_expected.not_to have_css '.partner_new__outer'
+            end
+          end
+        end
+      end
+    end
   end
 end

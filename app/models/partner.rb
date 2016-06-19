@@ -12,5 +12,6 @@
 class Partner < ActiveRecord::Base
   acts_as :employee
 
+  validates :name        , presence: true
   validates :company_name, presence: true
 end

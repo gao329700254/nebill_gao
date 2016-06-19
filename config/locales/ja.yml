@@ -300,9 +300,10 @@ ja:
       title: プロジェクト一覧
     project_show:
       title: プロジェクト情報
-      view:
+      component:
         project_detail: プロジェクト詳細
         bill_new: 請求新規作成
+        member_list: メンバー
     bill_show:
       title: 請求情報
     project_groups:
@@ -312,3 +313,6 @@ ja:
     admin:
       users:
         title: ユーザ管理
+  component:
+    member_list:
+      new_partner: パートナーを新規登録する

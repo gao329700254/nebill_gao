@@ -1,0 +1,19 @@
+.member_list {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  @include outer-container;
+  @include row;
+
+  &__user {
+    @include span-columns(6);
+  }
+
+  &__partner {
+    @include span-columns(6);
+
+    &__show_partner_new_btn {
+      @include btn--primary;
+    }
+  }
+}

@@ -2,7 +2,10 @@
   ul.project_show__menu_bar__list
     = link_to nil, 'v-on:click.prevent' => "viewShow('project_detail')"
       li :class = "currentView === 'projectDetail' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
-        span.project_show__menu_bar__item__title = t('page.project_show.view.project_detail')
+        span.project_show__menu_bar__item__title = t('page.project_show.component.project_detail')
     = link_to nil, 'v-on:click.prevent' => "viewShow('bill_new')"
       li :class = "currentView === 'billNew' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
-        span.project_show__menu_bar__item__title = t('page.project_show.view.bill_new')
+        span.project_show__menu_bar__item__title = t('page.project_show.component.bill_new')
+    = link_to nil, 'v-on:click.prevent' => "viewShow('member_list')"
+      li :class = "currentView === 'memberList' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
+        span.project_show__menu_bar__item__title = t('page.project_show.component.member_list')
