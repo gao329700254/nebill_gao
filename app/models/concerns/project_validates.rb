@@ -13,6 +13,7 @@ module ProjectValidates
       contracted.validates :start_on            , presence: true
       contracted.validates :end_on              , presence: true
       contracted.validates :amount              , presence: true
+      contracted.validates :payment_type        , presence: true
       contracted.validates :billing_company_name   , presence: true
       contracted.validates :billing_department_name, presence: true
       contracted.validates :billing_personnel_names, presence: true

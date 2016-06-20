@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160223062029
+# Schema version: 20160620035628
 #
 # Table name: projects
 #
@@ -29,6 +29,7 @@
 #  contractual_coverage    :string
 #  is_using_ses            :boolean
 #  group_id                :integer
+#  payment_type            :string
 #
 # Indexes
 #
@@ -48,6 +49,13 @@ class Project < ActiveRecord::Base
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
   enumerize :contractual_coverage, in: [:development, :maintenance]
+  # TODO(ishida): 支払日自動計算機能実装時に網羅
+  enumerize :payment_type, in: %w(
+    end_of_the_delivery_date_next_month
+    end_of_the_acceptance_on_date_next_month
+    15th_of_the_delivery_date_month_after_next
+    15th_of_the_acceptance_date_month_after_next
+  )
 
   serialize :billing_personnel_names, Array
   serialize :orderer_personnel_names, Array

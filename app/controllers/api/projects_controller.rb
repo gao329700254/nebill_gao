@@ -52,6 +52,7 @@ private
       :start_on,
       :end_on,
       :amount,
+      :payment_type,
       :billing_company_name,
       :billing_department_name,
       :billing_address,

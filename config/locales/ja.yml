@@ -38,6 +38,7 @@ ja:
         start_on: 開始日
         end_on:   終了日
         amount:   金額
+        payment_type: 支払条件
         billing_company_name:    請求先会社名
         billing_department_name: 請求先部署名
         billing_personnel_names: 請求先担当者名

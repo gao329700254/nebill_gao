@@ -35,3 +35,6 @@
   .project_new__form__item v-if='project.contracted'
     = label_tag :amount, t('activerecord.attributes.project.amount')
     = number_field_tag :amount, nil, min: 0, step: 10, 'v-model' => 'project.amount'
+  .project_new__form__item v-if='project.contracted'
+    = label_tag :payment_type, t('activerecord.attributes.project.payment_type')
+    = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'project.payment_type'
