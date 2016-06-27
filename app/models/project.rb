@@ -60,4 +60,8 @@ class Project < ActiveRecord::Base
               mapping: %w(company_name department_name personnel_names address zip_code memo).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
 
   before_save { key.upcase! }
+
+  def join!(employee)
+    members.create(employee_id: employee.id)
+  end
 end

@@ -1,17 +1,17 @@
-== render 'components/partner_new'
+== render 'components/user_member_list'
+== render 'components/partner_member_list'
 
 script type='text/x-template' id='member_list'
   .member_list
     .member_list__user
-      / TODO(hishida): #110307816
-      p TODO
-    .member_list__partner
-      / TODO(hishida): #110307816
-      p TODO
-
-      = button_tag t('component.member_list.new_partner'), 'v-on:click' => 'showPartnerNew', class: 'member_list__partner__show_partner_new_btn'
-
       component [
-        :is         = "'partnerNew'"
+        :is         = "'userMemberList'"
+        :project-id = "projectId"
+        keep-alive  = true
+      ]
+    .member_list__partner
+      component [
+        :is         = "'partnerMemberList'"
+        :project-id = "projectId"
         keep-alive  = true
       ]

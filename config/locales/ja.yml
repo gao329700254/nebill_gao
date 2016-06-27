@@ -14,6 +14,7 @@ ja:
       user: ユーザ
       partner: パートナー
       project: プロジェクト
+      member: メンバー
       project_group: プロジェクトグループ
       bill: 請求
     attributes:

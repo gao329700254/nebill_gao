@@ -8,6 +8,14 @@ RSpec.feature 'Project Show Page', js: true do
     given!(:project_group1) { create(:project_group, name: 'Group1') }
     given!(:project_group2) { create(:project_group, name: 'Group2') }
     given!(:project) { create(:uncontracted_project, group: project_group1) }
+    given!(:user1) { create(:user, :with_project, project: project) }
+    given!(:user2) { create(:user, :with_project, project: project) }
+    given!(:other_user1) { create(:user) }
+    given!(:other_user2) { create(:user) }
+    given!(:partner1) { create(:partner, :with_project, project: project) }
+    given!(:partner2) { create(:partner, :with_project, project: project) }
+    given!(:other_partner1) { create(:partner) }
+    given!(:other_partner2) { create(:partner) }
     background { visit project_show_path(project) }
 
     subject { page }
@@ -294,13 +302,69 @@ RSpec.feature 'Project Show Page', js: true do
 
       describe 'User List' do
         subject { find('.member_list__user') }
+
+        scenario 'Show' do
+          is_expected.to have_content '名前'
+          is_expected.to have_content 'メールアドレス'
+
+          is_expected.to have_content user1.name
+          is_expected.to have_content user1.email
+          is_expected.to have_content user2.name
+          is_expected.to have_content user2.email
+
+          is_expected.not_to have_content other_user1.name
+          is_expected.not_to have_content other_user1.email
+          is_expected.not_to have_content other_user2.name
+          is_expected.not_to have_content other_user2.email
+
+          is_expected.to have_field 'user', with: ''
+          is_expected.to have_button '登録'
+        end
+
+        scenario 'select user and click submit button' do
+          select other_user1.name, from: :user
+
+          expect do
+            within('.member_list__user') { click_button '登録' }
+            wait_for_ajax
+          end.to change(Member, :count).by(1)
+        end
       end
 
       describe 'Partner List' do
         subject { find('.member_list__partner') }
 
-        scenario 'should show modal button' do
+        scenario 'Show' do
+          is_expected.to have_content '名前'
+          is_expected.to have_content 'メールアドレス'
+          is_expected.to have_content '会社名'
+
+          is_expected.to have_content partner1.name
+          is_expected.to have_content partner1.email
+          is_expected.to have_content partner1.company_name
+          is_expected.to have_content partner2.name
+          is_expected.to have_content partner2.email
+          is_expected.to have_content partner2.company_name
+
+          is_expected.not_to have_content other_partner1.name
+          is_expected.not_to have_content other_partner1.email
+          is_expected.not_to have_content other_partner1.company_name
+          is_expected.not_to have_content other_partner2.name
+          is_expected.not_to have_content other_partner2.email
+          is_expected.not_to have_content other_partner2.company_name
+
+          is_expected.to have_field 'partner', with: ''
+          is_expected.to have_button '登録'
           is_expected.to have_button 'パートナーを新規登録する'
+        end
+
+        scenario 'select partner and click submit button' do
+          select other_partner1.name, from: :partner
+
+          expect do
+            within('.member_list__partner') { click_button '登録' }
+            wait_for_ajax
+          end.to change(Member, :count).by(1)
         end
 
         scenario 'show Partner New Modal when click show modal button' do
@@ -332,7 +396,7 @@ RSpec.feature 'Project Show Page', js: true do
               fill_in :company_name, with: 'abc'
 
               expect do
-                click_button '登録'
+                within('.partner_new') { click_button '登録' }
                 wait_for_ajax
               end.to change(Partner, :count).by(1)
 
@@ -345,7 +409,7 @@ RSpec.feature 'Project Show Page', js: true do
               fill_in :company_name, with: 'abc'
 
               expect do
-                click_button '登録'
+                within('.partner_new') { click_button '登録' }
                 wait_for_ajax
               end.not_to change(Partner, :count)
 

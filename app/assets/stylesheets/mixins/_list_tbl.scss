@@ -1,6 +1,7 @@
 //// list_tbl
 @mixin list_tbl {
   @include outer-container;
+  @include margin($small-spacing null);
   border-collapse: collapse;
   text-align: left;
 }

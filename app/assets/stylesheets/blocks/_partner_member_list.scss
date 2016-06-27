@@ -1,0 +1,54 @@
+.partner_member_list {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__item {
+      @include list_tbl__item;
+
+      &--name {
+        @extend .partner_member_list__tbl__item;
+        @include span-columns(4);
+      }
+      &--email {
+        @extend .partner_member_list__tbl__item;
+        @include span-columns(4);
+      }
+      &--company_name {
+        @extend .partner_member_list__tbl__item;
+        @include span-columns(4);
+      }
+    }
+  }
+
+  &__new_member {
+    @include display(flex);
+
+    &__list {
+      flex: 1;
+    }
+
+    &__btn {
+      @include btn--primary;
+    }
+  }
+
+  &__show_partner_new_btn {
+    @include btn--primary;
+  }
+}
