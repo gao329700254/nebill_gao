@@ -14,6 +14,7 @@ RSpec.describe Project do
   it { is_expected.to respond_to(:start_on) }
   it { is_expected.to respond_to(:end_on) }
   it { is_expected.to respond_to(:amount) }
+  it { is_expected.to respond_to(:payment_type) }
   it { is_expected.to respond_to(:billing) }
   it { is_expected.to respond_to(:orderer) }
 
@@ -43,6 +44,7 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:start_on) }
     it { is_expected.to validate_presence_of(:end_on) }
     it { is_expected.to validate_presence_of(:amount) }
+    it { is_expected.to validate_presence_of(:payment_type) }
     it { is_expected.to validate_presence_of(:billing_company_name) }
     it { is_expected.to validate_presence_of(:billing_department_name) }
     it { is_expected.to validate_presence_of(:billing_personnel_names) }

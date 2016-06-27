@@ -15,6 +15,7 @@ FactoryGirl.define do
       start_on    { Faker::Date.between(5.months.ago    , 1.month.ago) }
       end_on      { Faker::Date.between(Time.zone.today , 5.months.from_now) }
       amount   { rand(10) * (10 ** rand(3)) * 10_000 }
+      payment_type :end_of_the_delivery_date_next_month
       billing_company_name    { Faker::Company.name }
       billing_department_name { Faker::Commerce.department }
       billing_personnel_names { [Faker::Name.name, Faker::Name.name] }

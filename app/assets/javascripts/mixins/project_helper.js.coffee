@@ -37,6 +37,9 @@ Vue.modules.projectHelper = {
       amount:
         init: 0
         exist: { contracted: true, uncontracted: false }
+      payment_type:
+        init: 'end_of_the_delivery_date_next_month'
+        exist: { contracted: true, uncontracted: false }
       orderer_company_name:
         init: ''
         exist: { contracted: true, uncontracted: true }

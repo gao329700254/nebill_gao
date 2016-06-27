@@ -30,6 +30,7 @@ RSpec.describe 'projects request' do
       expect(json[0]['start_on']).to                 eq project1.start_on.strftime("%Y-%m-%d")
       expect(json[0]['end_on']).to                   eq project1.end_on.strftime("%Y-%m-%d")
       expect(json[0]['amount']).to                   eq project1.amount
+      expect(json[0]['payment_type']).to             eq project1.payment_type
       expect(json[0]['billing_company_name']).to     eq project1.billing_company_name
       expect(json[0]['billing_department_name']).to  eq project1.billing_department_name
       expect(json[0]['billing_personnel_names']).to  eq project1.billing_personnel_names
@@ -64,7 +65,8 @@ RSpec.describe 'projects request' do
             contractual_coverage: 'development',
             start_on: '2015-01-01',
             end_on:   '2015-10-31',
-            amount:   123,
+            amount: 123,
+            payment_type: 'end_of_the_acceptance_on_date_next_month',
             billing_company_name:    'billing_company_name',
             billing_department_name: 'billing_department_name',
             billing_personnel_names: ['billing_personnel_names'],
@@ -97,7 +99,8 @@ RSpec.describe 'projects request' do
         expect(project.contractual_coverage).to eq  'development'
         expect(project.start_on.to_s).to eq '2015-01-01'
         expect(project.end_on.to_s).to eq   '2015-10-31'
-        expect(project.amount).to eq    123
+        expect(project.amount).to eq 123
+        expect(project.payment_type).to eq 'end_of_the_acceptance_on_date_next_month'
         expect(project.billing_company_name).to eq     'billing_company_name'
         expect(project.billing_department_name).to eq  'billing_department_name'
         expect(project.billing_personnel_names).to eq  ['billing_personnel_names']
@@ -137,7 +140,8 @@ RSpec.describe 'projects request' do
             contractual_coverage: 'development',
             start_on: '2015-01-01',
             end_on:   '2015-10-31',
-            amount:   123,
+            amount: 123,
+            payment_type: 'end_of_the_acceptance_on_date_next_month',
             billing_company_name:    'billing_company_name',
             billing_department_name: 'billing_department_name',
             billing_personnel_names: ['billing_personnel_names'],
@@ -193,6 +197,7 @@ RSpec.describe 'projects request' do
         expect(json['start_on']).to                 eq project.start_on.strftime("%Y-%m-%d")
         expect(json['end_on']).to                   eq project.end_on.strftime("%Y-%m-%d")
         expect(json['amount']).to                   eq project.amount
+        expect(json['payment_type']).to             eq project.payment_type
         expect(json['billing_company_name']).to     eq project.billing_company_name
         expect(json['billing_department_name']).to  eq project.billing_department_name
         expect(json['billing_personnel_names']).to  eq project.billing_personnel_names
@@ -243,7 +248,8 @@ RSpec.describe 'projects request' do
               contractual_coverage: 'development',
               start_on: '2015-01-01',
               end_on:   '2015-10-31',
-              amount:   123,
+              amount: 123,
+              payment_type: 'end_of_the_acceptance_on_date_next_month',
               billing_company_name:    'billing_company_name',
               billing_department_name: 'billing_department_name',
               billing_personnel_names: ['billing_personnel_names'],
@@ -275,7 +281,8 @@ RSpec.describe 'projects request' do
           expect(project.contractual_coverage).to eq  'development'
           expect(project.start_on.to_s).to eq '2015-01-01'
           expect(project.end_on.to_s).to eq   '2015-10-31'
-          expect(project.amount).to eq    123
+          expect(project.amount).to eq 123
+          expect(project.payment_type).to eq 'end_of_the_acceptance_on_date_next_month'
           expect(project.billing_company_name).to eq     'billing_company_name'
           expect(project.billing_department_name).to eq  'billing_department_name'
           expect(project.billing_personnel_names).to eq  ['billing_personnel_names']
@@ -315,7 +322,8 @@ RSpec.describe 'projects request' do
               contractual_coverage: 'development',
               start_on: '2015-01-01',
               end_on:   '2015-10-31',
-              amount:   123,
+              amount: 123,
+              payment_type: 'end_of_the_acceptance_on_date_next_month',
               billing_company_name:    'billing_company_name',
               billing_department_name: 'billing_department_name',
               billing_personnel_names: ['billing_personnel_names'],

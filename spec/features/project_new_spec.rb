@@ -56,6 +56,7 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.not_to have_field 'start_on'
         is_expected.not_to have_field 'end_on'
         is_expected.not_to have_field 'amount'
+        is_expected.not_to have_field 'payment_type'
         is_expected.to     have_field 'orderer_company_name'
         is_expected.to     have_field 'orderer_department_name'
         is_expected.to     have_field 'orderer_personnel_names'
@@ -171,6 +172,7 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to     have_field 'start_on'
         is_expected.to     have_field 'end_on'
         is_expected.to     have_field 'amount'
+        is_expected.to     have_field 'payment_type'
         is_expected.to     have_field 'orderer_company_name'
         is_expected.to     have_field 'orderer_department_name'
         is_expected.to     have_field 'orderer_personnel_names'
@@ -198,6 +200,7 @@ RSpec.feature 'Project New Page', js: true do
         fill_in :start_on   , with: '2016-02-01'
         fill_in :end_on     , with: '2016-03-30'
         fill_in :amount     , with: 1_000_000
+        select '検収日翌月末', from: :payment_type
         fill_in :orderer_company_name    , with: 'test orderer company'
         fill_in :orderer_department_name , with: 'test orderer department'
         fill_in :orderer_personnel_names , with: 'test person1, test person2'

@@ -41,6 +41,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.not_to have_field 'start_on'
           is_expected.not_to have_field 'end_on'
           is_expected.not_to have_field 'amount'
+          is_expected.not_to have_field 'payment_type'
           is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: project.orderer_company_name
           is_expected.to     have_field 'orderer_department_name', disabled: true, with: project.orderer_department_name
           is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: project.orderer_personnel_names.join(', ')
@@ -72,6 +73,7 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.not_to have_field 'start_on'
             is_expected.not_to have_field 'end_on'
             is_expected.not_to have_field 'amount'
+            is_expected.not_to have_field 'payment_type'
             is_expected.to     have_field 'orderer_company_name'   , disabled: false, with: project.orderer_company_name
             is_expected.to     have_field 'orderer_department_name', disabled: false, with: project.orderer_department_name
             is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: project.orderer_personnel_names.join(', ')
