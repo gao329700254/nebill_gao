@@ -204,6 +204,7 @@ ja:
     back: 戻る
     login: ログイン
     logout: ログアウト
+    unauthorized: 許可されていません
   number:
     currency:
       format:
@@ -295,6 +296,7 @@ ja:
   page:
     home:
       title: ホーム
+      description: シンプルで高機能な請求管理システム
     project_new:
       title: プロジェクト新規作成
       copy: 受注先から請求先に値をコピー

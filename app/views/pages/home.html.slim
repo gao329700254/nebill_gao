@@ -1,3 +1,8 @@
-- provide(:title, 'HOME')
-
-h1 Home
+#home.home
+  .home__img_box
+    = image_tag 'home.jpg', class: 'home__img_box__img'
+    .home__img_box__outer
+      .home__img_box__outer__inner
+        p.home__img_box__description = t('page.home.description')
+        h1.home__img_box__title Nebill
+        = button_tag t('helpers.login'), onclick: "location.href='/auth/google_oauth2'", class: 'home__img_box__login'
