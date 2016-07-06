@@ -40,6 +40,6 @@ private
   end
 
   def user_param
-    params.require(:user).permit(:email, :is_admin)
+    params.require(:user).permit(:email, :role, :is_admin)
   end
 end

@@ -13,9 +13,11 @@ RSpec.describe User do
   it { is_expected.to respond_to(:failed_login_count) }
   it { is_expected.to respond_to(:current_login_at) }
   it { is_expected.to respond_to(:last_login_at) }
+  it { is_expected.to respond_to(:role) }
   it { is_expected.to respond_to(:is_admin) }
 
   it { expect(User).to act_as(:employee) }
 
   it { is_expected.to validate_uniqueness_of(:provider).scoped_to(:uid).allow_nil }
+  it { is_expected.to validate_presence_of(:role) }
 end
