@@ -4,16 +4,5 @@
 
   padding: $base-spacing;
   background-color: $white-bg-color;
-  color: $white-ft-color;
-
-  &__new {
-    &__form {
-      &__item {
-        margin-bottom: $small-spacing;
-      }
-      &__submit_btn {
-        @include btn--primary;
-      }
-    }
-  }
+  color: $white-ft-color
 }

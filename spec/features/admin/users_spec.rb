@@ -17,6 +17,8 @@ RSpec.feature 'Admin Users Page', js: true do
 
   context 'with loginned admin user' do
     given!(:admin_user) { create(:admin_user) }
+    given!(:user) { create(:user) }
+    given!(:un_register_user) { create(:un_register_user) }
 
     background { login admin_user, with_capybara: true }
     background { visit admin_users_path }
@@ -28,6 +30,21 @@ RSpec.feature 'Admin Users Page', js: true do
 
       is_expected.to have_field 'email'
       is_expected.to have_button '登録'
+
+      # HACK(rairei): カスタムマッチャーで定義するときれいになりそう
+      expect(all('.user_list__tbl__head__row th:nth-child(1)')[0]).to have_content '名前'
+      expect(all('.user_list__tbl__head__row th:nth-child(2)')[0]).to have_content 'メールアドレス'
+      expect(all('.user_list__tbl__head__row th:nth-child(3)')[0]).to have_content '管理者'
+
+      expect(all('.user_list__tbl__body__row td:nth-child(1)')[0]).to have_content admin_user.name
+      expect(all('.user_list__tbl__body__row td:nth-child(2)')[0]).to have_content admin_user.email
+      expect(all('.user_list__tbl__body__row td:nth-child(3)')[0]).to have_text '✔︎'
+      expect(all('.user_list__tbl__body__row td:nth-child(1)')[1]).to have_content user.name
+      expect(all('.user_list__tbl__body__row td:nth-child(2)')[1]).to have_content user.email
+      expect(all('.user_list__tbl__body__row td:nth-child(3)')[1]).not_to have_text '✔︎'
+      expect(all('.user_list__tbl__body__row td:nth-child(1)')[2]).to have_content un_register_user.name
+      expect(all('.user_list__tbl__body__row td:nth-child(2)')[2]).to have_content un_register_user.email
+      expect(all('.user_list__tbl__body__row td:nth-child(3)')[2]).not_to have_text '✔︎'
     end
 
     scenario 'click create button with corrent value' do
@@ -41,6 +58,7 @@ RSpec.feature 'Admin Users Page', js: true do
 
       is_expected.to have_field 'email', with: ''
       is_expected.to have_unchecked_field 'is_admin'
+      expect(find('.user_list')).to have_content 'foo@example.com'
     end
 
     scenario 'click create button with uncorrent value' do
