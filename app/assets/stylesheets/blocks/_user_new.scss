@@ -1,0 +1,11 @@
+.user_new {
+
+  &__form {
+    &__item {
+      margin-bottom: $small-spacing;
+    }
+    &__submit_btn {
+      @include btn--primary;
+    }
+  }
+}

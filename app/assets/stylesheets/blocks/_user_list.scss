@@ -1,0 +1,41 @@
+.user_list {
+
+  &__search {
+    margin-bottom: $base-spacing;
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+      &__row {
+        @include list_tbl__body__row;
+      }
+    }
+
+    &__item {
+      @include list_tbl__item;
+
+      &--name {
+        @extend .user_list__tbl__item;
+        @include span-columns(4);
+      }
+      &--email {
+        @extend .user_list__tbl__item;
+        @include span-columns(4);
+        @include word-wrap;
+      }
+      &--is_admin {
+        @extend .user_list__tbl__item;
+        @include span-columns(4);
+      }
+    }
+  }
+}

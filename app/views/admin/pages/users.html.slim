@@ -2,14 +2,17 @@
 
 - provide(:title, t('page.admin.users.title'))
 
+== render 'components/user_new'
+== render 'components/user_list'
+
 #admin_users.admin_users
   .admin_users__new
-    = form_tag nil, class: 'admin_users__new__form'
-      .admin_users__new__form__item
-        = label_tag :email, t('activerecord.attributes.user.email')
-        = email_field_tag :email, nil, 'v-model' => 'user.email'
-      .admin_users__new__form__item
-        = label_tag :is_admin, t('activerecord.attributes.user.is_admin')
-        = check_box_tag :is_admin, true, false, 'v-model' => 'user.is_admin'
-
-      = submit_tag t('helpers.submit.create'), 'v-on:click.prevent' => 'createUser', class: 'admin_users__new__form__submit_btn'
+    component [
+      :is         = "'userNew'"
+      keep-alive  = true
+    ]
+  .admin_users__list
+    component [
+      :is         = "'userList'"
+      keep-alive  = true
+    ]
