@@ -5,6 +5,7 @@ script type='text/x-template' id='user_list'
         tr.user_list__tbl__head__row
           th.user_list__tbl__item--name     = t('activerecord.attributes.user.name')
           th.user_list__tbl__item--email    = t('activerecord.attributes.user.email')
+          th.user_list__tbl__item--role     = t('activerecord.attributes.user.role')
           th.user_list__tbl__item--is_admin = t('activerecord.attributes.user.is_admin')
       tbody.user_list__tbl__body
         tr.user_list__tbl__body__row [
@@ -12,4 +13,5 @@ script type='text/x-template' id='user_list'
         ]
           td.user_list__tbl__item--name     v-text="user.name"
           td.user_list__tbl__item--email    v-text="user.email"
+          td.user_list__tbl__item--role     = select_tag :role, options_for_select(User.role.options), :disabled => true, 'v-model' => 'user.role'
           td.user_list__tbl__item--is_admin v-text="user.is_admin ? '✔︎' : ''"
