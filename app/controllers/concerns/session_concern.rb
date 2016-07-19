@@ -20,16 +20,16 @@ private
   def require_login
     return if current_user
     respond_to do |format|
-      format.html { redirect_to root_path, error: 'unauthorized' }
-      format.json { render(json: { message: 'unauthorized' }, status: :unauthorized) }
+      format.html { redirect_to root_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') } }
+      format.json { render(json: { message: t('helpers.unauthorized') }, status: :unauthorized) }
     end
   end
 
   def require_login_with_admin
     return if current_user.is_admin?
     respond_to do |format|
-      format.html { redirect_to root_path, error: 'unauthorized' }
-      format.json { render(json: { message: 'unauthorized' }, status: :unauthorized) }
+      format.html { redirect_to root_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') } }
+      format.json { render(json: { message: t('helpers.unauthorized') }, status: :unauthorized) }
     end
   end
 end

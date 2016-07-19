@@ -26,7 +26,7 @@ RSpec.describe UserSessionsController do
       it 'should login' do
         expect(controller.session['user_credentials']).to eq un_register_user.persistence_token
       end
-      it { is_expected.to redirect_to root_path }
+      it { is_expected.to redirect_to project_list_path }
     end
 
     context 'with registered user' do
@@ -42,7 +42,7 @@ RSpec.describe UserSessionsController do
       it 'should login' do
         expect(controller.session['user_credentials']).to eq user.persistence_token
       end
-      it { is_expected.to redirect_to root_path }
+      it { is_expected.to redirect_to project_list_path }
     end
   end
 

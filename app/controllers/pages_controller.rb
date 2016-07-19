@@ -4,6 +4,7 @@ class PagesController < ApplicationController
   before_action :set_bill   , only: [:bill_show]
 
   def home
+    render layout: 'simple'
   end
 
   def project_new

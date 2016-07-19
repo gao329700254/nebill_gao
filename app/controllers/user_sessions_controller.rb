@@ -7,7 +7,7 @@ class UserSessionsController < ApplicationController
 
     @session = UserSession.new(user)
     @session.save!
-    redirect_to root_path, flash: { success: t('action.login.success') }
+    redirect_to project_list_path, flash: { success: t('action.login.success') }
   rescue
     redirect_to root_path, flash: { error: t('action.login.fail') }
   end
