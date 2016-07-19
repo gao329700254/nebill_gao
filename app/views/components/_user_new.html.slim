@@ -5,6 +5,9 @@ script type='text/x-template' id='user_new'
         = label_tag :email, t('activerecord.attributes.user.email')
         = email_field_tag :email, nil, 'v-model' => 'user.email'
       .user_new__form__item
+        = label_tag :role, t('activerecord.attributes.user.role')
+        = select_tag :role, options_for_select(User.role.options), 'v-model' => 'user.role'
+      .user_new__form__item
         = label_tag :is_admin, t('activerecord.attributes.user.is_admin')
         = check_box_tag :is_admin, true, false, 'v-model' => 'user.is_admin'
 

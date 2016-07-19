@@ -29,6 +29,7 @@ RSpec.feature 'Admin Users Page', js: true do
       is_expected.to have_header_title 'ユーザ管理'
 
       is_expected.to have_field 'email'
+      is_expected.to have_select 'role', options: %w(一般 上長), selected: '一般'
       is_expected.to have_button '登録'
 
       # HACK(rairei): カスタムマッチャーで定義するときれいになりそう
@@ -49,6 +50,7 @@ RSpec.feature 'Admin Users Page', js: true do
 
     scenario 'click create button with corrent value' do
       fill_in :email, with: 'foo@example.com'
+      select '上長', from: 'role'
       check :is_admin
 
       expect do
@@ -56,7 +58,13 @@ RSpec.feature 'Admin Users Page', js: true do
         wait_for_ajax
       end.to change(User, :count).by(1)
 
+      user = User.find_by(email: 'foo@example.com')
+
+      expect(user.role).to eq 'superior'
+      expect(user.is_admin).to eq true
+
       is_expected.to have_field 'email', with: ''
+      is_expected.to have_select 'role', selected: '一般'
       is_expected.to have_unchecked_field 'is_admin'
       expect(find('.user_list')).to have_content 'foo@example.com'
     end

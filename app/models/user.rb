@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160524025023
+# Schema version: 20160707095855
 #
 # Table name: users
 #
@@ -14,6 +14,7 @@
 #  is_admin           :boolean          default(FALSE), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  role               :integer          default(10), not null
 #
 # Indexes
 #
@@ -21,10 +22,14 @@
 #
 
 class User < ActiveRecord::Base
+  extend Enumerize
   acts_as :employee
   acts_as_authentic
 
+  enumerize :role, in: { general: 10, superior: 30 }, default: :general
+
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
+  validates :role, presence: true
 
   def self.register_by!(auth)
     user = User.find_by!(email: auth.info.email)

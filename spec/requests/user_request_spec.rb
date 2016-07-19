@@ -21,6 +21,7 @@ RSpec.describe 'user request' do
       expect(json[0]['id']).to         eq admin_user.id
       expect(json[0]['name']).to       eq admin_user.name
       expect(json[0]['email']).to      eq admin_user.email
+      expect(json[0]['role']).to       eq admin_user.role
       expect(json[0]['is_admin']).to   eq admin_user.is_admin
       expect(json[0]['created_at']).to eq admin_user.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
       expect(json[0]['updated_at']).to eq admin_user.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
@@ -46,6 +47,7 @@ RSpec.describe 'user request' do
       expect(json[0]['id']).to         eq user1.id
       expect(json[0]['name']).to       eq user1.name
       expect(json[0]['email']).to      eq user1.email
+      expect(json[0]['role']).to       eq user1.role
       expect(json[0]['is_admin']).to   eq user1.is_admin
       expect(json[0]['created_at']).to eq user1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
       expect(json[0]['updated_at']).to eq user1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
@@ -56,7 +58,7 @@ RSpec.describe 'user request' do
     let(:path) { "/api/users" }
 
     context 'with correct parameter' do
-      let(:params) { { user: { email: 'foo@example.com' } } }
+      let(:params) { { user: { email: 'foo@example.com', role: 30 } } }
 
       it 'create a user' do
         expect do
@@ -65,6 +67,7 @@ RSpec.describe 'user request' do
 
         user = User.last
         expect(user.email).to eq 'foo@example.com'
+        expect(user.role).to eq 'superior'
       end
 
       it 'return success code and message' do

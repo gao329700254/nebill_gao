@@ -24,6 +24,7 @@ ja:
       user:
         <<: *employee
         is_admin: 管理者
+        role: ロール
       partner:
         <<: *employee
         company_name: 会社名
@@ -293,6 +294,9 @@ ja:
         end_of_the_acceptance_on_date_next_month:     検収日翌月末
         15th_of_the_delivery_date_month_after_next:   納品日翌々月15日
         15th_of_the_acceptance_date_month_after_next: 検収日翌々月15日
+    role:
+      general: 一般
+      superior: 上長
   page:
     home:
       title: ホーム
