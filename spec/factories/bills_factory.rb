@@ -8,5 +8,6 @@ FactoryGirl.define do
     bill_on        nil
     deposit_on     nil
     memo           { Faker::Lorem.sentence }
+    amount         { rand(10) * (10 ** rand(3)) * 10_000 }
   end
 end

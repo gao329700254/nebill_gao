@@ -8,6 +8,7 @@ $ ->
         id:             { init: '' }
         project_id:     { init: '' }
         key:            { init: '' }
+        amount:         { init: '' }
         delivery_on:    { init: '' }
         acceptance_on:  { init: '' }
         payment_on:     { init: '' }
@@ -44,6 +45,7 @@ $ ->
             data:
               bill:
                 key:            @bill.key
+                amount:         @bill.amount
                 delivery_on:    @bill.delivery_on
                 acceptance_on:  @bill.acceptance_on
                 payment_on:     @bill.payment_on

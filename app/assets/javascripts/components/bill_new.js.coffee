@@ -5,12 +5,14 @@ $ ->
     data: ->
       bill:
         key: undefined
+        amount:         undefined
         delivery_on:    undefined
         acceptance_on:  undefined
         payment_on:     undefined
         bill_on:        undefined
         deposit_on:     undefined
         memo:           undefined
+      default_amount: undefined
     methods:
       submit: ->
         try
@@ -30,6 +32,7 @@ $ ->
           submit.prop('disabled', false)
       initializeBill: ->
         @bill.key = undefined
+        @bill.amount        = @default_amount
         @bill.delivery_on   = undefined
         @bill.acceptance_on = undefined
         @bill.payment_on    = undefined

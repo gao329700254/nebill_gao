@@ -4,7 +4,7 @@ RSpec.feature 'Project Show Page', js: true do
   given!(:user) { create(:user) }
   background { login user, with_capybara: true }
 
-  describe 'that is uncorrected project' do
+  describe 'that is uncontracted project' do
     given!(:project_group1) { create(:project_group, name: 'Group1') }
     given!(:project_group2) { create(:project_group, name: 'Group2') }
     given!(:project) { create(:uncontracted_project, group: project_group1) }
@@ -242,6 +242,8 @@ RSpec.feature 'Project Show Page', js: true do
 
         scenario 'show' do
           is_expected.to have_field 'key'
+          is_expected.to have_field 'amount'
+          expect(find('#amount').value).to eq project.amount.to_s
           is_expected.to have_field 'delivery_on'
           is_expected.to have_field 'acceptance_on'
           is_expected.to have_field 'payment_on'
@@ -253,6 +255,7 @@ RSpec.feature 'Project Show Page', js: true do
 
         scenario 'click submit button with correct values' do
           fill_in :key, with: 'BILL-1'
+          fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
           fill_in :payment_on   , with: '2016-01-03'
@@ -266,6 +269,7 @@ RSpec.feature 'Project Show Page', js: true do
           end.to change(Bill, :count).by(1)
 
           is_expected.to have_field  'key'           , with: ''
+          is_expected.to have_field  'amount'        , with: project.amount
           is_expected.to have_field  'delivery_on'   , with: ''
           is_expected.to have_field  'acceptance_on' , with: ''
           is_expected.to have_field  'payment_on'    , with: ''
@@ -276,6 +280,7 @@ RSpec.feature 'Project Show Page', js: true do
 
         scenario 'click submit button with uncorrect values' do
           fill_in :key, with: '  '
+          fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
           fill_in :payment_on   , with: '2016-01-03'
@@ -289,6 +294,7 @@ RSpec.feature 'Project Show Page', js: true do
           end.not_to change(Bill, :count)
 
           is_expected.to have_field  'key'           , with: '  '
+          is_expected.to have_field  'amount'        , with: 222_222
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
           is_expected.to have_field  'payment_on'    , with: '2016-01-03'
@@ -427,6 +433,85 @@ RSpec.feature 'Project Show Page', js: true do
               is_expected.not_to have_css '.partner_new__outer'
             end
           end
+        end
+      end
+    end
+  end
+
+  describe 'that is contracted project' do
+    given!(:project_group1) { create(:project_group, name: 'Group1') }
+    given!(:project) { create(:contracted_project, group: project_group1) }
+    background { visit project_show_path(project) }
+
+    subject { page }
+
+    describe 'Bill New View' do
+      background { click_on '請求新規作成' }
+
+      describe 'form' do
+        subject { find('.bill_new__form') }
+
+        scenario 'show' do
+          is_expected.to have_field 'key'
+          is_expected.to have_field 'amount'
+          expect(find('#amount').value).to eq project.amount.to_s
+          is_expected.to have_field 'delivery_on'
+          is_expected.to have_field 'acceptance_on'
+          is_expected.to have_field 'payment_on'
+          is_expected.to have_field 'bill_on'
+          is_expected.to have_field 'deposit_on'
+          is_expected.to have_field 'memo'
+          is_expected.to have_button '登録'
+        end
+
+        scenario 'click submit button with correct values' do
+          fill_in :key, with: 'BILL-1'
+          fill_in :amount       , with: project.amount
+          fill_in :delivery_on  , with: '2016-01-01'
+          fill_in :acceptance_on, with: '2016-01-02'
+          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :bill_on      , with: '2016-01-04'
+          fill_in :deposit_on   , with: '2016-01-05'
+          fill_in :memo         , with: 'memo'
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.to change(Bill, :count).by(1)
+
+          is_expected.to have_field  'key'           , with: ''
+          is_expected.to have_field  'amount'        , with: project.amount
+          is_expected.to have_field  'delivery_on'   , with: ''
+          is_expected.to have_field  'acceptance_on' , with: ''
+          is_expected.to have_field  'payment_on'    , with: ''
+          is_expected.to have_field  'bill_on'       , with: ''
+          is_expected.to have_field  'deposit_on'    , with: ''
+          is_expected.to have_field  'memo'          , with: ''
+        end
+
+        scenario 'click submit button with uncorrect values' do
+          fill_in :key, with: '  '
+          fill_in :amount       , with: project.amount
+          fill_in :delivery_on  , with: '2016-01-01'
+          fill_in :acceptance_on, with: '2016-01-02'
+          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :bill_on      , with: '2016-01-04'
+          fill_in :deposit_on   , with: '2016-01-05'
+          fill_in :memo         , with: 'memo'
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.not_to change(Bill, :count)
+
+          is_expected.to have_field  'key'           , with: '  '
+          is_expected.to have_field  'amount'        , with: project.amount
+          is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
+          is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
+          is_expected.to have_field  'payment_on'    , with: '2016-01-03'
+          is_expected.to have_field  'bill_on'       , with: '2016-01-04'
+          is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
+          is_expected.to have_field  'memo'          , with: 'memo'
         end
       end
     end

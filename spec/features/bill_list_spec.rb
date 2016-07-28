@@ -20,14 +20,14 @@ RSpec.feature 'Bill List Page', js: true do
     is_expected.to have_content '請求番号'
     is_expected.to have_content 'プロジェクト'
     is_expected.to have_content '請求先会社名'
-    is_expected.to have_content '金額'
+    is_expected.to have_content '請求金額'
     is_expected.to have_content '支払日'
     is_expected.to have_content '入金日'
 
     is_expected.to have_content bill1.key
+    is_expected.to have_content bill1.amount
     is_expected.to have_content bill1.project.name
     is_expected.to have_content bill1.project.billing_company_name
-    is_expected.to have_content bill1.project.amount
     is_expected.to have_content bill1.payment_on
     is_expected.to have_content bill1.deposit_on
 
