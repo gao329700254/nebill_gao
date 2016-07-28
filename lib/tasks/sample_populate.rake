@@ -43,10 +43,12 @@ namespace :db do
       end
     end
 
-    def populate_partners(num = 10)
+    def populate_partners(company_num = 10, num = 3)
       puts 'populate partners'
       Partner.destroy_all
-      FactoryGirl.create_list(:partner, num)
+      company_num.times do
+        FactoryGirl.create_list(:partner, num, company_name: Faker::Company.name)
+      end
     end
 
     def populate_members(num = 5)

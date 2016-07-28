@@ -16,3 +16,7 @@ nav.sidemenu
       li.sidemenu__item
         = fa_icon 'files-o 2x', class: 'sidemenu__item__icon'
         span.sidemenu__item__page_title = t('page.bill_list.title')
+    = link_to partners_path
+      li.sidemenu__item
+        = fa_icon 'users 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = t('page.partners.title')
