@@ -22,6 +22,7 @@ RSpec.describe 'bills request' do
       expect(json[0]['id']).to                               eq bill1.id
       expect(json[0]['project_id']).to                       eq bill1.project_id
       expect(json[0]['key']).to                              eq bill1.key
+      expect(json[0]['amount']).to                           eq bill1.amount
       expect(json[0]['delivery_on']).to                      eq bill1.delivery_on.strftime("%Y-%m-%d")
       expect(json[0]['acceptance_on']).to                    eq bill1.acceptance_on.strftime("%Y-%m-%d")
       expect(json[0]['payment_on']).to                       eq bill1.payment_on.strftime("%Y-%m-%d")
@@ -35,7 +36,6 @@ RSpec.describe 'bills request' do
       expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
       expect(json[0]['project']['name']).to                  eq bill1.project.name
       expect(json[0]['project']['billing_company_name']).to  eq bill1.project.billing_company_name
-      expect(json[0]['project']['amount']).to                eq bill1.project.amount
     end
   end
 
@@ -53,6 +53,7 @@ RSpec.describe 'bills request' do
         expect(json['id']).to             eq bill.id
         expect(json['project_id']).to     eq bill.project_id
         expect(json['key']).to            eq bill.key
+        expect(json['amount']).to         eq bill.amount
         expect(json['delivery_on']).to    eq bill.delivery_on.strftime("%Y-%m-%d")
         expect(json['acceptance_on']).to  eq bill.acceptance_on.strftime("%Y-%m-%d")
         expect(json['payment_on']).to     eq bill.payment_on.strftime("%Y-%m-%d")
@@ -87,6 +88,7 @@ RSpec.describe 'bills request' do
         {
           bill: {
             key: 'BILL-1',
+            amount:        100_000,
             delivery_on:   '2016-01-01',
             acceptance_on: '2016-01-02',
             payment_on:    '2016-01-03',
@@ -105,6 +107,7 @@ RSpec.describe 'bills request' do
         bill = Bill.first
         expect(bill.project).to eq project
         expect(bill.key).to eq 'BILL-1'
+        expect(bill.amount).to              eq 100_000
         expect(bill.delivery_on.to_s).to    eq '2016-01-01'
         expect(bill.acceptance_on.to_s).to  eq '2016-01-02'
         expect(bill.payment_on.to_s).to     eq '2016-01-03'
@@ -119,6 +122,7 @@ RSpec.describe 'bills request' do
         {
           bill: {
             key: '',
+            amount:        100_000,
             delivery_on:   '2016-01-01',
             acceptance_on: '2016-01-02',
             payment_on:    '2016-01-03',
@@ -148,6 +152,7 @@ RSpec.describe 'bills request' do
           {
             bill: {
               key: 'BILL-1',
+              amount:        100_000,
               delivery_on:   '2016-01-01',
               acceptance_on: '2016-01-02',
               payment_on:    '2016-01-03',
@@ -165,6 +170,7 @@ RSpec.describe 'bills request' do
 
           expect(bill.project).to             eq project
           expect(bill.key).to                 eq 'BILL-1'
+          expect(bill.amount).to              eq 100_000
           expect(bill.delivery_on.to_s).to    eq '2016-01-01'
           expect(bill.acceptance_on.to_s).to  eq '2016-01-02'
           expect(bill.payment_on.to_s).to     eq '2016-01-03'
@@ -189,6 +195,7 @@ RSpec.describe 'bills request' do
           {
             bill: {
               key: '  ',
+              amount:        100_000,
               delivery_on:   '2016-01-01',
               acceptance_on: '2016-01-02',
               payment_on:    '2016-01-03',

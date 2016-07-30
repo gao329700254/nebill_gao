@@ -5,6 +5,7 @@ RSpec.describe Bill do
   subject { bill }
 
   it { is_expected.to respond_to(:key) }
+  it { is_expected.to respond_to(:amount) }
   it { is_expected.to respond_to(:delivery_on) }
   it { is_expected.to respond_to(:acceptance_on) }
   it { is_expected.to respond_to(:payment_on) }
@@ -16,6 +17,7 @@ RSpec.describe Bill do
 
   it { is_expected.to validate_presence_of(:key) }
   it { is_expected.to validate_uniqueness_of(:key).case_insensitive }
+  it { is_expected.to validate_presence_of(:amount) }
   it { is_expected.to validate_presence_of(:delivery_on) }
   it { is_expected.to validate_presence_of(:acceptance_on) }
   it { is_expected.to validate_presence_of(:payment_on) }

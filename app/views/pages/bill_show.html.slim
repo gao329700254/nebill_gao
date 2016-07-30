@@ -13,6 +13,9 @@
             = label_tag :contracted, t('activerecord.attributes.bill.key')
             = text_field_tag :key, nil, 'v-model' => 'bill.key', ':disabled' => '!editMode'
           .bill_show__form__item
+            = label_tag :amount, t('activerecord.attributes.bill.amount')
+            = number_field_tag :amount, nil, 'v-model' => 'bill.amount', ':disabled' => '!editMode'
+          .bill_show__form__item
             = label_tag :contracted, t('activerecord.attributes.bill.delivery_on')
             = text_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => '!editMode'
           .bill_show__form__item

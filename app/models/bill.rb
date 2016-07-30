@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160425091609
+# Schema version: 20160728084638
 #
 # Table name: bills
 #
@@ -14,6 +14,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  memo          :text
+#  amount        :integer          not null
 #
 # Indexes
 #
@@ -27,6 +28,7 @@ class Bill < ActiveRecord::Base
 
   validates :project      , presence: true
   validates :key          , presence: true, uniqueness: { case_sensitive: false }
+  validates :amount       , presence: true
   validates :delivery_on  , presence: true
   validates :acceptance_on, presence: true
   validates :payment_on   , presence: true

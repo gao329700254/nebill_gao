@@ -43,6 +43,7 @@ private
   def bill_param
     params.require(:bill).permit(
       :key,
+      :amount,
       :delivery_on,
       :acceptance_on,
       :payment_on,
@@ -56,7 +57,6 @@ private
     [
       :name,
       :billing_company_name,
-      :amount,
     ]
   end
 end

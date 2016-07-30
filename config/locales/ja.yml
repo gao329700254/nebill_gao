@@ -58,6 +58,7 @@ ja:
       bill:
         project: プロジェクト
         key: 請求番号
+        amount:         請求金額
         delivery_on:    納品日
         acceptance_on:  検収日
         payment_on:     支払日

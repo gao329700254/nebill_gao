@@ -7,6 +7,10 @@ script type='text/x-template' id='bill_new'
             = label_tag :key, t('activerecord.attributes.bill.key')
             = text_field_tag :key, nil, 'v-model' => 'bill.key'
           .bill_new__form__item
+            = label_tag :amount, t('activerecord.attributes.bill.amount')
+            = number_field_tag :amount, @project.amount, 'v-model' => 'bill.amount'
+            = hidden_field_tag :defailt_amount, @project.amount, 'v-model' => 'default_amount'
+          .bill_new__form__item
             = label_tag :delivery_on, t('activerecord.attributes.bill.delivery_on')
             = text_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on'
           .bill_new__form__item
