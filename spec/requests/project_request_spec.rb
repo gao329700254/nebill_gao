@@ -66,7 +66,7 @@ RSpec.describe 'projects request' do
             start_on: '2015-01-01',
             end_on:   '2015-10-31',
             amount: 123,
-            payment_type: 'end_of_the_acceptance_on_date_next_month',
+            payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
             billing_company_name:    'billing_company_name',
             billing_department_name: 'billing_department_name',
             billing_personnel_names: ['billing_personnel_names'],
@@ -100,7 +100,7 @@ RSpec.describe 'projects request' do
         expect(project.start_on.to_s).to eq '2015-01-01'
         expect(project.end_on.to_s).to eq   '2015-10-31'
         expect(project.amount).to eq 123
-        expect(project.payment_type).to eq 'end_of_the_acceptance_on_date_next_month'
+        expect(project.payment_type).to eq 'bill_on_15th_and_payment_on_end_of_next_month'
         expect(project.billing_company_name).to eq     'billing_company_name'
         expect(project.billing_department_name).to eq  'billing_department_name'
         expect(project.billing_personnel_names).to eq  ['billing_personnel_names']
@@ -141,7 +141,7 @@ RSpec.describe 'projects request' do
             start_on: '2015-01-01',
             end_on:   '2015-10-31',
             amount: 123,
-            payment_type: 'end_of_the_acceptance_on_date_next_month',
+            payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
             billing_company_name:    'billing_company_name',
             billing_department_name: 'billing_department_name',
             billing_personnel_names: ['billing_personnel_names'],
@@ -249,7 +249,7 @@ RSpec.describe 'projects request' do
               start_on: '2015-01-01',
               end_on:   '2015-10-31',
               amount: 123,
-              payment_type: 'end_of_the_acceptance_on_date_next_month',
+              payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
               billing_company_name:    'billing_company_name',
               billing_department_name: 'billing_department_name',
               billing_personnel_names: ['billing_personnel_names'],
@@ -282,7 +282,7 @@ RSpec.describe 'projects request' do
           expect(project.start_on.to_s).to eq '2015-01-01'
           expect(project.end_on.to_s).to eq   '2015-10-31'
           expect(project.amount).to eq 123
-          expect(project.payment_type).to eq 'end_of_the_acceptance_on_date_next_month'
+          expect(project.payment_type).to eq 'bill_on_15th_and_payment_on_end_of_next_month'
           expect(project.billing_company_name).to eq     'billing_company_name'
           expect(project.billing_department_name).to eq  'billing_department_name'
           expect(project.billing_personnel_names).to eq  ['billing_personnel_names']
@@ -323,7 +323,7 @@ RSpec.describe 'projects request' do
               start_on: '2015-01-01',
               end_on:   '2015-10-31',
               amount: 123,
-              payment_type: 'end_of_the_acceptance_on_date_next_month',
+              payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
               billing_company_name:    'billing_company_name',
               billing_department_name: 'billing_department_name',
               billing_personnel_names: ['billing_personnel_names'],
@@ -368,6 +368,29 @@ RSpec.describe 'projects request' do
 
         expect(json['message']).to eq 'リソースが見つかりませんでした'
       end
+    end
+  end
+
+  describe 'GET /api/projects/:id/default_dates' do
+    let!(:project) do
+      create(:contracted_project, end_on: '2016-06-10', payment_type: 'bill_on_15th_and_payment_on_end_of_next_month')
+    end
+    let(:now) { Time.zone.parse('2016-06-01') }
+    let(:path) { "/api/projects/#{project.id}/default_dates" }
+
+    around { |example| Timecop.travel(now) { example.run } }
+
+    it 'return default dates' do
+      get path
+
+      expect(response).to be_success
+      expect(response.status).to eq 200
+
+      expect(json['delivery_on']).to   eq '2016-06-10'
+      expect(json['acceptance_on']).to eq '2016-06-10'
+      expect(json['payment_on']).to    eq '2016-07-31'
+      expect(json['bill_on']).to       eq '2016-06-15'
+      expect(json['deposit_on']).to    eq nil
     end
   end
 end

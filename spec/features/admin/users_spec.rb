@@ -21,7 +21,10 @@ RSpec.feature 'Admin Users Page', js: true do
     given!(:un_register_user) { create(:un_register_user) }
 
     background { login admin_user, with_capybara: true }
-    background { visit admin_users_path }
+    background do
+      visit admin_users_path
+      wait_for_ajax
+    end
 
     subject { page }
 

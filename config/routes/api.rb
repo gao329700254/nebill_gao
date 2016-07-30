@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index]
       resources :partners, only: [:index]
       resources :bills, only: [:create, :show, :update]
+      get 'default_dates', on: :member
     end
     %w(user partner).each do |member_type|
       post "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"

@@ -39,3 +39,13 @@ $ ->
         @bill.bill_on       = undefined
         @bill.deposit_on    = undefined
         @bill.memo          = undefined
+    created: ->
+      $.ajax "/api/projects/#{@projectId}/default_dates.json"
+        .done (response) =>
+          @bill.delivery_on   = response.delivery_on
+          @bill.acceptance_on = response.acceptance_on
+          @bill.payment_on    = response.payment_on
+          @bill.bill_on       = response.bill_on
+          @bill.deposit_on    = response.deposit_on
+        .fail (response) =>
+          console.error response

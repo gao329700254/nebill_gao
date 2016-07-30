@@ -200,7 +200,7 @@ RSpec.feature 'Project New Page', js: true do
         fill_in :start_on   , with: '2016-02-01'
         fill_in :end_on     , with: '2016-03-30'
         fill_in :amount     , with: 1_000_000
-        select '検収日翌月末', from: :payment_type
+        select '15日締め翌月末払い', from: :payment_type
         fill_in :orderer_company_name    , with: 'test orderer company'
         fill_in :orderer_department_name , with: 'test orderer department'
         fill_in :orderer_personnel_names , with: 'test person1, test person2'

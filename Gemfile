@@ -47,6 +47,7 @@ group :development, :test do
   gem 'shoulda'
   gem 'teaspoon-jasmine'
   gem 'simplecov', require: false
+  gem 'timecop'
 end
 
 group :production do

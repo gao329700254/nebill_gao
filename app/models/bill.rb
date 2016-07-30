@@ -14,7 +14,7 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  memo          :text
-#  amount        :integer          not null
+#  amount        :integer          default(0), not null
 #
 # Indexes
 #
