@@ -1,5 +1,5 @@
 class Api::ProjectsController < Api::ApiController
-  before_action :set_project, only: [:show, :update]
+  before_action :set_project, only: [:show, :update, :default_dates]
 
   def index
     @projects = if params.key? :group_id
@@ -31,6 +31,20 @@ class Api::ProjectsController < Api::ApiController
     render_action_model_success_message(@project, :update)
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@project, :update)
+  end
+
+  def default_dates
+    now = Time.zone.now
+    @project.payment_type =~ /\Abill_on_(.+)_and_payment_on_(.+)\z/
+    result = {
+      delivery_on:    @project.end_on,
+      acceptance_on:  @project.end_on,
+      payment_on:     view_context.calc_date(now, Regexp.last_match(2)),
+      bill_on:        view_context.calc_date(now, Regexp.last_match(1)),
+      deposit_on:     nil,
+    }
+
+    render json: result, status: :ok
   end
 
 private

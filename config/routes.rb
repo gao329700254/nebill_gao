@@ -1,41 +1,42 @@
 # == Route Map
 #
-#               Prefix Verb   URI Pattern                                            Controller#Action
-#             teaspoon        /teaspoon                                              Teaspoon::Engine
-#                 root GET    /                                                      pages#home
-#                 home GET    /home(.:format)                                        pages#home
-#                      GET    /auth/:provider/callback(.:format)                     user_sessions#create
-#                      POST   /auth/:provider/callback(.:format)                     user_sessions#create
-#               logout DELETE /logout(.:format)                                      user_sessions#destroy
-#          project_new GET    /projects/new(.:format)                                pages#project_new
-#         project_list GET    /projects/list(.:format)                               pages#project_list
-#         project_show GET    /projects/:project_id/show(.:format)                   pages#project_show
-#            bill_list GET    /bills/list(.:format)                                  pages#bill_list
-#            bill_show GET    /bills/:bill_id/show(.:format)                         pages#bill_show
-#       project_groups GET    /project_groups(.:format)                              pages#project_groups
-#          admin_users GET    /admin/users(.:format)                                 admin/pages#users
-#            api_users GET    /api/users(.:format)                                   api/users#index
-#                      POST   /api/users(.:format)                                   api/users#create
-#         api_partners GET    /api/partners(.:format)                                api/partners#index
-#                      POST   /api/partners(.:format)                                api/partners#create
-#    api_project_users GET    /api/projects/:project_id/users(.:format)              api/users#index
-# api_project_partners GET    /api/projects/:project_id/partners(.:format)           api/partners#index
-#    api_project_bills POST   /api/projects/:project_id/bills(.:format)              api/bills#create
-#             api_bill GET    /api/bills/:id(.:format)                               api/bills#show
-#                      PATCH  /api/bills/:id(.:format)                               api/bills#update
-#                      PUT    /api/bills/:id(.:format)                               api/bills#update
-#         api_projects GET    /api/projects(.:format)                                api/projects#index
-#                      POST   /api/projects(.:format)                                api/projects#create
-#          api_project GET    /api/projects/:id(.:format)                            api/projects#show
-#                      PATCH  /api/projects/:id(.:format)                            api/projects#update
-#                      PUT    /api/projects/:id(.:format)                            api/projects#update
-#     api_user_members POST   /api/user_members/:project_id/:user_id(.:format)       api/user_members#create
-#  api_partner_members POST   /api/partner_members/:project_id/:partner_id(.:format) api/partner_members#create
-#   api_project_groups GET    /api/project_groups(.:format)                          api/project_groups#index
-#                      POST   /api/project_groups(.:format)                          api/project_groups#create
-#    api_project_group PATCH  /api/project_groups/:id(.:format)                      api/project_groups#update
-#                      PUT    /api/project_groups/:id(.:format)                      api/project_groups#update
-#            api_bills GET    /api/bills(.:format)                                   api/bills#index
+#                    Prefix Verb   URI Pattern                                            Controller#Action
+#                  teaspoon        /teaspoon                                              Teaspoon::Engine
+#                      root GET    /                                                      pages#home
+#                      home GET    /home(.:format)                                        pages#home
+#                           GET    /auth/:provider/callback(.:format)                     user_sessions#create
+#                           POST   /auth/:provider/callback(.:format)                     user_sessions#create
+#                    logout DELETE /logout(.:format)                                      user_sessions#destroy
+#               project_new GET    /projects/new(.:format)                                pages#project_new
+#              project_list GET    /projects/list(.:format)                               pages#project_list
+#              project_show GET    /projects/:project_id/show(.:format)                   pages#project_show
+#                 bill_list GET    /bills/list(.:format)                                  pages#bill_list
+#                 bill_show GET    /bills/:bill_id/show(.:format)                         pages#bill_show
+#            project_groups GET    /project_groups(.:format)                              pages#project_groups
+#               admin_users GET    /admin/users(.:format)                                 admin/pages#users
+#                 api_users GET    /api/users(.:format)                                   api/users#index
+#                           POST   /api/users(.:format)                                   api/users#create
+#              api_partners GET    /api/partners(.:format)                                api/partners#index
+#                           POST   /api/partners(.:format)                                api/partners#create
+#         api_project_users GET    /api/projects/:project_id/users(.:format)              api/users#index
+#      api_project_partners GET    /api/projects/:project_id/partners(.:format)           api/partners#index
+#         api_project_bills POST   /api/projects/:project_id/bills(.:format)              api/bills#create
+#                  api_bill GET    /api/bills/:id(.:format)                               api/bills#show
+#                           PATCH  /api/bills/:id(.:format)                               api/bills#update
+#                           PUT    /api/bills/:id(.:format)                               api/bills#update
+# default_dates_api_project GET    /api/projects/:id/default_dates(.:format)              api/projects#default_dates
+#              api_projects GET    /api/projects(.:format)                                api/projects#index
+#                           POST   /api/projects(.:format)                                api/projects#create
+#               api_project GET    /api/projects/:id(.:format)                            api/projects#show
+#                           PATCH  /api/projects/:id(.:format)                            api/projects#update
+#                           PUT    /api/projects/:id(.:format)                            api/projects#update
+#          api_user_members POST   /api/user_members/:project_id/:user_id(.:format)       api/user_members#create
+#       api_partner_members POST   /api/partner_members/:project_id/:partner_id(.:format) api/partner_members#create
+#        api_project_groups GET    /api/project_groups(.:format)                          api/project_groups#index
+#                           POST   /api/project_groups(.:format)                          api/project_groups#create
+#         api_project_group PATCH  /api/project_groups/:id(.:format)                      api/project_groups#update
+#                           PUT    /api/project_groups/:id(.:format)                      api/project_groups#update
+#                 api_bills GET    /api/bills(.:format)                                   api/bills#index
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index

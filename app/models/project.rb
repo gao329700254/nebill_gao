@@ -49,12 +49,15 @@ class Project < ActiveRecord::Base
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
   enumerize :contractual_coverage, in: [:development, :maintenance]
-  # TODO(ishida): 支払日自動計算機能実装時に網羅
   enumerize :payment_type, in: %w(
-    end_of_the_delivery_date_next_month
-    end_of_the_acceptance_on_date_next_month
-    15th_of_the_delivery_date_month_after_next
-    15th_of_the_acceptance_date_month_after_next
+    bill_on_15th_and_payment_on_end_of_next_month
+    bill_on_20th_and_payment_on_end_of_next_month
+    bill_on_end_of_month_and_payment_on_end_of_next_month
+    bill_on_end_of_month_and_payment_on_15th_of_month_after_next
+    bill_on_end_of_month_and_payment_on_20th_of_month_after_next
+    bill_on_end_of_month_and_payment_on_end_of_month_after_next
+    bill_on_end_of_month_and_payment_on_35th
+    bill_on_end_of_month_and_payment_on_45th
   )
 
   serialize :billing_personnel_names, Array

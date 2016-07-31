@@ -291,10 +291,14 @@ ja:
         development: 開発
         maintenance: 保守
       payment_type:
-        end_of_the_delivery_date_next_month:          納品日翌月末
-        end_of_the_acceptance_on_date_next_month:     検収日翌月末
-        15th_of_the_delivery_date_month_after_next:   納品日翌々月15日
-        15th_of_the_acceptance_date_month_after_next: 検収日翌々月15日
+        bill_on_15th_and_payment_on_end_of_next_month:                15日締め翌月末払い
+        bill_on_20th_and_payment_on_end_of_next_month:                20日締め翌月末払い
+        bill_on_end_of_month_and_payment_on_end_of_next_month:        末日締め翌月末払い
+        bill_on_end_of_month_and_payment_on_15th_of_month_after_next: 末日締め翌々月15日払い
+        bill_on_end_of_month_and_payment_on_20th_of_month_after_next: 末日締め翌々月20日払い
+        bill_on_end_of_month_and_payment_on_end_of_month_after_next:  末日締め翌々月末払い
+        bill_on_end_of_month_and_payment_on_35th:                     末日締め35日払い
+        bill_on_end_of_month_and_payment_on_45th:                     末日締め45日払い
     role:
       general: 一般
       superior: 上長
