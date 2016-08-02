@@ -25,16 +25,24 @@
 
       &--name {
         @extend .user_list__tbl__item;
-        @include span-columns(4);
+        @include span-columns(3);
       }
       &--email {
         @extend .user_list__tbl__item;
-        @include span-columns(4);
+        @include span-columns(3);
         @include word-wrap;
+      }
+      &--role {
+        @extend .user_list__tbl__item;
+        @include span-columns(3);
+        select {
+          border: none;
+          box-shadow: none;
+        }
       }
       &--is_admin {
         @extend .user_list__tbl__item;
-        @include span-columns(4);
+        @include span-columns(3);
       }
     }
   }
