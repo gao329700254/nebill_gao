@@ -27,31 +27,37 @@
       }
     }
 
-    &__item {
+    &__item,
+    %bill_list__tbl__item {
       @include list_tbl__item;
 
       &--key {
-        @extend .bill_list__tbl__item;
+        @extend %bill_list__tbl__item;
         @include span-columns(2);
       }
+
       &--project_name {
-        @extend .bill_list__tbl__item;
+        @extend %bill_list__tbl__item;
         @include span-columns(2);
       }
+
       &--billing_company {
-        @extend .bill_list__tbl__item;
+        @extend %bill_list__tbl__item;
         @include span-columns(2);
       }
+
       &--amount {
-        @extend .bill_list__tbl__item;
+        @extend %bill_list__tbl__item;
         @include span-columns(2);
       }
+
       &--payment_on {
-        @extend .bill_list__tbl__item;
+        @extend %bill_list__tbl__item;
         @include span-columns(2);
       }
+
       &--deposit_on {
-        @extend .bill_list__tbl__item;
+        @extend %bill_list__tbl__item;
         @include span-columns(2);
       }
     }

@@ -1,3 +1,5 @@
+// scss-lint:disable all
+
 // Typography
 $base-font-family: $helvetica;
 $heading-font-family: $base-font-family;
@@ -38,16 +40,16 @@ $global-left-size: 250px;
 
 // Colors
 //// Common
-$black:       rgb( 29, 32, 37);
-$light-black: rgb( 44, 44, 52);
-$grey:        rgb(103,104,109);
-$light-grey:  rgb(126,127,132);
-$red:         rgb(244, 90, 64);
-$light-red:   rgb(255,103, 79);
-$blue:        rgb(  0,134,171);
-$green:       rgb(  0,146, 80);
-$yellow:      rgb(246,202,  6);
-$white:       rgb(248,248,248);
+$black:       rgb( 29,  32,  37);
+$light-black: rgb( 44,  44,  52);
+$grey:        rgb(103, 104, 109);
+$light-grey:  rgb(126, 127, 132);
+$red:         rgb(244,  90,  64);
+$light-red:   rgb(255, 103,  79);
+$blue:        rgb(  0, 134, 171);
+$green:       rgb(  0, 146,  80);
+$yellow:      rgb(246, 202,   6);
+$white:       rgb(248, 248, 248);
 $theme-color: $red;
 $theme-lighen-color: $light-red;
 $action-color: $theme-color;
@@ -78,14 +80,19 @@ $white-ft-accent-color:      $theme-color;
 //// Base
 $base-bg-color: $white-bg-color;
 $base-border-color: $light-grey;
+//// Shadow
+$shadow-color: #000000;
+
 
 // Border
 $base-border: 1px solid $light-grey;
 $bold-border: 1.5px solid $black;
 
 // Forms
-$form-box-shadow: inset 0 1px 3px rgba(#000, 0.06);
-$form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -0.3);
+$form-box-shadow: inset 0 1px 3px rgba($shadow-color, .06);
+$form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $lightness: -5%, $alpha: -.3);
 
 // Utils
 $all-text-inputs-disabled:  assign-inputs($text-inputs-list, disabled);
+
+// scss-lint:enable all

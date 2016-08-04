@@ -17,6 +17,7 @@
 
     &__body {
       @include list_tbl__body;
+
       &__row {
         @include list_tbl__body__row;
         cursor: pointer;
@@ -27,31 +28,37 @@
       }
     }
 
-    &__item {
+    &__item,
+    %project_list__tbl__item {
       @include list_tbl__item;
 
       &--key {
-        @extend .project_list__tbl__item;
+        @extend %project_list__tbl__item;
         @include span-columns(2);
       }
+
       &--project_name {
-        @extend .project_list__tbl__item;
+        @extend %project_list__tbl__item;
         @include span-columns(2);
       }
+
       &--orderer_company {
-        @extend .project_list__tbl__item;
+        @extend %project_list__tbl__item;
         @include span-columns(2);
       }
+
       &--start_on {
-        @extend .project_list__tbl__item;
+        @extend %project_list__tbl__item;
         @include span-columns(2);
       }
+
       &--end_on {
-        @extend .project_list__tbl__item;
+        @extend %project_list__tbl__item;
         @include span-columns(2);
       }
+
       &--contract_on {
-        @extend .project_list__tbl__item;
+        @extend %project_list__tbl__item;
         @include span-columns(2);
       }
     }

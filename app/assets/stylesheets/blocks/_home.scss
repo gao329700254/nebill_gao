@@ -13,15 +13,16 @@
     }
 
     &__outer {
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       @include display(flex);
       @include align-items(center);
       @include justify-content(center);
+
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
 
       &__inner {
         text-align: center;
@@ -29,13 +30,13 @@
     }
 
     &__description {
-      font-size: $base-font-size;
       color: $white;
+      font-size: $base-font-size;
     }
 
     &__title {
-      font-size: $base-font-size * 10;
       color: $white;
+      font-size: $base-font-size * 10;
     }
 
     &__login {

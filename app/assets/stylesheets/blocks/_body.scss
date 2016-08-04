@@ -10,6 +10,7 @@
     background-color: $light-black-bg-color;
     color: $light-black-ft-color;
   }
+
   .body__main {
     @include flex(1);
     background-color: $white-bg-color;

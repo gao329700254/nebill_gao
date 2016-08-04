@@ -2,8 +2,8 @@
   /*** variables **************************************************************/
   /****************************************************************************/
 
-  padding: $base-spacing;
   background-color: $white-bg-color;
+  padding: $base-spacing;
   color: $white-ft-color;
 
   &__form {
@@ -14,22 +14,28 @@
         @include span-columns(6);
       }
     }
+
     &__item {
       margin-bottom: $small-spacing;
 
       #{$all-text-inputs-disabled},
       select:disabled,
       textarea:disabled {
-        background-color: $white-bg-color;
-        border-color: $white-bg-color;
         border-bottom: $base-border;
         border-radius: 0;
+        border-top-color: $white-bg-color;
+        border-right-color: $white-bg-color;
+        border-left-color: $white-bg-color;
         box-shadow: none;
+        background-color: $white-bg-color;
       }
     }
-    &__edit_btn, &__cancel_btn {
+
+    &__edit_btn,
+    &__cancel_btn {
       @include btn--default;
     }
+
     &__submit_btn {
       @include btn--primary;
     }

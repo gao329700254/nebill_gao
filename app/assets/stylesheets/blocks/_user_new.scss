@@ -4,6 +4,7 @@
     &__item {
       margin-bottom: $small-spacing;
     }
+
     &__submit_btn {
       @include btn--primary;
     }
