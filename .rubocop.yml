@@ -1,8 +1,9 @@
-# ver: 0.8.0
+# ver: 0.8.1
 
 inherit_from:
   - .rubocop_todo.yml
 AllCops:
+  TargetRubyVersion: 2.3
   Exclude:
     - 'bin/**/*'
     - 'db/schema.rb'

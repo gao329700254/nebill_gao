@@ -4,6 +4,8 @@
 !/log/.keep
 /tmp
 
+/public/uploads
+
 spec/examples.txt
 /coverage
 
