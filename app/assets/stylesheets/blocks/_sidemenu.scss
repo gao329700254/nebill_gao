@@ -10,6 +10,7 @@
     @include flex-direction(column);
     a { text-decoration: none; }
   }
+
   &__item {
     @include display(flex);
     @include flex-direction(column);

@@ -2,8 +2,8 @@
   /*** variables **************************************************************/
   /****************************************************************************/
 
-  padding: $base-spacing;
   background-color: $white-bg-color;
+  padding: $base-spacing;
   color: $white-ft-color;
 
   &__menu_bar {
@@ -17,13 +17,14 @@
       @include justify-content(flex-start);
     }
 
-    &__item {
+    &__item,
+    %project_show__menu_bar__item {
       @include padding($base-spacing $small-spacing);
-      list-style-type: none;
       color: $white-ft-color;
+      list-style-type: none;
 
       &--active {
-        @extend .project_show__menu_bar__item;
+        @extend %project_show__menu_bar__item;
         color: $theme-color;
       }
     }
@@ -32,7 +33,9 @@
   &__content--transition {
     @include transition(all .2s ease-out);
   }
-  &__content--enter, &__content--leave {
+
+  &__content--enter,
+  &__content--leave {
     opacity: 0;
   }
 }

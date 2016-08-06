@@ -5,9 +5,9 @@
   /****************************************************************************/
 
   @include display(flex);
-  height: $header-height;
 
   background-color: $black-bg-color;
+  height: $header-height;
   color: $black-ft-color;
 
   &__logo {
@@ -36,8 +36,8 @@
     @include padding(null $base-spacing);
 
     &__item {
-      list-style-type: none;
       margin-left: $small-spacing;
+      list-style-type: none;
     }
 
     &__link {

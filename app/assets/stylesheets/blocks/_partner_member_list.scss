@@ -18,19 +18,22 @@
       }
     }
 
-    &__item {
+    &__item,
+    %partner_member_list__tbl__item {
       @include list_tbl__item;
 
       &--name {
-        @extend .partner_member_list__tbl__item;
+        @extend %partner_member_list__tbl__item;
         @include span-columns(4);
       }
+
       &--email {
-        @extend .partner_member_list__tbl__item;
+        @extend %partner_member_list__tbl__item;
         @include span-columns(4);
       }
+
       &--company_name {
-        @extend .partner_member_list__tbl__item;
+        @extend %partner_member_list__tbl__item;
         @include span-columns(4);
       }
     }

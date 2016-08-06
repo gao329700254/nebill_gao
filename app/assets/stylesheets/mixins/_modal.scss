@@ -1,9 +1,11 @@
+$_modal-back-color: #000000;
+
 //// modal__outer
 @mixin modal__outer {
-  @include transition(opacity 0.25s ease);
+  @include transition(opacity .25s ease);
   @include position(fixed, 0);
   padding-top: 10em;
-  background-color: rgba(#000, 0.85);
+  background-color: rgba($_modal-back-color, .85);
   text-align: left;
   z-index: 100;
 }
@@ -18,10 +20,12 @@
   position: relative;
   width: 50%;
 }
+
 @mixin modal__outer__inner--large {
   @include modal__outer__inner;
   width: 80%;
 }
+
 @mixin modal__outer__inner--extra-large {
   @include modal__outer__inner;
   width: 95%;

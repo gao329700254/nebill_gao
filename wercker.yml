@@ -31,3 +31,6 @@ build:
         - script:
             name: exec slimlint
             code: bundle exec rake slim_lint
+        - script:
+            name: exec scsslint
+            code: bundle exec rake scss_lint

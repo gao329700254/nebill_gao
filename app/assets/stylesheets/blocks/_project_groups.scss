@@ -2,17 +2,19 @@
   /*** variables **************************************************************/
   /****************************************************************************/
 
-  padding: $base-spacing;
   background-color: $white-bg-color;
+  padding: $base-spacing;
   color: $white-ft-color;
 
   &__new {
     &__input {
       @include display(flex);
       max-width: 30em;
+
       &__field {
         @include flex(1);
       }
+
       &__btn {
         @include btn--default;
       }
@@ -27,12 +29,11 @@
   }
 
   &__item {
-    margin-right: $base-spacing;
-    margin-top: $base-spacing;
-
-    min-width: 10em;
-
     @include card;
+
+    margin-top: $base-spacing;
+    margin-right: $base-spacing;
+    min-width: 10em;
 
     &__title {
       @include card__title--theme;
@@ -44,15 +45,15 @@
       min-height: 1em;
 
       &__item {
-        list-style: none;
         cursor: move;
+        list-style: none;
 
         &--chosen {
           @include transform(rotate(-2deg));
         }
 
         &__col {
-          &--key::after { content: " : "; }
+          &--key::after { content: ' : '; }
         }
       }
     }

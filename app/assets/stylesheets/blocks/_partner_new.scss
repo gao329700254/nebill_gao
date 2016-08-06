@@ -11,6 +11,7 @@
       &__title {
         @include modal__outer__inner__title;
       }
+
       &__body {
         @include modal__outer__inner__body;
       }
@@ -21,9 +22,11 @@
     &__item {
       margin-bottom: $small-spacing;
     }
+
     &__cancel_btn {
       @include btn--default;
     }
+
     &__submit_btn {
       @include btn--primary;
     }
