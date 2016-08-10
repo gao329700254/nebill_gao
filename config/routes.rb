@@ -13,6 +13,7 @@
 #                 bill_list GET    /bills/list(.:format)                                  pages#bill_list
 #                 bill_show GET    /bills/:bill_id/show(.:format)                         pages#bill_show
 #            project_groups GET    /project_groups(.:format)                              pages#project_groups
+#                  partners GET    /partners(.:format)                                    pages#partners
 #               admin_users GET    /admin/users(.:format)                                 admin/pages#users
 #                 api_users GET    /api/users(.:format)                                   api/users#index
 #                           POST   /api/users(.:format)                                   api/users#create
@@ -68,6 +69,7 @@ Rails.application.routes.draw do
     get 'show', to: 'pages#bill_show', as: 'bill_show'
   end
   get 'project_groups', to: 'pages#project_groups'
+  get 'partners'      , to: 'pages#partners'
 
   namespace :admin do
     get 'users', to: 'pages#users'

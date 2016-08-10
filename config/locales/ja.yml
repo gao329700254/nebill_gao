@@ -323,6 +323,8 @@ ja:
       title: プロジェクトグループ
     bill_list:
       title: 請求一覧
+    partners:
+      title: パートナー一覧
     admin:
       users:
         title: ユーザ管理
