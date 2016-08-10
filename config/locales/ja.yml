@@ -311,6 +311,10 @@ ja:
       copy: 受注先から請求先に値をコピー
     project_list:
       title: プロジェクト一覧
+      contract_type:
+        all:          "すべて"
+        contracted:   "契約済"
+        uncontracted: "未契約"
     project_show:
       title: プロジェクト情報
       component:
