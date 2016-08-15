@@ -305,6 +305,60 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
           is_expected.to have_field  'memo'          , with: 'memo'
         end
+
+        scenario 'click submit button with uncorrect bill_on predate delivery_on' do
+          skip "fail on wercker"
+
+          fill_in :key, with: 'BILL-2'
+          fill_in :amount       , with: 222_222
+          fill_in :delivery_on  , with: '2016-01-01'
+          fill_in :acceptance_on, with: '2016-01-02'
+          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :bill_on      , with: '2015-12-31'
+          fill_in :deposit_on   , with: '2016-01-05'
+          fill_in :memo         , with: 'memo'
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.not_to change(Bill, :count)
+
+          is_expected.to have_field  'key'           , with: 'BILL-2'
+          is_expected.to have_field  'amount'        , with: 222_222
+          is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
+          is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
+          is_expected.to have_field  'payment_on'    , with: '2016-01-03'
+          is_expected.to have_field  'bill_on'       , with: '2015-12-31'
+          is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
+          is_expected.to have_field  'memo'          , with: 'memo'
+        end
+
+        scenario 'click submit button with uncorrect bill_on predate acceptance_on' do
+          skip "fail on wercker"
+
+          fill_in :key, with: 'BILL-2'
+          fill_in :amount       , with: 222_222
+          fill_in :delivery_on  , with: '2016-01-01'
+          fill_in :acceptance_on, with: '2016-01-02'
+          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :bill_on      , with: '2016-01-01'
+          fill_in :deposit_on   , with: '2016-01-05'
+          fill_in :memo         , with: 'memo'
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.not_to change(Bill, :count)
+
+          is_expected.to have_field  'key'           , with: 'BILL-2'
+          is_expected.to have_field  'amount'        , with: 222_222
+          is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
+          is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
+          is_expected.to have_field  'payment_on'    , with: '2016-01-03'
+          is_expected.to have_field  'bill_on'       , with: '2016-01-01'
+          is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
+          is_expected.to have_field  'memo'          , with: 'memo'
+        end
       end
     end
 

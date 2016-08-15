@@ -21,4 +21,20 @@ RSpec.describe Bill do
   it { is_expected.to validate_presence_of(:delivery_on) }
   it { is_expected.to validate_presence_of(:acceptance_on) }
   it { is_expected.to validate_presence_of(:payment_on) }
+
+  describe "#bill_on_cannot_predate_delivery_on" do
+    it "bill_on should not predate delivery_on" do
+      bill.bill_on = bill.delivery_on - 1
+      expect(bill).not_to be_valid
+      expect(bill.errors[:bill_on]).to include(I18n.t("errors.messages.wrong_bill_on_predate_delivery_on"))
+    end
+  end
+
+  describe "#bill_on_cannot_predate_acceptance_on" do
+    it "bill_on should not predate acceptance_on" do
+      bill.bill_on = bill.acceptance_on - 1
+      expect(bill).not_to be_valid
+      expect(bill.errors[:bill_on]).to include(I18n.t("errors.messages.wrong_bill_on_predate_acceptance_on"))
+    end
+  end
 end

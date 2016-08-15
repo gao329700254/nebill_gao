@@ -32,6 +32,18 @@ class Bill < ActiveRecord::Base
   validates :delivery_on  , presence: true
   validates :acceptance_on, presence: true
   validates :payment_on   , presence: true
+  validate  :bill_on_cannot_predate_delivery_on
+  validate  :bill_on_cannot_predate_acceptance_on
 
   before_save { key.upcase! }
+
+  def bill_on_cannot_predate_delivery_on
+    return if bill_on.nil?
+    errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_delivery_on')) if bill_on < delivery_on
+  end
+
+  def bill_on_cannot_predate_acceptance_on
+    return if bill_on.nil?
+    errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on')) if bill_on < acceptance_on
+  end
 end
