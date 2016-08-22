@@ -203,6 +203,7 @@ ja:
       create: 登録
       submit: 保存
       update: 更新
+      upload: アップロード
     edit: 編集
     cancel: キャンセル
     back: 戻る
@@ -283,6 +284,9 @@ ja:
     logout:
       success: ログアウトしました
       fail: ログアウトできませんでした
+    upload:
+      success: '%{name}をアップロードしました'
+      fail: '%{name}がアップロードできませんでした'
   enumerize:
     defaults:
       contract_type:
@@ -319,6 +323,11 @@ ja:
         project_detail: プロジェクト詳細
         bill_new: 請求新規作成
         member_list: メンバー
+        files: ファイル
+    file_list:
+      name: ファイル名
+      url:  URL
+      size: サイズ
     bill_show:
       title: 請求情報
     project_groups:

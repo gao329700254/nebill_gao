@@ -16,6 +16,8 @@ RSpec.feature 'Project Show Page', js: true do
     given!(:partner2) { create(:partner, :with_project, project: project) }
     given!(:other_partner1) { create(:partner) }
     given!(:other_partner2) { create(:partner) }
+    given!(:file1) { create(:project_file, project: project) }
+    given!(:file2) { create(:project_file, project: project) }
     background { visit project_show_path(project) }
 
     subject { page }
@@ -493,17 +495,60 @@ RSpec.feature 'Project Show Page', js: true do
         end
       end
     end
+
+    describe 'File View' do
+      background { click_on 'ファイル' }
+
+      describe 'File New' do
+        subject { find('.file_new') }
+
+        scenario 'attach file and click upload button' do
+          attach_file 'files', Rails.root.join('spec/fixtures/sample.jpg')
+
+          expect do
+            click_button 'アップロード'
+            wait_for_ajax
+          end.to change(ProjectFile, :count).by(1)
+        end
+      end
+
+      describe 'File List' do
+        subject { find('.file_list') }
+
+        scenario 'Show' do
+          is_expected.to have_content 'ファイル名'
+          is_expected.to have_content 'サイズ'
+
+          is_expected.to have_content file1.file_identifier
+          is_expected.to have_content file2.file_identifier
+        end
+
+        context 'when click file name' do
+          before { click_on file1.file_identifier, match: :first }
+
+          scenario 'download the file' do
+            expect(page.response_headers['Content-Type']).to eq('image/jpeg')
+          end
+        end
+      end
+    end
   end
 
   describe 'that is contracted project' do
     given!(:project_group1) { create(:project_group, name: 'Group1') }
-    given!(:project) { create(:contracted_project, group: project_group1) }
+    given!(:project) { create(:contracted_project, group: project_group1, end_on: '2016-06-10', payment_type: 'bill_on_15th_and_payment_on_end_of_next_month') }
+    given(:now) { Time.zone.parse('2016-06-01') }
+
+    around { |example| Timecop.travel(now) { example.run } }
     background { visit project_show_path(project) }
 
     subject { page }
 
     describe 'Bill New View' do
-      background { click_on '請求新規作成' }
+      background do
+        click_on '請求新規作成'
+        wait_for_ajax
+      end
 
       describe 'form' do
         subject { find('.bill_new__form') }
@@ -512,11 +557,11 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field 'key'
           is_expected.to have_field 'amount'
           expect(find('#amount').value).to eq project.amount.to_s
-          is_expected.to have_field 'delivery_on'
-          is_expected.to have_field 'acceptance_on'
-          is_expected.to have_field 'payment_on'
-          is_expected.to have_field 'bill_on'
-          is_expected.to have_field 'deposit_on'
+          is_expected.to have_field 'delivery_on'   , with: '2016-06-10'
+          is_expected.to have_field 'acceptance_on' , with: '2016-06-10'
+          is_expected.to have_field 'payment_on'    , with: '2016-07-31'
+          is_expected.to have_field 'bill_on'       , with: '2016-06-15'
+          is_expected.to have_field 'deposit_on'    , with: ''
           is_expected.to have_field 'memo'
           is_expected.to have_button '登録'
         end
@@ -571,40 +616,6 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'bill_on'       , with: '2016-01-04'
           is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
           is_expected.to have_field  'memo'          , with: 'memo'
-        end
-      end
-    end
-  end
-
-  describe 'that is corrected project' do
-    given!(:project) { create(:contracted_project, end_on: '2016-06-10', payment_type: 'bill_on_15th_and_payment_on_end_of_next_month') }
-    given(:now) { Time.zone.parse('2016-06-01') }
-    given(:path) { "/api/projects/#{project.id}/default_dates" }
-
-    around { |example| Timecop.travel(now) { example.run } }
-
-    background { visit project_show_path(project) }
-
-    subject { page }
-
-    describe 'Bill New View' do
-      background do
-        click_on '請求新規作成'
-        wait_for_ajax
-      end
-
-      describe 'form' do
-        subject { find('.bill_new__form') }
-
-        scenario 'show' do
-          is_expected.to have_field 'key'
-          is_expected.to have_field 'delivery_on'   , with: '2016-06-10'
-          is_expected.to have_field 'acceptance_on' , with: '2016-06-10'
-          is_expected.to have_field 'payment_on'    , with: '2016-07-31'
-          is_expected.to have_field 'bill_on'       , with: '2016-06-15'
-          is_expected.to have_field 'deposit_on'    , with: ''
-          is_expected.to have_field 'memo'
-          is_expected.to have_button '登録'
         end
       end
     end

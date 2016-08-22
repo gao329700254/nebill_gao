@@ -53,6 +53,7 @@ $white:       rgb(248, 248, 248);
 $theme-color: $red;
 $theme-lighen-color: $light-red;
 $action-color: $theme-color;
+$active-action-color: darken($action-color, 20%);
 $info-color:    $blue;
 $success-color: $green;
 $warning-color: $yellow;

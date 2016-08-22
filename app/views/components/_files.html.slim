@@ -1,0 +1,17 @@
+== render 'components/file_new'
+== render 'components/file_list'
+
+script type='text/x-template' id='files'
+  .files
+    .files__new
+      component [
+        :is         = "'fileNew'"
+        :project-id = "projectId"
+        keep-alive  = true
+      ]
+    .files__list
+      component [
+        :is         = "'fileList'"
+        :project-id = "projectId"
+        keep-alive  = true
+      ]

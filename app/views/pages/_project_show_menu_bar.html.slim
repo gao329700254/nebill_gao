@@ -9,3 +9,6 @@
     = link_to nil, 'v-on:click.prevent' => "viewShow('member_list')"
       li :class = "currentView === 'memberList' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
         span.project_show__menu_bar__item__title = t('page.project_show.component.member_list')
+    = link_to nil, 'v-on:click.prevent' => "viewShow('files')"
+      li :class = "currentView === 'files' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
+        span.project_show__menu_bar__item__title = t('page.project_show.component.files')

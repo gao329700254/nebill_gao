@@ -19,6 +19,7 @@ gem 'neat'
 gem 'bower-rails'
 gem 'font-awesome-rails'
 gem 'highline'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 
 group :development do
   gem 'web-console', '~> 2.0'

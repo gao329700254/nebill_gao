@@ -5,8 +5,8 @@
 
   &:hover,
   &:focus {
-    border: solid 1px darken($action-color, 20%);
-    background-color: darken($action-color, 20%);
+    border: solid 1px $active-action-color;
+    background-color: $active-action-color;
     color: $white;
   }
 }
@@ -18,8 +18,8 @@
 
   &:hover,
   &:focus {
-    border: solid 1px darken($action-color, 20%);
-    background-color: darken($action-color, 20%);
+    border: solid 1px $active-action-color;
+    background-color: $active-action-color;
     color: $white;
   }
 }

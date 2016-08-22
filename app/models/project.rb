@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160620035628
+# Schema version: 20160805140435
 #
 # Table name: projects
 #
@@ -46,6 +46,7 @@ class Project < ActiveRecord::Base
   has_many :users    , through: :members
   has_many :partners , through: :members
   has_many :bills
+  has_many :files, class_name: 'ProjectFile'
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
   enumerize :contractual_coverage, in: [:development, :maintenance]

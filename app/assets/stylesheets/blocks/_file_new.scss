@@ -1,0 +1,7 @@
+.file_new {
+  &__form {
+    &__submit_btn {
+      @include btn--primary;
+    }
+  }
+}

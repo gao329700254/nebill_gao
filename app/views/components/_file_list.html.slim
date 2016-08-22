@@ -1,0 +1,14 @@
+script type='text/x-template' id='file_list'
+  .file_list
+    table.file_list__tbl
+      thead.file_list__tbl__head
+        tr.file_list__tbl__head__row
+          th.file_list__tbl__item--name = t('page.file_list.name')
+          th.file_list__tbl__item--size = t('page.file_list.size')
+      tbody.file_list__tbl__body
+        tr.file_list__tbl__body__row [
+          v-for = "file in files | orderBy sortKey"
+        ]
+          td.file_list__tbl__item--name
+            a v-bind:href="file.url" v-text="file.name"
+          td.file_list__tbl__item--size v-text="file.size"
