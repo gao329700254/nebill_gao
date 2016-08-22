@@ -130,6 +130,56 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
         is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'
       end
+
+      scenario 'should not update when click submit button with uncorrect bill_on predate delivery_on' do
+        fill_in :key            , with: '0000002'
+        fill_in :amount         , with: 101_010
+        fill_in :delivery_on    , with: '2016-01-01'
+        fill_in :acceptance_on  , with: '2016-01-02'
+        fill_in :payment_on     , with: '2016-01-03'
+        fill_in :bill_on        , with: '2015-12-31'
+        fill_in :deposit_on     , with: '2016-01-05'
+        fill_in :memo           , with: 'memo'
+
+        expect do
+          click_button '更新'
+          wait_for_ajax
+        end.not_to change { bill.reload && bill.updated_at }
+
+        is_expected.to     have_field 'key'           , disabled: false, with: '0000002'
+        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010
+        is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
+        is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
+        is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'
+        is_expected.to     have_field 'bill_on'       , disabled: false, with: '2015-12-31'
+        is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
+        is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'
+      end
+
+      scenario 'should not update when click submit button with uncorrect bill_on predate acceptance_on' do
+        fill_in :key            , with: '0000002'
+        fill_in :amount         , with: 101_010
+        fill_in :delivery_on    , with: '2016-01-01'
+        fill_in :acceptance_on  , with: '2016-01-02'
+        fill_in :payment_on     , with: '2016-01-03'
+        fill_in :bill_on        , with: '2016-01-01'
+        fill_in :deposit_on     , with: '2016-01-05'
+        fill_in :memo           , with: 'memo'
+
+        expect do
+          click_button '更新'
+          wait_for_ajax
+        end.not_to change { bill.reload && bill.updated_at }
+
+        is_expected.to     have_field 'key'           , disabled: false, with: '0000002'
+        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010
+        is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
+        is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
+        is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'
+        is_expected.to     have_field 'bill_on'       , disabled: false, with: '2016-01-01'
+        is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
+        is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'
+      end
     end
   end
 end

@@ -189,6 +189,8 @@ ja:
       wrong_length: は%{count}文字で入力してください
       other_than: は%{count}以外の値にしてください
       change: は%{value}にすることはできません
+      wrong_bill_on_predate_delivery_on: は納品日以降を入力してください
+      wrong_bill_on_predate_acceptance_on: は検収日以降を入力してください
     template:
       body: 次の項目を確認してください
       header:
