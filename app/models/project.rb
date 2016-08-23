@@ -47,6 +47,7 @@ class Project < ActiveRecord::Base
   has_many :partners , through: :members
   has_many :bills
   has_many :files, class_name: 'ProjectFile'
+  has_many :file_groups, class_name: 'ProjectFileGroup'
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
   enumerize :contractual_coverage, in: [:development, :maintenance]

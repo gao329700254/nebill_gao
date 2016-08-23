@@ -1,0 +1,12 @@
+@mixin dropdown {
+  position: relative;
+}
+
+@mixin dropdown__content {
+  @include shadow(1);
+  @include padding(null $small-spacing null $small-spacing);
+  background-color: $white;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}

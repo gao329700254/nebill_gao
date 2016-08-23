@@ -16,8 +16,11 @@ RSpec.feature 'Project Show Page', js: true do
     given!(:partner2) { create(:partner, :with_project, project: project) }
     given!(:other_partner1) { create(:partner) }
     given!(:other_partner2) { create(:partner) }
-    given!(:file1) { create(:project_file, project: project) }
-    given!(:file2) { create(:project_file, project: project) }
+    given!(:file_group1) { create(:project_file_group, project: project) }
+    given!(:file_group2) { create(:project_file_group, project: project) }
+    given!(:file_group3) { create(:project_file_group, project: project) }
+    given!(:file1) { create(:project_file, project: project, group: file_group1) }
+    given!(:file2) { create(:project_file, project: project, group: file_group2) }
     background { visit project_show_path(project) }
 
     subject { page }
@@ -520,7 +523,53 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content 'サイズ'
 
           is_expected.to have_content file1.file_identifier
+          is_expected.to have_content file1.group.name
           is_expected.to have_content file2.file_identifier
+          is_expected.to have_content file2.group.name
+        end
+
+        scenario 'click create button with corrent value' do
+          fill_in :name, with: 'New Group'
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.to change(ProjectFileGroup, :count).by(1)
+
+          is_expected.to have_field 'name', with: ''
+        end
+
+        scenario 'click create button with uncorrent value' do
+          fill_in :name, with: '  '
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.not_to change(ProjectFileGroup, :count)
+
+          is_expected.to have_field 'name', with: '  '
+        end
+
+        context 'select files' do
+          before do
+            within("#file-#{file1.id}") { check 'selected' }
+            within("#file-#{file2.id}") { check 'selected' }
+          end
+
+          context 'and update file group click update button' do
+            before do
+              first('.file_list__group_update__btn').click
+              select file_group3.name
+              click_on '更新'
+              wait_for_ajax
+            end
+
+            scenario "update file's group" do
+              is_expected.to     have_content file_group3.name
+              is_expected.not_to have_content file_group1.name
+              is_expected.not_to have_content file_group2.name
+            end
+          end
         end
 
         context 'when click file name' do

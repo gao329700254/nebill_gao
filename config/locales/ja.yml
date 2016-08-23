@@ -18,6 +18,8 @@ ja:
       member: メンバー
       project_group: プロジェクトグループ
       bill: 請求
+      project_file: プロジェクトファイル
+      project_file_group: プロジェクトファイルグループ
     attributes:
       employee: &employee
         name: 名前
@@ -75,6 +77,8 @@ ja:
         bill_on:        請求日
         deposit_on:     入金日
         memo:           メモ
+      project_file_group:
+        name: 名前
   date:
     abbr_day_names:
     - 日

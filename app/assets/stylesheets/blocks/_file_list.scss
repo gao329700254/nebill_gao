@@ -1,4 +1,47 @@
 .file_list {
+  margin-top: $base-spacing;
+
+  &__menu {
+    @include display(flex);
+    list-style-type: none;
+  }
+
+  &__group_new {
+    @include display(flex);
+
+    &__field {
+      min-width: 19rem;
+      max-width: 30rem;
+    }
+
+    &__btn {
+      @include btn--default;
+    }
+  }
+
+  &__refresh {
+    &__btn {
+      @include btn--default;
+    }
+  }
+
+  &__group_update {
+    @include dropdown;
+
+    &__btn {
+      @include btn--default;
+    }
+
+    &__content {
+      @include dropdown__content;
+      width: 30rem;
+
+      &__btn {
+        @include btn--default;
+      }
+    }
+  }
+
   &__tbl {
     @include list_tbl;
 
@@ -10,8 +53,14 @@
 
     &__body {
       @include list_tbl__body;
-      &__row {
+      &__row,
+      %file_list__tbl__body__row {
         @include list_tbl__head__row;
+
+        &--selected {
+          @extend %file_list__tbl__body__row;
+          background-color: $yellow;
+        }
       }
     }
 
@@ -22,6 +71,15 @@
       &--name {
         @extend %file_list__tbl__item;
         @include span-columns(10);
+
+        input {
+          margin-right: $base-spacing;
+        }
+
+        span {
+          @include badge--primary;
+          margin-left: $base-spacing;
+        }
       }
 
       &--size {

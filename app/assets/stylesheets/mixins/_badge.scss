@@ -1,0 +1,6 @@
+@mixin badge--primary {
+  color: $white;
+  background-color: $theme-color;
+  padding: $small-spacing / 2 $small-spacing;
+  border-radius: $base-border-radius;
+}
