@@ -17,6 +17,9 @@ RSpec.feature 'Project List Page', js: true do
     is_expected.to have_header_title 'プロジェクト一覧'
 
     is_expected.to have_field 'search', with: ''
+    is_expected.to have_checked_field   'all'
+    is_expected.to have_unchecked_field 'contracted'
+    is_expected.to have_unchecked_field 'uncontracted'
     is_expected.to have_content 'ID'
     is_expected.to have_content '名前'
     is_expected.to have_content '受注先会社名'
@@ -103,5 +106,46 @@ RSpec.feature 'Project List Page', js: true do
     find("#project-#{project1.id}").click
 
     is_expected.to have_header_title 'プロジェクト情報'
+  end
+
+  context 'select contract type' do
+    scenario 'with all' do
+      choose 'all'
+      is_expected.to have_checked_field   'all'
+      is_expected.to have_unchecked_field 'contracted'
+      is_expected.to have_unchecked_field 'uncontracted'
+
+      is_expected.to have_content project1.key
+      is_expected.to have_content project2.key
+      is_expected.to have_content project3.key
+      is_expected.to have_content project4.key
+      is_expected.to have_content project5.key
+    end
+
+    scenario 'with contracted' do
+      choose 'contracted'
+      is_expected.to have_unchecked_field 'all'
+      is_expected.to have_checked_field   'contracted'
+      is_expected.to have_unchecked_field 'uncontracted'
+
+      is_expected.to     have_content project1.key
+      is_expected.to     have_content project2.key
+      is_expected.to     have_content project3.key
+      is_expected.not_to have_content project4.key
+      is_expected.not_to have_content project5.key
+    end
+
+    scenario 'with uncontracted' do
+      choose 'uncontracted'
+      is_expected.to have_unchecked_field 'all'
+      is_expected.to have_unchecked_field 'contracted'
+      is_expected.to have_checked_field   'uncontracted'
+
+      is_expected.not_to have_content project1.key
+      is_expected.not_to have_content project2.key
+      is_expected.not_to have_content project3.key
+      is_expected.to     have_content project4.key
+      is_expected.to     have_content project5.key
+    end
   end
 end

@@ -9,6 +9,7 @@ $ ->
         orderer_company_name: 'like'
       list: undefined
       searchKeywords: undefined
+      contractStatus: undefined
     methods:
       linkToShow: (projectId) -> window.location = "/projects/#{projectId}/show"
     compiled: ->
