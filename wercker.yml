@@ -1,4 +1,4 @@
-box: hishida/nebill
+box: cuon/nebill
 services:
     - postgres
 build:
