@@ -4,6 +4,7 @@ namespace :db do
     task populate: :environment do
       ActiveRecord::Base.transaction do
         %w(
+          clients
           project_groups
           projects
           bills
@@ -27,6 +28,11 @@ namespace :db do
           send("populate_#{table}", num)
         end
       end
+    end
+
+    def populate_clients(num = 5)
+      Client.destroy_all
+      FactoryGirl.create_list(:client, num)
     end
 
     def populate_project_groups(num = 3)
