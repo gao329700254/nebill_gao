@@ -2,6 +2,16 @@ require 'rails_helper'
 
 RSpec.feature 'Project New Page', js: true do
   given!(:user) { create(:user) }
+  given!(:client) do
+    create(
+      :client,
+      key: 'CLIENT-1',
+      company_name: 'clientA',
+      department_name: 'client department name',
+      address: 'client address',
+      zip_code: 'client zip code',
+    )
+  end
   given!(:project_group) { create(:project_group, name: 'GroupA') }
 
   background { login user, with_capybara: true }
@@ -15,6 +25,28 @@ RSpec.feature 'Project New Page', js: true do
 
   describe 'form' do
     subject { find('#project_new .project_new__form') }
+
+    scenario 'click orderer fill button' do
+      select 'CLIENT-1 clientA', from: :orderer_client_id
+      find('.project_new__form__orderer .project_new__form__fill__btn').click
+      wait_for_ajax
+
+      is_expected.to have_field 'orderer_company_name'    , with: 'clientA'
+      is_expected.to have_field 'orderer_department_name' , with: 'client department name'
+      is_expected.to have_field 'orderer_address'         , with: 'client address'
+      is_expected.to have_field 'orderer_zip_code'        , with: 'client zip code'
+    end
+
+    scenario 'click billing fill button' do
+      select 'CLIENT-1 clientA', from: :billing_client_id
+      find('.project_new__form__billing .project_new__form__fill__btn').click
+      wait_for_ajax
+
+      is_expected.to have_field 'billing_company_name'    , with: 'clientA'
+      is_expected.to have_field 'billing_department_name' , with: 'client department name'
+      is_expected.to have_field 'billing_address'         , with: 'client address'
+      is_expected.to have_field 'billing_zip_code'        , with: 'client zip code'
+    end
 
     scenario 'click copy button' do
       fill_in :orderer_company_name    , with: 'test orderer company'

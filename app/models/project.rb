@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160805140435
+# Schema version: 20160905090519
 #
 # Table name: projects
 #
@@ -14,13 +14,11 @@
 #  amount                  :integer
 #  billing_company_name    :string
 #  billing_department_name :string
-#  billing_personnel_names :string
 #  billing_address         :string
 #  billing_zip_code        :string
 #  billing_memo            :text
 #  orderer_company_name    :string
 #  orderer_department_name :string
-#  orderer_personnel_names :string
 #  orderer_address         :string
 #  orderer_zip_code        :string
 #  orderer_memo            :text
@@ -30,6 +28,8 @@
 #  is_using_ses            :boolean
 #  group_id                :integer
 #  payment_type            :string
+#  billing_personnel_names :string           is an Array
+#  orderer_personnel_names :string           is an Array
 #
 # Indexes
 #
@@ -60,9 +60,6 @@ class Project < ActiveRecord::Base
     bill_on_end_of_month_and_payment_on_35th
     bill_on_end_of_month_and_payment_on_45th
   )
-
-  serialize :billing_personnel_names, Array
-  serialize :orderer_personnel_names, Array
 
   composed_of :billing,
               class_name: 'DestinationInformation',

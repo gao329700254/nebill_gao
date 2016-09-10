@@ -91,10 +91,10 @@ Vue.modules.projectHelper = {
       else
         _.pick @project, (value, key) => @projectSchema[key].exist.uncontracted
     project_orderer_personnel_names_str:
-      get: -> @project.orderer_personnel_names.join(', ')
+      get: -> if @project.orderer_personnel_names? then @project.orderer_personnel_names.join(', ') else ''
       set: (val) -> @project.orderer_personnel_names = val.split(/[\s　]*[,、][\s　]*/)
     project_billing_personnel_names_str:
-      get: -> @project.billing_personnel_names.join(', ')
+      get: -> if @project.billing_personnel_names? then @project.billing_personnel_names.join(', ') else ''
       set: (val) -> @project.billing_personnel_names = val.split(/[\s　]*[,、][\s　]*/)
   methods:
     initializeProject: -> @project = $.extend(true, {}, @projectInit)

@@ -7,6 +7,7 @@
 #                           GET    /auth/:provider/callback(.:format)                     user_sessions#create
 #                           POST   /auth/:provider/callback(.:format)                     user_sessions#create
 #                    logout DELETE /logout(.:format)                                      user_sessions#destroy
+#                client_new GET    /clients/new(.:format)                                 pages#client_new
 #               project_new GET    /projects/new(.:format)                                pages#project_new
 #              project_list GET    /projects/list(.:format)                               pages#project_list
 #              project_show GET    /projects/:project_id/show(.:format)                   pages#project_show
@@ -15,6 +16,9 @@
 #            project_groups GET    /project_groups(.:format)                              pages#project_groups
 #                  partners GET    /partners(.:format)                                    pages#partners
 #               admin_users GET    /admin/users(.:format)                                 admin/pages#users
+#               api_clients GET    /api/clients(.:format)                                 api/clients#index
+#                           POST   /api/clients(.:format)                                 api/clients#create
+#                api_client GET    /api/clients/:id(.:format)                             api/clients#show
 #                 api_users GET    /api/users(.:format)                                   api/users#index
 #                           POST   /api/users(.:format)                                   api/users#create
 #              api_partners GET    /api/partners(.:format)                                api/partners#index
@@ -57,6 +61,9 @@ Rails.application.routes.draw do
   post   '/auth/:provider/callback', to: 'user_sessions#create'
   delete '/logout'                 , to: 'user_sessions#destroy'
 
+  scope path: 'clients' do
+    get 'new', to: 'pages#client_new', as: 'client_new'
+  end
   scope path: 'projects' do
     get 'new', to: 'pages#project_new', as: 'project_new'
     get 'list', to: 'pages#project_list', as: 'project_list'

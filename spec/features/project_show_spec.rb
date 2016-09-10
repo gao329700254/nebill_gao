@@ -46,13 +46,13 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.not_to have_field 'payment_type'
           is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: project.orderer_company_name
           is_expected.to     have_field 'orderer_department_name', disabled: true, with: project.orderer_department_name
-          is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: project.orderer_personnel_names.join(', ')
+          is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: project.orderer_personnel_names&.join(', ')
           is_expected.to     have_field 'orderer_address'        , disabled: true, with: project.orderer_address
           is_expected.to     have_field 'orderer_zip_code'       , disabled: true, with: project.orderer_zip_code
           is_expected.to     have_field 'orderer_memo'           , disabled: true, with: project.orderer_memo
           is_expected.to     have_field 'billing_company_name'   , disabled: true, with: project.billing_company_name
           is_expected.to     have_field 'billing_department_name', disabled: true, with: project.billing_department_name
-          is_expected.to     have_field 'billing_personnel_names', disabled: true, with: project.billing_personnel_names.join(', ')
+          is_expected.to     have_field 'billing_personnel_names', disabled: true, with: project.billing_personnel_names&.join(', ')
           is_expected.to     have_field 'billing_address'        , disabled: true, with: project.billing_address
           is_expected.to     have_field 'billing_zip_code'       , disabled: true, with: project.billing_zip_code
           is_expected.to     have_field 'billing_memo'           , disabled: true, with: project.billing_memo
@@ -78,13 +78,13 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.not_to have_field 'payment_type'
             is_expected.to     have_field 'orderer_company_name'   , disabled: false, with: project.orderer_company_name
             is_expected.to     have_field 'orderer_department_name', disabled: false, with: project.orderer_department_name
-            is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: project.orderer_personnel_names.join(', ')
+            is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: project.orderer_personnel_names&.join(', ')
             is_expected.to     have_field 'orderer_address'        , disabled: false, with: project.orderer_address
             is_expected.to     have_field 'orderer_zip_code'       , disabled: false, with: project.orderer_zip_code
             is_expected.to     have_field 'orderer_memo'           , disabled: false, with: project.orderer_memo
             is_expected.to     have_field 'billing_company_name'   , disabled: false, with: project.billing_company_name
             is_expected.to     have_field 'billing_department_name', disabled: false, with: project.billing_department_name
-            is_expected.to     have_field 'billing_personnel_names', disabled: false, with: project.billing_personnel_names.join(', ')
+            is_expected.to     have_field 'billing_personnel_names', disabled: false, with: project.billing_personnel_names&.join(', ')
             is_expected.to     have_field 'billing_address'        , disabled: false, with: project.billing_address
             is_expected.to     have_field 'billing_zip_code'       , disabled: false, with: project.billing_zip_code
             is_expected.to     have_field 'billing_memo'           , disabled: false, with: project.billing_memo
@@ -100,13 +100,13 @@ RSpec.feature 'Project Show Page', js: true do
             original_contract_on             =  project.contract_on
             original_orderer_company_name    =  project.orderer_company_name
             original_orderer_department_name =  project.orderer_department_name
-            original_orderer_personnel_names =  project.orderer_personnel_names.join(', ')
+            original_orderer_personnel_names =  project.orderer_personnel_names&.join(', ')
             original_orderer_address         =  project.orderer_address
             original_orderer_zip_code        =  project.orderer_zip_code
             original_orderer_memo            =  project.orderer_memo
             original_billing_company_name    =  project.billing_company_name
             original_billing_department_name =  project.billing_department_name
-            original_billing_personnel_names =  project.billing_personnel_names.join(', ')
+            original_billing_personnel_names =  project.billing_personnel_names&.join(', ')
             original_billing_address         =  project.billing_address
             original_billing_zip_code        =  project.billing_zip_code
             original_billing_memo            =  project.billing_memo

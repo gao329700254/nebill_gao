@@ -1,5 +1,11 @@
 fieldset.project_new__form__orderer
   .project_new__form__item
+    .project_new__form__fill
+      select#orderer_client_id.project_new__form__fill__select v-model="ordererClientId"
+        option v-for="client in clients" value="{{client.id}}" {{client.key + ' ' + client.company_name}}
+      = button_tag class: 'project_new__form__fill__btn', 'v-on:click.prevent' => 'fillOrderer' do
+        = fa_icon 'arrow-down'
+  .project_new__form__item
     = label_tag :orderer_company_name, t('activerecord.attributes.project.orderer_company_name')
     = text_field_tag :orderer_company_name, nil, 'v-model' => 'project.orderer_company_name'
   .project_new__form__item

@@ -1,4 +1,4 @@
-.project_new {
+.client_new {
   /*** variables **************************************************************/
   /****************************************************************************/
 
@@ -8,39 +8,21 @@
 
   &__form {
     @include outer-container;
-
     &__container {
       @include row;
-
       &__group {
         @include span-columns(6);
       }
     }
 
     &__item,
-    %project_new__form__item {
+    %client_new__form__item {
       margin-bottom: $small-spacing;
 
       &--key {
-        @extend %project_new__form__item;
-        width: 8em;
+        @extend %client_new__form__item;
+        width: 10em;
       }
-    }
-
-    &__fill {
-      @include display(flex);
-
-      &__select {
-        @include flex(1);
-      }
-
-      &__btn {
-        @include btn--default;
-      }
-    }
-
-    &__copy_btn {
-      @include btn--default;
     }
 
     &__submit_btn {
