@@ -26,6 +26,7 @@ RSpec.describe Project do
   it { is_expected.to have_many(:partners).through(:members) }
   it { is_expected.to have_many(:bills) }
   it { is_expected.to have_many(:files).class_name('ProjectFile') }
+  it { is_expected.to have_many(:file_groups).class_name('ProjectFileGroup') }
 
   it { is_expected.to validate_presence_of(:key) }
   it { is_expected.to validate_uniqueness_of(:key).case_insensitive }

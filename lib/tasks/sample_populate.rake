@@ -10,6 +10,7 @@ namespace :db do
           bills
           partners
           members
+          project_file_groups
           project_files
         ).each { |table| populate(table) }
       end
@@ -79,11 +80,21 @@ namespace :db do
       end
     end
 
+    def populate_project_file_groups(num = 3)
+      ProjectFileGroup.destroy_all
+
+      Project.all.each do |project|
+        FactoryGirl.create_list(:project_file_group, num, project: project)
+      end
+    end
+
     def populate_project_files(num = 3)
       ProjectFile.destroy_all
 
       Project.all.each do |project|
-        FactoryGirl.create_list(:project_file, num, project: project)
+        num.times do
+          FactoryGirl.create(:project_file, project: project, group: project.file_groups.sample)
+        end
       end
     end
   end

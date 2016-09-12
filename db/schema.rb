@@ -69,11 +69,19 @@ ActiveRecord::Schema.define(version: 20160905090519) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "project_files", force: :cascade do |t|
+  create_table "project_file_groups", force: :cascade do |t|
     t.integer  "project_id", null: false
-    t.string   "file",       null: false
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "project_files", force: :cascade do |t|
+    t.integer  "project_id",    null: false
+    t.string   "file",          null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "file_group_id"
   end
 
   create_table "project_groups", force: :cascade do |t|

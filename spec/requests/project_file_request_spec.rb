@@ -22,6 +22,7 @@ RSpec.describe 'project files request' do
       expect(json0).to have_key 'url'
       expect(json0).to have_key 'name'
       expect(json0).to have_key 'size'
+      expect(json0).to have_key 'group'
       expect(json0).to have_key 'created_at'
       expect(json0).to have_key 'updated_at'
     end
@@ -53,6 +54,31 @@ RSpec.describe 'project files request' do
 
       expect(json['id']).not_to eq nil
       expect(json['message']).to eq 'sample.jpgをアップロードしました'
+    end
+  end
+
+  describe 'PATCH /api/project_files/:id' do
+    let!(:project_file_group) { create(:project_file_group) }
+    let!(:project_file) { create(:project_file, project: project) }
+    let(:path) { "/api/project_files/#{project_file.id}" }
+    let(:params) { { project_file: { file_group_id: project_file_group.id } } }
+
+    it 'update the project file' do
+      expect do
+        patch path, params
+      end.to change { project_file.reload && project_file.updated_at }
+
+      expect(project_file.group).to eq project_file_group
+    end
+
+    it 'return success code and message' do
+      patch path, params
+
+      expect(response).to be_success
+      expect(response.status).to eq 201
+
+      expect(json['id']).not_to eq nil
+      expect(json['message']).to eq 'プロジェクトファイルを更新しました'
     end
   end
 end
