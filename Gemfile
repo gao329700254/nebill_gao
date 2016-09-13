@@ -20,6 +20,7 @@ gem 'bower-rails'
 gem 'font-awesome-rails'
 gem 'highline'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'rack-dev-mark'
 
 group :development do
   gem 'web-console', '~> 2.0'
@@ -52,6 +53,6 @@ group :development, :test do
   gem 'timecop'
 end
 
-group :production do
+group :production, :demo do
   gem 'rails_12factor'
 end
