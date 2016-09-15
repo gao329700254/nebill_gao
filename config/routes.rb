@@ -13,6 +13,7 @@
 #                    project_show GET    /projects/:project_id/show(.:format)                    pages#project_show
 #                       bill_list GET    /bills/list(.:format)                                   pages#bill_list
 #                       bill_show GET    /bills/:bill_id/show(.:format)                          pages#bill_show
+#                   bill_download GET    /bills/:bill_id/xlsx(.:format)                          bills/xlsx#download
 #                  project_groups GET    /project_groups(.:format)                               pages#project_groups
 #                        partners GET    /partners(.:format)                                     pages#partners
 #                     admin_users GET    /admin/users(.:format)                                  admin/pages#users
@@ -80,6 +81,7 @@ Rails.application.routes.draw do
   end
   scope path: 'bills/:bill_id' do
     get 'show', to: 'pages#bill_show', as: 'bill_show'
+    get 'xlsx', to: 'bills/xlsx#download', as: 'bill_download'
   end
   get 'project_groups', to: 'pages#project_groups'
   get 'partners'      , to: 'pages#partners'

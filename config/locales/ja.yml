@@ -214,10 +214,11 @@ ja:
     select:
       prompt: 選択してください
     submit:
-      create: 登録
-      submit: 保存
-      update: 更新
-      upload: アップロード
+      create:   登録
+      submit:   保存
+      update:   更新
+      upload:   アップロード
+      download: ダウンロード
     edit: 編集
     cancel: キャンセル
     back: 戻る

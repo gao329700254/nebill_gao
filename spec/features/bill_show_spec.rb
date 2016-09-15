@@ -26,6 +26,7 @@ RSpec.feature 'Bill Show Page', js: true do
       is_expected.to     have_field 'deposit_on'    , disabled: true, with: bill.deposit_on
       is_expected.to     have_field 'memo'          , disabled: true, with: bill.memo
       is_expected.to     have_button '編集'
+      is_expected.to     have_button 'ダウンロード'
       is_expected.not_to have_button 'キャンセル'
       is_expected.not_to have_button '更新'
     end
@@ -43,6 +44,7 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: bill.deposit_on
         is_expected.to     have_field 'memo'          , disabled: false, with: bill.memo
         is_expected.not_to have_button '編集'
+        is_expected.not_to have_button 'ダウンロード'
         is_expected.to     have_button 'キャンセル'
         is_expected.to     have_button '更新'
       end
@@ -179,6 +181,18 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'bill_on'       , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
         is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'
+      end
+    end
+  end
+
+  describe 'download' do
+    let(:file_name) { ['請求書', bill.project.billing_company_name, bill.key].compact.join("_") + '.xlsx' }
+
+    context 'when click download button' do
+      it 'should download an excel file' do
+        click_button 'ダウンロード'
+        expect(page.response_headers['Content-Disposition']).to include(file_name)
+        expect(page.response_headers['Content-Type']).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
       end
     end
   end
