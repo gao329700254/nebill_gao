@@ -19,13 +19,11 @@ module ProjectValidates
       contracted.validates :billing_personnel_names, presence: true
       contracted.validates :billing_address        , presence: true
       contracted.validates :billing_zip_code       , presence: true
-      contracted.validates :billing_memo           , presence: true
       contracted.validates :orderer_company_name   , presence: true
       contracted.validates :orderer_department_name, presence: true
       contracted.validates :orderer_personnel_names, presence: true
       contracted.validates :orderer_address        , presence: true
       contracted.validates :orderer_zip_code       , presence: true
-      contracted.validates :orderer_memo           , presence: true
     end
 
     with_options unless: :contracted? do |un_contracted|
