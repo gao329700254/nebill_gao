@@ -605,7 +605,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'show' do
           is_expected.to have_field 'key'
           is_expected.to have_field 'amount'
-          expect(find('#amount').value).to eq project.amount.to_s
+          expect(find('#amount').value).to eq project.amount.to_s(:delimited)
           is_expected.to have_field 'delivery_on'   , with: '2016-06-10'
           is_expected.to have_field 'acceptance_on' , with: '2016-06-10'
           is_expected.to have_field 'payment_on'    , with: '2016-07-31'
@@ -631,7 +631,7 @@ RSpec.feature 'Project Show Page', js: true do
           end.to change(Bill, :count).by(1)
 
           is_expected.to have_field  'key'           , with: ''
-          is_expected.to have_field  'amount'        , with: project.amount
+          is_expected.to have_field  'amount'        , with: project.amount.to_s(:delimited)
           is_expected.to have_field  'delivery_on'   , with: ''
           is_expected.to have_field  'acceptance_on' , with: ''
           is_expected.to have_field  'payment_on'    , with: ''
