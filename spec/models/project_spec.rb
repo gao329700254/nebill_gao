@@ -53,13 +53,11 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:billing_personnel_names) }
     it { is_expected.to validate_presence_of(:billing_address) }
     it { is_expected.to validate_presence_of(:billing_zip_code) }
-    it { is_expected.to validate_presence_of(:billing_memo) }
     it { is_expected.to validate_presence_of(:orderer_company_name) }
     it { is_expected.to validate_presence_of(:orderer_department_name) }
     it { is_expected.to validate_presence_of(:orderer_personnel_names) }
     it { is_expected.to validate_presence_of(:orderer_address) }
     it { is_expected.to validate_presence_of(:orderer_zip_code) }
-    it { is_expected.to validate_presence_of(:orderer_memo) }
 
     it 'should require contracted to not change to uncontracted' do
       project.contracted = false
