@@ -1,5 +1,5 @@
 # nebill
 
-[![wercker status](https://app.wercker.com/status/fd5b51a3e7c6fcd6145dc6820eb47075/m/master "wercker status")](https://app.wercker.com/project/bykey/fd5b51a3e7c6fcd6145dc6820eb47075)
+[![wercker status](https://app.wercker.com/status/e26313bf02ace0511f7b4f573a99f37f/m/master "wercker status")](https://app.wercker.com/project/byKey/e26313bf02ace0511f7b4f573a99f37f)
 
-neat + bill = nebill
+**neat + bill = nebill**
