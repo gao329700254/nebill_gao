@@ -10,6 +10,9 @@ class PagesController < ApplicationController
   def client_new
   end
 
+  def client_list
+  end
+
   def project_new
   end
 
