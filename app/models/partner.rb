@@ -12,6 +12,12 @@
 class Partner < ActiveRecord::Base
   acts_as :employee
 
+  has_many :members, through: :employee, class_name: 'PartnerMember'
+
   validates :name        , presence: true
   validates :company_name, presence: true
+
+  def join!(project, unit_price, min_limit_time, max_limit_time)
+    project.partner_members.create!(employee_id: employee.id, unit_price: unit_price, min_limit_time: min_limit_time, max_limit_time: max_limit_time)
+  end
 end

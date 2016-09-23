@@ -16,6 +16,8 @@ ja:
       client: 顧客
       project: プロジェクト
       member: メンバー
+      user_member: メンバー
+      partner_member: メンバー
       project_group: プロジェクトグループ
       bill: 請求
       project_file: プロジェクトファイル
@@ -31,6 +33,10 @@ ja:
       partner:
         <<: *employee
         company_name: 会社名
+      partner_member:
+        unit_price: 単価
+        max_limit_time: 上限
+        min_limit_time: 下限
       client:
         key: ID
         company_name:    会社名

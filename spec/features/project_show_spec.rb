@@ -408,13 +408,22 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content '名前'
           is_expected.to have_content 'メールアドレス'
           is_expected.to have_content '会社名'
+          is_expected.to have_content '単価'
+          is_expected.to have_content '下限'
+          is_expected.to have_content '上限'
 
           is_expected.to have_content partner1.name
           is_expected.to have_content partner1.email
           is_expected.to have_content partner1.company_name
+          is_expected.to have_content partner1.members[0].unit_price
+          is_expected.to have_content partner1.members[0].min_limit_time
+          is_expected.to have_content partner1.members[0].max_limit_time
           is_expected.to have_content partner2.name
           is_expected.to have_content partner2.email
           is_expected.to have_content partner2.company_name
+          is_expected.to have_content partner2.members[0].unit_price
+          is_expected.to have_content partner2.members[0].min_limit_time
+          is_expected.to have_content partner2.members[0].max_limit_time
 
           is_expected.not_to have_content other_partner1.name
           is_expected.not_to have_content other_partner1.email
@@ -424,17 +433,35 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.not_to have_content other_partner2.company_name
 
           is_expected.to have_field 'partner', with: ''
+          is_expected.to have_field 'unit_price', with: ''
+          is_expected.to have_field 'min_limit_time', with: ''
+          is_expected.to have_field 'max_limit_time', with: ''
           is_expected.to have_button '登録'
           is_expected.to have_button 'パートナーを新規登録する'
         end
 
-        scenario 'select partner and click submit button' do
+        scenario 'select partner and click submit button with correct values' do
           select other_partner1.name, from: :partner
+          fill_in :unit_price, with: '1'
+          fill_in :min_limit_time, with: '1'
+          fill_in :max_limit_time, with: '2'
 
           expect do
             within('.member_list__partner') { click_button '登録' }
             wait_for_ajax
           end.to change(Member, :count).by(1)
+        end
+
+        scenario 'select partner and click submit button with uncorrect values' do
+          select other_partner2.name, from: :partner
+          fill_in :unit_price, with: '1'
+          fill_in :min_limit_time, with: '2'
+          fill_in :max_limit_time, with: '1'
+
+          expect do
+            within('.member_list__partner') { click_button '登録' }
+            wait_for_ajax
+          end.not_to change(Member, :count)
         end
 
         scenario 'show Partner New Modal when click show modal button' do

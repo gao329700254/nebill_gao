@@ -8,7 +8,7 @@ class Api::PartnersController < Api::ApiController
                   Partner.all
                 end
 
-    render json: @partners, status: :ok
+    render 'index', formats: 'json', handlers: 'jbuilder'
   end
 
   def create

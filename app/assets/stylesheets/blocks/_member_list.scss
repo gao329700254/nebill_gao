@@ -6,10 +6,10 @@
   @include row;
 
   &__user {
-    @include span-columns(6);
+    @include span-columns(4);
   }
 
   &__partner {
-    @include span-columns(6);
+    @include span-columns(8);
   }
 }

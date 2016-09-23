@@ -7,7 +7,7 @@ FactoryGirl.define do
     trait :with_project do
       transient { project { create(:contracted_project) } }
       after :create do |user, evaluator|
-        user.members.build(project: evaluator.project).save!
+        user.members.build(project: evaluator.project, unit_price: 1, min_limit_time: 1, max_limit_time: 2).save!
       end
     end
   end

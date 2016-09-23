@@ -70,12 +70,15 @@ namespace :db do
       end
     end
 
-    def populate_members(num = 5)
+    def populate_members(num = 3)
       Member.destroy_all
 
       Project.all.each do |project|
-        Employee.all.sample(num).each do |employee|
-          FactoryGirl.create(:member, employee: employee, project: project)
+        Employee.where(actable_type: :User).sample(num).each do |employee|
+          FactoryGirl.create(:user_member, employee: employee, project: project)
+        end
+        Employee.where(actable_type: :Partner).sample(num).each do |employee|
+          FactoryGirl.create(:partner_member, employee: employee, project: project)
         end
       end
     end

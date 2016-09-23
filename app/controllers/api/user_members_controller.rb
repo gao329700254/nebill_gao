@@ -3,7 +3,7 @@ class Api::UserMembersController < Api::ApiController
   before_action :set_user   , only: [:create]
 
   def create
-    @member = @project.join!(@user.employee)
+    @member = @user.join!(@project)
 
     render_action_model_success_message(@member, :create)
   rescue ActiveRecord::RecordInvalid
