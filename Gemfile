@@ -21,6 +21,7 @@ gem 'font-awesome-rails'
 gem 'highline'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'rack-dev-mark'
+gem 'rubyXL'
 
 group :development do
   gem 'web-console', '~> 2.0'
