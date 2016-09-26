@@ -143,4 +143,10 @@ ActiveRecord::Schema.define(version: 20161003063433) do
 
   add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, using: :btree
 
+  add_foreign_key "bills", "projects", on_delete: :cascade
+  add_foreign_key "members", "employees", on_delete: :cascade
+  add_foreign_key "members", "projects", on_delete: :cascade
+  add_foreign_key "project_file_groups", "projects", on_delete: :cascade
+  add_foreign_key "project_files", "projects", on_delete: :cascade
+  add_foreign_key "projects", "project_groups", column: "group_id", on_delete: :nullify
 end

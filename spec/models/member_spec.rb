@@ -7,7 +7,24 @@ RSpec.describe Member do
 
     it { is_expected.to belong_to(:employee) }
     it { is_expected.to belong_to(:project) }
-    it { is_expected.to validate_uniqueness_of(:employee_id).scoped_to(:project_id) }
+
+    describe 'validate uniqueness of project_id scoped to employee_id' do
+      let(:other_user_member) { create(:user_member) }
+      context 'when not validate uniqueness' do
+        before do
+          user_member.project  = other_user_member.project
+          user_member.employee = other_user_member.employee
+        end
+        it { is_expected.to be_invalid }
+      end
+
+      context 'when validate uniqueness' do
+        before do
+          user_member.project  = other_user_member.project
+        end
+        it { is_expected.to be_valid }
+      end
+    end
   end
 
   describe 'PartnerMember' do
@@ -16,6 +33,23 @@ RSpec.describe Member do
 
     it { is_expected.to belong_to(:employee) }
     it { is_expected.to belong_to(:project) }
-    it { is_expected.to validate_uniqueness_of(:employee_id).scoped_to(:project_id) }
+
+    describe 'validate uniqueness of employee_id scoped to project_id' do
+      let(:other_partner_member) { create(:partner_member) }
+      context 'when not validate uniqueness' do
+        before do
+          partner_member.project = other_partner_member.project
+          partner_member.employee = other_partner_member.employee
+        end
+        it { is_expected.to be_invalid }
+      end
+
+      context 'when validate uniqueness' do
+        before do
+          partner_member.project = other_partner_member.project
+        end
+        it { is_expected.to be_valid }
+      end
+    end
   end
 end

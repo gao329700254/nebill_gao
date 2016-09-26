@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160728084638
+# Schema version: 20161003063433
 #
 # Table name: bills
 #
@@ -19,6 +19,10 @@
 # Indexes
 #
 #  index_bills_on_key  (key) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_9a464041fd  (project_id => projects.id)
 #
 
 class Bill < ActiveRecord::Base
