@@ -49,6 +49,7 @@
       &--amount {
         @extend %bill_list__tbl__item;
         @include span-columns(2);
+        text-align: right;
       }
 
       &--payment_on {

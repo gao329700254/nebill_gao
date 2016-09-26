@@ -6,6 +6,7 @@
     "sanitize-css": "3.0.0",
     "toastr": "2.1.2",
     "sortable": "git://github.com/RubaXa/Sortable#1.4.2",
-    "page": "1.7.1"
+    "page": "1.7.1",
+    "autoNumeric": "1.9.46"
   }
 }

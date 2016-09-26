@@ -18,7 +18,7 @@ RSpec.feature 'Bill Show Page', js: true do
 
     scenario 'should show bill attributes' do
       is_expected.to     have_field 'key'           , disabled: true, with: bill.key
-      is_expected.to     have_field 'amount'        , disabled: true, with: bill.amount
+      is_expected.to     have_field 'amount'        , disabled: true, with: bill.amount.to_s(:delimited)
       is_expected.to     have_field 'delivery_on'   , disabled: true, with: bill.delivery_on
       is_expected.to     have_field 'acceptance_on' , disabled: true, with: bill.acceptance_on
       is_expected.to     have_field 'payment_on'    , disabled: true, with: bill.payment_on
@@ -36,7 +36,7 @@ RSpec.feature 'Bill Show Page', js: true do
 
       scenario 'should have edit bill fields' do
         is_expected.to     have_field 'key'           , disabled: false, with: bill.key
-        is_expected.to     have_field 'amount'        , disabled: false, with: bill.amount
+        is_expected.to     have_field 'amount'        , disabled: false, with: bill.amount.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: bill.delivery_on
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: bill.acceptance_on
         is_expected.to     have_field 'payment_on'    , disabled: false, with: bill.payment_on
@@ -74,7 +74,7 @@ RSpec.feature 'Bill Show Page', js: true do
         end.not_to change { bill.reload && bill.updated_at }
 
         is_expected.to     have_field 'key'           , disabled: true, with: original_key
-        is_expected.to     have_field 'amount'        , disabled: true, with: original_amount
+        is_expected.to     have_field 'amount'        , disabled: true, with: original_amount.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: true, with: original_delivery_on
         is_expected.to     have_field 'acceptance_on' , disabled: true, with: original_acceptance_on
         is_expected.to     have_field 'payment_on'    , disabled: true, with: original_payment_on
@@ -99,7 +99,7 @@ RSpec.feature 'Bill Show Page', js: true do
         end.to change { bill.reload && bill.updated_at }
 
         is_expected.to     have_field 'key'           , disabled: true, with: '0000001'
-        is_expected.to     have_field 'amount'        , disabled: true, with: 101_010
+        is_expected.to     have_field 'amount'        , disabled: true, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: true, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: true, with: '2016-01-02'
         is_expected.to     have_field 'payment_on'    , disabled: true, with: '2016-01-03'
@@ -124,7 +124,7 @@ RSpec.feature 'Bill Show Page', js: true do
         end.not_to change { bill.reload && bill.updated_at }
 
         is_expected.to     have_field 'key'           , disabled: false, with: '  '
-        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010
+        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
         is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'
@@ -149,7 +149,7 @@ RSpec.feature 'Bill Show Page', js: true do
         end.not_to change { bill.reload && bill.updated_at }
 
         is_expected.to     have_field 'key'           , disabled: false, with: '0000002'
-        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010
+        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
         is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'
@@ -174,7 +174,7 @@ RSpec.feature 'Bill Show Page', js: true do
         end.not_to change { bill.reload && bill.updated_at }
 
         is_expected.to     have_field 'key'           , disabled: false, with: '0000002'
-        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010
+        is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
         is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'

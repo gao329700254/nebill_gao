@@ -8,23 +8,23 @@ script type='text/x-template' id='bill_new'
             = text_field_tag :key, nil, 'v-model' => 'bill.key'
           .bill_new__form__item
             = label_tag :amount, t('activerecord.attributes.bill.amount')
-            = number_field_tag :amount, @project.amount, 'v-model' => 'bill.amount'
+            = text_field_tag :amount, @project.amount, 'v-numeric' => 'bill.amount'
             = hidden_field_tag :defailt_amount, @project.amount, 'v-model' => 'default_amount'
           .bill_new__form__item
             = label_tag :delivery_on, t('activerecord.attributes.bill.delivery_on')
-            = text_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on'
+            = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on'
           .bill_new__form__item
             = label_tag :acceptance_on, t('activerecord.attributes.bill.acceptance_on')
-            = text_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on'
+            = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on'
           .bill_new__form__item
             = label_tag :payment_on, t('activerecord.attributes.bill.payment_on')
-            = text_field_tag :payment_on, nil, 'v-model' => 'bill.payment_on'
+            = date_field_tag :payment_on, nil, 'v-model' => 'bill.payment_on'
           .bill_new__form__item
             = label_tag :bill_on, t('activerecord.attributes.bill.bill_on')
-            = text_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on'
+            = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on'
           .bill_new__form__item
             = label_tag :deposit_on, t('activerecord.attributes.bill.deposit_on')
-            = text_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on'
+            = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on'
           .bill_new__form__item
             = label_tag :memo, t('activerecord.attributes.bill.memo')
             = text_area_tag :memo, nil, 'v-model' => 'bill.memo'

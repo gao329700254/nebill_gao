@@ -14,7 +14,7 @@ fieldset.project_detail__form__basic
     = text_field_tag :name, nil, 'v-model' => 'project.name', ':disabled' => '!editMode'
   .project_detail__form__item
     = label_tag :contract_on, t('activerecord.attributes.project.contract_on')
-    = text_field_tag :contract_on, nil, 'v-model' => 'project.contract_on', ':disabled' => '!editMode'
+    = date_field_tag :contract_on, nil, 'v-model' => 'project.contract_on', ':disabled' => '!editMode'
   .project_detail__form__item v-if='project.contracted'
     = label_tag :contract_type, t('activerecord.attributes.project.contract_type')
     = select_tag :contract_type, options_for_select(Project.contract_type.options), include_blank: true,
@@ -30,14 +30,14 @@ fieldset.project_detail__form__basic
     .project_detail__form__container__group
       .project_detail__form__item
         = label_tag :start_on, t('activerecord.attributes.project.start_on')
-        = text_field_tag :start_on, nil, 'v-model' => 'project.start_on', ':disabled' => '!editMode'
+        = date_field_tag :start_on, nil, 'v-model' => 'project.start_on', ':disabled' => '!editMode'
     .project_detail__form__container__group
       .project_detail__form__item
         = label_tag :end_on, t('activerecord.attributes.project.end_on')
-        = text_field_tag :end_on, nil, 'v-model' => 'project.end_on', ':disabled' => '!editMode'
+        = date_field_tag :end_on, nil, 'v-model' => 'project.end_on', ':disabled' => '!editMode'
   .project_detail__form__item v-if='project.contracted'
     = label_tag :amount, t('activerecord.attributes.project.amount')
-    = number_field_tag :amount, nil, min: 0, step: 10, 'v-model' => 'project.amount', ':disabled' => '!editMode'
+    = text_field_tag :amount, nil, 'v-numeric' => 'project.amount', ':disabled' => '!editMode'
   .project_detail__form__item v-if='project.contracted'
     = label_tag :payment_type, t('activerecord.attributes.project.payment_type')
     = select_tag :payment_type, options_for_select(Project.payment_type.options), include_blank: true,
