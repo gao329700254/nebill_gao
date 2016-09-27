@@ -20,9 +20,9 @@
 #  index_members_on_type                        (type)
 #
 
-class Member < ActiveRecord::Base
-  belongs_to :employee
-  belongs_to :project
+class PartnerMember < Member
+  has_one :partner, through: :employee, source: :actable, source_type: Partner
 
-  validates :employee_id, uniqueness: { scope: :project_id }
+  validates :unit_price    , presence: true
+  validates :max_limit_time, numericality: { greater_than: :min_limit_time }, allow_nil: true
 end

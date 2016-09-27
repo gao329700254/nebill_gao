@@ -6,6 +6,10 @@ $ ->
       partners: []
       allPartners: []
       selectedPartnerId: undefined
+      member:
+        unit_price: ''
+        min_limit_time: ''
+        max_limit_time: ''
     computed:
       selectablePartners: ->
         ids = _.pluck(@partners, 'id')
@@ -28,9 +32,13 @@ $ ->
           $.ajax
             url: "/api/partner_members/#{@projectId}/#{@selectedPartnerId}.json"
             type: 'POST'
+            data: { member: @member }
           .done (response) =>
             toastr.success('', response.message)
             @selectedPartnerId = undefined
+            @member.unit_price = ''
+            @member.min_limit_time = ''
+            @member.max_limit_time = ''
             @loadPartners()
             @loadAllPartners()
           .fail (response) =>

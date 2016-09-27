@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
   acts_as :employee
   acts_as_authentic
 
+  has_many :members, through: :employee, class_name: 'UserMember'
+
   enumerize :role, in: { general: 10, superior: 30 }, default: :general
 
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
@@ -38,5 +40,9 @@ class User < ActiveRecord::Base
     user.name     = auth.info.name
     user.save!
     user
+  end
+
+  def join!(project)
+    project.user_members.create!(employee_id: employee.id)
   end
 end

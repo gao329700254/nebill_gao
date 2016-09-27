@@ -24,17 +24,32 @@
 
       &--name {
         @extend %partner_member_list__tbl__item;
-        @include span-columns(4);
+        @include span-columns(2);
       }
 
       &--email {
         @extend %partner_member_list__tbl__item;
-        @include span-columns(4);
+        @include span-columns(3);
       }
 
       &--company_name {
         @extend %partner_member_list__tbl__item;
-        @include span-columns(4);
+        @include span-columns(3);
+      }
+
+      &--unit_price {
+        @extend %partner_member_list__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--min_limit_time {
+        @extend %partner_member_list__tbl__item;
+        @include span-columns(1);
+      }
+
+      &--max_limit_time {
+        @extend %partner_member_list__tbl__item;
+        @include span-columns(1);
       }
     }
   }
@@ -44,6 +59,12 @@
 
     &__list {
       flex: 1;
+    }
+
+    &__form {
+      &__item {
+        flex: 1;
+      }
     }
 
     &__btn {

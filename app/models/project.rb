@@ -42,9 +42,11 @@ class Project < ActiveRecord::Base
 
   belongs_to :group, class_name: 'ProjectGroup'
   has_many :members
+  has_many :user_members
+  has_many :partner_members
   has_many :employees, through: :members
-  has_many :users    , through: :members
-  has_many :partners , through: :members
+  has_many :users, through: :user_members
+  has_many :partners, through: :partner_members
   has_many :bills
   has_many :files, class_name: 'ProjectFile'
   has_many :file_groups, class_name: 'ProjectFileGroup'
@@ -70,8 +72,4 @@ class Project < ActiveRecord::Base
               mapping: %w(company_name department_name personnel_names address zip_code memo).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
 
   before_save { key.upcase! }
-
-  def join!(employee)
-    members.create(employee_id: employee.id)
-  end
 end

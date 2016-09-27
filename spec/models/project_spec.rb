@@ -21,9 +21,11 @@ RSpec.describe Project do
 
   it { is_expected.to belong_to(:group).class_name('ProjectGroup') }
   it { is_expected.to have_many(:members) }
+  it { is_expected.to have_many(:user_members) }
+  it { is_expected.to have_many(:partner_members) }
   it { is_expected.to have_many(:employees).through(:members) }
-  it { is_expected.to have_many(:users).through(:members) }
-  it { is_expected.to have_many(:partners).through(:members) }
+  it { is_expected.to have_many(:users).through(:user_members) }
+  it { is_expected.to have_many(:partners).through(:partner_members) }
   it { is_expected.to have_many(:bills) }
   it { is_expected.to have_many(:files).class_name('ProjectFile') }
   it { is_expected.to have_many(:file_groups).class_name('ProjectFileGroup') }
@@ -82,16 +84,6 @@ RSpec.describe Project do
       its(:address)         { is_expected.to eq project.orderer_address }
       its(:zip_code)        { is_expected.to eq project.orderer_zip_code }
       its(:memo)            { is_expected.to eq project.orderer_memo }
-    end
-
-    describe '#join!' do
-      let(:user) { create(:user) }
-      before do
-        project.save!
-        project.join!(user.employee)
-      end
-
-      its(:users) { is_expected.to include user }
     end
   end
 
