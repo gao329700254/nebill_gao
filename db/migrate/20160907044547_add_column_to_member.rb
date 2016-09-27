@@ -8,6 +8,7 @@ class AddColumnToMember < ActiveRecord::Migration
         member.save!
       when 'Partner'
         member.type = 'PartnerMember'
+        member.unit_price = 0
         member.save!
       end
     end
