@@ -1,0 +1,51 @@
+.client_list {
+
+  padding: $base-spacing;
+
+  &__search {
+    margin-bottom: $base-spacing;
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+
+      &__row {
+        @include list_tbl__body__row;
+      }
+    }
+
+    &__item,
+    %client_list__tbl__item {
+      @include list_tbl__item;
+
+      &--key {
+        @extend %client_list__tbl__item;
+        @include span-columns(3);
+      }
+
+      &--company_name {
+        @extend %client_list__tbl__item;
+        @include span-columns(3);
+      }
+
+      &--department_name {
+        @extend %client_list__tbl__item;
+        @include span-columns(3);
+      }
+
+      &--phone_number {
+        @extend %client_list__tbl__item;
+        @include span-columns(3);
+      }
+    }
+  }
+}

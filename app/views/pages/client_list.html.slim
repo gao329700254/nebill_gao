@@ -1,0 +1,23 @@
+= javascript_include_tag 'view_models/client_list'
+
+- provide(:title, t('page.client_list.title'))
+
+#client_list.client_list
+  = render partial: 'shared/search_form', locals: { css_class: 'user_list__search' }
+  table.client_list__tbl
+    thead.client_list__tbl__head
+      tr.client_list__tbl__head__row
+        th.client_list__tbl__item--key                  = t('activerecord.attributes.client.key')
+        th.client_list__tbl__item--company_name         = t('activerecord.attributes.client.company_name')
+        th.client_list__tbl__item--department_name      = t('activerecord.attributes.client.department_name')
+        th.client_list__tbl__item--phone_number         = t('activerecord.attributes.client.phone_number')
+    tbody.client_list__tbl__body
+      tr.client_list__tbl__body__row [
+        v-for      = "client in list | selectBy searchKeywords selectSchema | orderBy sortKey"
+        id         = "client-{{client.id}}"
+        track-by   = "key"
+      ]
+        td.client_list__tbl__item--key                  v-text='client.key'
+        td.client_list__tbl__item--company_name         v-text='client.company_name'
+        td.client_list__tbl__item--department_name      v-text='client.department_name'
+        td.client_list__tbl__item--phone_number         v-text='client.phone_number'

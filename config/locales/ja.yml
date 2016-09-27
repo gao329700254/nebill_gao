@@ -329,6 +329,8 @@ ja:
       description: シンプルで高機能な請求管理システム
     client_new:
       title: 顧客新規作成
+    client_list:
+      title: 顧客一覧
     project_new:
       title: プロジェクト新規作成
       copy: 受注先から請求先に値をコピー
