@@ -1,14 +1,26 @@
 class ProjectFileUploader < CarrierWave::Uploader::Base
-  storage :file
+  if Rails.env.production?
+    storage :fog
+  else
+    storage :file
+  end
 
   def store_dir
-    File.join(
-      'uploads',
-      Rails.env.product? ? '' : Rails.env.to_s,
-      model.class.to_s.underscore,
-      mounted_as.to_s,
-      model.id.to_s,
-    )
+    if Rails.env.production?
+      File.join(
+        model.class.to_s.underscore,
+        mounted_as.to_s,
+        model.id.to_s,
+      )
+    else
+      File.join(
+        'uploads',
+        Rails.env.to_s,
+        model.class.to_s.underscore,
+        mounted_as.to_s,
+        model.id.to_s,
+      )
+    end
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
