@@ -42,7 +42,6 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to     have_field 'contract_on'            , disabled: true, with: project.contract_on
           is_expected.not_to have_field 'contract_type'
           is_expected.not_to have_field 'is_using_ses'
-          is_expected.not_to have_field 'contractual_coverage'
           is_expected.not_to have_field 'start_on'
           is_expected.not_to have_field 'end_on'
           is_expected.not_to have_field 'amount'
@@ -74,7 +73,6 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'contract_on'            , disabled: false, with: project.contract_on
             is_expected.not_to have_field 'contract_type'
             is_expected.not_to have_field 'is_using_ses'
-            is_expected.not_to have_field 'contractual_coverage'
             is_expected.not_to have_field 'start_on'
             is_expected.not_to have_field 'end_on'
             is_expected.not_to have_field 'amount'

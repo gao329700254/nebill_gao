@@ -22,10 +22,6 @@ fieldset.project_detail__form__basic
   .project_detail__form__item v-if='project.contracted'
     = label_tag :is_using_ses, t('activerecord.attributes.project.is_using_ses')
     = check_box_tag :is_using_ses, true, false, 'v-model' => 'project.is_using_ses', ':disabled' => '!editMode'
-  .project_detail__form__item v-if='project.contracted'
-    = label_tag :contractual_coverage, t('activerecord.attributes.project.contractual_coverage')
-    = select_tag :contractual_coverage, options_for_select(Project.contractual_coverage.options), include_blank: true,
-                 'v-model' => 'project.contractual_coverage', ':disabled' => '!editMode'
   .project_detail__form__container v-if='project.contracted'
     .project_detail__form__container__group
       .project_detail__form__item

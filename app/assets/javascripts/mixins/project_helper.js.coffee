@@ -25,9 +25,6 @@ Vue.modules.projectHelper = {
       is_using_ses:
         init: false
         exist: { contracted: true, uncontracted: false }
-      contractual_coverage:
-        init: 'development'
-        exist: { contracted: true, uncontracted: false }
       start_on:
         init: ''
         exist: { contracted: true, uncontracted: false }
