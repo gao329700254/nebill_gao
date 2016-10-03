@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160905090519
+# Schema version: 20161003063433
 #
 # Table name: projects
 #
@@ -24,7 +24,6 @@
 #  orderer_memo            :text
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
-#  contractual_coverage    :string
 #  is_using_ses            :boolean
 #  group_id                :integer
 #  payment_type            :string
@@ -51,8 +50,7 @@ class Project < ActiveRecord::Base
   has_many :files, class_name: 'ProjectFile'
   has_many :file_groups, class_name: 'ProjectFileGroup'
 
-  enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment]
-  enumerize :contractual_coverage, in: [:development, :maintenance]
+  enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment, :maintenance]
   enumerize :payment_type, in: %w(
     bill_on_15th_and_payment_on_end_of_next_month
     bill_on_20th_and_payment_on_end_of_next_month
