@@ -1,4 +1,8 @@
 fieldset.project_detail__form__billing
+  .project_detail__form__legend
+    .project_detail__form__legend__title
+      = fa_icon 'paper-plane-o', text: t('page.project_show.project_detail.billing')
+
   .project_detail__form__item
     = label_tag :billing_company_name, t('activerecord.attributes.project.billing_company_name')
     = text_field_tag :billing_company_name, nil, 'v-model' => 'project.billing_company_name', ':disabled' => '!editMode'

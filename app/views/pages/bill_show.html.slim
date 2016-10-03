@@ -33,7 +33,11 @@
           .bill_show__form__item
             = label_tag :contracted, t('activerecord.attributes.bill.memo')
             = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
-    = button_tag t('helpers.edit')          , 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'bill_show__form__edit_btn'
-    = submit_tag t('helpers.cancel')        , 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__cancel_btn'
-    = submit_tag t('helpers.submit.update') , 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__submit_btn'
-    = link_to (button_tag t('helpers.submit.download'), type: 'button', class: 'bill_show__form__download_btn'), bill_download_path, 'v-if' => '!editMode'
+    = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'bill_show__form__btn--edit' do
+      = fa_icon 'edit', text: t('helpers.edit')
+    = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__btn--submit' do
+      = fa_icon 'pencil-square', text: t('helpers.submit.update')
+    = link_to bill_download_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
+      = fa_icon 'download', text: t('helpers.submit.download')

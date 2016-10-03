@@ -2,4 +2,5 @@ script type='text/x-template' id='file_new'
   .file_new
     = form_tag nil, class: 'file_new__form'
       = file_field_tag :files, multiple: true, 'v-on:change' => 'fileInputChange'
-      = submit_tag t('helpers.submit.upload'), 'v-on:click.prevent' => 'fileUpload', class: 'file_new__form__submit_btn'
+      = button_tag 'v-on:click.prevent' => 'fileUpload', class: 'file_new__form__submit_btn' do
+        = fa_icon 'upload', text: t('helpers.submit.upload')

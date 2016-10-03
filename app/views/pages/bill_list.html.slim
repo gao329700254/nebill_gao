@@ -3,7 +3,8 @@
 - provide(:title, t('page.bill_list.title'))
 
 #bill_list.bill_list
-  = render partial: 'shared/search_form', locals: { css_class: 'bill_list__search' }
+  = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+                     placeholder: t('page.bill_list.search_form_placeholder'), lazy: true, class: 'bill_list__search'
   table.bill_list__tbl
     thead.bill_list__tbl__head
       tr.bill_list__tbl__head__row

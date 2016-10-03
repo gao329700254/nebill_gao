@@ -334,11 +334,15 @@ ja:
       title: 顧客新規作成
     client_list:
       title: 顧客一覧
+      search_form_placeholder: 'ID,会社名,部署名,電話番号で検索できます'
     project_new:
       title: プロジェクト新規作成
+      orderer: 受注先会社情報
+      billing: 請求先会社情報
       copy: 受注先から請求先に値をコピー
     project_list:
       title: プロジェクト一覧
+      search_form_placeholder: 'ID,名前,受注先会社名で検索できます'
       contract_type:
         all:          "すべて"
         contracted:   "契約済"
@@ -350,7 +354,11 @@ ja:
         bill_new: 請求新規作成
         member_list: メンバー
         files: ファイル
+      project_detail:
+        orderer: 受注先会社情報
+        billing: 請求先会社情報
     file_list:
+      new_form_placeholder: 'ファイルグループを登録'
       name: ファイル名
       url:  URL
       size: サイズ
@@ -358,8 +366,10 @@ ja:
       title: 請求情報
     project_groups:
       title: プロジェクトグループ
+      new_form_placeholder: 'プロジェクトグループを登録'
     bill_list:
       title: 請求一覧
+      search_form_placeholder: 'ID,プロジェクト名,請求先会社名で検索できます'
     partners:
       title: パートナー一覧
     admin:
@@ -367,4 +377,4 @@ ja:
         title: ユーザ管理
   component:
     member_list:
-      new_partner: パートナーを新規登録する
+      new_partner: パートナーを新規登録

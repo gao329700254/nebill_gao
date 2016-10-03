@@ -2,8 +2,9 @@ script type='text/x-template' id='file_list'
   .file_list
     ul.file_list__menu
       li.file_list__menu__item.file_list__group_new
-        = text_field_tag :name, nil, placeholder: 'new group', 'v-model' => 'group_name', class: 'file_list__group_new__field'
-        = button_tag t('helpers.submit.create'), 'v-on:click' => 'createFileGroup', class: 'file_list__group_new__btn'
+        = text_field_tag :name, nil, placeholder: t('page.file_list.new_form_placeholder'), 'v-model' => 'group_name', class: 'file_list__group_new__field'
+        = button_tag 'v-on:click' => 'createFileGroup', class: 'file_list__group_new__btn' do
+          = fa_icon 'check', text: t('helpers.submit.create')
       li.file_list__menu__item.file_list__refresh
         = button_tag 'v-on:click' => 'loadFiles', class: 'file_list__refresh__btn' do
           = fa_icon 'refresh'
@@ -15,7 +16,8 @@ script type='text/x-template' id='file_list'
           select v-model='fileGroupId'
             option value=""
             option v-for="fileGroup in fileGroups" value="{{fileGroup.id}}" {{fileGroup.name}}
-          = button_tag t('helpers.submit.update'), 'v-on:click' => 'updateFiles', class: 'file_list__group_update__content__btn'
+          = button_tag 'v-on:click' => 'updateFiles', class: 'file_list__group_update__content__btn' do
+            = fa_icon 'pencil-square', text: t('helpers.submit.update')
 
     table.file_list__tbl
       thead.file_list__tbl__head

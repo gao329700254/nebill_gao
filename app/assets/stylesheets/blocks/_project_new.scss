@@ -17,14 +17,22 @@
       }
     }
 
-    &__item,
-    %project_new__form__item {
-      margin-bottom: $small-spacing;
+    &__legend {
+      @include display(flex);
+      @include align-items(center);
+      @include justify-content(space-between);
 
-      &--key {
-        @extend %project_new__form__item;
-        width: 8em;
-      }
+      margin-top: $base-spacing;
+      margin-bottom: $base-spacing;
+      border-bottom: $bold-border;
+      width: 100%;
+      height: 50px;
+      font-size: $base-font-size * 1.1;
+      font-weight: bold;
+    }
+
+    &__item {
+      margin-bottom: $small-spacing;
     }
 
     &__fill {

@@ -1,12 +1,12 @@
 header#header.header
   .header__logo
-    span Nebill
+    = image_tag 'logo.jpg', class: 'header__logo__img'
   .header__title
     = yield(:title)
   .header__menu
     ul.header__menu__list
-    - if logged_in?
-      li.header__menu__item = @current_user.name
-      li.header__menu__item = link_to t('helpers.logout'), logout_path, method: :delete, class: 'header__menu__link'
-    - else
-      li.header__menu__item = link_to t('helpers.login'), '/auth/google_oauth2', class: 'header__menu__link'
+      li.header__menu__list__item
+        = fa_icon 'user', text: @current_user.name
+      li.header__menu__list__item
+        = link_to logout_path, method: :delete, class: 'header__menu__link' do
+          = fa_icon 'sign-out', text: t('helpers.logout')

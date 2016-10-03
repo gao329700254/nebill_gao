@@ -5,21 +5,24 @@
 #project_groups.project_groups
   .project_groups__new
     .project_groups__new__input
-      = text_field_tag :name, nil, 'v-model' => 'projectGroup.name', class: 'project_groups__new__input__field'
-      = button_tag t('helpers.submit.create'), 'v-on:click.prevent' => 'createProjectGroup', class: 'project_groups__new__input__btn'
-
+      = text_field_tag :name, nil, 'v-model' => 'projectGroup.name', \
+                       class: 'project_groups__new__input__field', placeholder: t('page.project_groups.new_form_placeholder')
+      = button_tag 'v-on:click.prevent' => 'createProjectGroup', class: 'project_groups__new__input__btn'
+        = fa_icon 'check', text: t('helpers.submit.create')
   .project_groups__list
-    component [
-      :is                 = "'projectGroupsItem'"
-      :project-group-id   = "0"
-    ]
-    component [
-      :is                 = "'projectGroupsItem'"
-      :project-group-id   = "projectGroup.id"
-      :project-group-name = "projectGroup.name"
-      v-for               = "projectGroup in projectGroupList"
-      track-by            = "id"
-    ]
+    .project_groups__list__container
+      component [
+        :is                 = "'projectGroupsItem'"
+        :project-group-id   = "0"
+      ]
+    .project_groups__list__container
+      component [
+        :is                 = "'projectGroupsItem'"
+        :project-group-id   = "projectGroup.id"
+        :project-group-name = "projectGroup.name"
+        v-for               = "projectGroup in projectGroupList"
+        track-by            = "id"
+      ]
 
     script type='text/x-template' id='project_groups__item'
       .project_groups__item id="project_group-{{projectGroupId}}"

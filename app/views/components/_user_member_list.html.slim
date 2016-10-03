@@ -17,4 +17,5 @@ script type='text/x-template' id='user_member_list'
     .user_member_list__new_member
       select.user_member_list__new_member__list name="user" v-model="selectedUserId"
         option v-for="user in selectableUsers" value="{{user.id}}" {{user.name}}
-      = button_tag t('helpers.submit.create'), 'v-on:click' => 'addMember', class: 'user_member_list__new_member__btn'
+      = button_tag 'v-on:click' => 'addMember', class: 'user_member_list__new_member__btn' do
+        = fa_icon 'check', text: t('helpers.submit.create')

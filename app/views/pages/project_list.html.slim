@@ -3,7 +3,8 @@
 - provide(:title, t('page.project_list.title'))
 
 #project_list.project_list
-  = render partial: 'shared/search_form', locals: { css_class: 'project_list__search' }
+  = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+                     placeholder: t('page.project_list.search_form_placeholder'), lazy: true, class: 'project_list__search'
   div.project_list__filter
     = radio_button_tag :all, '', true, id: 'all', 'v-model' => 'contractStatus'
     = label_tag :all, t('page.project_list.contract_type.all')

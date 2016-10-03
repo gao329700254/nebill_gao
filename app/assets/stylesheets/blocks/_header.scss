@@ -18,6 +18,11 @@
     background-color: $theme-bg-color;
     color: $theme-ft-color;
     font-weight: bold;
+
+    &__img {
+      width: auto;
+      height: $header-height;
+    }
   }
 
   &__title {
@@ -35,9 +40,12 @@
     @include justify-content(flex-end);
     @include padding(null $base-spacing);
 
-    &__item {
-      margin-left: $small-spacing;
-      list-style-type: none;
+    &__list {
+      @include display(flex);
+      &__item {
+        margin-left: $base-spacing;
+        list-style-type: none;
+      }
     }
 
     &__link {
