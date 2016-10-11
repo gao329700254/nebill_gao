@@ -54,7 +54,7 @@ class Project < ActiveRecord::Base
   has_many :files, class_name: 'ProjectFile'
   has_many :file_groups, class_name: 'ProjectFileGroup'
 
-  enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment, :maintenance]
+  enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment, :maintenance, :other]
   enumerize :payment_type, in: %w(
     bill_on_15th_and_payment_on_end_of_next_month
     bill_on_20th_and_payment_on_end_of_next_month
@@ -74,4 +74,9 @@ class Project < ActiveRecord::Base
               mapping: %w(company_name department_name personnel_names address zip_code memo).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
 
   before_save { key.upcase! }
+
+  def self.sequence(prefix)
+    @max_sequence = where('key LIKE ?', "%#{prefix}%").pluck(:key).map { |key| key.gsub(prefix, "").to_i }.max
+    @sequence = @max_sequence ? @max_sequence + 1 : 1
+  end
 end

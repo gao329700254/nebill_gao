@@ -8,6 +8,17 @@ $ ->
       ordererClientId: undefined
       billingClientId: undefined
     methods:
+      setProjectKey: ->
+        projectType =
+          if @project.contracted == false
+            'uncontracted'
+          else if @project.is_using_ses == true
+            'ses'
+          else
+            @project.contract_type
+        $.ajax "/api/projects/key/#{projectType}.json"
+          .done (response) =>
+            @project.key = response.key
       loadClients: ->
         $.ajax '/api/clients.json'
           .done (response) =>
@@ -51,3 +62,4 @@ $ ->
     created: ->
       @loadClients()
       @initializeProject()
+      @setProjectKey()
