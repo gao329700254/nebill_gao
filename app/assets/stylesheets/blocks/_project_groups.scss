@@ -23,9 +23,13 @@
 
   &__list {
     @include display(flex);
-    @include flex-flow(row wrap);
-    @include justify-content(flex-start);
-    @include align-items(flex-start);
+
+    &__container {
+      @include display(flex);
+      @include flex-flow(row wrap);
+      @include justify-content(flex-start);
+      @include align-items(flex-start);
+    }
   }
 
   &__item {
@@ -37,6 +41,7 @@
 
     &__title {
       @include card__title--theme;
+      font-size: $base-font-size;
     }
 
     &__project_list {

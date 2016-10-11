@@ -1,4 +1,8 @@
 fieldset.project_new__form__billing
+  .project_new__form__legend
+    .project_new__form__legend__title
+      = fa_icon 'paper-plane-o', text: t('page.project_new.billing')
+
   .project_new__form__item
     .project_new__form__fill
       select#billing_client_id.project_new__form__fill__select v-model="billingClientId"

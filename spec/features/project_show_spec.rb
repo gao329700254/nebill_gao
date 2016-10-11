@@ -435,7 +435,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field 'min_limit_time', with: ''
           is_expected.to have_field 'max_limit_time', with: ''
           is_expected.to have_button '登録'
-          is_expected.to have_button 'パートナーを新規登録する'
+          is_expected.to have_button 'パートナーを新規登録'
         end
 
         scenario 'select partner and click submit button with correct values' do
@@ -464,16 +464,16 @@ RSpec.feature 'Project Show Page', js: true do
 
         scenario 'show Partner New Modal when click show modal button' do
           is_expected.not_to have_css '.partner_new__outer'
-          click_on 'パートナーを新規登録する'
+          click_on 'パートナーを新規登録'
           is_expected.to     have_css '.partner_new__outer'
         end
 
         describe 'Partner New Modal' do
-          before { click_on 'パートナーを新規登録する' }
+          before { click_on 'パートナーを新規登録' }
           subject { find('.partner_new') }
 
           scenario 'show' do
-            is_expected.to have_content 'パートナーを新規登録する'
+            is_expected.to have_content 'パートナーを新規登録'
           end
 
           describe 'form' do

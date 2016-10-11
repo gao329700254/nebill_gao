@@ -3,7 +3,8 @@
 - provide(:title, t('page.client_list.title'))
 
 #client_list.client_list
-  = render partial: 'shared/search_form', locals: { css_class: 'user_list__search' }
+  = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+                     placeholder: t('page.client_list.search_form_placeholder'), lazy: true, class: 'client_list__search'
   table.client_list__tbl
     thead.client_list__tbl__head
       tr.client_list__tbl__head__row

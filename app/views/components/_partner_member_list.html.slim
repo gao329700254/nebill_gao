@@ -35,9 +35,10 @@ script type='text/x-template' id='partner_member_list'
       .partner_member_list__new_member__form__item
         = number_field_tag :max_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.max_limit_time'), 'v-model' => 'member.max_limit_time'
       .partner_member_list__new_member__form__item
-        = button_tag t('helpers.submit.create'), 'v-on:click' => 'addMember', class: 'partner_member_list__new_member__btn'
-
-    = button_tag t('component.member_list.new_partner'), 'v-on:click' => 'showPartnerNew', class: 'partner_member_list__show_partner_new_btn'
+        = button_tag 'v-on:click' => 'addMember', class: 'partner_member_list__new_member__btn' do
+          = fa_icon 'check', text: t('helpers.submit.create')
+    = button_tag 'v-on:click' => 'showPartnerNew', class: 'partner_member_list__show_partner_new_btn' do
+      = fa_icon 'check', text: t('component.member_list.new_partner')
 
     component [
       :is         = "'partnerNew'"

@@ -1,5 +1,6 @@
 #{$all-button-inputs},
-button {
+button,
+a[type=button] {
   @include appearance(none);
   @include transition(all .2s ease-out);
   @include user-select(none);
@@ -10,7 +11,7 @@ button {
 
   cursor: pointer;
 
-  padding: .75em 1em;
+  padding: .6em 2em;
 
   vertical-align: middle;
 

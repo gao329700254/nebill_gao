@@ -1,24 +1,25 @@
 @mixin btn--default {
   background-color: $white;
-  border: solid 1px $action-color;
-  color: $action-color;
+  border: solid 2px $action-color;
+  color: $black;
 
   &:hover,
   &:focus {
-    border: solid 1px $active-action-color;
+    border: solid 2px $active-action-color;
     background-color: $active-action-color;
     color: $white;
   }
 }
 
+// 暫定的にbtn--defaultと同じstyle
 @mixin btn--primary {
-  background-color: $action-color;
-  border: solid 1px $action-color;
-  color: $white;
+  background-color: $white;
+  border: solid 2px $action-color;
+  color: $black;
 
   &:hover,
   &:focus {
-    border: solid 1px $active-action-color;
+    border: solid 2px $active-action-color;
     background-color: $active-action-color;
     color: $white;
   }

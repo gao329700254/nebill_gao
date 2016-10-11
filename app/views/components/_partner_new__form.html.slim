@@ -8,5 +8,7 @@
   .partner_new__form__item
     = label_tag :company_name, t('activerecord.attributes.partner.company_name')
     = text_field_tag :company_name, nil, 'v-model' => 'partner.company_name'
-  = button_tag t('helpers.cancel')        , 'v-on:click.prevent' => 'cancel', class: 'partner_new__form__cancel_btn'
-  = submit_tag t('helpers.submit.create') , 'v-on:click.prevent' => 'submit', class: 'partner_new__form__submit_btn'
+  = button_tag 'v-on:click.prevent' => 'cancel', class: 'partner_new__form__cancel_btn' do
+    = fa_icon 'remove', text: t('helpers.cancel')
+  = button_tag 'v-on:click.prevent' => 'submit', class: 'partner_new__form__submit_btn' do
+    = fa_icon 'check', text: t('helpers.submit.create')

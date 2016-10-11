@@ -1,4 +1,8 @@
 fieldset.project_detail__form__orderer
+  .project_detail__form__legend
+    .project_detail__form__legend__title
+        = fa_icon 'jpy', text: t('page.project_show.project_detail.orderer')
+
   .project_detail__form__item
     = label_tag :orderer_company_name, t('activerecord.attributes.project.orderer_company_name')
     = text_field_tag :orderer_company_name, nil, 'v-model' => 'project.orderer_company_name', ':disabled' => '!editMode'

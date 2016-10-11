@@ -27,4 +27,5 @@
         .client_new__form__item
           = label_tag :memo, t('activerecord.attributes.client.memo')
           = text_area_tag :memo, nil, 'v-model' => 'client.memo'
-    = submit_tag t('helpers.submit.create'), 'v-on:click.prevent' => 'submit', class: 'client_new__form__submit_btn'
+    = button_tag 'v-on:click.prevent' => 'submit', class: 'client_new__form__submit_btn' do
+      = fa_icon 'check', text: t('helpers.submit.create')
