@@ -49,12 +49,13 @@ RSpec.describe 'projects request' do
 
   describe 'POST /api/projects' do
     let(:path) { "/api/projects" }
+    let(:project_group) { create(:project_group) }
 
     context 'with correct parameter' do
       let(:params) do
         {
           project: {
-            group_id: 1,
+            group_id: project_group.id,
             key: 'key',
             name: 'name',
             contracted: true,
@@ -87,7 +88,7 @@ RSpec.describe 'projects request' do
         end.to change(Project, :count).by(1)
 
         project = Project.first
-        expect(project.group_id).to eq 1
+        expect(project.group_id).to eq project_group.id
         expect(project.key).to eq  'KEY'
         expect(project.name).to eq  'name'
         expect(project.contracted).to eq  true
@@ -227,13 +228,14 @@ RSpec.describe 'projects request' do
   describe 'PATCH /api/projects' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
+      let(:project_group) { create(:project_group) }
       let(:path) { "/api/projects/#{project.id}" }
 
       context 'with correct parameter' do
         let(:params) do
           {
             project: {
-              group_id: 1,
+              group_id: project_group.id,
               key: 'key',
               name: 'name',
               contracted: true,
@@ -265,7 +267,7 @@ RSpec.describe 'projects request' do
             patch path, params
           end.to change { project.reload && project.updated_at }
 
-          expect(project.group_id).to eq  1
+          expect(project.group_id).to eq  project_group.id
           expect(project.key).to eq  'KEY'
           expect(project.name).to eq  'name'
           expect(project.contracted).to eq  true

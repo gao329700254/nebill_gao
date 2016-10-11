@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160823090016
+# Schema version: 20161003063433
 #
 # Table name: project_files
 #
@@ -9,6 +9,10 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  file_group_id :integer
+#
+# Foreign Keys
+#
+#  fk_rails_c26fbba4b3  (project_id => projects.id)
 #
 
 class ProjectFile < ActiveRecord::Base

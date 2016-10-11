@@ -34,6 +34,10 @@
 #
 #  index_projects_on_key  (key) UNIQUE
 #
+# Foreign Keys
+#
+#  fk_rails_a3d5742497  (group_id => project_groups.id)
+#
 
 class Project < ActiveRecord::Base
   extend Enumerize

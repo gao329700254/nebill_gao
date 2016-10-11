@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160923105401
+# Schema version: 20161003063433
 #
 # Table name: members
 #
@@ -18,6 +18,11 @@
 #  index_members_on_employee_id_and_project_id  (employee_id,project_id) UNIQUE
 #  index_members_on_project_id                  (project_id)
 #  index_members_on_type                        (type)
+#
+# Foreign Keys
+#
+#  fk_rails_1e30d6a7f9  (employee_id => employees.id)
+#  fk_rails_7054080f33  (project_id => projects.id)
 #
 
 class Member < ActiveRecord::Base
