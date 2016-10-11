@@ -314,6 +314,7 @@ ja:
         uasimandate: 準委任
         consignment: 委託
         maintenance: 保守
+        other:       その他
       payment_type:
         bill_on_15th_and_payment_on_end_of_next_month:                15日締め翌月末払い
         bill_on_20th_and_payment_on_end_of_next_month:                20日締め翌月末払い

@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       resources :project_files, only: [:index, :create, :update]
       resources :project_file_groups, only: [:index, :create]
       get 'default_dates', on: :member
+      collection do
+        get "key/:project_type", to: "project_keys#key", as: "project_key"
+      end
     end
     %w(user partner).each do |member_type|
       post "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"

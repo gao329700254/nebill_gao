@@ -38,6 +38,7 @@
 # api_project_project_file_groups GET    /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#index
 #                                 POST   /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#create
 #       default_dates_api_project GET    /api/projects/:id/default_dates(.:format)               api/projects#default_dates
+#        project_key_api_projects GET    /api/projects/key/:project_type(.:format)               api/project_keys#key
 #                    api_projects GET    /api/projects(.:format)                                 api/projects#index
 #                                 POST   /api/projects(.:format)                                 api/projects#create
 #                     api_project GET    /api/projects/:id(.:format)                             api/projects#show
