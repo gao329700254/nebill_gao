@@ -19,12 +19,23 @@ RSpec.describe 'project files request' do
 
       json0 = json[0]
       expect(json0).to have_key 'id'
-      expect(json0).to have_key 'url'
-      expect(json0).to have_key 'name'
+      expect(json0).to have_key 'original_filename'
       expect(json0).to have_key 'size'
       expect(json0).to have_key 'group'
       expect(json0).to have_key 'created_at'
       expect(json0).to have_key 'updated_at'
+    end
+  end
+
+  describe 'GET /api/project_files/:id' do
+    let!(:file_path) { Rails.root.join('spec/fixtures/sample.jpg') }
+    let!(:project_file) { create(:project_file, project: project, file: fixture_file_upload(file_path, 'image/jpg')) }
+    let(:path) { "/api/project_files/#{project_file.id}" }
+
+    it 'download the file' do
+      get path
+
+      expect(response.body).to eq IO.binread(file_path)
     end
   end
 
@@ -43,7 +54,7 @@ RSpec.describe 'project files request' do
       end.to change(ProjectFile, :count).by(1)
 
       project_file = ProjectFile.first
-      expect(project_file.file_identifier).to eq 'sample.jpg'
+      expect(project_file.original_filename).to eq 'sample.jpg'
     end
 
     it 'return success code and message' do

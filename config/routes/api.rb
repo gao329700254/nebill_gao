@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index]
       resources :partners, only: [:index]
       resources :bills, only: [:create, :show, :update]
-      resources :project_files, only: [:index, :create, :update]
+      resources :project_files, only: [:index, :show, :create, :update]
       resources :project_file_groups, only: [:index, :create]
       get 'default_dates', on: :member
       collection do

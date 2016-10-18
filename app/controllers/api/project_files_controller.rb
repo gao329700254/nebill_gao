@@ -1,6 +1,6 @@
 class Api::ProjectFilesController < Api::ApiController
   before_action :set_project, only: [:index, :create]
-  before_action :set_project_file, only: [:update]
+  before_action :set_project_file, only: [:show, :update]
 
   def index
     @project_files = @project.files
@@ -9,8 +9,14 @@ class Api::ProjectFilesController < Api::ApiController
     end
   end
 
+  def show
+    file = @project_file.file
+    file.download!(file.url) if Rails.env.production?
+    send_file file.path, filename: @project_file.original_filename
+  end
+
   def create
-    @file = @project.files.build(file: params[:file])
+    @file = @project.files.build(file: params[:file], original_filename: params[:file].original_filename)
     @file.save!
 
     render(

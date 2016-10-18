@@ -19,8 +19,8 @@ RSpec.feature 'Project Show Page', js: true do
     given!(:file_group1) { create(:project_file_group, project: project) }
     given!(:file_group2) { create(:project_file_group, project: project) }
     given!(:file_group3) { create(:project_file_group, project: project) }
-    given!(:file1) { create(:project_file, project: project, group: file_group1) }
-    given!(:file2) { create(:project_file, project: project, group: file_group2) }
+    given!(:file1) { create(:project_file, project: project, group: file_group1, original_filename: 'sample1.jpg') }
+    given!(:file2) { create(:project_file, project: project, group: file_group2, original_filename: 'sample2.jpg') }
     background { visit project_show_path(project) }
 
     subject { page }
@@ -547,9 +547,9 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content 'ファイル名'
           is_expected.to have_content 'サイズ'
 
-          is_expected.to have_content file1.file_identifier
+          is_expected.to have_content file1.original_filename
           is_expected.to have_content file1.group.name
-          is_expected.to have_content file2.file_identifier
+          is_expected.to have_content file2.original_filename
           is_expected.to have_content file2.group.name
         end
 
@@ -598,7 +598,7 @@ RSpec.feature 'Project Show Page', js: true do
         end
 
         context 'when click file name' do
-          before { click_on file1.file_identifier, match: :first }
+          before { click_on file1.original_filename, match: :first }
 
           scenario 'download the file' do
             expect(page.response_headers['Content-Type']).to eq('image/jpeg')

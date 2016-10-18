@@ -34,6 +34,6 @@ script type='text/x-template' id='file_list'
         ]
           td.file_list__tbl__item--name
             input type="checkbox" name="selected" v-model="file.selected"
-            a v-bind:href="file.url" v-text="file.name"
+            a v-bind:href="'/api/project_files/' + file.id" v-text="file.original_filename"
             span v-text="file.group.name" v-if="file.group.name != null"
           td.file_list__tbl__item--size v-text="file.size"
