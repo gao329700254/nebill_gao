@@ -33,7 +33,8 @@
 #                                 PUT    /api/bills/:id(.:format)                                api/bills#update
 #       api_project_project_files GET    /api/projects/:project_id/project_files(.:format)       api/project_files#index
 #                                 POST   /api/projects/:project_id/project_files(.:format)       api/project_files#create
-#                api_project_file PATCH  /api/project_files/:id(.:format)                        api/project_files#update
+#                api_project_file GET    /api/project_files/:id(.:format)                        api/project_files#show
+#                                 PATCH  /api/project_files/:id(.:format)                        api/project_files#update
 #                                 PUT    /api/project_files/:id(.:format)                        api/project_files#update
 # api_project_project_file_groups GET    /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#index
 #                                 POST   /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#create

@@ -1,14 +1,15 @@
 # == Schema Information
-# Schema version: 20161003063433
+# Schema version: 20161018105329
 #
 # Table name: project_files
 #
-#  id            :integer          not null, primary key
-#  project_id    :integer          not null
-#  file          :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  file_group_id :integer
+#  id                :integer          not null, primary key
+#  project_id        :integer          not null
+#  file              :string           not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  file_group_id     :integer
+#  original_filename :string           not null
 #
 # Foreign Keys
 #
@@ -21,5 +22,6 @@ class ProjectFile < ActiveRecord::Base
 
   mount_uploader :file, ProjectFileUploader
 
-  validates :file, presence: true
+  validates :file             , presence: true
+  validates :original_filename, presence: true
 end
