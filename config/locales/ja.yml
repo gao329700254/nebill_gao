@@ -341,6 +341,12 @@ ja:
       orderer: 受注先会社情報
       billing: 請求先会社情報
       copy: 受注先から請求先に値をコピー
+      company_name: 会社名
+      department_name: 部署名
+      personnel_names: 担当者名
+      address: 住所
+      zip_code: 郵便番号
+      memo: メモ
     project_list:
       title: プロジェクト一覧
       search_form_placeholder: 'ID,名前,受注先会社名で検索できます'
@@ -358,6 +364,12 @@ ja:
       project_detail:
         orderer: 受注先会社情報
         billing: 請求先会社情報
+        company_name: 会社名
+        department_name: 部署名
+        personnel_names: 担当者名
+        address: 住所
+        zip_code: 郵便番号
+        memo: メモ
     file_list:
       new_form_placeholder: 'ファイルグループを登録'
       name: ファイル名
