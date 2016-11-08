@@ -124,5 +124,90 @@ RSpec.describe 'clients request' do
   end
 
   describe 'PATCH /api/clients/:id' do
+    context 'with exist client id' do
+      let(:client) { create(:client) }
+      let(:path)   { "/api/clients/#{client.id}" }
+
+      context 'with correct values' do
+        let(:params) do
+          {
+            client: {
+              key: 'CLIENT-1',
+              company_name:     'company_name',
+              department_name:  'department_name',
+              zip_code:         '000-0000',
+              phone_number:     '00-0000-0000',
+              memo:             'memo',
+            },
+          }
+        end
+
+        it 'update the client' do
+          expect do
+            patch path, params
+          end.to change { client.reload && client.updated_at }
+
+          expect(client.key).to              eq 'CLIENT-1'
+          expect(client.company_name).to     eq 'company_name'
+          expect(client.department_name).to  eq 'department_name'
+          expect(client.zip_code).to         eq '000-0000'
+          expect(client.phone_number).to     eq '00-0000-0000'
+          expect(client.memo).to             eq 'memo'
+        end
+
+        it 'return success code and message' do
+          patch path, params
+
+          expect(response).to be_success
+          expect(response.status).to eq 201
+
+          expect(json['id']).not_to eq nil
+          expect(json['message']).to eq '顧客を更新しました'
+        end
+      end
+
+      context 'with uncorrect values' do
+        let(:params) do
+          {
+            client: {
+              key: '  ',
+              company_name:     'company_name',
+              department_name:  'department_name',
+              zip_code:         '000-0000',
+              phone_number:     '00-0000-0000',
+              memo:             'memo',
+            },
+          }
+        end
+
+        it 'do not update the client' do
+          expect do
+            patch path, params
+          end.not_to change { client.reload && client.updated_at }
+        end
+
+        it 'return 422 Unprocessable Entity code and message' do
+          patch path, params
+
+          expect(response).not_to be_success
+          expect(response.status).to eq 422
+
+          expect(json['message']).to eq '顧客が更新できませんでした'
+        end
+      end
+    end
+
+    context 'with not exist client id' do
+      let(:path) { "/api/clients/0" }
+
+      it 'return 404 Not Found code and message' do
+        patch path
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
   end
 end

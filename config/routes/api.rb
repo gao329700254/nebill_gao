@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api, format: :json do
-    resources :clients, only: [:index, :create, :show]
+    resources :clients, only: [:index, :create, :show, :update]
     resources :users, only: [:index, :create]
     resources :partners, only: [:index, :create]
     resources :projects, only: [:index, :create, :show, :update], shallow: true do

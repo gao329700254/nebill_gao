@@ -20,6 +20,11 @@
 
       &__row {
         @include list_tbl__body__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
       }
     }
 
