@@ -4,20 +4,20 @@ fieldset.project_detail__form__orderer
         = fa_icon 'jpy', text: t('page.project_show.project_detail.orderer')
 
   .project_detail__form__item
-    = label_tag :orderer_company_name, t('activerecord.attributes.project.orderer_company_name')
+    = label_tag :orderer_company_name, t('page.project_show.project_detail.company_name')
     = text_field_tag :orderer_company_name, nil, 'v-model' => 'project.orderer_company_name', ':disabled' => '!editMode'
   .project_detail__form__item
-    = label_tag :orderer_department_name, t('activerecord.attributes.project.orderer_department_name')
+    = label_tag :orderer_department_name, t('page.project_show.project_detail.department_name')
     = text_field_tag :orderer_department_name, nil, 'v-model' => 'project.orderer_department_name', ':disabled' => '!editMode'
   .project_detail__form__item
-    = label_tag :orderer_personnel_names, t('activerecord.attributes.project.orderer_personnel_names')
+    = label_tag :orderer_personnel_names, t('page.project_show.project_detail.personnel_names')
     = text_field_tag :orderer_personnel_names, nil, 'v-model' => 'project_orderer_personnel_names_str', ':disabled' => '!editMode'
   .project_detail__form__item
-    = label_tag :orderer_address, t('activerecord.attributes.project.orderer_address')
+    = label_tag :orderer_address, t('page.project_show.project_detail.address')
     = text_field_tag :orderer_address, nil, 'v-model' => 'project.orderer_address', ':disabled' => '!editMode'
   .project_detail__form__item
-    = label_tag :orderer_zip_code, t('activerecord.attributes.project.orderer_zip_code')
+    = label_tag :orderer_zip_code, t('page.project_show.project_detail.zip_code')
     = text_field_tag :orderer_zip_code, nil, 'v-model' => 'project.orderer_zip_code', ':disabled' => '!editMode'
   .project_detail__form__item
-    = label_tag :orderer_memo, t('activerecord.attributes.project.orderer_memo')
+    = label_tag :orderer_memo, t('page.project_show.project_detail.memo')
     = text_area_tag :orderer_memo, nil, 'v-model' => 'project.orderer_memo', ':disabled' => '!editMode'
