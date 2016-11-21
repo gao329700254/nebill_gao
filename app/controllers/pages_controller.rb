@@ -2,6 +2,7 @@ class PagesController < ApplicationController
   skip_before_action :require_login, only: [:home]
   before_action :set_project, only: [:project_show]
   before_action :set_bill   , only: [:bill_show]
+  before_action :set_client , only: [:client_show]
 
   def home
     render layout: 'simple'
@@ -11,6 +12,9 @@ class PagesController < ApplicationController
   end
 
   def client_list
+  end
+
+  def client_show
   end
 
   def project_new
@@ -42,5 +46,9 @@ private
 
   def set_bill
     @bill = Bill.find(params[:bill_id])
+  end
+
+  def set_client
+    @client = Client.find(params[:client_id])
   end
 end

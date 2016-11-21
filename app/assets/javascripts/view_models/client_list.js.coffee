@@ -10,6 +10,8 @@ $ ->
       list: undefined
       searchKeywords: undefined
       sortKey: 'id'
+    methods:
+      linkToShow: (clientId) -> window.location = "/clients/#{clientId}/show"
     compiled: ->
       $.ajax '/api/clients.json'
         .done (response) =>

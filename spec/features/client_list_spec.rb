@@ -79,4 +79,10 @@ RSpec.feature 'Client List Page', js: true do
     end
   end
 
+  scenario 'link to a client show page when click row' do
+    find("#client-#{client1.id}").click
+
+    is_expected.to have_header_title '顧客情報'
+  end
+
 end

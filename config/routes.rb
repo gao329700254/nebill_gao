@@ -9,6 +9,7 @@
 #                          logout DELETE /logout(.:format)                                       user_sessions#destroy
 #                      client_new GET    /clients/new(.:format)                                  pages#client_new
 #                     client_list GET    /clients/list(.:format)                                 pages#client_list
+#                     client_show GET    /clients/:client_id/show(.:format)                      pages#client_show
 #                     project_new GET    /projects/new(.:format)                                 pages#project_new
 #                    project_list GET    /projects/list(.:format)                                pages#project_list
 #                    project_show GET    /projects/:project_id/show(.:format)                    pages#project_show
@@ -21,6 +22,8 @@
 #                     api_clients GET    /api/clients(.:format)                                  api/clients#index
 #                                 POST   /api/clients(.:format)                                  api/clients#create
 #                      api_client GET    /api/clients/:id(.:format)                              api/clients#show
+#                                 PATCH  /api/clients/:id(.:format)                              api/clients#update
+#                                 PUT    /api/clients/:id(.:format)                              api/clients#update
 #                       api_users GET    /api/users(.:format)                                    api/users#index
 #                                 POST   /api/users(.:format)                                    api/users#create
 #                    api_partners GET    /api/partners(.:format)                                 api/partners#index
@@ -72,6 +75,9 @@ Rails.application.routes.draw do
   scope path: 'clients' do
     get 'new',  to: 'pages#client_new',  as: 'client_new'
     get 'list', to: 'pages#client_list', as: 'client_list'
+  end
+  scope path: 'clients/:client_id' do
+    get 'show', to: 'pages#client_show', as: 'client_show'
   end
   scope path: 'projects' do
     get 'new', to: 'pages#project_new', as: 'project_new'

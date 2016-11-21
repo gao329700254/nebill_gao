@@ -1,0 +1,37 @@
+= javascript_include_tag 'view_models/client_show'
+
+- provide(:title, t('page.client_show.title'))
+
+#client_show.client_show
+  = hidden_field_tag :client_id, @client.id, 'v-model' => 'clientId'
+
+  = form_tag nil, class: 'client_show__form'
+    .client_show__form__container
+      .client_show__form__container__group
+        .client_show__form__item
+          = label_tag :key, t('activerecord.attributes.client.key')
+          = text_field_tag :key, nil, 'v-model' => 'client.key', ':disabled' => '!editMode'
+        .client_show__form__item
+          = label_tag :company_name, t('activerecord.attributes.client.company_name')
+          = text_field_tag :company_name, nil, 'v-model' => 'client.company_name', ':disabled' => '!editMode'
+        .client_show__form__item
+          = label_tag :department_name, t('activerecord.attributes.client.department_name')
+          = text_field_tag :department_name, nil, 'v-model' => 'client.department_name', ':disabled' => '!editMode'
+        .client_show__form__item
+          = label_tag :address, t('activerecord.attributes.client.address')
+          = text_field_tag :address, nil, 'v-model' => 'client.address', ':disabled' => '!editMode'
+        .client_show__form__item
+          = label_tag :zip_code, t('activerecord.attributes.client.zip_code')
+          = text_field_tag :zip_code, nil, 'v-model' => 'client.zip_code', ':disabled' => '!editMode'
+        .client_show__form__item
+          = label_tag :phone_number, t('activerecord.attributes.client.phone_number')
+          = text_field_tag :phone_number, nil, 'v-model' => 'client.phone_number', ':disabled' => '!editMode'
+        .client_show__form__item
+          = label_tag :memo, t('activerecord.attributes.client.memo')
+          = text_field_tag :memo, nil, 'v-model' => 'client.memo', ':disabled' => '!editMode'
+    = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'client_show__form__btn--edit' do
+      = fa_icon 'edit', text: t('helpers.edit')
+    = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'client_show__form__btn--cancel' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'client_show__form__btn--submit' do
+      = fa_icon 'pencil-square', text: t('helpers.submit.update')

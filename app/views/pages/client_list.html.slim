@@ -16,6 +16,7 @@
       tr.client_list__tbl__body__row [
         v-for      = "client in list | selectBy searchKeywords selectSchema | orderBy sortKey"
         id         = "client-{{client.id}}"
+        v-on:click = "linkToShow(client.id)"
         track-by   = "key"
       ]
         td.client_list__tbl__item--key                  v-text='client.key'

@@ -336,6 +336,8 @@ ja:
     client_list:
       title: 顧客一覧
       search_form_placeholder: 'ID,会社名,部署名,電話番号で検索できます'
+    client_show:
+      title: 顧客情報
     project_new:
       title: プロジェクト新規作成
       orderer: 受注先会社情報
