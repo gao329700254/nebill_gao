@@ -35,10 +35,10 @@ module Xlsx
     def edit_cell(cell, target)
       case target
       when "[Time.zone.today]"         then replace!(cell, target, date_format(Time.zone.today))
-      when "[project_key]"             then replace!(cell, target, @project.key)
+      when "[project_cd]"              then replace!(cell, target, @project.cd)
       when "[project_name]"            then replace!(cell, target, @project.name)
       when "[project_period]"          then replace!(cell, target, project_period)
-      when "[bill_key]"                then replace!(cell, target, @bill.key)
+      when "[bill_cd]"                 then replace!(cell, target, @bill.cd)
       when "[bill_payment_on]"         then replace!(cell, target, date_format(@bill.payment_on))
       when "[bill_amount]"             then replace!(cell, target, @bill.amount)
       when "[subtotal]"                then replace!(cell, target, subtotal)

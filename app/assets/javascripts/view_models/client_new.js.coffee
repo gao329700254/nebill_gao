@@ -3,7 +3,7 @@ $ ->
     el: '#client_new'
     data:
       client:
-        key:              undefined
+        cd:               undefined
         company_name:     undefined
         department_name:  undefined
         address:          undefined

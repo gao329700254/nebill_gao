@@ -5,7 +5,7 @@ $ ->
       clientId: undefined
       clientSchema:
         id:               { init: '' }
-        key:              { init: '' }
+        cd:               { init: '' }
         company_name:     { init: '' }
         department_name:  { init: '' }
         address:          { init: '' }
@@ -42,7 +42,7 @@ $ ->
             type: 'PATCH'
             data:
               client:
-                key:              @client.key
+                cd:               @client.cd
                 company_name:     @client.company_name
                 department_name:  @client.department_name
                 address:          @client.address

@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :project do
     association :group, factory: :project_group
 
-    sequence(:key) { |n| "KEY-#{n}" }
+    sequence(:cd) { |n| "CD-#{n}" }
     name { Faker::App.name }
     contracted false
     contract_on { Faker::Date.between(6.months.ago, 5.months.ago) }

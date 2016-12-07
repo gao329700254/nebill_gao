@@ -21,7 +21,7 @@ private
   end
 
   def xlsx_file_name
-    ['請求書', @bill.project.billing_company_name, @bill.key].compact.join("_") + '.xlsx'
+    ['請求書', @bill.project.billing_company_name, @bill.cd].compact.join("_") + '.xlsx'
   end
 
   def set_bill

@@ -7,8 +7,8 @@ fieldset.project_detail__form__basic
                      'v-model' => 'project.group_id', ':disabled' => '!editMode'
     .project_detail__form__container__group
       .project_detail__form__item
-        = label_tag :key, t('activerecord.attributes.project.key')
-        = text_field_tag :key, nil, 'v-model' => 'project.key', ':disabled' => '!editMode', maxlength: 7
+        = label_tag :cd, t('activerecord.attributes.project.cd')
+        = text_field_tag :cd, nil, 'v-model' => 'project.cd', ':disabled' => '!editMode', maxlength: 7
   .project_detail__form__container
     .project_detail__form__container__group
       .project_detail__form__item

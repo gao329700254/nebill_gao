@@ -2,7 +2,7 @@ module ProjectValidates
   extend ActiveSupport::Concern
 
   included do
-    validates :key          , presence: true, uniqueness: { case_sensitive: false }
+    validates :cd           , presence: true, uniqueness: { case_sensitive: false }
     validates :name         , presence: true
     validates :contract_on  , presence: true
     validates :amount       , numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }

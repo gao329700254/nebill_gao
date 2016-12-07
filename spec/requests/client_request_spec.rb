@@ -21,7 +21,7 @@ RSpec.describe 'clients request' do
 
       json0 = json[0]
       expect(json0).to have_key 'id'
-      expect(json0).to have_key 'key'
+      expect(json0).to have_key 'cd'
       expect(json0).to have_key 'company_name'
       expect(json0).to have_key 'department_name'
       expect(json0).to have_key 'address'
@@ -43,7 +43,7 @@ RSpec.describe 'clients request' do
         expect(response.status).to eq 200
 
         expect(json['id']).to               eq client.id
-        expect(json['key']).to              eq client.key
+        expect(json['cd']).to               eq client.cd
         expect(json['company_name']).to     eq client.company_name
         expect(json['department_name']).to  eq client.department_name
         expect(json['address']).to          eq client.address
@@ -76,7 +76,7 @@ RSpec.describe 'clients request' do
       let(:params) do
         {
           client: {
-            key: 'CLIENT-1',
+            cd: 'CLIENT-1',
             company_name:     'company_name',
             department_name:  'department_name',
             zip_code:         '000-0000',
@@ -92,7 +92,7 @@ RSpec.describe 'clients request' do
         end.to change(Client, :count).by(1)
 
         client = Client.first
-        expect(client.key).to              eq 'CLIENT-1'
+        expect(client.cd).to               eq 'CLIENT-1'
         expect(client.company_name).to     eq 'company_name'
         expect(client.department_name).to  eq 'department_name'
         expect(client.zip_code).to         eq '000-0000'
@@ -105,7 +105,7 @@ RSpec.describe 'clients request' do
       let(:params) do
         {
           client: {
-            key: '  ',
+            cd: '  ',
             company_name:     'company_name',
             department_name:  'department_name',
             zip_code:         '000-0000',
@@ -132,7 +132,7 @@ RSpec.describe 'clients request' do
         let(:params) do
           {
             client: {
-              key: 'CLIENT-1',
+              cd: 'CLIENT-1',
               company_name:     'company_name',
               department_name:  'department_name',
               zip_code:         '000-0000',
@@ -147,7 +147,7 @@ RSpec.describe 'clients request' do
             patch path, params
           end.to change { client.reload && client.updated_at }
 
-          expect(client.key).to              eq 'CLIENT-1'
+          expect(client.cd).to               eq 'CLIENT-1'
           expect(client.company_name).to     eq 'company_name'
           expect(client.department_name).to  eq 'department_name'
           expect(client.zip_code).to         eq '000-0000'
@@ -170,7 +170,7 @@ RSpec.describe 'clients request' do
         let(:params) do
           {
             client: {
-              key: '  ',
+              cd: '  ',
               company_name:     'company_name',
               department_name:  'department_name',
               zip_code:         '000-0000',

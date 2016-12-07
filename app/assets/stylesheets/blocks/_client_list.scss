@@ -32,7 +32,7 @@
     %client_list__tbl__item {
       @include list_tbl__item;
 
-      &--key {
+      &--cd {
         @extend %client_list__tbl__item;
         @include span-columns(3);
       }

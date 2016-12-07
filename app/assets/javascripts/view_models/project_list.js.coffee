@@ -4,7 +4,7 @@ $ ->
     data:
       sortKey: 'contract_on'
       selectSchema:
-        key: 'eq'
+        cd: 'eq'
         name: 'like'
         orderer_company_name: 'like'
       list: undefined

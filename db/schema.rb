@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018105329) do
+ActiveRecord::Schema.define(version: 20161207071241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "bills", force: :cascade do |t|
     t.integer  "project_id",                null: false
-    t.string   "key",                       null: false
+    t.string   "cd",                        null: false
     t.date     "delivery_on",               null: false
     t.date     "acceptance_on",             null: false
     t.date     "payment_on",                null: false
@@ -30,10 +30,10 @@ ActiveRecord::Schema.define(version: 20161018105329) do
     t.integer  "amount",        default: 0, null: false
   end
 
-  add_index "bills", ["key"], name: "index_bills_on_key", unique: true, using: :btree
+  add_index "bills", ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
 
   create_table "clients", force: :cascade do |t|
-    t.string   "key",             null: false
+    t.string   "cd",              null: false
     t.string   "company_name"
     t.string   "department_name"
     t.string   "address"
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20161018105329) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "key",                     null: false
+    t.string   "cd",                      null: false
     t.string   "name",                    null: false
     t.boolean  "contracted",              null: false
     t.date     "contract_on",             null: false
@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 20161018105329) do
     t.string   "orderer_personnel_names",              array: true
   end
 
-  add_index "projects", ["key"], name: "index_projects_on_key", unique: true, using: :btree
+  add_index "projects", ["cd"], name: "index_projects_on_cd", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"

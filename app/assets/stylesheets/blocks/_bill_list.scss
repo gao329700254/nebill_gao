@@ -31,7 +31,7 @@
     %bill_list__tbl__item {
       @include list_tbl__item;
 
-      &--key {
+      &--cd {
         @extend %bill_list__tbl__item;
         @include span-columns(2);
       }

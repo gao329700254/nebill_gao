@@ -37,7 +37,7 @@ RSpec.feature 'Project Show Page', js: true do
 
         scenario 'should show project attributes' do
           is_expected.to     have_field 'group_id'               , disabled: true, with: project.group_id
-          is_expected.to     have_field 'key'                    , disabled: true, with: project.key
+          is_expected.to     have_field 'cd'                     , disabled: true, with: project.cd
           is_expected.to     have_field 'name'                   , disabled: true, with: project.name
           is_expected.to     have_field 'contract_on'            , disabled: true, with: project.contract_on
           is_expected.not_to have_field 'contract_type'
@@ -68,7 +68,7 @@ RSpec.feature 'Project Show Page', js: true do
 
           scenario 'should have edit project fields' do
             is_expected.to     have_field 'group_id'               , disabled: false, with: project.group_id
-            is_expected.to     have_field 'key'                    , disabled: false, with: project.key
+            is_expected.to     have_field 'cd'                     , disabled: false, with: project.cd
             is_expected.to     have_field 'name'                   , disabled: false, with: project.name
             is_expected.to     have_field 'contract_on'            , disabled: false, with: project.contract_on
             is_expected.not_to have_field 'contract_type'
@@ -96,7 +96,7 @@ RSpec.feature 'Project Show Page', js: true do
 
           scenario 'should do not update when click cancel button' do
             original_group                   =  project.group_id
-            original_key                     =  project.key
+            original_cd                      =  project.cd
             original_name                    =  project.name
             original_contract_on             =  project.contract_on
             original_orderer_company_name    =  project.orderer_company_name
@@ -113,7 +113,7 @@ RSpec.feature 'Project Show Page', js: true do
             original_billing_memo            =  project.billing_memo
 
             select 'Group2', from: :group_id
-            fill_in :key        , with: '0000001'
+            fill_in :cd         , with: '0000001'
             fill_in :name       , with: 'test project'
             fill_in :contract_on, with: '2016-01-01'
             fill_in :orderer_company_name    , with: 'test orderer company'
@@ -135,7 +135,7 @@ RSpec.feature 'Project Show Page', js: true do
             end.not_to change { project.reload && project.updated_at }
 
             is_expected.to     have_field 'group_id'               , disabled: true, with: original_group
-            is_expected.to     have_field 'key'                    , disabled: true, with: original_key
+            is_expected.to     have_field 'cd'                     , disabled: true, with: original_cd
             is_expected.to     have_field 'name'                   , disabled: true, with: original_name
             is_expected.to     have_field 'contract_on'            , disabled: true, with: original_contract_on
             is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: original_orderer_company_name
@@ -154,7 +154,7 @@ RSpec.feature 'Project Show Page', js: true do
 
           scenario 'should update when click submit button with correct values' do
             select 'Group2', from: :group_id
-            fill_in :key        , with: '0000001'
+            fill_in :cd        , with: '0000001'
             fill_in :name       , with: 'test project'
             fill_in :contract_on, with: '2016-01-01'
             fill_in :orderer_company_name    , with: 'test orderer company'
@@ -176,7 +176,7 @@ RSpec.feature 'Project Show Page', js: true do
             end.to change { project.reload && project.updated_at }
 
             is_expected.to     have_field 'group_id'               , disabled: true, with: project_group2.id
-            is_expected.to     have_field 'key'                    , disabled: true, with: '0000001'
+            is_expected.to     have_field 'cd'                     , disabled: true, with: '0000001'
             is_expected.to     have_field 'name'                   , disabled: true, with: 'test project'
             is_expected.to     have_field 'contract_on'            , disabled: true, with: '2016-01-01'
             is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: 'test orderer company'
@@ -195,7 +195,7 @@ RSpec.feature 'Project Show Page', js: true do
 
           scenario 'should not update when click submit button with uncorrent values' do
             select 'Group2', from: :group_id
-            fill_in :key        , with: '  '
+            fill_in :cd         , with: '  '
             fill_in :name       , with: 'test project'
             fill_in :contract_on, with: '2016-01-01'
             fill_in :orderer_company_name    , with: 'test orderer company'
@@ -217,7 +217,7 @@ RSpec.feature 'Project Show Page', js: true do
             end.not_to change { project.reload && project.updated_at }
 
             is_expected.to     have_field 'group_id'               , disabled: false, with: project_group2.id
-            is_expected.to     have_field 'key'                    , disabled: false, with: '  '
+            is_expected.to     have_field 'cd'                     , disabled: false, with: '  '
             is_expected.to     have_field 'name'                   , disabled: false, with: 'test project'
             is_expected.to     have_field 'contract_on'            , disabled: false, with: '2016-01-01'
             is_expected.to     have_field 'orderer_company_name'   , disabled: false, with: 'test orderer company'
@@ -244,7 +244,7 @@ RSpec.feature 'Project Show Page', js: true do
         subject { find('.bill_new__form') }
 
         scenario 'show' do
-          is_expected.to have_field 'key'
+          is_expected.to have_field 'cd'
           is_expected.to have_field 'amount', with: project.amount
           is_expected.to have_field 'delivery_on'
           is_expected.to have_field 'acceptance_on'
@@ -258,7 +258,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'click submit button with correct values' do
           skip "fail on wercker"
 
-          fill_in :key, with: 'BILL-1'
+          fill_in :cd           , with: 'BILL-1'
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
@@ -272,7 +272,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.to change(Bill, :count).by(1)
 
-          is_expected.to have_field  'key'           , with: ''
+          is_expected.to have_field  'cd'            , with: ''
           is_expected.to have_field  'amount'        , with: project.amount
           is_expected.to have_field  'delivery_on'   , with: ''
           is_expected.to have_field  'acceptance_on' , with: ''
@@ -285,7 +285,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'click submit button with uncorrect values' do
           skip "fail on wercker"
 
-          fill_in :key, with: '  '
+          fill_in :cd           , with: '  '
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
@@ -299,7 +299,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.not_to change(Bill, :count)
 
-          is_expected.to have_field  'key'           , with: '  '
+          is_expected.to have_field  'cd'            , with: '  '
           is_expected.to have_field  'amount'        , with: 222_222
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
@@ -312,7 +312,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'click submit button with uncorrect bill_on predate delivery_on' do
           skip "fail on wercker"
 
-          fill_in :key, with: 'BILL-2'
+          fill_in :cd           , with: 'BILL-2'
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
@@ -326,7 +326,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.not_to change(Bill, :count)
 
-          is_expected.to have_field  'key'           , with: 'BILL-2'
+          is_expected.to have_field  'cd'            , with: 'BILL-2'
           is_expected.to have_field  'amount'        , with: 222_222
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
@@ -339,7 +339,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'click submit button with uncorrect bill_on predate acceptance_on' do
           skip "fail on wercker"
 
-          fill_in :key, with: 'BILL-2'
+          fill_in :cd           , with: 'BILL-2'
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
@@ -353,7 +353,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.not_to change(Bill, :count)
 
-          is_expected.to have_field  'key'           , with: 'BILL-2'
+          is_expected.to have_field  'cd'            , with: 'BILL-2'
           is_expected.to have_field  'amount'        , with: 222_222
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
@@ -628,7 +628,7 @@ RSpec.feature 'Project Show Page', js: true do
         subject { find('.bill_new__form') }
 
         scenario 'show' do
-          is_expected.to have_field 'key'
+          is_expected.to have_field 'cd'
           is_expected.to have_field 'amount'
           expect(find('#amount').value).to eq project.amount.to_s(:delimited)
           is_expected.to have_field 'delivery_on'   , with: '2016-06-10'
@@ -641,7 +641,7 @@ RSpec.feature 'Project Show Page', js: true do
         end
 
         scenario 'click submit button with correct values' do
-          fill_in :key, with: 'BILL-1'
+          fill_in :cd           , with: 'BILL-1'
           fill_in :amount       , with: project.amount
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
@@ -655,7 +655,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.to change(Bill, :count).by(1)
 
-          is_expected.to have_field  'key'           , with: ''
+          is_expected.to have_field  'cd'            , with: ''
           is_expected.to have_field  'amount'        , with: project.amount.to_s(:delimited)
           is_expected.to have_field  'delivery_on'   , with: ''
           is_expected.to have_field  'acceptance_on' , with: ''
@@ -668,7 +668,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'click submit button with uncorrect values' do
           skip "fail on wercker"
 
-          fill_in :key, with: '  '
+          fill_in :cd           , with: '  '
           fill_in :amount       , with: project.amount
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
@@ -682,7 +682,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.not_to change(Bill, :count)
 
-          is_expected.to have_field  'key'           , with: '  '
+          is_expected.to have_field  'cd'            , with: '  '
           is_expected.to have_field  'amount'        , with: project.amount
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'

@@ -3,7 +3,7 @@ $ ->
     el:  '#client_list'
     data:
       selectSchema:
-        key:              'eq'
+        cd:               'eq'
         company_name:     'like'
         department_name:  'like'
         phone_number:     'eq'

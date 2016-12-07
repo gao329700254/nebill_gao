@@ -2,9 +2,9 @@ $ ->
   window.billList = new Vue
     el: '#bill_list'
     data:
-      sortKey: 'key'
+      sortKey: 'cd'
       selectSchema:
-        key: 'like'
+        cd: 'like'
         'project.name': 'like'
         'project.billing_company_name': 'like'
       list: undefined

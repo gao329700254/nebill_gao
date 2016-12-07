@@ -1,10 +1,10 @@
 # == Schema Information
-# Schema version: 20161003063433
+# Schema version: 20161207071241
 #
 # Table name: projects
 #
 #  id                      :integer          not null, primary key
-#  key                     :string           not null
+#  cd                      :string           not null
 #  name                    :string           not null
 #  contracted              :boolean          not null
 #  contract_on             :date             not null
@@ -32,7 +32,7 @@
 #
 # Indexes
 #
-#  index_projects_on_key  (key) UNIQUE
+#  index_projects_on_cd  (cd) UNIQUE
 #
 # Foreign Keys
 #
@@ -73,10 +73,10 @@ class Project < ActiveRecord::Base
               class_name: 'DestinationInformation',
               mapping: %w(company_name department_name personnel_names address zip_code memo).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
 
-  before_save { key.upcase! }
+  before_save { cd.upcase! }
 
   def self.sequence(prefix)
-    @max_sequence = where('key LIKE ?', "%#{prefix}%").pluck(:key).map { |key| key.gsub(prefix, "").to_i }.max
+    @max_sequence = where('cd LIKE ?', "%#{prefix}%").pluck(:cd).map { |cd| cd.gsub(prefix, "").to_i }.max
     @sequence = @max_sequence ? @max_sequence + 1 : 1
   end
 end

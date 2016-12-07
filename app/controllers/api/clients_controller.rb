@@ -37,7 +37,7 @@ private
 
   def client_param
     params.require(:client).permit(
-      :key,
+      :cd,
       :company_name,
       :department_name,
       :address,

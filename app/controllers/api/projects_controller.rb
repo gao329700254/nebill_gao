@@ -56,7 +56,7 @@ private
   def project_param
     params.require(:project).permit(
       :group_id,
-      :key,
+      :cd,
       :name,
       :contracted,
       :contract_on,

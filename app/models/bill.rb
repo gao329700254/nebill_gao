@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 20161003063433
+# Schema version: 20161207071241
 #
 # Table name: bills
 #
 #  id            :integer          not null, primary key
 #  project_id    :integer          not null
-#  key           :string           not null
+#  cd            :string           not null
 #  delivery_on   :date             not null
 #  acceptance_on :date             not null
 #  payment_on    :date             not null
@@ -18,7 +18,7 @@
 #
 # Indexes
 #
-#  index_bills_on_key  (key) UNIQUE
+#  index_bills_on_cd  (cd) UNIQUE
 #
 # Foreign Keys
 #
@@ -31,7 +31,7 @@ class Bill < ActiveRecord::Base
   belongs_to :project
 
   validates :project      , presence: true
-  validates :key          , presence: true, uniqueness: { case_sensitive: false }
+  validates :cd           , presence: true, uniqueness: { case_sensitive: false }
   validates :amount       , presence: true
   validates :delivery_on  , presence: true
   validates :acceptance_on, presence: true
@@ -39,7 +39,7 @@ class Bill < ActiveRecord::Base
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
 
-  before_save { key.upcase! }
+  before_save { cd.upcase! }
 
   def bill_on_cannot_predate_delivery_on
     return if bill_on.nil?

@@ -42,7 +42,7 @@ private
 
   def bill_param
     params.require(:bill).permit(
-      :key,
+      :cd,
       :amount,
       :delivery_on,
       :acceptance_on,

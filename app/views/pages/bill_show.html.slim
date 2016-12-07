@@ -10,8 +10,8 @@
       .bill_show__form__container__group
         fieldset.bill_show__form__basic
           .bill_show__form__item
-            = label_tag :contracted, t('activerecord.attributes.bill.key')
-            = text_field_tag :key, nil, 'v-model' => 'bill.key', ':disabled' => '!editMode'
+            = label_tag :contracted, t('activerecord.attributes.bill.cd')
+            = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
           .bill_show__form__item
             = label_tag :amount, t('activerecord.attributes.bill.amount')
             = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'

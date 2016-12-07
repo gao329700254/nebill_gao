@@ -8,15 +8,15 @@ describe 'select_by', ->
     describe 'when schema is not an object', ->
       describe 'when eq query', ->
         it 'should filter list by eq', ->
-          value = 'KEY-1'
-          schema = { key: 'eq' }
+          value = 'CD-1'
+          schema = { cd: 'eq' }
           list = [
-            { key: 'KEY-1' },
-            { key: 'KEY-2' },
-            { key: 'KEY-3' },
+            { cd: 'CD-1' },
+            { cd: 'CD-2' },
+            { cd: 'CD-3' },
           ]
           expected_result = [
-            { key: 'KEY-1' },
+            { cd: 'CD-1' },
           ]
           expect(select_by(list, value, schema)).toEqual expected_result
       describe 'when like query', ->
@@ -37,15 +37,15 @@ describe 'select_by', ->
     describe 'when schema is an object', ->
       describe 'when eq query', ->
         it 'should filter list by eq', ->
-          value = 'KEY-2'
-          schema = { 'project.key': 'eq' }
+          value = 'CD-2'
+          schema = { 'project.cd': 'eq' }
           list = [
-            { project: { key: 'KEY-1' } },
-            { project: { key: 'KEY-2' } },
-            { project: { key: 'KEY-3' } },
+            { project: { cd: 'CD-1' } },
+            { project: { cd: 'CD-2' } },
+            { project: { cd: 'CD-3' } },
           ]
           expected_result = [
-            { project: { key: 'KEY-2' } },
+            { project: { cd: 'CD-2' } },
           ]
           expect(select_by(list, value, schema)).toEqual expected_result
       describe 'when like query', ->

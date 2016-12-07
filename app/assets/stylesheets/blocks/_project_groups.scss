@@ -58,7 +58,7 @@
         }
 
         &__col {
-          &--key::after { content: ' : '; }
+          &--cd::after { content: ' : '; }
         }
       }
     }

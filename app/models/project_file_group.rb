@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20161003063433
+# Schema version: 20161207071241
 #
 # Table name: project_file_groups
 #

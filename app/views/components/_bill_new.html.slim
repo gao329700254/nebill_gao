@@ -3,9 +3,9 @@ script type='text/x-template' id='bill_new'
     = form_tag nil, class: 'bill_new__form'
       .bill_new__form__container
         .bill_new__form__container__group
-          .bill_new__form__item--key
-            = label_tag :key, t('activerecord.attributes.bill.key')
-            = text_field_tag :key, nil, 'v-model' => 'bill.key'
+          .bill_new__form__item--cd
+            = label_tag :cd, t('activerecord.attributes.bill.cd')
+            = text_field_tag :cd, nil, 'v-model' => 'bill.cd'
           .bill_new__form__item
             = label_tag :amount, t('activerecord.attributes.bill.amount')
             = text_field_tag :amount, @project.amount, 'v-numeric' => 'bill.amount'

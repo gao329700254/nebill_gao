@@ -20,7 +20,7 @@ RSpec.describe 'projects request' do
 
       expect(json[0]['id']).to                       eq project1.id
       expect(json[0]['group_id']).to                 eq project1.group_id
-      expect(json[0]['key']).to                      eq project1.key
+      expect(json[0]['cd']).to                       eq project1.cd
       expect(json[0]['name']).to                     eq project1.name
       expect(json[0]['contracted']).to               eq project1.contracted
       expect(json[0]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
@@ -56,7 +56,7 @@ RSpec.describe 'projects request' do
         {
           project: {
             group_id: project_group.id,
-            key: 'key',
+            cd: 'cd',
             name: 'name',
             contracted: true,
             contract_on: '2015-01-01',
@@ -89,7 +89,7 @@ RSpec.describe 'projects request' do
 
         project = Project.first
         expect(project.group_id).to eq project_group.id
-        expect(project.key).to eq  'KEY'
+        expect(project.cd).to eq  'CD'
         expect(project.name).to eq  'name'
         expect(project.contracted).to eq  true
         expect(project.contract_on.to_s).to eq  '2015-01-01'
@@ -129,7 +129,7 @@ RSpec.describe 'projects request' do
         {
           project: {
             group_id: 1,
-            key: '',
+            cd: '',
             name: 'name',
             contracted: 'true',
             contract_on: '2015-01-01',
@@ -184,7 +184,7 @@ RSpec.describe 'projects request' do
         expect(response.status).to eq 200
         expect(json['id']).to                       eq project.id
         expect(json['group_id']).to                 eq project.group_id
-        expect(json['key']).to                      eq project.key
+        expect(json['cd']).to                       eq project.cd
         expect(json['name']).to                     eq project.name
         expect(json['contracted']).to               eq project.contracted
         expect(json['contract_on']).to              eq project.contract_on.strftime("%Y-%m-%d")
@@ -236,7 +236,7 @@ RSpec.describe 'projects request' do
           {
             project: {
               group_id: project_group.id,
-              key: 'key',
+              cd: 'cd',
               name: 'name',
               contracted: true,
               contract_on: '2015-01-01',
@@ -268,7 +268,7 @@ RSpec.describe 'projects request' do
           end.to change { project.reload && project.updated_at }
 
           expect(project.group_id).to eq  project_group.id
-          expect(project.key).to eq  'KEY'
+          expect(project.cd).to eq  'CD'
           expect(project.name).to eq  'name'
           expect(project.contracted).to eq  true
           expect(project.contract_on.to_s).to eq  '2015-01-01'
@@ -308,7 +308,7 @@ RSpec.describe 'projects request' do
           {
             project: {
               group_id: 1,
-              key: '',
+              cd: '',
               name: 'name',
               contracted: true,
               contract_on: '2015-01-01',

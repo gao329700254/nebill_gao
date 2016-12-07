@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       resources :project_file_groups, only: [:index, :create]
       get 'default_dates', on: :member
       collection do
-        get "key/:project_type", to: "project_keys#key", as: "project_key"
+        get "cd/:project_type", to: "project_cds#cd", as: "project_cd"
       end
     end
     %w(user partner).each do |member_type|

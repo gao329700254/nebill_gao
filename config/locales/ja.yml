@@ -38,7 +38,7 @@ ja:
         max_limit_time: 上限
         min_limit_time: 下限
       client:
-        key: ID
+        cd: ID
         company_name:    会社名
         department_name: 部署名
         address:         住所
@@ -48,7 +48,7 @@ ja:
         memo:            メモ
       project:
         group: グループ
-        key: ID
+        cd: ID
         name: 名前
         contracted: 契約済
         contract_on: 契約日
@@ -74,7 +74,7 @@ ja:
         name: 名前
       bill:
         project: プロジェクト
-        key: 請求番号
+        cd: 請求番号
         amount:         請求金額
         delivery_on:    納品日
         acceptance_on:  検収日

@@ -17,7 +17,7 @@ RSpec.feature 'Bill Show Page', js: true do
     subject { find('.bill_show__form') }
 
     scenario 'should show bill attributes' do
-      is_expected.to     have_field 'key'           , disabled: true, with: bill.key
+      is_expected.to     have_field 'cd'            , disabled: true, with: bill.cd
       is_expected.to     have_field 'amount'        , disabled: true, with: bill.amount.to_s(:delimited)
       is_expected.to     have_field 'delivery_on'   , disabled: true, with: bill.delivery_on
       is_expected.to     have_field 'acceptance_on' , disabled: true, with: bill.acceptance_on
@@ -35,7 +35,7 @@ RSpec.feature 'Bill Show Page', js: true do
       background { click_button '編集' }
 
       scenario 'should have edit bill fields' do
-        is_expected.to     have_field 'key'           , disabled: false, with: bill.key
+        is_expected.to     have_field 'cd'            , disabled: false, with: bill.cd
         is_expected.to     have_field 'amount'        , disabled: false, with: bill.amount.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: bill.delivery_on
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: bill.acceptance_on
@@ -50,7 +50,7 @@ RSpec.feature 'Bill Show Page', js: true do
       end
 
       scenario 'should do not update when click cancel button' do
-        original_key            = bill.key
+        original_cd             = bill.cd
         original_amount         = bill.amount
         original_delivery_on    = bill.delivery_on
         original_acceptance_on  = bill.acceptance_on
@@ -59,7 +59,7 @@ RSpec.feature 'Bill Show Page', js: true do
         original_deposit_on     = bill.deposit_on
         original_memo           = bill.memo
 
-        fill_in :key            , with: '0000001'
+        fill_in :cd             , with: '0000001'
         fill_in :amount         , with: 101_010
         fill_in :delivery_on    , with: '2016-01-01'
         fill_in :acceptance_on  , with: '2016-01-02'
@@ -73,7 +73,7 @@ RSpec.feature 'Bill Show Page', js: true do
           wait_for_ajax
         end.not_to change { bill.reload && bill.updated_at }
 
-        is_expected.to     have_field 'key'           , disabled: true, with: original_key
+        is_expected.to     have_field 'cd'            , disabled: true, with: original_cd
         is_expected.to     have_field 'amount'        , disabled: true, with: original_amount.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: true, with: original_delivery_on
         is_expected.to     have_field 'acceptance_on' , disabled: true, with: original_acceptance_on
@@ -84,7 +84,7 @@ RSpec.feature 'Bill Show Page', js: true do
       end
 
       scenario 'should update when click submit button with correct values' do
-        fill_in :key            , with: '0000001'
+        fill_in :cd             , with: '0000001'
         fill_in :amount         , with: 101_010
         fill_in :delivery_on    , with: '2016-01-01'
         fill_in :acceptance_on  , with: '2016-01-02'
@@ -98,7 +98,7 @@ RSpec.feature 'Bill Show Page', js: true do
           wait_for_ajax
         end.to change { bill.reload && bill.updated_at }
 
-        is_expected.to     have_field 'key'           , disabled: true, with: '0000001'
+        is_expected.to     have_field 'cd'            , disabled: true, with: '0000001'
         is_expected.to     have_field 'amount'        , disabled: true, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: true, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: true, with: '2016-01-02'
@@ -109,7 +109,7 @@ RSpec.feature 'Bill Show Page', js: true do
       end
 
       scenario 'should not update when click submit button with uncorrect values' do
-        fill_in :key            , with: '  '
+        fill_in :cd             , with: '  '
         fill_in :amount         , with: 101_010
         fill_in :delivery_on    , with: '2016-01-01'
         fill_in :acceptance_on  , with: '2016-01-02'
@@ -123,7 +123,7 @@ RSpec.feature 'Bill Show Page', js: true do
           wait_for_ajax
         end.not_to change { bill.reload && bill.updated_at }
 
-        is_expected.to     have_field 'key'           , disabled: false, with: '  '
+        is_expected.to     have_field 'cd'            , disabled: false, with: '  '
         is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
@@ -134,7 +134,7 @@ RSpec.feature 'Bill Show Page', js: true do
       end
 
       scenario 'should not update when click submit button with uncorrect bill_on predate delivery_on' do
-        fill_in :key            , with: '0000002'
+        fill_in :cd             , with: '0000002'
         fill_in :amount         , with: 101_010
         fill_in :delivery_on    , with: '2016-01-01'
         fill_in :acceptance_on  , with: '2016-01-02'
@@ -148,7 +148,7 @@ RSpec.feature 'Bill Show Page', js: true do
           wait_for_ajax
         end.not_to change { bill.reload && bill.updated_at }
 
-        is_expected.to     have_field 'key'           , disabled: false, with: '0000002'
+        is_expected.to     have_field 'cd'            , disabled: false, with: '0000002'
         is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
@@ -159,7 +159,7 @@ RSpec.feature 'Bill Show Page', js: true do
       end
 
       scenario 'should not update when click submit button with uncorrect bill_on predate acceptance_on' do
-        fill_in :key            , with: '0000002'
+        fill_in :cd             , with: '0000002'
         fill_in :amount         , with: 101_010
         fill_in :delivery_on    , with: '2016-01-01'
         fill_in :acceptance_on  , with: '2016-01-02'
@@ -173,7 +173,7 @@ RSpec.feature 'Bill Show Page', js: true do
           wait_for_ajax
         end.not_to change { bill.reload && bill.updated_at }
 
-        is_expected.to     have_field 'key'           , disabled: false, with: '0000002'
+        is_expected.to     have_field 'cd'            , disabled: false, with: '0000002'
         is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
@@ -186,7 +186,7 @@ RSpec.feature 'Bill Show Page', js: true do
   end
 
   describe 'download' do
-    let(:file_name) { ['請求書', bill.project.billing_company_name, bill.key].compact.join("_") + '.xlsx' }
+    let(:file_name) { ['請求書', bill.project.billing_company_name, bill.cd].compact.join("_") + '.xlsx' }
 
     context 'when click download button' do
       it 'should download an excel file' do
