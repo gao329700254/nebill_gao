@@ -6,9 +6,9 @@
   = form_tag nil, class: 'client_new__form'
     .client_new__form__container
       .client_new__form__container__group
-        .client_new__form__item--key
-          = label_tag :key, t('activerecord.attributes.client.key')
-          = text_field_tag :key, nil, 'v-model' => 'client.key'
+        .client_new__form__item--cd
+          = label_tag :cd, t('activerecord.attributes.client.cd')
+          = text_field_tag :cd, nil, 'v-model' => 'client.cd'
         .client_new__form__item
           = label_tag :company_name, t('activerecord.attributes.client.company_name')
           = text_field_tag :company_name, nil, 'v-model' => 'client.company_name'

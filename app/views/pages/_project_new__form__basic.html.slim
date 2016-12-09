@@ -6,8 +6,8 @@
         = select_tag :group_id, options_from_collection_for_select(ProjectGroup.all, :id, :name), include_blank: true, 'v-model' => 'project.group_id'
     .project_new__form__container__group
       .project_new__form__item
-        = label_tag :key, t('activerecord.attributes.project.key')
-        = text_field_tag :key, nil, 'v-model' => 'project.key', maxlength: 7
+        = label_tag :cd, t('activerecord.attributes.project.cd')
+        = text_field_tag :cd, nil, 'v-model' => 'project.cd', maxlength: 7
   .project_new__form__container
     .project_new__form__container__group
       .project_new__form__item
@@ -21,19 +21,19 @@
     .project_new__form__container__group
       .project_new__form__item
         = label_tag :contracted, t('activerecord.attributes.project.contracted')
-        = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', 'v-on:change' => 'setProjectKey'
+        = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', 'v-on:change' => 'setProjectCd'
 
   template v-if='project.contracted'
     .project_new__form__container
       .project_new__form__container__group
         .project_new__form__item
           = label_tag :contract_type, t('activerecord.attributes.project.contract_type')
-          = select_tag :contract_type, options_for_select(Project.contract_type.options), 'v-model' => 'project.contract_type', 'v-on:change' => 'setProjectKey'
+          = select_tag :contract_type, options_for_select(Project.contract_type.options), 'v-model' => 'project.contract_type', 'v-on:change' => 'setProjectCd'
     .project_new__form__container
       .project_new__form__container__group
         .project_new__form__item
           = label_tag :is_using_ses, t('activerecord.attributes.project.is_using_ses')
-          = check_box_tag :is_using_ses, true, false, 'v-model' => 'project.is_using_ses', 'v-on:change' => 'setProjectKey'
+          = check_box_tag :is_using_ses, true, false, 'v-model' => 'project.is_using_ses', 'v-on:change' => 'setProjectCd'
     .project_new__form__container
       .project_new__form__container__group
         .project_new__form__item

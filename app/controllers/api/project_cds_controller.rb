@@ -1,13 +1,13 @@
-class Api::ProjectKeysController < Api::ApiController
+class Api::ProjectCdsController < Api::ApiController
   PROJECT_TYPES = %w(lump_sum uncontracted uasimandate consignment maintenance ses other).freeze
 
-  before_action :set_project_type, only: [:key]
+  before_action :set_project_type, only: [:cd]
 
-  def key
+  def cd
     @prefix = Time.zone.today.strftime("%y") + identifier(@project_type)
-    @key = { key: @prefix + format("%03d", Project.sequence(@prefix)) + (@project_type == 'uncontracted' ? 'B' : 'A') }
+    @cd = { cd: @prefix + format("%03d", Project.sequence(@prefix)) + (@project_type == 'uncontracted' ? 'B' : 'A') }
 
-    render json: @key, status: :ok
+    render json: @cd, status: :ok
   end
 
 private

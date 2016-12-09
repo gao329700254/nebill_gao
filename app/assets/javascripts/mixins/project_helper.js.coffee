@@ -10,7 +10,7 @@ Vue.modules.projectHelper = {
       contracted:
         init: false
         exist: { contracted: true, uncontracted: true }
-      key:
+      cd:
         init: ''
         exist: { contracted: true, uncontracted: true }
       name:

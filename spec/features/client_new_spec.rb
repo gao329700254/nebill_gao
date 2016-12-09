@@ -16,7 +16,7 @@ RSpec.feature 'Client New Page', js: true do
     subject { find('#client_new .client_new__form') }
 
     scenario 'show' do
-      is_expected.to have_field 'key'
+      is_expected.to have_field 'cd'
       is_expected.to have_field 'company_name'
       is_expected.to have_field 'department_name'
       is_expected.to have_field 'address'
@@ -27,7 +27,7 @@ RSpec.feature 'Client New Page', js: true do
     end
 
     scenario 'click submit button with correct values' do
-      fill_in :key        , with: '0000001'
+      fill_in :cd              , with: '0000001'
       fill_in :company_name    , with: 'test company'
       fill_in :department_name , with: 'test department'
       fill_in :address         , with: 'test address'
@@ -40,7 +40,7 @@ RSpec.feature 'Client New Page', js: true do
         wait_for_ajax
       end.to change(Client, :count).by(1)
 
-      is_expected.to have_field 'key'               , with: ''
+      is_expected.to have_field 'cd'               , with: ''
       is_expected.to have_field 'company_name'      , with: ''
       is_expected.to have_field 'department_name'   , with: ''
       is_expected.to have_field 'address'           , with: ''
@@ -50,7 +50,7 @@ RSpec.feature 'Client New Page', js: true do
     end
 
     scenario 'click submit button with uncorrect values' do
-      fill_in :key        , with: '  '
+      fill_in :cd              , with: '  '
       fill_in :company_name    , with: 'test company'
       fill_in :department_name , with: 'test department'
       fill_in :address         , with: 'test address'
@@ -63,7 +63,7 @@ RSpec.feature 'Client New Page', js: true do
         wait_for_ajax
       end.not_to change(Client, :count)
 
-      is_expected.to have_field 'key'               , with: '  '
+      is_expected.to have_field 'cd'                , with: '  '
       is_expected.to have_field 'company_name'      , with: 'test company'
       is_expected.to have_field 'department_name'   , with: 'test department'
       is_expected.to have_field 'address'           , with: 'test address'

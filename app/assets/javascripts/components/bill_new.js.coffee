@@ -4,7 +4,7 @@ $ ->
     props: ['projectId']
     data: ->
       bill:
-        key: undefined
+        cd: undefined
         amount:         undefined
         delivery_on:    undefined
         acceptance_on:  undefined
@@ -31,7 +31,7 @@ $ ->
         finally
           submit.prop('disabled', false)
       initializeBill: ->
-        @bill.key = undefined
+        @bill.cd = undefined
         @bill.amount        = @default_amount
         @bill.delivery_on   = undefined
         @bill.acceptance_on = undefined

@@ -7,7 +7,7 @@ $ ->
       billSchema:
         id:             { init: '' }
         project_id:     { init: '' }
-        key:            { init: '' }
+        cd:             { init: '' }
         amount:         { init: '' }
         delivery_on:    { init: '' }
         acceptance_on:  { init: '' }
@@ -44,7 +44,7 @@ $ ->
             type: 'PATCH'
             data:
               bill:
-                key:            @bill.key
+                cd:             @bill.cd
                 amount:         @bill.amount
                 delivery_on:    @bill.delivery_on
                 acceptance_on:  @bill.acceptance_on

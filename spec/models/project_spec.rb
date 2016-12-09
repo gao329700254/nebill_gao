@@ -4,7 +4,7 @@ RSpec.describe Project do
   let(:project) { build(:project) }
   subject { project }
 
-  it { is_expected.to respond_to(:key) }
+  it { is_expected.to respond_to(:cd) }
   it { is_expected.to respond_to(:name) }
   it { is_expected.to respond_to(:contracted?) }
   it { is_expected.to respond_to(:contract_on) }
@@ -29,8 +29,8 @@ RSpec.describe Project do
   it { is_expected.to have_many(:files).class_name('ProjectFile') }
   it { is_expected.to have_many(:file_groups).class_name('ProjectFileGroup') }
 
-  it { is_expected.to validate_presence_of(:key) }
-  it { is_expected.to validate_uniqueness_of(:key).case_insensitive }
+  it { is_expected.to validate_presence_of(:cd) }
+  it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:contract_on) }
   it { is_expected.to validate_numericality_of(:amount).only_integer }

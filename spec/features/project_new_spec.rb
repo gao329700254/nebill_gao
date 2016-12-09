@@ -5,7 +5,7 @@ RSpec.feature 'Project New Page', js: true do
   given!(:client) do
     create(
       :client,
-      key: 'CLIENT-1',
+      cd: 'CLIENT-1',
       company_name: 'clientA',
       department_name: 'client department name',
       address: 'client address',
@@ -79,7 +79,7 @@ RSpec.feature 'Project New Page', js: true do
 
       scenario 'show' do
         is_expected.to     have_field 'group_id'
-        is_expected.to     have_field 'key'
+        is_expected.to     have_field 'cd'
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
         is_expected.not_to have_field 'contract_type'
@@ -106,7 +106,7 @@ RSpec.feature 'Project New Page', js: true do
 
       scenario 'click submit button with correct values' do
         select 'GroupA', from: :group_id
-        fill_in :key        , with: '0000001'
+        fill_in :cd         , with: '0000001'
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
         fill_in :orderer_company_name    , with: 'test orderer company'
@@ -129,7 +129,7 @@ RSpec.feature 'Project New Page', js: true do
 
         is_expected.to have_unchecked_field 'contracted'
         is_expected.to have_field 'group_id'                , with: ''
-        is_expected.to have_field 'key'                     , with: ''
+        is_expected.to have_field 'cd'                      , with: ''
         is_expected.to have_field 'name'                    , with: ''
         is_expected.to have_field 'contract_on'             , with: ''
         is_expected.to have_field 'orderer_company_name'    , with: ''
@@ -148,7 +148,7 @@ RSpec.feature 'Project New Page', js: true do
 
       scenario 'click submit button with uncorrect values' do
         select 'GroupA', from: :group_id
-        fill_in :key        , with: ' '
+        fill_in :cd         , with: ' '
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
         fill_in :orderer_company_name    , with: 'test orderer company'
@@ -171,7 +171,7 @@ RSpec.feature 'Project New Page', js: true do
 
         is_expected.to have_unchecked_field 'contracted'
         select 'GroupA', from: :group_id
-        is_expected.to have_field 'key'                     , with: ' '
+        is_expected.to have_field 'cd'                      , with: ' '
         is_expected.to have_field 'name'                    , with: 'test project'
         is_expected.to have_field 'contract_on'             , with: '2016-01-01'
         is_expected.to have_field 'orderer_company_name'    , with: 'test orderer company'
@@ -194,7 +194,7 @@ RSpec.feature 'Project New Page', js: true do
 
       scenario 'show' do
         is_expected.to     have_field 'group_id'
-        is_expected.to     have_field 'key'
+        is_expected.to     have_field 'cd'
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
         is_expected.to     have_field 'contract_type'
@@ -221,7 +221,7 @@ RSpec.feature 'Project New Page', js: true do
 
       scenario 'click submit button with correct values' do
         select 'GroupA', from: :group_id
-        fill_in :key        , with: '0000001'
+        fill_in :cd         , with: '0000001'
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
         select '委託', from: :contract_type
@@ -250,7 +250,7 @@ RSpec.feature 'Project New Page', js: true do
 
         is_expected.to have_unchecked_field 'contracted'
         is_expected.to have_field 'group_id'                , with: ''
-        is_expected.to have_field 'key'                     , with: ''
+        is_expected.to have_field 'cd'                      , with: ''
         is_expected.to have_field 'name'                    , with: ''
         is_expected.to have_field 'contract_on'             , with: ''
         is_expected.to have_field 'orderer_company_name'    , with: ''

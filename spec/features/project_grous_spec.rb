@@ -22,9 +22,9 @@ RSpec.feature 'Project Groups Page', js: true do
     expect(find('.project_groups__list')).to have_content project_group1.name
     expect(find('.project_groups__list')).to have_content project_group2.name
 
-    expect(find("#project_group-#{project_group1.id}")).to have_content "#{project1.key}#{project1.name}"
-    expect(find("#project_group-#{project_group2.id}")).to have_content "#{project2.key}#{project2.name}"
-    expect(find("#project_group-0")).to                    have_content "#{project3.key}#{project3.name}"
+    expect(find("#project_group-#{project_group1.id}")).to have_content "#{project1.cd}#{project1.name}"
+    expect(find("#project_group-#{project_group2.id}")).to have_content "#{project2.cd}#{project2.name}"
+    expect(find("#project_group-0")).to                    have_content "#{project3.cd}#{project3.name}"
   end
 
   scenario 'click create button with corrent value' do
@@ -60,7 +60,7 @@ RSpec.feature 'Project Groups Page', js: true do
     source.drag_to(target)
     wait_for_ajax
 
-    expect(find("#project_group-#{project_group2.id}")).to have_content "#{project1.key}#{project1.name}"
+    expect(find("#project_group-#{project_group2.id}")).to have_content "#{project1.cd}#{project1.name}"
     project1.reload
     expect(project1.group).to eq project_group2
   end

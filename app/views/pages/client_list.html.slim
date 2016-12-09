@@ -8,7 +8,7 @@
   table.client_list__tbl
     thead.client_list__tbl__head
       tr.client_list__tbl__head__row
-        th.client_list__tbl__item--key                  = t('activerecord.attributes.client.key')
+        th.client_list__tbl__item--cd                   = t('activerecord.attributes.client.cd')
         th.client_list__tbl__item--company_name         = t('activerecord.attributes.client.company_name')
         th.client_list__tbl__item--department_name      = t('activerecord.attributes.client.department_name')
         th.client_list__tbl__item--phone_number         = t('activerecord.attributes.client.phone_number')
@@ -17,9 +17,9 @@
         v-for      = "client in list | selectBy searchKeywords selectSchema | orderBy sortKey"
         id         = "client-{{client.id}}"
         v-on:click = "linkToShow(client.id)"
-        track-by   = "key"
+        track-by   = "id"
       ]
-        td.client_list__tbl__item--key                  v-text='client.key'
+        td.client_list__tbl__item--cd                   v-text='client.cd'
         td.client_list__tbl__item--company_name         v-text='client.company_name'
         td.client_list__tbl__item--department_name      v-text='client.department_name'
         td.client_list__tbl__item--phone_number         v-text='client.phone_number'

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :client do
-    sequence(:key) { |n| "KEY-#{n}" }
+    sequence(:cd)   { |n| "CD-#{n}" }
     company_name    { Faker::Company.name }
     department_name { Faker::Commerce.department }
     address         { "#{Faker::Address.city} #{Faker::Address.secondary_address}" }

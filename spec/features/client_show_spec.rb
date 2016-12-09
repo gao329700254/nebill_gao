@@ -17,7 +17,7 @@ RSpec.feature 'Client Show Page', js: true do
     subject { find('.client_show__form') }
 
     scenario 'should show client attributes' do
-      is_expected.to have_field      'key'            , disabled: true, with: client.key
+      is_expected.to have_field      'cd'             , disabled: true, with: client.cd
       is_expected.to have_field      'company_name'   , disabled: true, with: client.company_name
       is_expected.to have_field      'department_name', disabled: true, with: client.department_name
       is_expected.to have_field      'address'        , disabled: true, with: client.address
@@ -33,7 +33,7 @@ RSpec.feature 'Client Show Page', js: true do
       background { click_button '編集' }
 
       scenario 'should have edit client fields' do
-        is_expected.to     have_field  'key'            , disabled: false, with: client.key
+        is_expected.to     have_field  'cd'             , disabled: false, with: client.cd
         is_expected.to     have_field  'company_name'   , disabled: false, with: client.company_name
         is_expected.to     have_field  'department_name', disabled: false, with: client.department_name
         is_expected.to     have_field  'address'        , disabled: false, with: client.address
@@ -46,7 +46,7 @@ RSpec.feature 'Client Show Page', js: true do
       end
 
       scenario 'should not update when click cancel button' do
-        original_key             = client.key
+        original_cd              = client.cd
         original_company_name    = client.company_name
         original_department_name = client.department_name
         original_address         = client.address
@@ -54,7 +54,7 @@ RSpec.feature 'Client Show Page', js: true do
         original_phone_number    = client.phone_number
         original_memo            = client.memo
 
-        fill_in :key             , with: '0000001'
+        fill_in :cd              , with: '0000001'
         fill_in :company_name    , with: 'company_name'
         fill_in :department_name , with: 'department_name'
         fill_in :address         , with: 'address'
@@ -67,7 +67,7 @@ RSpec.feature 'Client Show Page', js: true do
           wait_for_ajax
         end.not_to change { client.reload && client.updated_at }
 
-        is_expected.to have_field 'key'            , disabled: true, with: original_key
+        is_expected.to have_field 'cd'             , disabled: true, with: original_cd
         is_expected.to have_field 'company_name'   , disabled: true, with: original_company_name
         is_expected.to have_field 'department_name', disabled: true, with: original_department_name
         is_expected.to have_field 'address'        , disabled: true, with: original_address
@@ -77,7 +77,7 @@ RSpec.feature 'Client Show Page', js: true do
       end
 
       scenario 'should update when click submit button with correct values' do
-        fill_in :key             , with: '0000001'
+        fill_in :cd              , with: '0000001'
         fill_in :company_name    , with: 'company_name'
         fill_in :department_name , with: 'department_name'
         fill_in :address         , with: 'address'
@@ -90,7 +90,7 @@ RSpec.feature 'Client Show Page', js: true do
           wait_for_ajax
         end.to change { client.reload && client.updated_at }
 
-        is_expected.to have_field 'key'            , disabled: true, with: '0000001'
+        is_expected.to have_field 'cd'             , disabled: true, with: '0000001'
         is_expected.to have_field 'company_name'   , disabled: true, with: 'company_name'
         is_expected.to have_field 'department_name', disabled: true, with: 'department_name'
         is_expected.to have_field 'address'        , disabled: true, with: 'address'
@@ -100,7 +100,7 @@ RSpec.feature 'Client Show Page', js: true do
       end
 
       scenario 'should not update when click submit button with uncorrect values' do
-        fill_in :key             , with: '  '
+        fill_in :cd              , with: '  '
         fill_in :company_name    , with: 'company_name'
         fill_in :department_name , with: 'department_name'
         fill_in :address         , with: 'address'
@@ -113,7 +113,7 @@ RSpec.feature 'Client Show Page', js: true do
           wait_for_ajax
         end.not_to change { client.reload && client.updated_at }
 
-        is_expected.to have_field 'key'            , disabled: false, with: '  '
+        is_expected.to have_field 'cd'             , disabled: false, with: '  '
         is_expected.to have_field 'company_name'   , disabled: false, with: 'company_name'
         is_expected.to have_field 'department_name', disabled: false, with: 'department_name'
         is_expected.to have_field 'address'        , disabled: false, with: 'address'

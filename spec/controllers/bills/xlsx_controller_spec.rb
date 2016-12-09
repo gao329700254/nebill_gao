@@ -15,7 +15,7 @@ RSpec.describe Bills::XlsxController do
     end
     context 'when logged in' do
       let(:user) { create(:user) }
-      let(:file_name) { ['請求書', bill.project.billing_company_name, bill.key].compact.join("_") + '.xlsx' }
+      let(:file_name) { ['請求書', bill.project.billing_company_name, bill.cd].compact.join("_") + '.xlsx' }
 
       before { login(user) }
       before { get :download, bill_id: bill.id }

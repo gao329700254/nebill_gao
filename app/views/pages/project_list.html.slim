@@ -15,7 +15,7 @@
   table.project_list__tbl
     thead.project_list__tbl__head
       tr.project_list__tbl__head__row
-        th.project_list__tbl__item--key             = t('activerecord.attributes.project.key')
+        th.project_list__tbl__item--cd              = t('activerecord.attributes.project.cd')
         th.project_list__tbl__item--project_name    = t('activerecord.attributes.project.name')
         th.project_list__tbl__item--orderer_company = t('activerecord.attributes.project.orderer_company_name')
         th.project_list__tbl__item--start_on        = t('activerecord.attributes.project.start_on')
@@ -28,7 +28,7 @@
         v-on:click = "linkToShow(project.id)"
         track-by   = "id"
       ]
-        td.project_list__tbl__item--key             v-text='project.key'
+        td.project_list__tbl__item--cd              v-text='project.cd'
         td.project_list__tbl__item--project_name    v-text='project.name'
         td.project_list__tbl__item--orderer_company v-text='project.orderer_company_name'
         td.project_list__tbl__item--start_on        v-text='project.start_on'

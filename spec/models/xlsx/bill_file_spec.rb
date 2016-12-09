@@ -9,10 +9,10 @@ RSpec.describe Xlsx::BillFile do
   describe '#create' do
     it "should replace with bill's value" do
       expect(worksheet[0][0].value).to  eq Time.zone.today.strftime("%Y/%m/%d")
-      expect(worksheet[1][0].value).to  eq project.key
+      expect(worksheet[1][0].value).to  eq project.cd
       expect(worksheet[2][0].value).to  eq project.name
       expect(worksheet[3][0].value).to  eq "2016/01/01〜2017/01/01"
-      expect(worksheet[4][0].value).to  eq bill.key
+      expect(worksheet[4][0].value).to  eq bill.cd
       expect(worksheet[5][0].value).to  eq bill.payment_on.strftime("%Y/%m/%d")
       expect(worksheet[6][0].value).to  eq bill.amount
       expect(worksheet[7][0].value).to  eq 110
