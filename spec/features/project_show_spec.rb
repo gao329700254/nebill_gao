@@ -403,6 +403,7 @@ RSpec.feature 'Project Show Page', js: true do
         subject { find('.member_list__partner') }
 
         scenario 'Show' do
+          is_expected.to have_content 'ID'
           is_expected.to have_content '名前'
           is_expected.to have_content 'メールアドレス'
           is_expected.to have_content '会社名'
@@ -410,12 +411,14 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content '下限'
           is_expected.to have_content '上限'
 
+          is_expected.to have_content partner1.cd
           is_expected.to have_content partner1.name
           is_expected.to have_content partner1.email
           is_expected.to have_content partner1.company_name
           is_expected.to have_content partner1.members[0].unit_price
           is_expected.to have_content partner1.members[0].min_limit_time
           is_expected.to have_content partner1.members[0].max_limit_time
+          is_expected.to have_content partner2.cd
           is_expected.to have_content partner2.name
           is_expected.to have_content partner2.email
           is_expected.to have_content partner2.company_name
@@ -423,9 +426,11 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content partner2.members[0].min_limit_time
           is_expected.to have_content partner2.members[0].max_limit_time
 
+          is_expected.not_to have_content other_partner1.cd
           is_expected.not_to have_content other_partner1.name
           is_expected.not_to have_content other_partner1.email
           is_expected.not_to have_content other_partner1.company_name
+          is_expected.not_to have_content other_partner2.cd
           is_expected.not_to have_content other_partner2.name
           is_expected.not_to have_content other_partner2.email
           is_expected.not_to have_content other_partner2.company_name
@@ -478,17 +483,25 @@ RSpec.feature 'Project Show Page', js: true do
 
           describe 'form' do
             scenario 'show' do
+              is_expected.to have_field 'cd'
               is_expected.to have_field 'email'
               is_expected.to have_field 'name'
               is_expected.to have_field 'company_name'
+              is_expected.to have_field 'address'
+              is_expected.to have_field 'zip_code'
+              is_expected.to have_field 'phone_number'
               is_expected.to have_button 'キャンセル'
               is_expected.to have_button '登録'
             end
 
             scenario 'click submit button with correct values' do
+              fill_in :cd          , with: 'cd'
               fill_in :email       , with: 'foobar@example.com'
               fill_in :name        , with: 'foo bar'
               fill_in :company_name, with: 'abc'
+              fill_in :address     , with: 'address'
+              fill_in :zip_code    , with: 'zip_code'
+              fill_in :phone_number, with: '1234-5678'
 
               expect do
                 within('.partner_new') { click_button '登録' }
@@ -499,9 +512,13 @@ RSpec.feature 'Project Show Page', js: true do
             end
 
             scenario 'click submit button with uncorrect values' do
+              fill_in :cd          , with: 'cd'
               fill_in :email       , with: 'foobar@'
               fill_in :name        , with: 'foo bar'
               fill_in :company_name, with: 'abc'
+              fill_in :address     , with: 'address'
+              fill_in :zip_code    , with: 'zip_code'
+              fill_in :phone_number, with: '1234-5678'
 
               expect do
                 within('.partner_new') { click_button '登録' }
@@ -512,6 +529,10 @@ RSpec.feature 'Project Show Page', js: true do
               is_expected.to have_field 'email'       , with: 'foobar@'
               is_expected.to have_field 'name'        , with: 'foo bar'
               is_expected.to have_field 'company_name', with: 'abc'
+              is_expected.to have_field 'address'     , with: 'address'
+              is_expected.to have_field 'zip_code'    , with: 'zip_code'
+              is_expected.to have_field 'phone_number', with: '1234-5678'
+
             end
 
             scenario 'click cancel' do

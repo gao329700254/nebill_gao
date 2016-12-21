@@ -1,5 +1,8 @@
 = form_tag nil, class: 'partner_new__form'
   .partner_new__form__item
+    = label_tag :cd, t('activerecord.attributes.partner.cd')
+    = text_field_tag :cd, nil, 'v-model' => 'partner.cd'
+  .partner_new__form__item
     = label_tag :email, t('activerecord.attributes.partner.email')
     = email_field_tag :email, nil, 'v-model' => 'partner.email'
   .partner_new__form__item
@@ -8,6 +11,15 @@
   .partner_new__form__item
     = label_tag :company_name, t('activerecord.attributes.partner.company_name')
     = text_field_tag :company_name, nil, 'v-model' => 'partner.company_name'
+  .partner_new__form__item
+    = label_tag :address, t('activerecord.attributes.partner.address')
+    = text_field_tag :address, nil, 'v-model' => 'partner.address'
+  .partner_new__form__item
+    = label_tag :zip_code, t('activerecord.attributes.partner.zip_code')
+    = text_field_tag :zip_code, nil, 'v-model' => 'partner.zip_code'
+  .partner_new__form__item
+    = label_tag :phone_number, t('activerecord.attributes.partner.phone_number')
+    = text_field_tag :phone_number, nil, 'v-model' => 'partner.phone_number'
   = button_tag 'v-on:click.prevent' => 'cancel', class: 'partner_new__form__cancel_btn' do
     = fa_icon 'remove', text: t('helpers.cancel')
   = button_tag 'v-on:click.prevent' => 'submit', class: 'partner_new__form__submit_btn' do

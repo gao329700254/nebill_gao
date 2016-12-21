@@ -32,7 +32,11 @@ ja:
         role: ロール
       partner:
         <<: *employee
+        cd: ID
         company_name: 会社名
+        address:      住所
+        zip_code:     郵便番号
+        phone_number: 電話番号
       partner_member:
         unit_price: 単価
         max_limit_time: 上限

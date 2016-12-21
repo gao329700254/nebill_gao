@@ -18,6 +18,7 @@ RSpec.feature 'Partners Page', js: true do
     is_expected.to have_header_title 'パートナー一覧'
 
     is_expected.to have_content '会社名'
+    is_expected.to have_content 'ID'
     is_expected.to have_content '名前'
     is_expected.to have_content 'メールアドレス'
 
@@ -29,10 +30,12 @@ RSpec.feature 'Partners Page', js: true do
   scenario 'click company name' do
     page.all('.partners__partner_company_list__tbl__body__row td:nth-child(1)')[0].click
     sleep Capybara.default_max_wait_time
-    expect(all('.partners__partner_list__tbl__body__row td:nth-child(1)')[0]).to have_content partner1.name
-    expect(all('.partners__partner_list__tbl__body__row td:nth-child(2)')[0]).to have_content partner1.email
-    expect(all('.partners__partner_list__tbl__body__row td:nth-child(1)')[1]).to have_content partner2.name
-    expect(all('.partners__partner_list__tbl__body__row td:nth-child(2)')[1]).to have_content partner2.email
+    expect(all('.partners__partner_list__tbl__body__row td:nth-child(1)')[0]).to have_content partner1.cd
+    expect(all('.partners__partner_list__tbl__body__row td:nth-child(2)')[0]).to have_content partner1.name
+    expect(all('.partners__partner_list__tbl__body__row td:nth-child(3)')[0]).to have_content partner1.email
+    expect(all('.partners__partner_list__tbl__body__row td:nth-child(1)')[1]).to have_content partner2.cd
+    expect(all('.partners__partner_list__tbl__body__row td:nth-child(2)')[1]).to have_content partner2.name
+    expect(all('.partners__partner_list__tbl__body__row td:nth-child(3)')[1]).to have_content partner2.email
     is_expected.not_to have_content partner3.name
     is_expected.not_to have_content partner3.email
   end

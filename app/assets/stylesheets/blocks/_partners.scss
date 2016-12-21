@@ -65,6 +65,11 @@
       &__item,
       %partner_list__tbl__item {
         @include list_tbl__item;
+        &--cd {
+          @extend %partner_list__tbl__item;
+          @include span-columns(1);
+        }
+
         &--name {
           @extend %partner_list__tbl__item;
           @include span-columns(3);
@@ -72,7 +77,7 @@
 
         &--email {
           @extend %partner_list__tbl__item;
-          @include span-columns(4);
+          @include span-columns(3);
         }
       }
     }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207071241) do
+ActiveRecord::Schema.define(version: 20161208055509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,7 +74,13 @@ ActiveRecord::Schema.define(version: 20161207071241) do
     t.string   "company_name", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "cd",           null: false
+    t.string   "address"
+    t.string   "zip_code"
+    t.string   "phone_number"
   end
+
+  add_index "partners", ["cd"], name: "index_partners_on_cd", using: :btree
 
   create_table "project_file_groups", force: :cascade do |t|
     t.integer  "project_id", null: false

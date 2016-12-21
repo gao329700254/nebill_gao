@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20160524030515
+# Schema version: 20161208055509
 #
 # Table name: partners
 #
@@ -7,6 +7,14 @@
 #  company_name :string           not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  cd           :string           not null
+#  address      :string
+#  zip_code     :string
+#  phone_number :string
+#
+# Indexes
+#
+#  index_partners_on_cd  (cd)
 #
 
 class Partner < ActiveRecord::Base
@@ -14,8 +22,11 @@ class Partner < ActiveRecord::Base
 
   has_many :members, through: :employee, class_name: 'PartnerMember'
 
+  validates :cd          , presence: true, uniqueness: { case_sensitive: false }
   validates :name        , presence: true
   validates :company_name, presence: true
+
+  before_save { cd.upcase! }
 
   def join!(project, unit_price, min_limit_time, max_limit_time)
     project.partner_members.create!(employee_id: employee.id, unit_price: unit_price, min_limit_time: min_limit_time, max_limit_time: max_limit_time)

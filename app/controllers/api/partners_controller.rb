@@ -28,9 +28,13 @@ private
 
   def partner_param
     params.require(:partner).permit(
+      :cd,
       :name,
       :email,
       :company_name,
+      :address,
+      :zip_code,
+      :phone_number,
     )
   end
 end
