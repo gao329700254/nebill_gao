@@ -5,6 +5,7 @@ script type='text/x-template' id='partner_member_list'
     table.partner_member_list__tbl
       thead.partner_member_list__tbl__head
         tr.partner_member_list__tbl__head__row
+          th.partner_member_list__tbl__item--cd             = t('activerecord.attributes.partner.cd')
           th.partner_member_list__tbl__item--name           = t('activerecord.attributes.partner.name')
           th.partner_member_list__tbl__item--email          = t('activerecord.attributes.partner.email')
           th.partner_member_list__tbl__item--company_name   = t('activerecord.attributes.partner.company_name')
@@ -17,6 +18,7 @@ script type='text/x-template' id='partner_member_list'
           id       = "partner-{{partner.id}}"
           track-by = "id"
         ]
+          td.partner_member_list__tbl__item--cd             v-text='partner.cd'
           td.partner_member_list__tbl__item--name           v-text='partner.name'
           td.partner_member_list__tbl__item--email          v-text='partner.email'
           td.partner_member_list__tbl__item--company_name   v-text='partner.company_name'

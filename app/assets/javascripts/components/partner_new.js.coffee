@@ -4,9 +4,13 @@ $ ->
     mixins: [Vue.modules.modal]
     data: ->
       partner:
+        cd: ''
         email: ''
         name: ''
         company_name: ''
+        address: ''
+        zip_code: ''
+        phone_number: ''
     methods:
       cancel: -> @modalHide()
       submit: ->
@@ -19,9 +23,13 @@ $ ->
             data: { partner: @partner }
           .done (response) =>
             toastr.success('', response.message)
+            @partner.cd           = ''
             @partner.email        = ''
             @partner.name         = ''
             @partner.company_name = ''
+            @partner.address      = ''
+            @partner.zip_code     = ''
+            @partner.phone_number = ''
             @modalHide()
             @$dispatch('loadAllPartnersEvent', response.id)
           .fail (response) =>

@@ -21,11 +21,13 @@
     table.partners__partner_list__tbl
       thead.partners__partner_list__tbl__head
         tr.partners__partner_list__tbl__head__row
+          th.partners__partner_list__tbl__item--cd    = t('activerecord.attributes.partner.cd')
           th.partners__partner_list__tbl__item--name  = t('activerecord.attributes.partner.name')
           th.partners__partner_list__tbl__item--email = t('activerecord.attributes.partner.email')
       tbody.partners__partner_list__tbl__body
         tr.partners__partner_list__tbl__body__row [
           v-for = "partner in partnerSearchByCompanyName"
         ]
+          td.partners__partner_list__tbl__item--cd    v-text="partner.cd"
           td.partners__partner_list__tbl__item--name  v-text="partner.name"
           td.partners__partner_list__tbl__item--email v-text="partner.email"
