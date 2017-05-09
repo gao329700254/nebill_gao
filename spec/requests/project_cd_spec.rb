@@ -6,14 +6,15 @@ RSpec.describe 'project_cds request' do
   before { login(user) }
 
   describe "GET /api/projects/cd/:project_type" do
-    let!(:project1)  { create(:contracted_project,   cd: '16D001A', contract_type: 'lump_sum') }
-    let!(:project2)  { create(:contracted_project,   cd: '16S001A', contract_type: 'lump_sum',    is_using_ses: true) }
-    let!(:project3)  { create(:contracted_project,   cd: '16K001A', contract_type: 'uasimandate') }
-    let!(:project4)  { create(:contracted_project,   cd: '16K002A', contract_type: 'uasimandate') }
-    let!(:project5)  { create(:contracted_project,   cd: '16K003A', contract_type: 'consignment') }
-    let!(:project7)  { create(:contracted_project,   cd: '16S002A', contract_type: 'consignment', is_using_ses: true) }
-    let!(:project8)  { create(:contracted_project,   cd: '16M001A', contract_type: 'maintenance') }
-    let!(:project9)  { create(:uncontracted_project, cd: '16D002B') }
+    let!(:project1)  { create(:contracted_project,   cd: "#{year}D001A", contract_type: 'lump_sum') }
+    let!(:project2)  { create(:contracted_project,   cd: "#{year}S001A", contract_type: 'lump_sum',    is_using_ses: true) }
+    let!(:project3)  { create(:contracted_project,   cd: "#{year}K001A", contract_type: 'uasimandate') }
+    let!(:project4)  { create(:contracted_project,   cd: "#{year}K002A", contract_type: 'uasimandate') }
+    let!(:project5)  { create(:contracted_project,   cd: "#{year}K003A", contract_type: 'consignment') }
+    let!(:project7)  { create(:contracted_project,   cd: "#{year}S002A", contract_type: 'consignment', is_using_ses: true) }
+    let!(:project8)  { create(:contracted_project,   cd: "#{year}M001A", contract_type: 'maintenance') }
+    let!(:project9)  { create(:uncontracted_project, cd: "#{year}D002B") }
+    let!(:year)   { Time.zone.today.strftime("%y") }
 
     context 'defined contract type' do
       context 'GET /api/projects/cd/lump_sum' do
@@ -25,7 +26,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq '16D003A'
+          expect(json['cd']).to eq "#{year}D003A"
         end
       end
 
@@ -38,7 +39,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq '16D003B'
+          expect(json['cd']).to eq "#{year}D003B"
         end
       end
 
@@ -51,7 +52,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq '16K004A'
+          expect(json['cd']).to eq "#{year}K004A"
         end
       end
 
@@ -64,7 +65,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq '16K004A'
+          expect(json['cd']).to eq "#{year}K004A"
         end
       end
 
@@ -77,7 +78,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq '16M002A'
+          expect(json['cd']).to eq "#{year}M002A"
         end
       end
 
@@ -90,7 +91,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq '16S003A'
+          expect(json['cd']).to eq "#{year}S003A"
         end
       end
 
@@ -103,7 +104,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq '16W001A'
+          expect(json['cd']).to eq "#{year}W001A"
         end
       end
     end
