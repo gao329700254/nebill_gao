@@ -162,7 +162,7 @@ RSpec.describe 'clients request' do
           expect(response.status).to eq 201
 
           expect(json['id']).not_to eq nil
-          expect(json['message']).to eq '顧客を更新しました'
+          expect(json['message']).to eq '取引先を更新しました'
         end
       end
 
@@ -192,7 +192,7 @@ RSpec.describe 'clients request' do
           expect(response).not_to be_success
           expect(response.status).to eq 422
 
-          expect(json['message']).to eq '顧客が更新できませんでした'
+          expect(json['message']).to eq '取引先が更新できませんでした'
         end
       end
     end

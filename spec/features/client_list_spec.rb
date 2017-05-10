@@ -12,7 +12,7 @@ RSpec.feature 'Client List Page', js: true do
   subject { page }
 
   scenario 'show' do
-    is_expected.to have_header_title '顧客一覧'
+    is_expected.to have_header_title '取引先一覧'
 
     is_expected.to have_field 'search', with: ''
     is_expected.to have_content 'ID'
@@ -80,7 +80,7 @@ RSpec.feature 'Client List Page', js: true do
   scenario 'link to a client show page when click row' do
     find("#client-#{client1.id}").click
 
-    is_expected.to have_header_title '顧客情報'
+    is_expected.to have_header_title '取引先情報'
   end
 
 end

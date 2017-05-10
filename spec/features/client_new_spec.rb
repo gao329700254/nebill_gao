@@ -9,7 +9,7 @@ RSpec.feature 'Client New Page', js: true do
   subject { page }
 
   scenario 'show' do
-    is_expected.to have_header_title '顧客新規作成'
+    is_expected.to have_header_title '取引先新規作成'
   end
 
   describe 'form' do
