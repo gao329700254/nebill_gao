@@ -10,7 +10,7 @@ RSpec.feature 'Client Show Page', js: true do
   subject { page }
 
   scenario 'show' do
-    is_expected.to have_header_title '顧客情報'
+    is_expected.to have_header_title '取引先情報'
   end
 
   describe 'form' do
