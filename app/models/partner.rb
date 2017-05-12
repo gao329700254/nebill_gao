@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20161208055509
+# Schema version: 20170512072051
 #
 # Table name: partners
 #
@@ -28,7 +28,13 @@ class Partner < ActiveRecord::Base
 
   before_save { cd.upcase! }
 
-  def join!(project, unit_price, min_limit_time, max_limit_time)
-    project.partner_members.create!(employee_id: employee.id, unit_price: unit_price, min_limit_time: min_limit_time, max_limit_time: max_limit_time)
+  def join!(project, unit_price, working_rate, min_limit_time, max_limit_time)
+    project.partner_members.create!(
+      employee_id:    employee.id,
+      unit_price:     unit_price,
+      working_rate:   working_rate,
+      min_limit_time: min_limit_time,
+      max_limit_time: max_limit_time,
+    )
   end
 end

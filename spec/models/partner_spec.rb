@@ -21,7 +21,7 @@ RSpec.describe Partner do
     let(:project) { create(:project) }
     before do
       partner.save!
-      partner.join!(project, 1, 1, 2)
+      partner.join!(project, 1, 0.6, 1, 2)
     end
 
     its(:projects) { is_expected.to include project }

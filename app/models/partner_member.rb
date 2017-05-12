@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20161207071241
+# Schema version: 20170512072051
 #
 # Table name: members
 #
@@ -12,6 +12,7 @@
 #  max_limit_time :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  working_rate   :float
 #
 # Indexes
 #
@@ -30,4 +31,5 @@ class PartnerMember < Member
 
   validates :unit_price    , presence: true
   validates :max_limit_time, numericality: { greater_than: :min_limit_time }, allow_nil: true
+  validates :working_rate  , numericality: true , allow_nil: true
 end

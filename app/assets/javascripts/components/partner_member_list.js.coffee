@@ -8,6 +8,7 @@ $ ->
       selectedPartnerId: undefined
       member:
         unit_price: ''
+        working_rate: ''
         min_limit_time: ''
         max_limit_time: ''
     computed:
@@ -37,6 +38,7 @@ $ ->
             toastr.success('', response.message)
             @selectedPartnerId = undefined
             @member.unit_price = ''
+            @member.working_rate = ''
             @member.min_limit_time = ''
             @member.max_limit_time = ''
             @loadPartners()

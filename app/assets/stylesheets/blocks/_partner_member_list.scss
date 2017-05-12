@@ -34,7 +34,8 @@
 
       &--email {
         @extend %partner_member_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2);
+        @include word-wrap;
       }
 
       &--company_name {
@@ -43,6 +44,11 @@
       }
 
       &--unit_price {
+        @extend %partner_member_list__tbl__item;
+        @include span-columns(1);
+      }
+
+      &--working_rate {
         @extend %partner_member_list__tbl__item;
         @include span-columns(2);
       }

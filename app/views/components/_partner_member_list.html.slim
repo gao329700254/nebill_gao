@@ -10,6 +10,7 @@ script type='text/x-template' id='partner_member_list'
           th.partner_member_list__tbl__item--email          = t('activerecord.attributes.partner.email')
           th.partner_member_list__tbl__item--company_name   = t('activerecord.attributes.partner.company_name')
           th.partner_member_list__tbl__item--unit_price     = t('activerecord.attributes.partner_member.unit_price')
+          th.partner_member_list__tbl__item--working_rate   = t('activerecord.attributes.partner_member.working_rate')
           th.partner_member_list__tbl__item--min_limit_time = t('activerecord.attributes.partner_member.min_limit_time')
           th.partner_member_list__tbl__item--max_limit_time = t('activerecord.attributes.partner_member.max_limit_time')
       tbody.partner_member_list__tbl__body
@@ -23,6 +24,7 @@ script type='text/x-template' id='partner_member_list'
           td.partner_member_list__tbl__item--email          v-text='partner.email'
           td.partner_member_list__tbl__item--company_name   v-text='partner.company_name'
           td.partner_member_list__tbl__item--unit_price     v-text='partner.member.unit_price.toLocaleString()'
+          td.partner_member_list__tbl__item--working_rate   v-text='partner.member.working_rate'
           td.partner_member_list__tbl__item--min_limit_time v-text='partner.member.min_limit_time'
           td.partner_member_list__tbl__item--max_limit_time v-text='partner.member.max_limit_time'
 
@@ -32,6 +34,8 @@ script type='text/x-template' id='partner_member_list'
 
       .partner_member_list__new_member__form__item
         = text_field_tag   :unit_price    , nil, placeholder: t('activerecord.attributes.partner_member.unit_price')    , 'v-numeric' => 'member.unit_price'
+      .partner_member_list__new_member__form__item
+        = text_field_tag   :working_rate,   nil, placeholder: t('activerecord.attributes.partner_member.working_rate'),   'v-model' => 'member.working_rate'
       .partner_member_list__new_member__form__item
         = number_field_tag :min_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.min_limit_time'), 'v-model' => 'member.min_limit_time'
       .partner_member_list__new_member__form__item

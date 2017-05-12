@@ -3,7 +3,12 @@ class Api::PartnerMembersController < Api::ApiController
   before_action :set_partner, only: [:create]
 
   def create
-    @member = @partner.join!(@project, params[:member][:unit_price], params[:member][:min_limit_time], params[:member][:max_limit_time])
+    @member = @partner.join!(
+      @project, params[:member][:unit_price],
+      params[:member][:working_rate],
+      params[:member][:min_limit_time],
+      params[:member][:max_limit_time]
+    )
 
     render_action_model_success_message(@member, :create)
   rescue ActiveRecord::RecordInvalid => e

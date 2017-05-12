@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208055509) do
+ActiveRecord::Schema.define(version: 20170512072051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20161208055509) do
     t.integer  "max_limit_time"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.float    "working_rate"
   end
 
   add_index "members", ["employee_id", "project_id"], name: "index_members_on_employee_id_and_project_id", unique: true, using: :btree

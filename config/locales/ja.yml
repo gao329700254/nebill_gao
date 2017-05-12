@@ -39,6 +39,7 @@ ja:
         phone_number: 電話番号
       partner_member:
         unit_price: 単価
+        working_rate: 稼働時間
         max_limit_time: 上限
         min_limit_time: 下限
       client:

@@ -408,6 +408,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content 'メールアドレス'
           is_expected.to have_content '会社名'
           is_expected.to have_content '単価'
+          is_expected.to have_content '稼働時間'
           is_expected.to have_content '下限'
           is_expected.to have_content '上限'
 
@@ -416,6 +417,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content partner1.email
           is_expected.to have_content partner1.company_name
           is_expected.to have_content partner1.members[0].unit_price
+          is_expected.to have_content partner1.members[0].working_rate
           is_expected.to have_content partner1.members[0].min_limit_time
           is_expected.to have_content partner1.members[0].max_limit_time
           is_expected.to have_content partner2.cd
@@ -423,6 +425,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_content partner2.email
           is_expected.to have_content partner2.company_name
           is_expected.to have_content partner2.members[0].unit_price
+          is_expected.to have_content partner2.members[0].working_rate
           is_expected.to have_content partner2.members[0].min_limit_time
           is_expected.to have_content partner2.members[0].max_limit_time
 
@@ -437,6 +440,7 @@ RSpec.feature 'Project Show Page', js: true do
 
           is_expected.to have_field 'partner', with: ''
           is_expected.to have_field 'unit_price', with: ''
+          is_expected.to have_field 'working_rate', with: ''
           is_expected.to have_field 'min_limit_time', with: ''
           is_expected.to have_field 'max_limit_time', with: ''
           is_expected.to have_button '登録'
@@ -446,6 +450,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'select partner and click submit button with correct values' do
           select other_partner1.name, from: :partner
           fill_in :unit_price, with: '1'
+          fill_in :working_rate, with: '0.6'
           fill_in :min_limit_time, with: '1'
           fill_in :max_limit_time, with: '2'
 
@@ -458,6 +463,7 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'select partner and click submit button with uncorrect values' do
           select other_partner2.name, from: :partner
           fill_in :unit_price, with: '1'
+          fill_in :working_rate, with: '0.6'
           fill_in :min_limit_time, with: '2'
           fill_in :max_limit_time, with: '1'
 

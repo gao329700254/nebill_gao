@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20161207071241
+# Schema version: 20170512072051
 #
 # Table name: members
 #
@@ -12,6 +12,7 @@
 #  max_limit_time :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  working_rate   :float
 #
 # Indexes
 #
@@ -28,5 +29,5 @@
 class UserMember < Member
   has_one :user, through: :employee, source: :actable, source_type: User
 
-  validates :unit_price, :min_limit_time, :max_limit_time, absence: true
+  validates :unit_price, :working_rate, :min_limit_time, :max_limit_time, absence: true
 end
