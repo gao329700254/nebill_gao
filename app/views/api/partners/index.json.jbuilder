@@ -4,6 +4,7 @@ json.array!(@partners) do |partner|
     member = partner.members.find_by(project_id: @project.id)
     json.member do
       json.unit_price     member.unit_price
+      json.working_rate   member.working_rate
       json.min_limit_time member.min_limit_time
       json.max_limit_time member.max_limit_time
     end

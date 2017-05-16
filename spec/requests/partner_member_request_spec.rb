@@ -14,6 +14,7 @@ RSpec.describe 'partner members request' do
       {
         member: {
           unit_price: 1,
+          working_rate: 0.6,
           min_limit_time: 1,
           max_limit_time: 2,
         },
