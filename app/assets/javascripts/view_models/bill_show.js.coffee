@@ -11,7 +11,7 @@ $ ->
         amount:         { init: '' }
         delivery_on:    { init: '' }
         acceptance_on:  { init: '' }
-        payment_on:     { init: '' }
+        payment_type:   { init: '' }
         bill_on:        { init: '' }
         deposit_on:     { init: '' }
         created_at:     { init: '' }
@@ -48,7 +48,7 @@ $ ->
                 amount:         @bill.amount
                 delivery_on:    @bill.delivery_on
                 acceptance_on:  @bill.acceptance_on
-                payment_on:     @bill.payment_on
+                payment_type:   @bill.payment_type
                 bill_on:        @bill.bill_on
                 deposit_on:     @bill.deposit_on
                 memo:           @bill.memo

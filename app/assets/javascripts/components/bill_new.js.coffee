@@ -8,7 +8,7 @@ $ ->
         amount:         undefined
         delivery_on:    undefined
         acceptance_on:  undefined
-        payment_on:     undefined
+        payment_type:   undefined
         bill_on:        undefined
         deposit_on:     undefined
         memo:           undefined
@@ -35,7 +35,7 @@ $ ->
         @bill.amount        = @default_amount
         @bill.delivery_on   = undefined
         @bill.acceptance_on = undefined
-        @bill.payment_on    = undefined
+        @bill.payment_type  = undefined
         @bill.bill_on       = undefined
         @bill.deposit_on    = undefined
         @bill.memo          = undefined
@@ -44,7 +44,7 @@ $ ->
         .done (response) =>
           @bill.delivery_on   = response.delivery_on
           @bill.acceptance_on = response.acceptance_on
-          @bill.payment_on    = response.payment_on
+          @bill.payment_type  = response.payment_type
           @bill.bill_on       = response.bill_on
           @bill.deposit_on    = response.deposit_on
         .fail (response) =>

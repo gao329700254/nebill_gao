@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170512072051
+# Schema version: 20170518101719
 #
 # Table name: bills
 #
@@ -8,13 +8,13 @@
 #  cd            :string           not null
 #  delivery_on   :date             not null
 #  acceptance_on :date             not null
-#  payment_on    :date             not null
 #  bill_on       :date
 #  deposit_on    :date
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  memo          :text
 #  amount        :integer          default(0), not null
+#  payment_type  :string
 #
 # Indexes
 #
@@ -35,7 +35,6 @@ class Bill < ActiveRecord::Base
   validates :amount       , presence: true
   validates :delivery_on  , presence: true
   validates :acceptance_on, presence: true
-  validates :payment_on   , presence: true
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
 

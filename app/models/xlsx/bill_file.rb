@@ -39,7 +39,7 @@ module Xlsx
       when "[project_name]"            then replace!(cell, target, @project.name)
       when "[project_period]"          then replace!(cell, target, project_period)
       when "[bill_cd]"                 then replace!(cell, target, @bill.cd)
-      when "[bill_payment_on]"         then replace!(cell, target, date_format(@bill.payment_on))
+      when "[bill_payment_type]"       then replace!(cell, target, I18n.t("enumerize.defaults.payment_type.#{@bill.payment_type}"))
       when "[bill_amount]"             then replace!(cell, target, @bill.amount)
       when "[subtotal]"                then replace!(cell, target, subtotal)
       when "[tax]"                     then replace!(cell, target, tax)

@@ -248,7 +248,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field 'amount', with: project.amount
           is_expected.to have_field 'delivery_on'
           is_expected.to have_field 'acceptance_on'
-          is_expected.to have_field 'payment_on'
+          is_expected.to have_field 'payment_type'
           is_expected.to have_field 'bill_on'
           is_expected.to have_field 'deposit_on'
           is_expected.to have_field 'memo'
@@ -262,7 +262,7 @@ RSpec.feature 'Project Show Page', js: true do
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           fill_in :bill_on      , with: '2016-01-04'
           fill_in :deposit_on   , with: '2016-01-05'
           fill_in :memo         , with: 'memo'
@@ -276,7 +276,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'amount'        , with: project.amount
           is_expected.to have_field  'delivery_on'   , with: ''
           is_expected.to have_field  'acceptance_on' , with: ''
-          is_expected.to have_field  'payment_on'    , with: ''
+          is_expected.to have_field  'payment_type'  , with: ''
           is_expected.to have_field  'bill_on'       , with: ''
           is_expected.to have_field  'deposit_on'    , with: ''
           is_expected.to have_field  'memo'          , with: ''
@@ -289,7 +289,7 @@ RSpec.feature 'Project Show Page', js: true do
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           fill_in :bill_on      , with: '2016-01-04'
           fill_in :deposit_on   , with: '2016-01-05'
           fill_in :memo         , with: 'memo'
@@ -303,7 +303,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'amount'        , with: 222_222
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
-          is_expected.to have_field  'payment_on'    , with: '2016-01-03'
+          is_expected.to have_field  'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           is_expected.to have_field  'bill_on'       , with: '2016-01-04'
           is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
           is_expected.to have_field  'memo'          , with: 'memo'
@@ -316,7 +316,7 @@ RSpec.feature 'Project Show Page', js: true do
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           fill_in :bill_on      , with: '2015-12-31'
           fill_in :deposit_on   , with: '2016-01-05'
           fill_in :memo         , with: 'memo'
@@ -330,7 +330,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'amount'        , with: 222_222
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
-          is_expected.to have_field  'payment_on'    , with: '2016-01-03'
+          is_expected.to have_field  'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           is_expected.to have_field  'bill_on'       , with: '2015-12-31'
           is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
           is_expected.to have_field  'memo'          , with: 'memo'
@@ -343,7 +343,7 @@ RSpec.feature 'Project Show Page', js: true do
           fill_in :amount       , with: 222_222
           fill_in :delivery_on  , with: '2016-01-01'
           fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_on   , with: '2016-01-03'
+          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           fill_in :bill_on      , with: '2016-01-01'
           fill_in :deposit_on   , with: '2016-01-05'
           fill_in :memo         , with: 'memo'
@@ -357,7 +357,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'amount'        , with: 222_222
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
-          is_expected.to have_field  'payment_on'    , with: '2016-01-03'
+          is_expected.to have_field  'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           is_expected.to have_field  'bill_on'       , with: '2016-01-01'
           is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
           is_expected.to have_field  'memo'          , with: 'memo'
@@ -660,7 +660,7 @@ RSpec.feature 'Project Show Page', js: true do
           expect(find('#amount').value).to eq project.amount.to_s(:delimited)
           is_expected.to have_field 'delivery_on'   , with: '2016-06-10'
           is_expected.to have_field 'acceptance_on' , with: '2016-06-10'
-          is_expected.to have_field 'payment_on'    , with: '2016-07-31'
+          is_expected.to have_field 'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           is_expected.to have_field 'bill_on'       , with: '2016-06-15'
           is_expected.to have_field 'deposit_on'    , with: ''
           is_expected.to have_field 'memo'
@@ -668,14 +668,14 @@ RSpec.feature 'Project Show Page', js: true do
         end
 
         scenario 'click submit button with correct values' do
-          fill_in :cd           , with: 'BILL-1'
-          fill_in :amount       , with: project.amount
-          fill_in :delivery_on  , with: '2016-01-01'
-          fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_on   , with: '2016-01-03'
-          fill_in :bill_on      , with: '2016-01-04'
-          fill_in :deposit_on   , with: '2016-01-05'
-          fill_in :memo         , with: 'memo'
+          fill_in :cd              , with: 'BILL-1'
+          fill_in :amount          , with: project.amount
+          fill_in :delivery_on     , with: '2016-01-01'
+          fill_in :acceptance_on   , with: '2016-01-02'
+          select  '15日締め翌月末払い', from: :payment_type
+          fill_in :bill_on         , with: '2016-01-04'
+          fill_in :deposit_on      , with: '2016-01-05'
+          fill_in :memo            , with: 'memo'
 
           expect do
             click_button '登録'
@@ -686,7 +686,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'amount'        , with: project.amount.to_s(:delimited)
           is_expected.to have_field  'delivery_on'   , with: ''
           is_expected.to have_field  'acceptance_on' , with: ''
-          is_expected.to have_field  'payment_on'    , with: ''
+          is_expected.to have_field  'payment_type'  , with: ''
           is_expected.to have_field  'bill_on'       , with: ''
           is_expected.to have_field  'deposit_on'    , with: ''
           is_expected.to have_field  'memo'          , with: ''
@@ -695,14 +695,14 @@ RSpec.feature 'Project Show Page', js: true do
         scenario 'click submit button with uncorrect values' do
           skip "fail on wercker"
 
-          fill_in :cd           , with: '  '
-          fill_in :amount       , with: project.amount
-          fill_in :delivery_on  , with: '2016-01-01'
-          fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_on   , with: '2016-01-03'
-          fill_in :bill_on      , with: '2016-01-04'
-          fill_in :deposit_on   , with: '2016-01-05'
-          fill_in :memo         , with: 'memo'
+          fill_in :cd              , with: '  '
+          fill_in :amount          , with: project.amount
+          fill_in :delivery_on     , with: '2016-01-01'
+          fill_in :acceptance_on   , with: '2016-01-02'
+          select  '15日締め翌月末払い', from: :payment_type
+          fill_in :bill_on         , with: '2016-01-04'
+          fill_in :deposit_on      , with: '2016-01-05'
+          fill_in :memo            , with: 'memo'
 
           expect do
             click_button '登録'
@@ -713,7 +713,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'amount'        , with: project.amount
           is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
           is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
-          is_expected.to have_field  'payment_on'    , with: '2016-01-03'
+          is_expected.to have_field  'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
           is_expected.to have_field  'bill_on'       , with: '2016-01-04'
           is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
           is_expected.to have_field  'memo'          , with: 'memo'

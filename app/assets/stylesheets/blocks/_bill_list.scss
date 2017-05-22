@@ -52,7 +52,7 @@
         text-align: right;
       }
 
-      &--payment_on {
+      &--payment_type {
         @extend %bill_list__tbl__item;
         @include span-columns(2);
       }

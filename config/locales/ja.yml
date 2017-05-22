@@ -83,7 +83,7 @@ ja:
         amount:         請求金額
         delivery_on:    納品日
         acceptance_on:  検収日
-        payment_on:     支払日
+        payment_type:   支払条件
         bill_on:        請求日
         deposit_on:     入金日
         memo:           メモ

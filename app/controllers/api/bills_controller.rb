@@ -4,8 +4,7 @@ class Api::BillsController < Api::ApiController
 
   def index
     @bills = Bill.all.includes(:project)
-
-    render json: @bills, include: { project: { only: bill_index_project_cols } }, status: :ok
+    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def create
@@ -46,7 +45,7 @@ private
       :amount,
       :delivery_on,
       :acceptance_on,
-      :payment_on,
+      :payment_type,
       :bill_on,
       :deposit_on,
       :memo,

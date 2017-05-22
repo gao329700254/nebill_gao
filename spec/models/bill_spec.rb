@@ -8,7 +8,7 @@ RSpec.describe Bill do
   it { is_expected.to respond_to(:amount) }
   it { is_expected.to respond_to(:delivery_on) }
   it { is_expected.to respond_to(:acceptance_on) }
-  it { is_expected.to respond_to(:payment_on) }
+  it { is_expected.to respond_to(:payment_type) }
   it { is_expected.to respond_to(:bill_on) }
   it { is_expected.to respond_to(:deposit_on) }
   it { is_expected.to respond_to(:memo) }
@@ -20,7 +20,6 @@ RSpec.describe Bill do
   it { is_expected.to validate_presence_of(:amount) }
   it { is_expected.to validate_presence_of(:delivery_on) }
   it { is_expected.to validate_presence_of(:acceptance_on) }
-  it { is_expected.to validate_presence_of(:payment_on) }
 
   describe "#bill_on_cannot_predate_delivery_on" do
     it "bill_on should not predate delivery_on" do
