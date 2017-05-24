@@ -98,7 +98,7 @@ RSpec.describe 'project files request' do
       let!(:project_file) { create(:project_file, project: project) }
       let(:path) { "/api/project_files/#{project_file.id}" }
 
-      it 'delete the project fileand return success message' do
+      it 'delete the project file and return success message' do
         expect do
           delete path
         end.to change(ProjectFile, :count).by(-1)

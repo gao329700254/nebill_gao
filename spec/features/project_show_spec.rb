@@ -623,15 +623,22 @@ RSpec.feature 'Project Show Page', js: true do
             end
           end
 
-          context 'and click delete button' do
-            before do
-              click_button '削除'
-              wait_for_ajax
-            end
-
-            scenario 'delete project_files' do
+          context 'when click delete button' do
+            scenario 'and accept the confirm' do
+              page.accept_confirm('本当に削除してよろしいですか？') do
+                click_button '削除'
+                wait_for_ajax
+              end
               is_expected.not_to have_content file1.original_filename
               is_expected.not_to have_content file2.original_filename
+            end
+
+            scenario 'and dismiss the confirm' do
+              page.dismiss_confirm do
+                click_button '削除'
+              end
+              is_expected.to have_content file1.original_filename
+              is_expected.to have_content file2.original_filename
             end
           end
         end
