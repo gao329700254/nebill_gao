@@ -25,13 +25,10 @@ RSpec.describe 'bills request' do
       expect(json[0]['amount']).to                           eq bill1.amount
       expect(json[0]['delivery_on']).to                      eq bill1.delivery_on.strftime("%Y-%m-%d")
       expect(json[0]['acceptance_on']).to                    eq bill1.acceptance_on.strftime("%Y-%m-%d")
-      expect(json[0]['payment_on']).to                       eq bill1.payment_on.strftime("%Y-%m-%d")
+      expect(json[0]['payment_type']).to                     eq I18n.t("enumerize.defaults.payment_type.#{bill1.payment_type}")
       expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill1.memo
-      expect(json[0]['payment_on']).to                       eq bill1.payment_on.strftime("%Y-%m-%d")
-      expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
-      expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
       expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
       expect(json[0]['project']['name']).to                  eq bill1.project.name
@@ -56,7 +53,7 @@ RSpec.describe 'bills request' do
         expect(json['amount']).to         eq bill.amount
         expect(json['delivery_on']).to    eq bill.delivery_on.strftime("%Y-%m-%d")
         expect(json['acceptance_on']).to  eq bill.acceptance_on.strftime("%Y-%m-%d")
-        expect(json['payment_on']).to     eq bill.payment_on.strftime("%Y-%m-%d")
+        expect(json['payment_type']).to   eq bill.payment_type
         expect(json['bill_on']).to        eq bill.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
         expect(json['deposit_on']).to     eq bill.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json['memo']).to           eq bill.memo
@@ -91,7 +88,7 @@ RSpec.describe 'bills request' do
             amount:        100_000,
             delivery_on:   '2016-01-01',
             acceptance_on: '2016-01-02',
-            payment_on:    '2016-01-03',
+            payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
             bill_on:       '2016-01-04',
             deposit_on:    '2016-01-05',
             memo:          'memo',
@@ -110,7 +107,7 @@ RSpec.describe 'bills request' do
         expect(bill.amount).to              eq 100_000
         expect(bill.delivery_on.to_s).to    eq '2016-01-01'
         expect(bill.acceptance_on.to_s).to  eq '2016-01-02'
-        expect(bill.payment_on.to_s).to     eq '2016-01-03'
+        expect(bill.payment_type).to        eq 'bill_on_15th_and_payment_on_end_of_next_month'
         expect(bill.bill_on.to_s).to        eq '2016-01-04'
         expect(bill.deposit_on.to_s).to     eq '2016-01-05'
         expect(bill.memo).to                eq 'memo'
@@ -125,7 +122,7 @@ RSpec.describe 'bills request' do
             amount:        100_000,
             delivery_on:   '2016-01-01',
             acceptance_on: '2016-01-02',
-            payment_on:    '2016-01-03',
+            payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
             bill_on:       '2016-01-04',
             deposit_on:    '2016-01-05',
             memo:          'memo',
@@ -155,7 +152,7 @@ RSpec.describe 'bills request' do
               amount:        100_000,
               delivery_on:   '2016-01-01',
               acceptance_on: '2016-01-02',
-              payment_on:    '2016-01-03',
+              payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
               bill_on:       '2016-01-04',
               deposit_on:    '2016-01-05',
               memo:          'memo',
@@ -169,11 +166,11 @@ RSpec.describe 'bills request' do
           end.to change { bill.reload && bill.updated_at }
 
           expect(bill.project).to             eq project
-          expect(bill.cd).to                 eq 'BILL-1'
+          expect(bill.cd).to                  eq 'BILL-1'
           expect(bill.amount).to              eq 100_000
           expect(bill.delivery_on.to_s).to    eq '2016-01-01'
           expect(bill.acceptance_on.to_s).to  eq '2016-01-02'
-          expect(bill.payment_on.to_s).to     eq '2016-01-03'
+          expect(bill.payment_type).to        eq 'bill_on_15th_and_payment_on_end_of_next_month'
           expect(bill.bill_on.to_s).to        eq '2016-01-04'
           expect(bill.deposit_on.to_s).to     eq '2016-01-05'
           expect(bill.memo).to                eq 'memo'
@@ -198,7 +195,7 @@ RSpec.describe 'bills request' do
               amount:        100_000,
               delivery_on:   '2016-01-01',
               acceptance_on: '2016-01-02',
-              payment_on:    '2016-01-03',
+              payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
               bill_on:       '2016-01-04',
               deposit_on:    '2016-01-05',
               memo:          'memo',

@@ -4,7 +4,7 @@ FactoryGirl.define do
     sequence(:cd)  { |n| "BILL-#{n}" }
     delivery_on    { Faker::Date.between(1.month.from_now, 2.months.from_now) }
     acceptance_on  { delivery_on + 5.days }
-    payment_on     { acceptance_on + 1.day }
+    payment_type   { Project.payment_type.values[rand(0..7)] }
     bill_on        nil
     deposit_on     nil
     memo           { Faker::Lorem.sentence }

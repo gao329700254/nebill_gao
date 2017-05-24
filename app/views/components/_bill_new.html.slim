@@ -17,8 +17,8 @@ script type='text/x-template' id='bill_new'
             = label_tag :acceptance_on, t('activerecord.attributes.bill.acceptance_on')
             = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on'
           .bill_new__form__item
-            = label_tag :payment_on, t('activerecord.attributes.bill.payment_on')
-            = date_field_tag :payment_on, nil, 'v-model' => 'bill.payment_on'
+            = label_tag :payment_type, t('activerecord.attributes.project.payment_type')
+            = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type'
           .bill_new__form__item
             = label_tag :bill_on, t('activerecord.attributes.bill.bill_on')
             = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on'

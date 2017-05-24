@@ -382,7 +382,7 @@ RSpec.describe 'projects request' do
 
       expect(json['delivery_on']).to   eq '2016-06-10'
       expect(json['acceptance_on']).to eq '2016-06-10'
-      expect(json['payment_on']).to    eq '2016-07-31'
+      expect(json['payment_type']).to  eq 'bill_on_15th_and_payment_on_end_of_next_month'
       expect(json['bill_on']).to       eq '2016-06-15'
       expect(json['deposit_on']).to    eq nil
     end

@@ -21,7 +21,7 @@ RSpec.feature 'Bill Show Page', js: true do
       is_expected.to     have_field 'amount'        , disabled: true, with: bill.amount.to_s(:delimited)
       is_expected.to     have_field 'delivery_on'   , disabled: true, with: bill.delivery_on
       is_expected.to     have_field 'acceptance_on' , disabled: true, with: bill.acceptance_on
-      is_expected.to     have_field 'payment_on'    , disabled: true, with: bill.payment_on
+      is_expected.to     have_field 'payment_type'  , disabled: true, with: bill.payment_type
       is_expected.to     have_field 'bill_on'       , disabled: true, with: bill.bill_on
       is_expected.to     have_field 'deposit_on'    , disabled: true, with: bill.deposit_on
       is_expected.to     have_field 'memo'          , disabled: true, with: bill.memo
@@ -39,7 +39,7 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'amount'        , disabled: false, with: bill.amount.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: bill.delivery_on
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: bill.acceptance_on
-        is_expected.to     have_field 'payment_on'    , disabled: false, with: bill.payment_on
+        is_expected.to     have_field 'payment_type'  , disabled: false, with: bill.payment_type
         is_expected.to     have_field 'bill_on'       , disabled: false, with: bill.bill_on
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: bill.deposit_on
         is_expected.to     have_field 'memo'          , disabled: false, with: bill.memo
@@ -54,19 +54,19 @@ RSpec.feature 'Bill Show Page', js: true do
         original_amount         = bill.amount
         original_delivery_on    = bill.delivery_on
         original_acceptance_on  = bill.acceptance_on
-        original_payment_on     = bill.payment_on
+        original_payment_type   = bill.payment_type
         original_bill_on        = bill.bill_on
         original_deposit_on     = bill.deposit_on
         original_memo           = bill.memo
 
-        fill_in :cd             , with: '0000001'
-        fill_in :amount         , with: 101_010
-        fill_in :delivery_on    , with: '2016-01-01'
-        fill_in :acceptance_on  , with: '2016-01-02'
-        fill_in :payment_on     , with: '2016-01-03'
-        fill_in :bill_on        , with: '2016-01-04'
-        fill_in :deposit_on     , with: '2016-01-05'
-        fill_in :memo           , with: 'memo'
+        fill_in :cd              , with: '0000001'
+        fill_in :amount          , with: 101_010
+        fill_in :delivery_on     , with: '2016-01-01'
+        fill_in :acceptance_on   , with: '2016-01-02'
+        select  '15日締め翌月末払い', from: :payment_type
+        fill_in :bill_on         , with: '2016-01-04'
+        fill_in :deposit_on      , with: '2016-01-05'
+        fill_in :memo            , with: 'memo'
 
         expect do
           click_button 'キャンセル'
@@ -77,21 +77,21 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'amount'        , disabled: true, with: original_amount.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: true, with: original_delivery_on
         is_expected.to     have_field 'acceptance_on' , disabled: true, with: original_acceptance_on
-        is_expected.to     have_field 'payment_on'    , disabled: true, with: original_payment_on
+        is_expected.to     have_field 'payment_type'  , disabled: true, with: original_payment_type
         is_expected.to     have_field 'bill_on'       , disabled: true, with: original_bill_on
         is_expected.to     have_field 'deposit_on'    , disabled: true, with: original_deposit_on
         is_expected.to     have_field 'memo'          , disabled: true, with: original_memo
       end
 
       scenario 'should update when click submit button with correct values' do
-        fill_in :cd             , with: '0000001'
-        fill_in :amount         , with: 101_010
-        fill_in :delivery_on    , with: '2016-01-01'
-        fill_in :acceptance_on  , with: '2016-01-02'
-        fill_in :payment_on     , with: '2016-01-03'
-        fill_in :bill_on        , with: '2016-01-04'
-        fill_in :deposit_on     , with: '2016-01-05'
-        fill_in :memo           , with: 'memo'
+        fill_in :cd              , with: '0000001'
+        fill_in :amount          , with: 101_010
+        fill_in :delivery_on     , with: '2016-01-01'
+        fill_in :acceptance_on   , with: '2016-01-02'
+        select  '15日締め翌月末払い', from: :payment_type
+        fill_in :bill_on         , with: '2016-01-04'
+        fill_in :deposit_on      , with: '2016-01-05'
+        fill_in :memo            , with: 'memo'
 
         expect do
           click_button '更新'
@@ -102,21 +102,21 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'amount'        , disabled: true, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: true, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: true, with: '2016-01-02'
-        is_expected.to     have_field 'payment_on'    , disabled: true, with: '2016-01-03'
+        is_expected.to     have_field 'payment_type'  , disabled: true, with: 'bill_on_15th_and_payment_on_end_of_next_month'
         is_expected.to     have_field 'bill_on'       , disabled: true, with: '2016-01-04'
         is_expected.to     have_field 'deposit_on'    , disabled: true, with: '2016-01-05'
         is_expected.to     have_field 'memo'          , disabled: true, with: 'memo'
       end
 
       scenario 'should not update when click submit button with uncorrect values' do
-        fill_in :cd             , with: '  '
-        fill_in :amount         , with: 101_010
-        fill_in :delivery_on    , with: '2016-01-01'
-        fill_in :acceptance_on  , with: '2016-01-02'
-        fill_in :payment_on     , with: '2016-01-03'
-        fill_in :bill_on        , with: '2016-01-04'
-        fill_in :deposit_on     , with: '2016-01-05'
-        fill_in :memo           , with: 'memo'
+        fill_in :cd              , with: '  '
+        fill_in :amount          , with: 101_010
+        fill_in :delivery_on     , with: '2016-01-01'
+        fill_in :acceptance_on   , with: '2016-01-02'
+        select  '15日締め翌月末払い', from: :payment_type
+        fill_in :bill_on         , with: '2016-01-04'
+        fill_in :deposit_on      , with: '2016-01-05'
+        fill_in :memo            , with: 'memo'
 
         expect do
           click_button '更新'
@@ -127,21 +127,21 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
-        is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'
+        is_expected.to     have_field 'payment_type'  , disabled: false, with: 'bill_on_15th_and_payment_on_end_of_next_month'
         is_expected.to     have_field 'bill_on'       , disabled: false, with: '2016-01-04'
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
         is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'
       end
 
       scenario 'should not update when click submit button with uncorrect bill_on predate delivery_on' do
-        fill_in :cd             , with: '0000002'
-        fill_in :amount         , with: 101_010
-        fill_in :delivery_on    , with: '2016-01-01'
-        fill_in :acceptance_on  , with: '2016-01-02'
-        fill_in :payment_on     , with: '2016-01-03'
-        fill_in :bill_on        , with: '2015-12-31'
-        fill_in :deposit_on     , with: '2016-01-05'
-        fill_in :memo           , with: 'memo'
+        fill_in :cd              , with: '0000002'
+        fill_in :amount          , with: 101_010
+        fill_in :delivery_on     , with: '2016-01-01'
+        fill_in :acceptance_on   , with: '2016-01-02'
+        select  '15日締め翌月末払い', from: :payment_type
+        fill_in :bill_on         , with: '2015-12-31'
+        fill_in :deposit_on      , with: '2016-01-05'
+        fill_in :memo            , with: 'memo'
 
         expect do
           click_button '更新'
@@ -152,21 +152,21 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
-        is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'
+        is_expected.to     have_field 'payment_type'  , disabled: false, with: 'bill_on_15th_and_payment_on_end_of_next_month'
         is_expected.to     have_field 'bill_on'       , disabled: false, with: '2015-12-31'
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
         is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'
       end
 
       scenario 'should not update when click submit button with uncorrect bill_on predate acceptance_on' do
-        fill_in :cd             , with: '0000002'
-        fill_in :amount         , with: 101_010
-        fill_in :delivery_on    , with: '2016-01-01'
-        fill_in :acceptance_on  , with: '2016-01-02'
-        fill_in :payment_on     , with: '2016-01-03'
-        fill_in :bill_on        , with: '2016-01-01'
-        fill_in :deposit_on     , with: '2016-01-05'
-        fill_in :memo           , with: 'memo'
+        fill_in :cd              , with: '0000002'
+        fill_in :amount          , with: 101_010
+        fill_in :delivery_on     , with: '2016-01-01'
+        fill_in :acceptance_on   , with: '2016-01-02'
+        select  '15日締め翌月末払い', from: :payment_type
+        fill_in :bill_on         , with: '2016-01-01'
+        fill_in :deposit_on      , with: '2016-01-05'
+        fill_in :memo            , with: 'memo'
 
         expect do
           click_button '更新'
@@ -177,7 +177,7 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'amount'        , disabled: false, with: 101_010.to_s(:delimited)
         is_expected.to     have_field 'delivery_on'   , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'acceptance_on' , disabled: false, with: '2016-01-02'
-        is_expected.to     have_field 'payment_on'    , disabled: false, with: '2016-01-03'
+        is_expected.to     have_field 'payment_type'  , disabled: false, with: 'bill_on_15th_and_payment_on_end_of_next_month'
         is_expected.to     have_field 'bill_on'       , disabled: false, with: '2016-01-01'
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
         is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'

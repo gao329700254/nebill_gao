@@ -39,7 +39,7 @@ class Api::ProjectsController < Api::ApiController
     result = {
       delivery_on:    @project.end_on,
       acceptance_on:  @project.end_on,
-      payment_on:     view_context.calc_date(now, Regexp.last_match(2)),
+      payment_type:   @project.payment_type,
       bill_on:        view_context.calc_date(now, Regexp.last_match(1)),
       deposit_on:     nil,
     }

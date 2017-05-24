@@ -13,7 +13,7 @@ RSpec.describe Xlsx::BillFile do
       expect(worksheet[2][0].value).to  eq project.name
       expect(worksheet[3][0].value).to  eq "2016/01/01〜2017/01/01"
       expect(worksheet[4][0].value).to  eq bill.cd
-      expect(worksheet[5][0].value).to  eq bill.payment_on.strftime("%Y/%m/%d")
+      expect(worksheet[5][0].value).to  eq I18n.t("enumerize.defaults.payment_type.#{bill.payment_type}")
       expect(worksheet[6][0].value).to  eq bill.amount
       expect(worksheet[7][0].value).to  eq 110
       expect(worksheet[8][0].value).to  eq 8
