@@ -10,6 +10,10 @@
   height: $header-height;
   color: $black-ft-color;
 
+  &__delete_confirm_message {
+    display: none;
+  }
+
   &__logo {
     @include flex(0 0 $header-logo-whight);
     @include display(flex);

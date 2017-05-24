@@ -1,6 +1,6 @@
 class Api::BillsController < Api::ApiController
   before_action :set_project, only: [:create]
-  before_action :set_bill   , only: [:show, :update]
+  before_action :set_bill   , only: [:show, :update, :destroy]
 
   def index
     @bills = Bill.all.includes(:project)
@@ -27,6 +27,13 @@ class Api::BillsController < Api::ApiController
     render_action_model_success_message(@bill, :update)
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@bill, :update)
+  end
+
+  def destroy
+    @bill.destroy!
+    render_action_model_flash_success_message(@bill, :destroy)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@bill, :destroy)
   end
 
 private

@@ -41,3 +41,5 @@
       = fa_icon 'pencil-square', text: t('helpers.submit.update')
     = link_to bill_download_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
       = fa_icon 'download', text: t('helpers.submit.download')
+    = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!editMode', class: 'bill_show__form__btn--delete' do
+      = fa_icon 'trash', text: t('helpers.delete')
