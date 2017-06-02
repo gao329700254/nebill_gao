@@ -92,4 +92,37 @@ RSpec.describe 'project files request' do
       expect(json['message']).to eq 'プロジェクトファイルを更新しました'
     end
   end
+
+  describe 'DELETE /api/project_files/:id' do
+    context 'with exist project_file' do
+      let!(:project_file) { create(:project_file, project: project) }
+      let(:path) { "/api/project_files/#{project_file.id}" }
+
+      it 'delete the project fileand return success message' do
+        expect do
+          delete path
+        end.to change(ProjectFile, :count).by(-1)
+
+        expect(response).to be_success
+        expect(response.status).to eq 201
+
+        expect(json['message']).to eq 'プロジェクトファイルを削除しました'
+      end
+    end
+
+    context 'with not exist project_file' do
+      let(:path) { "/api/project_files/0" }
+
+      it 'return 404 Not Found code and message' do
+        expect do
+          delete path
+        end.not_to change(ProjectFile, :count)
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+  end
 end

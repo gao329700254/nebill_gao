@@ -42,6 +42,12 @@
     }
   }
 
+  &__group_delete {
+    &__btn {
+      @include btn--default;
+    }
+  }
+
   &__tbl {
     @include list_tbl;
 

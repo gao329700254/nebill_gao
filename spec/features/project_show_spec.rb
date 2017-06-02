@@ -622,6 +622,18 @@ RSpec.feature 'Project Show Page', js: true do
               is_expected.not_to have_content file_group2.name
             end
           end
+
+          context 'and click delete button' do
+            before do
+              click_button '削除'
+              wait_for_ajax
+            end
+
+            scenario 'delete project_files' do
+              is_expected.not_to have_content file1.original_filename
+              is_expected.not_to have_content file2.original_filename
+            end
+          end
         end
 
         context 'when click file name' do
