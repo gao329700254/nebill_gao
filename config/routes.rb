@@ -39,6 +39,7 @@
 #                api_project_file GET    /api/project_files/:id(.:format)                        api/project_files#show
 #                                 PATCH  /api/project_files/:id(.:format)                        api/project_files#update
 #                                 PUT    /api/project_files/:id(.:format)                        api/project_files#update
+#                                 DELETE /api/project_files/:id(.:format)                        api/project_files#destroy
 # api_project_project_file_groups GET    /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#index
 #                                 POST   /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#create
 #       default_dates_api_project GET    /api/projects/:id/default_dates(.:format)               api/projects#default_dates

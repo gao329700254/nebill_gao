@@ -1,6 +1,6 @@
 class Api::ProjectFilesController < Api::ApiController
   before_action :set_project, only: [:index, :create]
-  before_action :set_project_file, only: [:show, :update]
+  before_action :set_project_file, only: [:show, :update, :destroy]
 
   def index
     @project_files = @project.files
@@ -43,6 +43,13 @@ class Api::ProjectFilesController < Api::ApiController
     render_action_model_success_message(@project_file, :update)
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@project_file, :update)
+  end
+
+  def destroy
+    @project_file.destroy!
+    render_action_model_success_message(@project_file, :destroy)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@project_file, :destroy)
   end
 
 private

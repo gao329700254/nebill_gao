@@ -18,6 +18,9 @@ script type='text/x-template' id='file_list'
             option v-for="fileGroup in fileGroups" value="{{fileGroup.id}}" {{fileGroup.name}}
           = button_tag 'v-on:click' => 'updateFiles', class: 'file_list__group_update__content__btn' do
             = fa_icon 'pencil-square', text: t('helpers.submit.update')
+      li.file_list__menu__item.file_list__group_delete v-if="selectedFiles.length > 0"
+        = button_tag 'v-on:click.prevent' => 'deleteFiles', class: 'file_list__group_delete__btn' do
+          = fa_icon 'trash', text: t('helpers.delete')
 
     table.file_list__tbl
       thead.file_list__tbl__head
