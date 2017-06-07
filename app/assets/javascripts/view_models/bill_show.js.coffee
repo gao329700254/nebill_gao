@@ -61,4 +61,19 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
         finally
           submit.prop('disabled', false)
+      destroy: ->
+        try
+          destroy = $('.bill_show__form__btn--delete')
+          destroy.prop('disabled', true)
+          if(confirm($('#header__delete_confirm_message').val()))
+            $.ajax
+              url: "/api/bills/#{@billId}.json"
+              type: 'DELETE'
+            .done (response) =>
+              window.location = '/bills/list'
+            .fail (response) =>
+              json = response.responseJSON
+              toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+        finally
+          destroy.prop('disabled', false)
     created: -> @initializeBill()

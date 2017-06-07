@@ -234,4 +234,37 @@ RSpec.describe 'bills request' do
     end
   end
 
+  describe 'DELETE /api/bills/:id' do
+    context 'with exist bill id' do
+      let!(:bill) { create(:bill) }
+      let(:path) { "/api/bills/#{bill.id}" }
+
+      it 'delete the bill and return the succcess message' do
+        expect do
+          delete path
+        end.to change(Bill, :count).by(-1)
+
+        expect(response).to be_success
+        expect(response.status).to eq 201
+
+        expect(flash[:success]).to eq '請求を削除しました'
+      end
+    end
+
+    context 'with not exist bill id' do
+      let!(:bill) { create(:bill) }
+      let(:path) { "/api/bills/0" }
+
+      it 'return 404 Not Found code and message' do
+        expect do
+          delete path
+        end.not_to change(Bill, :count)
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+  end
 end

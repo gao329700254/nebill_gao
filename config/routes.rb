@@ -34,6 +34,7 @@
 #                        api_bill GET    /api/bills/:id(.:format)                                api/bills#show
 #                                 PATCH  /api/bills/:id(.:format)                                api/bills#update
 #                                 PUT    /api/bills/:id(.:format)                                api/bills#update
+#                                 DELETE /api/bills/:id(.:format)                                api/bills#destroy
 #       api_project_project_files GET    /api/projects/:project_id/project_files(.:format)       api/project_files#index
 #                                 POST   /api/projects/:project_id/project_files(.:format)       api/project_files#create
 #                api_project_file GET    /api/project_files/:id(.:format)                        api/project_files#show

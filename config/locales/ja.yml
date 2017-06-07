@@ -302,6 +302,7 @@ ja:
       success: '%{model}を更新しました'
       fail: '%{model}が更新できませんでした'
     destroy:
+      confirm: '本当に削除してよろしいですか？'
       success: '%{model}を削除しました'
       fail: '%{model}が削除できませんでした'
     login:

@@ -27,6 +27,7 @@ RSpec.feature 'Bill Show Page', js: true do
       is_expected.to     have_field 'memo'          , disabled: true, with: bill.memo
       is_expected.to     have_button '編集'
       is_expected.to     have_link 'ダウンロード'
+      is_expected.to     have_button '削除'
       is_expected.not_to have_button 'キャンセル'
       is_expected.not_to have_button '更新'
     end
@@ -45,6 +46,7 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'memo'          , disabled: false, with: bill.memo
         is_expected.not_to have_button '編集'
         is_expected.not_to have_button 'ダウンロード'
+        is_expected.not_to have_button '削除'
         is_expected.to     have_button 'キャンセル'
         is_expected.to     have_button '更新'
       end
@@ -193,6 +195,29 @@ RSpec.feature 'Bill Show Page', js: true do
         click_on 'ダウンロード'
         expect(page.response_headers['Content-Disposition']).to include(file_name)
         expect(page.response_headers['Content-Type']).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      end
+    end
+  end
+
+  describe 'delete' do
+    context 'when click delete button' do
+      scenario 'and accept the confirm' do
+        page.accept_confirm('本当に削除してよろしいですか？') do
+          click_button '削除'
+          wait_for_ajax
+        end
+        sleep 1
+        expect(current_path).to eq bill_list_path
+        expect(page).not_to have_content bill.cd
+      end
+
+      scenario 'and dismiss the confirm' do
+        page.dismiss_confirm do
+          click_button '削除'
+        end
+
+        expect(current_path).to eq bill_show_path(bill)
+        expect(page).to have_field 'cd', disabled: true, with: bill.cd
       end
     end
   end

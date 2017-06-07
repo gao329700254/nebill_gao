@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :projects, only: [:index, :create, :show, :update], shallow: true do
       resources :users, only: [:index]
       resources :partners, only: [:index]
-      resources :bills, only: [:create, :show, :update]
+      resources :bills, only: [:create, :show, :update, :destroy]
       resources :project_files, only: [:index, :show, :create, :update, :destroy]
       resources :project_file_groups, only: [:index, :create]
       get 'default_dates', on: :member

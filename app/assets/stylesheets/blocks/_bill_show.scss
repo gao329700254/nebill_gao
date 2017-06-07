@@ -41,6 +41,10 @@
       &--download {
         @include btn--primary;
       }
+
+      &--delete {
+        @include btn--primary;
+      }
     }
   }
 }
