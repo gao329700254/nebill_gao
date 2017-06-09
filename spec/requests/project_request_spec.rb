@@ -225,7 +225,7 @@ RSpec.describe 'projects request' do
     end
   end
 
-  describe 'PATCH /api/projects' do
+  describe 'PATCH /api/projects/:id' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
       let(:project_group) { create(:project_group) }
@@ -385,6 +385,39 @@ RSpec.describe 'projects request' do
       expect(json['payment_type']).to  eq 'bill_on_15th_and_payment_on_end_of_next_month'
       expect(json['bill_on']).to       eq '2016-06-15'
       expect(json['deposit_on']).to    eq nil
+    end
+  end
+
+  describe 'DELETE /api/projects/:id' do
+    context 'with exist project id' do
+      let!(:project) { create(:contracted_project) }
+      let(:path) { "/api/projects/#{project.id}" }
+
+      it 'delete the project' do
+        expect do
+          delete path
+        end.to change(Project, :count).by(-1)
+
+        expect(response).to be_success
+        expect(response.status).to eq 201
+
+        expect(flash[:success]).to eq 'プロジェクトを削除しました'
+      end
+    end
+
+    context 'with not exist project id' do
+      let(:path) { "/api/projects/0" }
+
+      it 'returns 404 Not Found code and message' do
+        expect do
+          delete path
+        end.not_to change(Project, :count)
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
     end
   end
 end

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :clients, only: [:index, :create, :show, :update]
     resources :users, only: [:index, :create]
     resources :partners, only: [:index, :create]
-    resources :projects, only: [:index, :create, :show, :update], shallow: true do
+    resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
       resources :users, only: [:index]
       resources :partners, only: [:index]
       resources :bills, only: [:create, :show, :update, :destroy]

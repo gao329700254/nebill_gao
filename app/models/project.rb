@@ -44,15 +44,15 @@ class Project < ActiveRecord::Base
   include ProjectValidates
 
   belongs_to :group, class_name: 'ProjectGroup'
-  has_many :members
+  has_many :members, dependent: :destroy
   has_many :user_members
   has_many :partner_members
   has_many :employees, through: :members
   has_many :users, through: :user_members
   has_many :partners, through: :partner_members
-  has_many :bills
-  has_many :files, class_name: 'ProjectFile'
-  has_many :file_groups, class_name: 'ProjectFileGroup'
+  has_many :bills, dependent: :destroy
+  has_many :files, class_name: 'ProjectFile', dependent: :destroy
+  has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment, :maintenance, :other]
   enumerize :payment_type, in: %w(

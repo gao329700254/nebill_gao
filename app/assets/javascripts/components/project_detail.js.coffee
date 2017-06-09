@@ -38,4 +38,19 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
         finally
           submit.prop('disabled', false)
+      destroy: ->
+        try
+          destroy = $('.project_detail__form__delete_btn')
+          destroy.prop('disabled', true)
+          if(confirm($('#header__delete_confirm_message').val()))
+            $.ajax
+              url: "/api/projects/#{@projectId}.json"
+              type: 'DELETE'
+            .done (response) =>
+              window.location = '/projects/list'
+            .fail (response) =>
+              json = response.responseJSON
+              toastr.error(json.errors.full_message.join('<br>'), json.message, { timeout: 0 })
+        finally
+          destroy.prop('disabled', false)
     created: -> @initializeProject()

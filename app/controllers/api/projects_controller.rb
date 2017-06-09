@@ -1,5 +1,5 @@
 class Api::ProjectsController < Api::ApiController
-  before_action :set_project, only: [:show, :update, :default_dates]
+  before_action :set_project, only: [:show, :update, :default_dates, :destroy]
 
   def index
     @projects = if params.key? :group_id
@@ -45,6 +45,13 @@ class Api::ProjectsController < Api::ApiController
     }
 
     render json: result, status: :ok
+  end
+
+  def destroy
+    @project.destroy!
+    render_action_model_flash_success_message(@project, :destroy)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@project, :destroy)
   end
 
 private

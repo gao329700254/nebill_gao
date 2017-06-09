@@ -61,6 +61,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to     have_button '編集'
           is_expected.not_to have_button 'キャンセル'
           is_expected.not_to have_button '更新'
+          is_expected.to     have_button '削除'
         end
 
         context 'when click edit button' do
@@ -92,6 +93,7 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.not_to have_button '編集'
             is_expected.to     have_button 'キャンセル'
             is_expected.to     have_button '更新'
+            is_expected.not_to have_button '削除'
           end
 
           scenario 'should do not update when click cancel button' do
@@ -232,6 +234,26 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'billing_address'        , disabled: false, with: 'test billing address'
             is_expected.to     have_field 'billing_zip_code'       , disabled: false, with: '2345678'
             is_expected.to     have_field 'billing_memo'           , disabled: false, with: 'test billing memo'
+          end
+        end
+
+        context 'when click delete button' do
+          scenario 'and accept the confirm' do
+            page.accept_confirm('本当に削除してよろしいですか？') do
+              click_button '削除'
+              wait_for_ajax
+            end
+            sleep 1
+            expect(current_path).to eq project_list_path
+            expect(page).not_to have_content project.cd
+          end
+
+          scenario 'and dismiss the confirm' do
+            page.dismiss_confirm do
+              click_button '削除'
+            end
+            expect(current_path).to eq project_show_path(project)
+            expect(page).to have_field 'cd', disabled: true, with: project.cd
           end
         end
       end
