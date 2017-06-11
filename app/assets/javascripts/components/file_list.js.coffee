@@ -54,18 +54,19 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
       deleteFiles: ->
         try
-          destroy = $('.file_list__group_update__content__btn')
+          destroy = $('.file_list__group_delete__btn')
           destroy.prop('disabled', true)
-          $.each @selectedFiles, (i, file) =>
-            $.ajax
-              url: "/api/project_files/#{file.id}.json"
-              type: 'DELETE'
-            .done (response) =>
-              toastr.success('', response.message)
-              @loadFiles()
-            .fail (response) =>
-              json = response.responseJSON
-              toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+          if(confirm($('#header__delete_confirm_message').val()))
+            $.each @selectedFiles, (i, file) =>
+              $.ajax
+                url: "/api/project_files/#{file.id}.json"
+                type: 'DELETE'
+              .done (response) =>
+                toastr.success('', response.message)
+                @loadFiles()
+              .fail (response) =>
+                json = response.responseJSON
+                toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
         finally
           destroy.prop('disabled', false)
     events:
