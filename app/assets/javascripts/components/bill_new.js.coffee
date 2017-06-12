@@ -16,7 +16,7 @@ $ ->
     methods:
       submit: ->
         try
-          submit = $('.bill_new__form__submit_btn')
+          submit = $('.bill_new__form__btn--submit')
           submit.prop('disabled', true)
           $.ajax
             url: "/api/projects/#{@projectId}/bills.json"

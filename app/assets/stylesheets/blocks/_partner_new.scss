@@ -23,12 +23,14 @@
       margin-bottom: $small-spacing;
     }
 
-    &__cancel_btn {
-      @include btn--default;
-    }
+    &__btn {
+      &--cancel {
+        @include btn--default;
+      }
 
-    &__submit_btn {
-      @include btn--primary;
+      &--submit {
+        @include btn--primary;
+      }
     }
   }
 }

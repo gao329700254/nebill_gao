@@ -28,7 +28,7 @@ RSpec.feature 'Project New Page', js: true do
 
     scenario 'click orderer fill button' do
       select 'CLIENT-1 clientA', from: :orderer_client_id
-      find('.project_new__form__orderer .project_new__form__fill__btn').click
+      find('.project_new__form__orderer .project_new__form__fill--btn').click
       wait_for_ajax
 
       is_expected.to have_field 'orderer_company_name'    , with: 'clientA'
@@ -39,7 +39,7 @@ RSpec.feature 'Project New Page', js: true do
 
     scenario 'click billing fill button' do
       select 'CLIENT-1 clientA', from: :billing_client_id
-      find('.project_new__form__billing .project_new__form__fill__btn').click
+      find('.project_new__form__billing .project_new__form__fill--btn').click
       wait_for_ajax
 
       is_expected.to have_field 'billing_company_name'    , with: 'clientA'

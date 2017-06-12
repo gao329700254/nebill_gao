@@ -29,5 +29,5 @@ script type='text/x-template' id='bill_new'
             = label_tag :memo, t('activerecord.attributes.bill.memo')
             = text_area_tag :memo, nil, 'v-model' => 'bill.memo'
 
-      = button_tag 'v-on:click.prevent' => 'submit', class: 'bill_new__form__submit_btn' do
+      = button_tag 'v-on:click.prevent' => 'submit', class: 'bill_new__form__btn--submit' do
         = fa_icon 'check', text: t('helpers.submit.create')

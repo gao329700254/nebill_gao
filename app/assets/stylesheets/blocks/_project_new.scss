@@ -38,11 +38,11 @@
     &__fill {
       @include display(flex);
 
-      &__select {
+      &--select {
         @include flex(1);
       }
 
-      &__btn {
+      &--btn {
         @include btn--default;
       }
     }

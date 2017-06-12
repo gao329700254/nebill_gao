@@ -35,7 +35,7 @@ $ ->
             console.error response
       submit: ->
         try
-          submit = $('.client_show__form__submit_btn')
+          submit = $('.client_show__form__btn--submit')
           submit.prop('disabled', true)
           $.ajax
             url: "/api/clients/#{@clientId}.json"

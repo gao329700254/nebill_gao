@@ -15,7 +15,7 @@ $ ->
       cancel: -> @modalHide()
       submit: ->
         try
-          submit = $('.partner_new__form__submit_btn')
+          submit = $('.partner_new__form__btn--submit')
           submit.prop('disabled', true)
           $.ajax
             url: '/api/partners.json'

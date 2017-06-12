@@ -16,7 +16,7 @@ $ ->
         new Sortable document.getElementById("project_groups__sortable-#{@projectGroupId}"),
           group: 'group'
           sort: false
-          chosenClass: 'project_groups__item__project_body__item--chosen'
+          chosenClass: 'project_groups__item__project_list__item--chosen'
           animation: 150
           onAdd: (evt) => @moveProject(evt)
       moveProject: (evt) ->

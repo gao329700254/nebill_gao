@@ -23,7 +23,7 @@ $ ->
       addMember: ->
         return unless @selectedUserId?
         try
-          submit = $('.user_member_list__new_member__btn')
+          submit = $('.user_member_list__new_member__btn--submit')
           submit.prop('disabled', true)
           $.ajax
             url: "/api/user_members/#{@projectId}/#{@selectedUserId}.json"

@@ -44,7 +44,9 @@
     }
 
     &__btn {
-      @include btn--primary;
+      &--submit {
+        @include btn--primary;
+      }
     }
   }
 }

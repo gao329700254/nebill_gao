@@ -20,7 +20,7 @@
   .partner_new__form__item
     = label_tag :phone_number, t('activerecord.attributes.partner.phone_number')
     = text_field_tag :phone_number, nil, 'v-model' => 'partner.phone_number'
-  = button_tag 'v-on:click.prevent' => 'cancel', class: 'partner_new__form__cancel_btn' do
+  = button_tag 'v-on:click.prevent' => 'cancel', class: 'partner_new__form__btn--cancel' do
     = fa_icon 'remove', text: t('helpers.cancel')
-  = button_tag 'v-on:click.prevent' => 'submit', class: 'partner_new__form__submit_btn' do
+  = button_tag 'v-on:click.prevent' => 'submit', class: 'partner_new__form__btn--submit' do
     = fa_icon 'check', text: t('helpers.submit.create')

@@ -6,8 +6,8 @@
   .project_groups__new
     .project_groups__new__input
       = text_field_tag :name, nil, 'v-model' => 'projectGroup.name', \
-                       class: 'project_groups__new__input__field', placeholder: t('page.project_groups.new_form_placeholder')
-      = button_tag 'v-on:click.prevent' => 'createProjectGroup', class: 'project_groups__new__input__btn'
+                       class: 'project_groups__new__input--field', placeholder: t('page.project_groups.new_form_placeholder')
+      = button_tag 'v-on:click.prevent' => 'createProjectGroup', class: 'project_groups__new__input--btn'
         = fa_icon 'check', text: t('helpers.submit.create')
   .project_groups__list
     .project_groups__list__container

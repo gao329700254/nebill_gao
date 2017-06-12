@@ -38,10 +38,7 @@
       }
 
       &--submit,
-      &--download {
-        @include btn--primary;
-      }
-
+      &--download,
       &--delete {
         @include btn--primary;
       }
