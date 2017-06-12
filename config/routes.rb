@@ -50,6 +50,7 @@
 #                     api_project GET    /api/projects/:id(.:format)                             api/projects#show
 #                                 PATCH  /api/projects/:id(.:format)                             api/projects#update
 #                                 PUT    /api/projects/:id(.:format)                             api/projects#update
+#                                 DELETE /api/projects/:id(.:format)                             api/projects#destroy
 #                api_user_members POST   /api/user_members/:project_id/:user_id(.:format)        api/user_members#create
 #             api_partner_members POST   /api/partner_members/:project_id/:partner_id(.:format)  api/partner_members#create
 #              api_project_groups GET    /api/project_groups(.:format)                           api/project_groups#index

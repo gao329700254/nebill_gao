@@ -52,5 +52,9 @@
     &__submit_btn {
       @include btn--primary;
     }
+
+    &__delete_btn, {
+      @include btn--primary;
+    }
   }
 }

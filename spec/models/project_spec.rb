@@ -19,15 +19,15 @@ RSpec.describe Project do
   it { is_expected.to respond_to(:files) }
 
   it { is_expected.to belong_to(:group).class_name('ProjectGroup') }
-  it { is_expected.to have_many(:members) }
+  it { is_expected.to have_many(:members).dependent(:destroy) }
   it { is_expected.to have_many(:user_members) }
   it { is_expected.to have_many(:partner_members) }
   it { is_expected.to have_many(:employees).through(:members) }
   it { is_expected.to have_many(:users).through(:user_members) }
   it { is_expected.to have_many(:partners).through(:partner_members) }
-  it { is_expected.to have_many(:bills) }
-  it { is_expected.to have_many(:files).class_name('ProjectFile') }
-  it { is_expected.to have_many(:file_groups).class_name('ProjectFileGroup') }
+  it { is_expected.to have_many(:bills).dependent(:destroy) }
+  it { is_expected.to have_many(:files).class_name('ProjectFile').dependent(:destroy) }
+  it { is_expected.to have_many(:file_groups).class_name('ProjectFileGroup').dependent(:destroy) }
 
   it { is_expected.to validate_presence_of(:cd) }
   it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }

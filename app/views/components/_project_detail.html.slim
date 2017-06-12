@@ -15,3 +15,5 @@ script type='text/x-template' id='project_detail'
         = fa_icon 'remove', text: t('helpers.cancel')
       = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'project_detail__form__submit_btn' do
         = fa_icon 'pencil-square', text: t('helpers.submit.update')
+      = button_tag 'v-on:click.prevent' => 'destroy'         , 'v-if' => '!editMode', class: 'project_detail__form__delete_btn' do
+        = fa_icon 'trash', text: t('helpers.delete')
