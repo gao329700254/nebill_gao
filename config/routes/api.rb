@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
     %w(user partner).each do |member_type|
       post "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"
+      delete "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#destroy", as: "delete_#{member_type}_members"
     end
     resources :project_groups, only: [:index, :create, :update]
     resources :bills, only: [:index]

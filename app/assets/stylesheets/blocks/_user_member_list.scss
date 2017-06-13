@@ -17,6 +17,10 @@
 
       &__row {
         @include list_tbl__head__row;
+
+        &--selected {
+          background-color: $yellow;
+        }
       }
     }
 
@@ -47,6 +51,12 @@
       &--submit {
         @include btn--primary;
       }
+    }
+  }
+
+  &__delete_member {
+    &--btn {
+      @include btn--primary;
     }
   }
 }

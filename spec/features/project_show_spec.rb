@@ -409,6 +409,7 @@ RSpec.feature 'Project Show Page', js: true do
 
           is_expected.to have_field 'user', with: ''
           is_expected.to have_button '登録'
+          is_expected.not_to have_button '削除'
         end
 
         scenario 'select user and click submit button' do
@@ -418,6 +419,24 @@ RSpec.feature 'Project Show Page', js: true do
             within('.member_list__user') { click_button '登録' }
             wait_for_ajax
           end.to change(Member, :count).by(1)
+        end
+
+        context 'when select users' do
+          before { within("#user-#{user1.id}") { check 'selected' } }
+
+          scenario 'should appear the delete button' do
+            is_expected.to have_button '削除'
+          end
+
+          scenario 'and click delete button' do
+            expect do
+              click_button '削除'
+              wait_for_ajax
+            end.to change(Member, :count).by(-1)
+
+            is_expected.not_to have_content user1.name
+            is_expected.to     have_content user2.name
+          end
         end
       end
 
