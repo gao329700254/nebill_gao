@@ -22,7 +22,7 @@ $ ->
             console.error response
       submit: ->
         try
-          submit = $('.project_detail__form__submit_btn')
+          submit = $('.project_detail__form__btn--submit')
           submit.prop('disabled', true)
           $.ajax
             url: "/api/projects/#{@projectId}.json"
@@ -40,7 +40,7 @@ $ ->
           submit.prop('disabled', false)
       destroy: ->
         try
-          destroy = $('.project_detail__form__delete_btn')
+          destroy = $('.project_detail__form__btn--delete')
           destroy.prop('disabled', true)
           if(confirm($('#header__delete_confirm_message').val()))
             $.ajax

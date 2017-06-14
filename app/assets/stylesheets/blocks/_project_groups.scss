@@ -11,11 +11,11 @@
       @include display(flex);
       max-width: 30em;
 
-      &__field {
+      &--field {
         @include flex(1);
       }
 
-      &__btn {
+      &--btn {
         @include btn--default;
       }
     }

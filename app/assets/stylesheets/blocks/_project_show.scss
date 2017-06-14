@@ -30,12 +30,14 @@
     }
   }
 
-  &__content--transition {
-    @include transition(all .2s ease-out);
-  }
+  &__content {
+    &--transition {
+      @include transition(all .2s ease-out);
+    }
 
-  &__content--enter,
-  &__content--leave {
-    opacity: 0;
+    &--enter,
+    &--leave {
+      opacity: 0;
+    }
   }
 }

@@ -44,17 +44,16 @@
       }
     }
 
-    &__edit_btn,
-    &__cancel_btn {
-      @include btn--default;
-    }
+    &__btn {
+      &--edit,
+      &--cancel {
+        @include btn--default;
+      }
 
-    &__submit_btn {
-      @include btn--primary;
-    }
-
-    &__delete_btn, {
-      @include btn--primary;
+      &--submit,
+      &--delete {
+        @include btn--primary;
+      }
     }
   }
 }

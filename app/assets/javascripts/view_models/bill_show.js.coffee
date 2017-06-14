@@ -37,7 +37,7 @@ $ ->
             console.error response
       submit: ->
         try
-          submit = $('.bill_show__form__submit_btn')
+          submit = $('.bill_show__form__btn--submit')
           submit.prop('disabled', true)
           $.ajax
             url: "/api/bills/#{@billId}.json"

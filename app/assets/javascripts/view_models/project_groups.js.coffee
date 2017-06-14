@@ -12,7 +12,7 @@ $ ->
             @projectGroupList = response
       createProjectGroup: ->
         try
-          submit = $('.project_groups__new__input__btn')
+          submit = $('.project_groups__new__input--btn')
           submit.prop('disabled', true)
           $.ajax
             url: '/api/project_groups.json'
