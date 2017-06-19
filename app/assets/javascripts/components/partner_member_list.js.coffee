@@ -16,6 +16,7 @@ $ ->
         ids = _.pluck(@partners, 'id')
         _.reject @allPartners, (p) ->
           _.includes(ids, p.id)
+      selectedPartners: -> _.filter @partners, (p) -> p.selected
     methods:
       loadPartners: ->
         $.ajax "/api/projects/#{@projectId}/partners"
@@ -28,7 +29,7 @@ $ ->
       addMember: ->
         return unless @selectedPartnerId?
         try
-          submit = $('.partner_member_list__new_member__btn')
+          submit = $('.partner_member_list__add_member__btn')
           submit.prop('disabled', true)
           $.ajax
             url: "/api/partner_members/#{@projectId}/#{@selectedPartnerId}.json"
@@ -48,6 +49,26 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
         finally
           submit.prop('disabled', false)
+      deleteMember: ->
+        try
+          destroy = $('.partner_member_list__btn--delete')
+          destroy.prop('disabled', true)
+          $.each @selectedPartners, (i, partner) =>
+            $.ajax
+              url: "/api/partner_members/#{@projectId}/#{partner.id}.json"
+              type: 'DELETE'
+            .done (response) =>
+              toastr.success('', response.message)
+              @loadPartners()
+              @loadAllPartners()
+            .fail (response) =>
+              json = response.responseJSON
+              if _.has(json, 'errors')
+                toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+              else
+                toastr.error('', json.message)
+        finally
+          destroy.prop('disabled', false)
       showPartnerNew: -> @$broadcast('showPartnerNewEvent')
     events:
       loadAllPartnersEvent: (partnerId) ->
