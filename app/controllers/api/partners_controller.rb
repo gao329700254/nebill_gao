@@ -3,7 +3,7 @@ class Api::PartnersController < Api::ApiController
 
   def index
     @partners = if @project
-                  @project.partners
+                  @project.partners.order(:company_name, :id)
                 else
                   Partner.all
                 end

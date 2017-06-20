@@ -11,3 +11,8 @@ private
     page.evaluate_script('jQuery.active').zero?
   end
 end
+
+RSpec.configure do |config|
+  config.include FeatureHelper, type: :feature
+  config.after(:each, js: :true) { wait_for_ajax }
+end

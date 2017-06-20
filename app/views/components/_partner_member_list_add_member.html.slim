@@ -1,0 +1,18 @@
+select.partner_member_list__add_member__list name="partner" v-model="selectedPartnerId"
+  option v-for="partner in selectablePartners" value="{{partner.id}}" {{partner.name}}
+
+.partner_member_list__add_member__form__item
+  = text_field_tag   :new_unit_price    , nil, placeholder: t('activerecord.attributes.partner_member.unit_price'),
+    'v-numeric' => 'member.unit_price'
+.partner_member_list__add_member__form__item
+  = text_field_tag   :new_working_rate,   nil, placeholder: t('activerecord.attributes.partner_member.working_rate'),
+    'v-model' => 'member.working_rate'
+.partner_member_list__add_member__form__item
+  = number_field_tag :new_min_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.min_limit_time'),
+    'v-model' => 'member.min_limit_time'
+.partner_member_list__add_member__form__item
+  = number_field_tag :new_max_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.max_limit_time'),
+    'v-model' => 'member.max_limit_time'
+.partner_member_list__add_member__form__item
+  = button_tag 'v-on:click' => 'addMember', class: 'partner_member_list__add_member__btn' do
+    = fa_icon 'check', text: t('helpers.submit.create')

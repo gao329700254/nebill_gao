@@ -1,6 +1,7 @@
 class Api::PartnerMembersController < Api::ApiController
   before_action :set_project, only: [:create]
-  before_action :set_partner, only: [:create, :destroy]
+  before_action :set_partner, only: [:create, :destroy, :update]
+  before_action :set_member,  only: [:update, :destroy]
 
   def create
     @member = @partner.join!(
@@ -15,9 +16,16 @@ class Api::PartnerMembersController < Api::ApiController
     render_action_model_fail_message(e.record, :create)
   end
 
-  def destroy
-    @member = @partner.members.find_by!(project: params[:project_id])
+  def update
+    @member.attributes = member_param
+    @member.save!
 
+    render_action_model_success_message(@member, :update)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@member, :update)
+  end
+
+  def destroy
     if @member.destroy
       render_action_model_success_message(@member, :destroy)
     else
@@ -33,5 +41,24 @@ private
 
   def set_partner
     @partner = Partner.find(params[:partner_id])
+  end
+
+  def set_member
+    @member= @partner.members.find_by!(project: params[:project_id])
+  end
+
+  def member_param
+    params.require(:members).permit(
+      :unit_price,
+      :working_rate,
+      :min_limit_time,
+      :max_limit_time,
+      partner_attributes: [
+        :id,
+        :name,
+        :email,
+        :company_name,
+      ],
+    )
   end
 end

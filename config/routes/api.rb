@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       post "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"
       delete "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#destroy", as: "delete_#{member_type}_members"
     end
+    patch "partner_members/:project_id/:partner_id", to: "partner_members#update", as: "update_partner_members"
     resources :project_groups, only: [:index, :create, :update]
     resources :bills, only: [:index]
   end
