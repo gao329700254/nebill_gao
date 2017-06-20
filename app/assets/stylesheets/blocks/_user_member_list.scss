@@ -15,10 +15,12 @@
     &__body {
       @include list_tbl__body;
 
-      &__row {
+      &__row,
+      %user_member_list__tbl__body__row {
         @include list_tbl__head__row;
 
         &--selected {
+          @extend %user_member_list__tbl__body__row;
           background-color: $yellow;
         }
       }
