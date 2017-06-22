@@ -479,13 +479,14 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.not_to have_content other_partner2.email
           is_expected.not_to have_content other_partner2.company_name
 
-          is_expected.to have_field 'partner', with: ''
-          is_expected.to have_field 'unit_price', with: ''
-          is_expected.to have_field 'working_rate', with: ''
-          is_expected.to have_field 'min_limit_time', with: ''
-          is_expected.to have_field 'max_limit_time', with: ''
-          is_expected.to have_button '登録'
-          is_expected.to have_button 'パートナーを新規登録'
+          is_expected.to     have_field 'partner', with: ''
+          is_expected.to     have_field 'unit_price', with: ''
+          is_expected.to     have_field 'working_rate', with: ''
+          is_expected.to     have_field 'min_limit_time', with: ''
+          is_expected.to     have_field 'max_limit_time', with: ''
+          is_expected.to     have_button '登録'
+          is_expected.to     have_button 'パートナーを新規登録'
+          is_expected.not_to have_button '削除'
         end
 
         scenario 'select partner and click submit button with correct values' do
@@ -587,6 +588,24 @@ RSpec.feature 'Project Show Page', js: true do
               click_button 'キャンセル'
               is_expected.not_to have_css '.partner_new__outer'
             end
+          end
+        end
+
+        context 'when select partners' do
+          before { within("#partner-#{partner1.id}") { check 'selected' } }
+
+          scenario 'should appear the delete button' do
+            is_expected.to have_button '削除'
+          end
+
+          scenario 'and click delete button' do
+            expect do
+              click_button '削除'
+              wait_for_ajax
+            end.to change(Member, :count).by(-1)
+
+            is_expected.not_to have_content partner1.name
+            is_expected.to     have_content partner2.name
           end
         end
       end

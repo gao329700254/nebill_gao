@@ -13,8 +13,14 @@
 
     &__body {
       @include list_tbl__body;
-      &__row {
-        @include list_tbl__head__row;
+      &__row,
+      %partner_member_list__tbl__body__row {
+        @include list_tbl__body__row;
+
+        &--selected {
+          @extend %partner_member_list__tbl__body__row;
+          background-color: $yellow;
+        }
       }
     }
 
@@ -65,7 +71,7 @@
     }
   }
 
-  &__new_member {
+  &__add_member {
     @include display(flex);
 
     &__list {
@@ -83,7 +89,10 @@
     }
   }
 
-  &__show_partner_new_btn {
-    @include btn--primary;
+  &__btn {
+    &--new_partner,
+    &--delete {
+      @include btn--primary;
+    }
   }
 }
