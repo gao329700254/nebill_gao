@@ -46,10 +46,11 @@ class Api::ProjectFilesController < Api::ApiController
   end
 
   def destroy
-    @project_file.destroy!
-    render_action_model_success_message(@project_file, :destroy)
-  rescue ActiveRecord::RecordInvalid
-    render_action_model_fail_message(@project_file, :destroy)
+    if @project_file.destroy
+      render_action_model_success_message(@project_file, :destroy)
+    else
+      render_action_model_fail_message(@project_file, :destroy)
+    end
   end
 
 private

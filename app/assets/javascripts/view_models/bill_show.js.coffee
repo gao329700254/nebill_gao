@@ -58,7 +58,10 @@ $ ->
             @editMode = false
           .fail (response) =>
             json = response.responseJSON
-            toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+            if _.has(json, 'errors')
+              toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+            else
+              toastr.error('', json.message)
         finally
           submit.prop('disabled', false)
       destroy: ->
@@ -73,7 +76,10 @@ $ ->
               window.location = '/bills/list'
             .fail (response) =>
               json = response.responseJSON
-              toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+              if _.has(json, 'errors')
+                toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+              else
+                toastr.error('', json.message)
         finally
           destroy.prop('disabled', false)
     created: -> @initializeBill()

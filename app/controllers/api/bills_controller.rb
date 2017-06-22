@@ -30,10 +30,11 @@ class Api::BillsController < Api::ApiController
   end
 
   def destroy
-    @bill.destroy!
-    render_action_model_flash_success_message(@bill, :destroy)
-  rescue ActiveRecord::RecordInvalid
-    render_action_model_fail_message(@bill, :destroy)
+    if @bill.destroy
+      render_action_model_flash_success_message(@bill, :destroy)
+    else
+      render_action_model_fail_message(@bill, :destroy)
+    end
   end
 
 private
