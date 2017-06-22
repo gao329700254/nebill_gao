@@ -41,7 +41,7 @@ group :development do
   gem 'coffeelint'
 end
 
-group :development, :test do
+group :development, :test, :demo do
   gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'rspec-its'
