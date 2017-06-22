@@ -11,12 +11,13 @@ class Api::UserMembersController < Api::ApiController
   end
 
   def destroy
-    @member = @user.members.find_by(project: params[:project_id])
-    @member.destroy!
+    @member = @user.members.find_by!(project: params[:project_id])
 
-    render_action_model_success_message(@member, :destroy)
-  rescue ActiveRecord::RecordInvalid
-    render_action_model_fail_message(@member, :destroy)
+    if @member.destroy
+      render_action_model_success_message(@member, :destroy)
+    else
+      render_action_model_fail_message(@member, :destroy)
+    end
   end
 
 private

@@ -35,6 +35,37 @@ RSpec.describe 'user members request' do
       end
     end
 
+    context 'with not exist project' do
+      let!(:member) { create(:user_member) }
+      let(:path) { "/api/user_members/0/#{member.user.id}" }
+
+      it 'return 404 Not Found code and message' do
+        expect do
+          delete path
+        end.not_to change(Member, :count)
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+
+    context 'with not exist member' do
+      let(:path) { "/api/user_members/#{project.id}/#{user.id}" }
+
+      it "return 404 Not Found code and message" do
+        expect do
+          delete path
+        end.not_to change(Member, :count)
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+
     context 'with not exist user_member' do
       let(:path) { "/api/user_members/#{project.id}/0" }
 
