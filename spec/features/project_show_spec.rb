@@ -506,8 +506,8 @@ RSpec.feature 'Project Show Page', js: true do
           select other_partner2.name, from: :partner
           fill_in :unit_price, with: '1'
           fill_in :working_rate, with: '0.6'
-          fill_in :min_limit_time, with: '2'
-          fill_in :max_limit_time, with: '1'
+          fill_in :min_limit_time, with: '0.2'
+          fill_in :max_limit_time, with: '0.1'
 
           expect do
             within('.member_list__partner') { click_button '登録' }

@@ -29,7 +29,7 @@
 class PartnerMember < Member
   has_one :partner, through: :employee, source: :actable, source_type: Partner
 
-  validates :unit_price    , presence: true
-  validates :max_limit_time, numericality: { greater_than: :min_limit_time }, allow_nil: true
-  validates :working_rate  , numericality: true , allow_nil: true
+  validates :min_limit_time, numericality: { only_integer: true }, allow_nil: true
+  validates :max_limit_time, numericality: { only_integer: true }, allow_nil: true
+  validates :working_rate  , numericality: true, allow_nil: true
 end
