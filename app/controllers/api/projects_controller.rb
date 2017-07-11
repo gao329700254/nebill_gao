@@ -74,6 +74,7 @@ private
       :end_on,
       :amount,
       :payment_type,
+      :estimated_amount,
       :billing_company_name,
       :billing_department_name,
       :billing_address,

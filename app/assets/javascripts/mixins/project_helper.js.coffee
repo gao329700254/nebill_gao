@@ -22,6 +22,9 @@ Vue.modules.projectHelper = {
       contract_type:
         init: 'lump_sum'
         exist: { contracted: true, uncontracted: false }
+      estimated_amount:
+        init: 0
+        exist: { contracted: true, uncontracted: false }
       is_using_ses:
         init: false
         exist: { contracted: true, uncontracted: false }

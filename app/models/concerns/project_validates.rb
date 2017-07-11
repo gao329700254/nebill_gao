@@ -2,10 +2,11 @@ module ProjectValidates
   extend ActiveSupport::Concern
 
   included do
-    validates :cd           , presence: true, uniqueness: { case_sensitive: false }
-    validates :name         , presence: true
-    validates :contract_on  , presence: true
-    validates :amount       , numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }
+    validates :cd               , presence: true, uniqueness: { case_sensitive: false }
+    validates :name             , presence: true
+    validates :contract_on      , presence: true
+    validates :amount           , numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }
+    validates :estimated_amount , numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }
 
     with_options if: :contracted? do |contracted|
       contracted.validates :contract_type       , presence: true
@@ -27,10 +28,12 @@ module ProjectValidates
 
     with_options unless: :contracted? do |un_contracted|
       un_contracted.validates :contract_type       , absence: true
+      un_contracted.validates :estimated_amount    , absence: true
       un_contracted.validates :is_using_ses        , absence: true
       un_contracted.validates :start_on            , absence: true
       un_contracted.validates :end_on              , absence: true
       un_contracted.validates :amount              , absence: true
+      un_contracted.validates :payment_type        , absence: true
     end
 
     validate :can_not_change_from_contracted_to_uncontracted, on: :update

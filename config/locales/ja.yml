@@ -58,6 +58,7 @@ ja:
         contracted: 契約済
         contract_on: 契約日
         contract_type: 契約形態
+        estimated_amount: 見積もり額
         is_using_ses: SES
         start_on: 開始日
         end_on:   終了日

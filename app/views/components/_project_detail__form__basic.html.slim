@@ -24,13 +24,17 @@ fieldset.project_detail__form__basic
         = label_tag :contracted, t('activerecord.attributes.project.contracted')
         = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', ':disabled' => '!editMode || projectOriginal.contracted'
 
-  template v-if='project.contracted'
+  .project_detail__form__contracted v-if='project.contracted'
     .project_detail__form__container
       .project_detail__form__container__group
         .project_detail__form__item
           = label_tag :contract_type, t('activerecord.attributes.project.contract_type')
           = select_tag :contract_type, options_for_select(Project.contract_type.options), include_blank: true,
                        'v-model' => 'project.contract_type', ':disabled' => '!editMode'
+      .project_detail__form__container__group
+        .project_detail__form__item
+          = label_tag :esimated_amount, t('activerecord.attributes.project.estimated_amount')
+          = text_field_tag :estimated_amount, nil, 'v-numeric' => 'project.estimated_amount', ':disabled' => '!editMode'
     .project_detail__form__container
       .project_detail__form__container__group
         .project_detail__form__item v-if='project.contracted'

@@ -9,6 +9,7 @@ RSpec.describe Project do
   it { is_expected.to respond_to(:contracted?) }
   it { is_expected.to respond_to(:contract_on) }
   it { is_expected.to respond_to(:contract_type) }
+  it { is_expected.to respond_to(:estimated_amount) }
   it { is_expected.to respond_to(:is_using_ses) }
   it { is_expected.to respond_to(:start_on) }
   it { is_expected.to respond_to(:end_on) }
@@ -36,6 +37,9 @@ RSpec.describe Project do
   it { is_expected.to validate_numericality_of(:amount).only_integer }
   it { is_expected.to validate_numericality_of(:amount).is_greater_than_or_equal_to(0) }
   it { is_expected.to validate_numericality_of(:amount).allow_nil }
+  it { is_expected.to validate_numericality_of(:estimated_amount).only_integer }
+  it { is_expected.to validate_numericality_of(:estimated_amount).is_greater_than_or_equal_to(0) }
+  it { is_expected.to validate_numericality_of(:estimated_amount).allow_nil }
 
   describe 'Contracted Project' do
     let(:project) { build(:contracted_project) }
@@ -92,6 +96,7 @@ RSpec.describe Project do
     it { is_expected.to be_valid }
 
     it { is_expected.to validate_absence_of(:contract_type) }
+    it { is_expected.to validate_absence_of(:estimated_amount) }
     it { is_expected.to validate_absence_of(:start_on) }
     it { is_expected.to validate_absence_of(:end_on) }
     it { is_expected.to validate_absence_of(:amount) }

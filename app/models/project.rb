@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170518101719
+# Schema version: 20170711122708
 #
 # Table name: projects
 #
@@ -29,6 +29,7 @@
 #  payment_type            :string
 #  billing_personnel_names :string           is an Array
 #  orderer_personnel_names :string           is an Array
+#  estimated_amount        :integer
 #
 # Indexes
 #

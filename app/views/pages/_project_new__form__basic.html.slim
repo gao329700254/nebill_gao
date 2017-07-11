@@ -23,12 +23,16 @@
         = label_tag :contracted, t('activerecord.attributes.project.contracted')
         = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', 'v-on:change' => 'setProjectCd'
 
-  template v-if='project.contracted'
+  .project_new__form__contracted v-if='project.contracted'
     .project_new__form__container
       .project_new__form__container__group
         .project_new__form__item
           = label_tag :contract_type, t('activerecord.attributes.project.contract_type')
           = select_tag :contract_type, options_for_select(Project.contract_type.options), 'v-model' => 'project.contract_type', 'v-on:change' => 'setProjectCd'
+      .project_new__form__container__group
+        .project_new__form__item
+          = label_tag :esimated_amount, t('activerecord.attributes.project.estimated_amount')
+          = text_field_tag :estimated_amount, nil, 'v-numeric' => 'project.estimated_amount'
     .project_new__form__container
       .project_new__form__container__group
         .project_new__form__item
