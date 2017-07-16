@@ -3,12 +3,12 @@ toastr.options = {
   debug: false
   newestOnTop: false
   progressBar: true
-  positionClass: 'toast-top-full-width'
+  positionClass: 'toast-top-left'
   preventDuplicates: false
   onclick: null
   showDuration: 200
   hideDuration: 200
-  timeOut: 3000
+  timeOut: 2000
   extendedTimeOut: 1000
   showEasing: 'swing'
   hideEasing: 'linear'

@@ -36,7 +36,7 @@ $ ->
           .fail (response) =>
             json = response.responseJSON
             if _.has(json, 'errors')
-              toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+              toastr.error(json.errors.full_messages.join('<br>'), json.message)
             else
               toastr.error('', json.message)
         finally
@@ -54,7 +54,7 @@ $ ->
             .fail (response) =>
               json = response.responseJSON
               if _.has(json, 'errors')
-                toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+                toastr.error(json.errors.full_messages.join('<br>'), json.message)
               else
                 toastr.error('', json.message)
         finally

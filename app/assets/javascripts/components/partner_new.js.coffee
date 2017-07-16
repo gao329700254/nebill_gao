@@ -34,7 +34,7 @@ $ ->
             @$dispatch('loadAllPartnersEvent', response.id)
           .fail (response) =>
             json = response.responseJSON
-            toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+            toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
     events:
