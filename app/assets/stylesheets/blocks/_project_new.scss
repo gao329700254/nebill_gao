@@ -15,6 +15,14 @@
       &__group {
         @include span-columns(6);
       }
+
+      &__group_2 {
+        @include span-columns(4);
+      }
+
+      &__group_3 {
+        @include span-columns(8);
+      }
     }
 
     &__legend {

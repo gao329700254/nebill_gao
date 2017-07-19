@@ -9,21 +9,28 @@ fieldset.project_new__form__billing
         option v-for="client in clients" value="{{client.id}}" {{client.cd + ' ' + client.company_name}}
       = button_tag class: 'project_new__form__fill--btn', 'v-on:click.prevent' => 'fillBilling' do
         = fa_icon 'arrow-down'
-  .project_new__form__item
-    = label_tag :billing_company_name, t('page.project_new.company_name')
-    = text_field_tag :billing_company_name, nil, 'v-model' => 'project.billing_company_name'
-  .project_new__form__item
-    = label_tag :billing_department_name, t('page.project_new.department_name')
-    = text_field_tag :billing_department_name, nil, 'v-model' => 'project.billing_department_name'
-  .project_new__form__item
-    = label_tag :billing_personnel_names, t('page.project_new.personnel_names')
-    = text_field_tag :billing_personnel_names, nil, 'v-model' => 'project_billing_personnel_names_str'
-  .project_new__form__item
-    = label_tag :billing_address, t('page.project_new.address')
-    = text_field_tag :billing_address, nil, 'v-model' => 'project.billing_address'
-  .project_new__form__item
-    = label_tag :billing_zip_code, t('page.project_new.zip_code')
-    = text_field_tag :billing_zip_code, nil, 'v-model' => 'project.billing_zip_code'
+  .project_new__form__container
+    .project_new__form__container__group_2
+      .project_new__form__item
+        = label_tag :billing_company_name, t('page.project_new.company_name')
+        = text_field_tag :billing_company_name, nil, 'v-model' => 'project.billing_company_name'
+    .project_new__form__container__group_2
+      .project_new__form__item
+        = label_tag :billing_department_name, t('page.project_new.department_name')
+        = text_field_tag :billing_department_name, nil, 'v-model' => 'project.billing_department_name'
+    .project_new__form__container__group_2
+      .project_new__form__item
+        = label_tag :billing_personnel_names, t('page.project_new.personnel_names')
+        = text_field_tag :billing_personnel_names, nil, 'v-model' => 'project_billing_personnel_names_str'
+  .project_new__form__container
+    .project_new__form__container__group_2
+      .project_new__form__item
+        = label_tag :billing_zip_code, t('page.project_new.zip_code')
+        = text_field_tag :billing_zip_code, nil, 'v-model' => 'project.billing_zip_code'
+    .project_new__form__container__group_3
+      .project_new__form__item
+        = label_tag :billing_address, t('page.project_new.address')
+        = text_field_tag :billing_address, nil, 'v-model' => 'project.billing_address'
   .project_new__form__item
     = label_tag :billing_memo, t('page.project_new.memo')
     = text_area_tag :billing_memo, nil, 'v-model' => 'project.billing_memo'
