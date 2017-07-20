@@ -10,6 +10,7 @@ FactoryGirl.define do
     factory :contracted_project do
       contracted true
       contract_type :lump_sum
+      estimated_amount { rand(10) * (10 ** rand(3)) * 10_000 }
       is_using_ses false
       start_on    { Faker::Date.between(5.months.ago    , 1.month.ago) }
       end_on      { Faker::Date.between(Time.zone.today , 5.months.from_now) }
@@ -32,10 +33,12 @@ FactoryGirl.define do
     factory :uncontracted_project do
       contracted false
       contract_type        nil
+      estimated_amount     nil
       is_using_ses         nil
       start_on             nil
       end_on               nil
       amount               nil
+      payment_type         nil
       billing_company_name    nil
       billing_department_name nil
       billing_personnel_names nil

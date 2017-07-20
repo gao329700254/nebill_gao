@@ -24,7 +24,7 @@ RSpec.feature 'Project New Page', js: true do
   end
 
   describe 'form' do
-    subject { find('#project_new .project_new__form') }
+    subject { find('.project_new__form') }
 
     scenario 'click orderer fill button' do
       select 'CLIENT-1 clientA', from: :orderer_client_id
@@ -83,6 +83,7 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
         is_expected.not_to have_field 'contract_type'
+        is_expected.not_to have_field 'estimated_amount'
         is_expected.not_to have_field 'is_using_ses'
         is_expected.not_to have_field 'start_on'
         is_expected.not_to have_field 'end_on'
@@ -198,6 +199,7 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to     have_field 'name'
         is_expected.to     have_field 'contract_on'
         is_expected.to     have_field 'contract_type'
+        is_expected.to     have_field 'estimated_amount'
         is_expected.to     have_field 'is_using_ses'
         is_expected.to     have_field 'start_on'
         is_expected.to     have_field 'end_on'
@@ -221,15 +223,16 @@ RSpec.feature 'Project New Page', js: true do
 
       scenario 'click submit button with correct values' do
         select 'GroupA', from: :group_id
-        fill_in :cd         , with: '0000001'
         fill_in :name       , with: 'test project'
         fill_in :contract_on, with: '2016-01-01'
         select '委託', from: :contract_type
+        fill_in :estimated_amount, with: 1_000_000
         check   :is_using_ses
         fill_in :start_on   , with: '2016-02-01'
         fill_in :end_on     , with: '2016-03-30'
         fill_in :amount     , with: 1_000_000
         select '15日締め翌月末払い', from: :payment_type
+        fill_in :cd         , with: '0000001'
         fill_in :orderer_company_name    , with: 'test orderer company'
         fill_in :orderer_department_name , with: 'test orderer department'
         fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -265,6 +268,62 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to have_field 'billing_address'         , with: ''
         is_expected.to have_field 'billing_zip_code'        , with: ''
         is_expected.to have_field 'billing_memo'            , with: ''
+      end
+
+      scenario 'click submit button with uncorrect values' do
+        select 'GroupA', from: :group_id
+        fill_in :name       , with: '  '
+        fill_in :contract_on, with: '2016-01-01'
+        select '委託', from: :contract_type
+        fill_in :estimated_amount, with: 1_000_000
+        check   :is_using_ses
+        fill_in :start_on   , with: '2016-02-01'
+        fill_in :end_on     , with: '2016-03-30'
+        fill_in :amount     , with: 1_000_000
+        select '15日締め翌月末払い', from: :payment_type
+        fill_in :cd         , with: '0000001'
+        fill_in :orderer_company_name    , with: 'test orderer company'
+        fill_in :orderer_department_name , with: 'test orderer department'
+        fill_in :orderer_personnel_names , with: 'test person1, test person2'
+        fill_in :orderer_address         , with: 'test orderer address'
+        fill_in :orderer_zip_code        , with: '1234567'
+        fill_in :orderer_memo            , with: 'test orderer memo'
+        fill_in :billing_company_name    , with: 'test billing company'
+        fill_in :billing_department_name , with: 'test billing department'
+        fill_in :billing_personnel_names , with: 'test person3, test person4'
+        fill_in :billing_address         , with: 'test billing address'
+        fill_in :billing_zip_code        , with: '2345678'
+        fill_in :billing_memo            , with: 'test billing memo'
+
+        expect do
+          click_button '登録'
+          wait_for_ajax
+        end.not_to change(Project, :count)
+
+        is_expected.to have_checked_field 'contracted'
+        select 'GroupA', from: :group_id
+        is_expected.to have_field 'cd'                      , with: '0000001'
+        is_expected.to have_field 'name'                    , with: '  '
+        is_expected.to have_field 'contract_on'             , with: '2016-01-01'
+        select '委託', from: :contract_type
+        is_expected.to have_field 'estimated_amount'        , with: '1,000,000'
+        check   :is_using_ses
+        is_expected.to have_field 'start_on'                , with: '2016-02-01'
+        is_expected.to have_field 'end_on'                  , with: '2016-03-30'
+        is_expected.to have_field 'amount'                  , with: '1,000,000'
+        select '15日締め翌月末払い', from: :payment_type
+        is_expected.to have_field 'orderer_company_name'    , with: 'test orderer company'
+        is_expected.to have_field 'orderer_department_name' , with: 'test orderer department'
+        is_expected.to have_field 'orderer_personnel_names' , with: 'test person1, test person2'
+        is_expected.to have_field 'orderer_address'         , with: 'test orderer address'
+        is_expected.to have_field 'orderer_zip_code'        , with: '1234567'
+        is_expected.to have_field 'orderer_memo'            , with: 'test orderer memo'
+        is_expected.to have_field 'billing_company_name'    , with: 'test billing company'
+        is_expected.to have_field 'billing_department_name' , with: 'test billing department'
+        is_expected.to have_field 'billing_personnel_names' , with: 'test person3, test person4'
+        is_expected.to have_field 'billing_address'         , with: 'test billing address'
+        is_expected.to have_field 'billing_zip_code'        , with: '2345678'
+        is_expected.to have_field 'billing_memo'            , with: 'test billing memo'
       end
     end
   end
