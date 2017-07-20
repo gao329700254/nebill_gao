@@ -24,6 +24,6 @@ $ ->
             @client = _.mapObject @client, (v, k) -> undefined
           .fail (response) =>
             json = response.responseJSON
-            toastr.error(json.errors.full_messages.join('<br>'), json.message, { timeOut: 0 })
+            toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
