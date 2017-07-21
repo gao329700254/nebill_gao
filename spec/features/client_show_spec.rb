@@ -77,7 +77,7 @@ RSpec.feature 'Client Show Page', js: true do
       end
 
       scenario 'should update when click submit button with correct values' do
-        fill_in :cd              , with: '0000001'
+        fill_in :cd              , with: 'cd-1'
         fill_in :company_name    , with: 'company_name'
         fill_in :department_name , with: 'department_name'
         fill_in :address         , with: 'address'
@@ -90,7 +90,7 @@ RSpec.feature 'Client Show Page', js: true do
           wait_for_ajax
         end.to change { client.reload && client.updated_at }
 
-        is_expected.to have_field 'cd'             , disabled: true, with: '0000001'
+        is_expected.to have_field 'cd'             , disabled: true, with: 'CD-1'
         is_expected.to have_field 'company_name'   , disabled: true, with: 'company_name'
         is_expected.to have_field 'department_name', disabled: true, with: 'department_name'
         is_expected.to have_field 'address'        , disabled: true, with: 'address'
@@ -100,8 +100,8 @@ RSpec.feature 'Client Show Page', js: true do
       end
 
       scenario 'should not update when click submit button with uncorrect values' do
-        fill_in :cd              , with: '  '
-        fill_in :company_name    , with: 'company_name'
+        fill_in :cd              , with: 'cd-1'
+        fill_in :company_name    , with: '  '
         fill_in :department_name , with: 'department_name'
         fill_in :address         , with: 'address'
         fill_in :zip_code        , with: '123-4567'
@@ -113,8 +113,8 @@ RSpec.feature 'Client Show Page', js: true do
           wait_for_ajax
         end.not_to change { client.reload && client.updated_at }
 
-        is_expected.to have_field 'cd'             , disabled: false, with: '  '
-        is_expected.to have_field 'company_name'   , disabled: false, with: 'company_name'
+        is_expected.to have_field 'cd'             , disabled: false, with: 'cd-1'
+        is_expected.to have_field 'company_name'   , disabled: false, with: '  '
         is_expected.to have_field 'department_name', disabled: false, with: 'department_name'
         is_expected.to have_field 'address'        , disabled: false, with: 'address'
         is_expected.to have_field 'zip_code'       , disabled: false, with: '123-4567'

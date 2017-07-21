@@ -3,13 +3,13 @@ $ ->
     el: '#client_new'
     data:
       client:
-        cd:               undefined
-        company_name:     undefined
-        department_name:  undefined
-        address:          undefined
-        zip_code:         undefined
-        phone_number:     undefined
-        memo:             undefined
+        cd:               ''
+        company_name:     ''
+        department_name:  ''
+        address:          ''
+        zip_code:         ''
+        phone_number:     ''
+        memo:             ''
     methods:
       submit: ->
         try

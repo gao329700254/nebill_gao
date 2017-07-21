@@ -12,6 +12,6 @@ RSpec.describe Client do
   it { is_expected.to respond_to(:phone_number) }
   it { is_expected.to respond_to(:memo) }
 
-  it { is_expected.to validate_presence_of(:cd) }
   it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }
+  it { is_expected.to validate_presence_of(:company_name) }
 end

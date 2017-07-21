@@ -76,7 +76,7 @@ RSpec.describe 'clients request' do
       let(:params) do
         {
           client: {
-            cd: 'CLIENT-1',
+            cd:               'CLIENT-1',
             company_name:     'company_name',
             department_name:  'department_name',
             zip_code:         '000-0000',
@@ -105,8 +105,8 @@ RSpec.describe 'clients request' do
       let(:params) do
         {
           client: {
-            cd: '  ',
-            company_name:     'company_name',
+            cd:               'CLIENT-1',
+            company_name:     '  ',
             department_name:  'department_name',
             zip_code:         '000-0000',
             phone_number:     '000-000-0000',
@@ -132,7 +132,7 @@ RSpec.describe 'clients request' do
         let(:params) do
           {
             client: {
-              cd: 'CLIENT-1',
+              cd:               'CLIENT-1',
               company_name:     'company_name',
               department_name:  'department_name',
               zip_code:         '000-0000',
@@ -170,8 +170,8 @@ RSpec.describe 'clients request' do
         let(:params) do
           {
             client: {
-              cd: '  ',
-              company_name:     'company_name',
+              cd:               'CLIENT-1',
+              company_name:     '  ',
               department_name:  'department_name',
               zip_code:         '000-0000',
               phone_number:     '00-0000-0000',
