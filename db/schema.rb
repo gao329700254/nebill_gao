@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711122708) do
+ActiveRecord::Schema.define(version: 20170721074829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20170711122708) do
   add_index "bills", ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
 
   create_table "clients", force: :cascade do |t|
-    t.string   "cd",              null: false
-    t.string   "company_name"
+    t.string   "cd"
+    t.string   "company_name",    null: false
     t.string   "department_name"
     t.string   "address"
     t.string   "zip_code"

@@ -1,11 +1,11 @@
 # == Schema Information
-# Schema version: 20170512072051
+# Schema version: 20170721074829
 #
 # Table name: clients
 #
 #  id              :integer          not null, primary key
-#  cd              :string           not null
-#  company_name    :string
+#  cd              :string
+#  company_name    :string           not null
 #  department_name :string
 #  address         :string
 #  zip_code        :string
@@ -16,7 +16,8 @@
 #
 
 class Client < ActiveRecord::Base
-  validates :cd, presence: true, uniqueness: { case_sensitive: false }
+  validates :cd, uniqueness: { case_sensitive: false }, if: :cd?
+  validates :company_name, presence: true
 
-  before_save { cd.upcase! }
+  before_save { cd.upcase! if cd.present? }
 end
