@@ -12,8 +12,8 @@ FactoryGirl.define do
       contract_type :lump_sum
       estimated_amount { rand(10) * (10 ** rand(3)) * 10_000 }
       is_using_ses false
-      start_on    { Faker::Date.between(5.months.ago    , 1.month.ago) }
-      end_on      { Faker::Date.between(Time.zone.today , 5.months.from_now) }
+      start_on    { Faker::Date.between(5.months.ago , 3.months.ago) }
+      end_on      { Faker::Date.between(2.months.ago , 1.month.ago) }
       amount   { rand(10) * (10 ** rand(3)) * 10_000 }
       payment_type :bill_on_15th_and_payment_on_end_of_next_month
       billing_company_name    { Faker::Company.name }

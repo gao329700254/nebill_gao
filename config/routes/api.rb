@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       resources :bills, only: [:create, :show, :update, :destroy]
       resources :project_files, only: [:index, :show, :create, :update, :destroy]
       resources :project_file_groups, only: [:index, :create]
-      get 'default_dates', on: :member
+      get 'bill_default_values', on: :member
       collection do
         get "cd/:project_type", to: "project_cds#cd", as: "project_cd"
       end
