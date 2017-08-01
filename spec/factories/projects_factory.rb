@@ -5,10 +5,10 @@ FactoryGirl.define do
     sequence(:cd) { |n| "CD-#{n}" }
     name { Faker::App.name }
     contracted false
-    contract_on { Faker::Date.between(6.months.ago, 5.months.ago) }
 
     factory :contracted_project do
       contracted true
+      contract_on { Faker::Date.between(6.months.ago, 5.months.ago) }
       contract_type :lump_sum
       estimated_amount { rand(10) * (10 ** rand(3)) * 10_000 }
       is_using_ses false
@@ -32,6 +32,7 @@ FactoryGirl.define do
 
     factory :uncontracted_project do
       contracted false
+      contract_on          nil
       contract_type        nil
       estimated_amount     nil
       is_using_ses         nil

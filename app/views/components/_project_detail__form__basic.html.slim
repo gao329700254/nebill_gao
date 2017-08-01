@@ -14,10 +14,6 @@ fieldset.project_detail__form__basic
       .project_detail__form__item
         = label_tag :name, t('activerecord.attributes.project.name')
         = text_field_tag :name, nil, 'v-model' => 'project.name', ':disabled' => '!editMode'
-    .project_detail__form__container__group
-      .project_detail__form__item
-        = label_tag :contract_on, t('activerecord.attributes.project.contract_on')
-        = date_field_tag :contract_on, nil, 'v-model' => 'project.contract_on', ':disabled' => '!editMode'
   .project_detail__form__container
     .project_detail__form__container__group
       .project_detail__form__item
@@ -25,6 +21,10 @@ fieldset.project_detail__form__basic
         = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', ':disabled' => '!editMode || projectOriginal.contracted'
 
   .project_detail__form__contracted v-if='project.contracted'
+    .project_detail__form__container__group
+      .project_detail__form__item
+        = label_tag :contract_on, t('activerecord.attributes.project.contract_on')
+        = date_field_tag :contract_on, nil, 'v-model' => 'project.contract_on', ':disabled' => '!editMode'
     .project_detail__form__container
       .project_detail__form__container__group
         .project_detail__form__item
