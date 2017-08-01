@@ -13,10 +13,7 @@ html
 
     .body
       .body__sidemenu
-        - if controller.is_a? Admin::PagesController
-          == render partial: 'shared/sidemenu_admin'
-        - else
-          == render partial: 'shared/sidemenu'
+        == render partial: 'shared/sidemenu'
       .body__main
         == yield
 
