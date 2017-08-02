@@ -1,0 +1,9 @@
+script type='text/x-template' id='client_new'
+  .client_new
+    .client_new__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .client_new__outer__inner v-on:click.stop=""
+        .client_new__outer__inner__body
+          == render 'components/client_new__form'

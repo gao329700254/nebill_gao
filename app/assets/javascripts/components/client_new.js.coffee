@@ -1,7 +1,8 @@
 $ ->
-  window.clientNew = new Vue
-    el: '#client_new'
-    data:
+  Vue.component 'clientNew',
+    template: '#client_new'
+    mixins: [Vue.modules.modal]
+    data: ->
       client:
         cd:               ''
         company_name:     ''
@@ -11,6 +12,7 @@ $ ->
         phone_number:     ''
         memo:             ''
     methods:
+      cancel: -> @modalHide()
       submit: ->
         try
           submit = $('.client_new__form__submit_btn')
@@ -22,8 +24,12 @@ $ ->
           .done (response) =>
             toastr.success('', response.message)
             @client = _.mapObject @client, (v, k) -> undefined
+            @modalHide()
+            @$dispatch('loadClientsEvent')
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
+    events:
+      showClientNewEvent: -> @modalShow()

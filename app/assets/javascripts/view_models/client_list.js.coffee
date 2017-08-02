@@ -11,8 +11,14 @@ $ ->
       searchKeywords: undefined
       sortKey: 'id'
     methods:
+      loadClients: ->
+        $.ajax '/api/clients.json'
+          .done (response) =>
+            @list = response
       linkToShow: (clientId) -> window.location = "/clients/#{clientId}/show"
+      showClientNew: -> @$broadcast('showClientNewEvent')
     compiled: ->
-      $.ajax '/api/clients.json'
-        .done (response) =>
-          @list = response
+      @loadClients()
+    events:
+      loadClientsEvent: ->
+        @loadClients()

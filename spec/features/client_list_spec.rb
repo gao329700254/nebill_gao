@@ -15,6 +15,7 @@ RSpec.feature 'Client List Page', js: true do
     is_expected.to have_header_title '取引先一覧'
 
     is_expected.to have_field 'search', with: ''
+    is_expected.to have_button '取引先新規作成'
     is_expected.to have_content 'ID'
     is_expected.to have_content '会社名'
     is_expected.to have_content '部署名'
@@ -83,4 +84,72 @@ RSpec.feature 'Client List Page', js: true do
     is_expected.to have_header_title '取引先情報'
   end
 
+  scenario 'show Client New Modal when click show modal button' do
+    is_expected.not_to have_css '.client_new__outer'
+    click_on '取引先新規作成'
+    is_expected.to     have_css '.client_new__outer'
+  end
+
+  context 'Client New Modal' do
+    background { click_button '取引先新規作成' }
+    subject { find('.client_new') }
+
+    scenario 'show' do
+      is_expected.to have_field 'cd'
+      is_expected.to have_field 'company_name'
+      is_expected.to have_field 'department_name'
+      is_expected.to have_field 'address'
+      is_expected.to have_field 'zip_code'
+      is_expected.to have_field 'phone_number'
+      is_expected.to have_field 'memo'
+      is_expected.to have_button '登録'
+      is_expected.to have_button 'キャンセル'
+    end
+
+    scenario 'click submit button with correct values'do
+      fill_in :cd              , with: '0000001'
+      fill_in :company_name    , with: 'test company'
+      fill_in :department_name , with: 'test department'
+      fill_in :address         , with: 'test address'
+      fill_in :zip_code        , with: '1234567'
+      fill_in :phone_number    , with: '1234-5678'
+      fill_in :memo            , with: 'test memo'
+
+      expect do
+        click_button '登録'
+        wait_for_ajax
+      end.to change(Client, :count).by(1)
+
+      is_expected.not_to have_css 'client_new__outer'
+    end
+
+    scenario 'click submit button with uncorrect values' do
+      fill_in :cd              , with: '00001'
+      fill_in :company_name    , with: '  '
+      fill_in :department_name , with: 'test department'
+      fill_in :address         , with: 'test address'
+      fill_in :zip_code        , with: '1234567'
+      fill_in :phone_number    , with: '1234-5678'
+      fill_in :memo            , with: 'test memo'
+
+      expect do
+        click_button '登録'
+        wait_for_ajax
+      end.not_to change(Client, :count)
+
+      is_expected.to have_field 'cd'                , with: '00001'
+      is_expected.to have_field 'company_name'      , with: '  '
+      is_expected.to have_field 'department_name'   , with: 'test department'
+      is_expected.to have_field 'address'           , with: 'test address'
+      is_expected.to have_field 'zip_code'          , with: '1234567'
+      is_expected.to have_field 'phone_number'      , with: '1234-5678'
+      is_expected.to have_field 'memo'              , with: 'test memo'
+    end
+
+    scenario 'click cancel' do
+      is_expected.to     have_css '.client_new__outer'
+      click_button 'キャンセル'
+      is_expected.not_to have_css '.client_new__outer'
+    end
+  end
 end
