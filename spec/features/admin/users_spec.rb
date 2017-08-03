@@ -2,6 +2,19 @@ require 'rails_helper'
 
 RSpec.feature 'Admin Users Page', js: true do
 
+  context 'with loginned not admin user' do
+    given!(:user) { create(:user) }
+
+    background { login user, with_capybara: true }
+    background { visit admin_users_path }
+
+    subject { page }
+
+    scenario 'show' do
+      is_expected.to have_css '#home'
+    end
+  end
+
   context 'with loginned admin user' do
     given!(:admin_user) { create(:admin_user) }
     given!(:user) { create(:user) }

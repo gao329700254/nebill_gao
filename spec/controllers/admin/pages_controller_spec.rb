@@ -10,8 +10,15 @@ RSpec.describe Admin::PagesController do
 
       it { is_expected.to redirect_to root_path }
     end
-
     context 'when logged in' do
+      context 'with not admin user' do
+        let(:user) { create(:user) }
+        before { login(user) }
+        before { get :users }
+
+        it { is_expected.to redirect_to root_path }
+      end
+
       context 'with admin user' do
         let(:admin_user) { create(:admin_user) }
         before { login(admin_user) }
