@@ -18,6 +18,7 @@ RSpec.describe Admin::PagesController do
 
         it { is_expected.to redirect_to root_path }
       end
+
       context 'with admin user' do
         let(:admin_user) { create(:admin_user) }
         before { login(admin_user) }
