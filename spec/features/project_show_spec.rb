@@ -39,7 +39,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to     have_field 'group_id'               , disabled: true, with: project.group_id
           is_expected.to     have_field 'cd'                     , disabled: true, with: project.cd
           is_expected.to     have_field 'name'                   , disabled: true, with: project.name
-          is_expected.to     have_field 'contract_on'            , disabled: true, with: project.contract_on
+          is_expected.not_to have_field 'contract_on'
           is_expected.not_to have_field 'contract_type'
           is_expected.not_to have_field 'estimated_amount'
           is_expected.not_to have_field 'is_using_ses'
@@ -72,7 +72,7 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'group_id'               , disabled: false, with: project.group_id
             is_expected.to     have_field 'cd'                     , disabled: false, with: project.cd
             is_expected.to     have_field 'name'                   , disabled: false, with: project.name
-            is_expected.to     have_field 'contract_on'            , disabled: false, with: project.contract_on
+            is_expected.not_to have_field 'contract_on'
             is_expected.not_to have_field 'contract_type'
             is_expected.not_to have_field 'estimated_amount'
             is_expected.not_to have_field 'is_using_ses'
@@ -102,7 +102,6 @@ RSpec.feature 'Project Show Page', js: true do
             original_group                   =  project.group_id
             original_cd                      =  project.cd
             original_name                    =  project.name
-            original_contract_on             =  project.contract_on
             original_orderer_company_name    =  project.orderer_company_name
             original_orderer_department_name =  project.orderer_department_name
             original_orderer_personnel_names =  project.orderer_personnel_names&.join(', ')
@@ -119,7 +118,6 @@ RSpec.feature 'Project Show Page', js: true do
             select 'Group2', from: :group_id
             fill_in :cd         , with: '0000001'
             fill_in :name       , with: 'test project'
-            fill_in :contract_on, with: '2016-01-01'
             fill_in :orderer_company_name    , with: 'test orderer company'
             fill_in :orderer_department_name , with: 'test orderer department'
             fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -141,7 +139,6 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'group_id'               , disabled: true, with: original_group
             is_expected.to     have_field 'cd'                     , disabled: true, with: original_cd
             is_expected.to     have_field 'name'                   , disabled: true, with: original_name
-            is_expected.to     have_field 'contract_on'            , disabled: true, with: original_contract_on
             is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: original_orderer_company_name
             is_expected.to     have_field 'orderer_department_name', disabled: true, with: original_orderer_department_name
             is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: original_orderer_personnel_names
@@ -160,7 +157,6 @@ RSpec.feature 'Project Show Page', js: true do
             select 'Group2', from: :group_id
             fill_in :cd        , with: '0000001'
             fill_in :name       , with: 'test project'
-            fill_in :contract_on, with: '2016-01-01'
             fill_in :orderer_company_name    , with: 'test orderer company'
             fill_in :orderer_department_name , with: 'test orderer department'
             fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -182,7 +178,6 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'group_id'               , disabled: true, with: project_group2.id
             is_expected.to     have_field 'cd'                     , disabled: true, with: '0000001'
             is_expected.to     have_field 'name'                   , disabled: true, with: 'test project'
-            is_expected.to     have_field 'contract_on'            , disabled: true, with: '2016-01-01'
             is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: 'test orderer company'
             is_expected.to     have_field 'orderer_department_name', disabled: true, with: 'test orderer department'
             is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: 'test person1, test person2'
@@ -201,7 +196,6 @@ RSpec.feature 'Project Show Page', js: true do
             select 'Group2', from: :group_id
             fill_in :cd         , with: '  '
             fill_in :name       , with: 'test project'
-            fill_in :contract_on, with: '2016-01-01'
             fill_in :orderer_company_name    , with: 'test orderer company'
             fill_in :orderer_department_name , with: 'test orderer department'
             fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -223,7 +217,6 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'group_id'               , disabled: false, with: project_group2.id
             is_expected.to     have_field 'cd'                     , disabled: false, with: '  '
             is_expected.to     have_field 'name'                   , disabled: false, with: 'test project'
-            is_expected.to     have_field 'contract_on'            , disabled: false, with: '2016-01-01'
             is_expected.to     have_field 'orderer_company_name'   , disabled: false, with: 'test orderer company'
             is_expected.to     have_field 'orderer_department_name', disabled: false, with: 'test orderer department'
             is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: 'test person1, test person2'

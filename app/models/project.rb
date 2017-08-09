@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170721074829
+# Schema version: 20170801021317
 #
 # Table name: projects
 #
@@ -7,7 +7,7 @@
 #  cd                      :string           not null
 #  name                    :string           not null
 #  contracted              :boolean          not null
-#  contract_on             :date             not null
+#  contract_on             :date
 #  contract_type           :string
 #  start_on                :date
 #  end_on                  :date

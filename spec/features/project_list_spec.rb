@@ -5,8 +5,8 @@ RSpec.feature 'Project List Page', js: true do
   given!(:project1) { create(:contracted_project,   cd: 'PROJECT-1', name: 'abc', orderer_company_name: 'ABC', contract_on: 5.days.ago) }
   given!(:project2) { create(:contracted_project,   cd: 'PROJECT-2', name: 'bcd', orderer_company_name: 'BCD', contract_on: 2.days.ago) }
   given!(:project3) { create(:contracted_project,   cd: 'PROJECT-3', name: 'cde', orderer_company_name: 'CDE', contract_on: 4.days.ago) }
-  given!(:project4) { create(:uncontracted_project, cd: 'PROJECT-4', name: 'def', orderer_company_name: 'DEF', contract_on: 3.days.ago) }
-  given!(:project5) { create(:uncontracted_project, cd: 'PROJECT-5', name: 'efg', orderer_company_name: 'EFG', contract_on: 1.day.ago)  }
+  given!(:project4) { create(:uncontracted_project, cd: 'PROJECT-4', name: 'def', orderer_company_name: 'DEF') }
+  given!(:project5) { create(:uncontracted_project, cd: 'PROJECT-5', name: 'efg', orderer_company_name: 'EFG') }
 
   background { login user, with_capybara: true }
   background { visit project_list_path }
@@ -39,11 +39,11 @@ RSpec.feature 'Project List Page', js: true do
     is_expected.to have_content project4.cd
     is_expected.to have_content project5.cd
 
-    expect(all('.project_list__tbl__body__row td:first-child')[0]).to have_text project1.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[1]).to have_text project3.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[2]).to have_text project4.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[3]).to have_text project2.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[4]).to have_text project5.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[0]).to have_text project4.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[1]).to have_text project5.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[2]).to have_text project1.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[3]).to have_text project3.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[4]).to have_text project2.cd
   end
 
   context 'search' do

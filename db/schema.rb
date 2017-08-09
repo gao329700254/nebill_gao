@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721074829) do
+ActiveRecord::Schema.define(version: 20170801021317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20170721074829) do
     t.string   "cd",                      null: false
     t.string   "name",                    null: false
     t.boolean  "contracted",              null: false
-    t.date     "contract_on",             null: false
+    t.date     "contract_on"
     t.string   "contract_type"
     t.date     "start_on"
     t.date     "end_on"

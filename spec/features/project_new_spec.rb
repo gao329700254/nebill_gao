@@ -81,7 +81,7 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to     have_field 'group_id'
         is_expected.to     have_field 'cd'
         is_expected.to     have_field 'name'
-        is_expected.to     have_field 'contract_on'
+        is_expected.not_to have_field 'contract_on'
         is_expected.not_to have_field 'contract_type'
         is_expected.not_to have_field 'estimated_amount'
         is_expected.not_to have_field 'is_using_ses'
@@ -109,7 +109,6 @@ RSpec.feature 'Project New Page', js: true do
         select 'GroupA', from: :group_id
         fill_in :cd         , with: '0000001'
         fill_in :name       , with: 'test project'
-        fill_in :contract_on, with: '2016-01-01'
         fill_in :orderer_company_name    , with: 'test orderer company'
         fill_in :orderer_department_name , with: 'test orderer department'
         fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -132,7 +131,6 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to have_field 'group_id'                , with: ''
         is_expected.to have_field 'cd'                      , with: ''
         is_expected.to have_field 'name'                    , with: ''
-        is_expected.to have_field 'contract_on'             , with: ''
         is_expected.to have_field 'orderer_company_name'    , with: ''
         is_expected.to have_field 'orderer_department_name' , with: ''
         is_expected.to have_field 'orderer_personnel_names' , with: ''
@@ -151,7 +149,6 @@ RSpec.feature 'Project New Page', js: true do
         select 'GroupA', from: :group_id
         fill_in :cd         , with: ' '
         fill_in :name       , with: 'test project'
-        fill_in :contract_on, with: '2016-01-01'
         fill_in :orderer_company_name    , with: 'test orderer company'
         fill_in :orderer_department_name , with: 'test orderer department'
         fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -174,7 +171,6 @@ RSpec.feature 'Project New Page', js: true do
         select 'GroupA', from: :group_id
         is_expected.to have_field 'cd'                      , with: ' '
         is_expected.to have_field 'name'                    , with: 'test project'
-        is_expected.to have_field 'contract_on'             , with: '2016-01-01'
         is_expected.to have_field 'orderer_company_name'    , with: 'test orderer company'
         is_expected.to have_field 'orderer_department_name' , with: 'test orderer department'
         is_expected.to have_field 'orderer_personnel_names' , with: 'test person1, test person2'
@@ -255,7 +251,6 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to have_field 'group_id'                , with: ''
         is_expected.to have_field 'cd'                      , with: ''
         is_expected.to have_field 'name'                    , with: ''
-        is_expected.to have_field 'contract_on'             , with: ''
         is_expected.to have_field 'orderer_company_name'    , with: ''
         is_expected.to have_field 'orderer_department_name' , with: ''
         is_expected.to have_field 'orderer_personnel_names' , with: ''

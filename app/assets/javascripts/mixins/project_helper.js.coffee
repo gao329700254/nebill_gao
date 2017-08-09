@@ -18,7 +18,7 @@ Vue.modules.projectHelper = {
         exist: { contracted: true, uncontracted: true }
       contract_on:
         init: ''
-        exist: { contracted: true, uncontracted: true }
+        exist: { contracted: true, uncontracted: false }
       contract_type:
         init: 'lump_sum'
         exist: { contracted: true, uncontracted: false }
