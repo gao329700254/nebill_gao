@@ -38,6 +38,10 @@
         .project_new__form__item
           = label_tag :is_using_ses, t('activerecord.attributes.project.is_using_ses')
           = check_box_tag :is_using_ses, true, false, 'v-model' => 'project.is_using_ses', 'v-on:change' => 'setProjectCd'
+      .project_new__form__container__group
+        .project_new__form__item
+          = label_tag :is_regular_contract, t('activerecord.attributes.project.is_regular_contract')
+          = check_box_tag :is_regular_contract, true, false, 'v-model' => 'project.is_regular_contract'
     .project_new__form__container
       .project_new__form__container__group
         .project_new__form__item
