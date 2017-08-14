@@ -25,6 +25,7 @@ RSpec.describe 'projects request' do
       expect(json[0]['contracted']).to               eq project1.contracted
       expect(json[0]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
       expect(json[0]['is_using_ses']).to             eq project1.is_using_ses
+      expect(json[0]['is_regular_contract']).to      eq project1.is_regular_contract
       expect(json[0]['contract_type']).to            eq project1.contract_type
       expect(json[0]['estimated_amount']).to         eq project1.estimated_amount
       expect(json[0]['start_on']).to                 eq project1.start_on.strftime("%Y-%m-%d")
@@ -64,6 +65,7 @@ RSpec.describe 'projects request' do
             contract_type: 'lump_sum',
             estimated_amount: 123,
             is_using_ses: true,
+            is_regular_contract: true,
             start_on: '2015-01-01',
             end_on:   '2015-10-31',
             amount: 123,
@@ -98,6 +100,7 @@ RSpec.describe 'projects request' do
         expect(project.contract_type).to eq  'lump_sum'
         expect(project.estimated_amount).to eq  123
         expect(project.is_using_ses).to eq  true
+        expect(project.is_regular_contract).to eq  true
         expect(project.start_on.to_s).to eq '2015-01-01'
         expect(project.end_on.to_s).to eq   '2015-10-31'
         expect(project.amount).to eq 123
@@ -139,6 +142,7 @@ RSpec.describe 'projects request' do
             contract_type: 'lump_sum',
             estimated_amount: 123,
             is_using_ses: false,
+            is_regular_contract: false,
             start_on: '2015-01-01',
             end_on:   '2015-10-31',
             amount: 123,
@@ -193,6 +197,7 @@ RSpec.describe 'projects request' do
         expect(json['contracted']).to               eq project.contracted
         expect(json['contract_on']).to              eq project.contract_on.strftime("%Y-%m-%d")
         expect(json['is_using_ses']).to             eq project.is_using_ses
+        expect(json['is_regular_contract']).to      eq project.is_regular_contract
         expect(json['contract_type']).to            eq project.contract_type
         expect(json['estimated_amount']).to         eq project.estimated_amount
         expect(json['start_on']).to                 eq project.start_on.strftime("%Y-%m-%d")
@@ -248,6 +253,7 @@ RSpec.describe 'projects request' do
               contract_type: 'lump_sum',
               estimated_amount: 123,
               is_using_ses: true,
+              is_regular_contract: true,
               start_on: '2015-01-01',
               end_on:   '2015-10-31',
               amount: 123,
@@ -281,6 +287,7 @@ RSpec.describe 'projects request' do
           expect(project.contract_type).to eq  'lump_sum'
           expect(project.estimated_amount).to eq  123
           expect(project.is_using_ses).to eq  true
+          expect(project.is_regular_contract).to eq  true
           expect(project.start_on.to_s).to eq '2015-01-01'
           expect(project.end_on.to_s).to eq   '2015-10-31'
           expect(project.amount).to eq 123
@@ -322,6 +329,7 @@ RSpec.describe 'projects request' do
               contract_type: 'lump_sum',
               estimated_amount: 123,
               is_using_ses: false,
+              is_regular_contract: false,
               start_on: '2015-01-01',
               end_on:   '2015-10-31',
               amount: 123,

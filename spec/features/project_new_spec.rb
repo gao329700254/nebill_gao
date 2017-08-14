@@ -85,6 +85,7 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.not_to have_field 'contract_type'
         is_expected.not_to have_field 'estimated_amount'
         is_expected.not_to have_field 'is_using_ses'
+        is_expected.not_to have_field 'is_regular_contract'
         is_expected.not_to have_field 'start_on'
         is_expected.not_to have_field 'end_on'
         is_expected.not_to have_field 'amount'
@@ -197,6 +198,7 @@ RSpec.feature 'Project New Page', js: true do
         is_expected.to     have_field 'contract_type'
         is_expected.to     have_field 'estimated_amount'
         is_expected.to     have_field 'is_using_ses'
+        is_expected.to     have_field 'is_regular_contract'
         is_expected.to     have_field 'start_on'
         is_expected.to     have_field 'end_on'
         is_expected.to     have_field 'amount'
@@ -224,6 +226,7 @@ RSpec.feature 'Project New Page', js: true do
         select '委託', from: :contract_type
         fill_in :estimated_amount, with: 1_000_000
         check   :is_using_ses
+        check   :is_regular_contract
         fill_in :start_on   , with: '2016-02-01'
         fill_in :end_on     , with: '2016-03-30'
         fill_in :amount     , with: 1_000_000
@@ -272,6 +275,7 @@ RSpec.feature 'Project New Page', js: true do
         select '委託', from: :contract_type
         fill_in :estimated_amount, with: 1_000_000
         check   :is_using_ses
+        check   :is_regular_contract
         fill_in :start_on   , with: '2016-02-01'
         fill_in :end_on     , with: '2016-03-30'
         fill_in :amount     , with: 1_000_000
@@ -303,6 +307,7 @@ RSpec.feature 'Project New Page', js: true do
         select '委託', from: :contract_type
         is_expected.to have_field 'estimated_amount'        , with: '1,000,000'
         check   :is_using_ses
+        check   :is_regular_contract
         is_expected.to have_field 'start_on'                , with: '2016-02-01'
         is_expected.to have_field 'end_on'                  , with: '2016-03-30'
         is_expected.to have_field 'amount'                  , with: '1,000,000'

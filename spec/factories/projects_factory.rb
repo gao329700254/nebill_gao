@@ -36,6 +36,7 @@ FactoryGirl.define do
       contract_type        nil
       estimated_amount     nil
       is_using_ses         nil
+      is_regular_contract  nil
       start_on             nil
       end_on               nil
       amount               nil

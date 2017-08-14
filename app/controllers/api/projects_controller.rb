@@ -71,6 +71,7 @@ private
       :contract_on,
       :contract_type,
       :is_using_ses,
+      :is_regular_contract,
       :start_on,
       :end_on,
       :amount,
