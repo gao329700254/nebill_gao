@@ -4,7 +4,7 @@ $ ->
     props: ['projectId']
     data: ->
       bill:
-        cd: undefined
+        cd:             undefined
         amount:         undefined
         delivery_on:    undefined
         acceptance_on:  undefined
@@ -31,7 +31,7 @@ $ ->
         finally
           submit.prop('disabled', false)
       initializeBill: ->
-        @bill.cd = undefined
+        @bill.cd            = undefined
         @bill.amount        = @default_amount
         @bill.delivery_on   = undefined
         @bill.acceptance_on = undefined
@@ -40,8 +40,9 @@ $ ->
         @bill.deposit_on    = undefined
         @bill.memo          = undefined
     created: ->
-      $.ajax "/api/projects/#{@projectId}/default_dates.json"
+      $.ajax "/api/projects/#{@projectId}/bill_default_values.json"
         .done (response) =>
+          @bill.amount        = response.amount
           @bill.delivery_on   = response.delivery_on
           @bill.acceptance_on = response.acceptance_on
           @bill.payment_type  = response.payment_type

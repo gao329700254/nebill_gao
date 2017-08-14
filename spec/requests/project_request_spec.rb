@@ -373,12 +373,12 @@ RSpec.describe 'projects request' do
     end
   end
 
-  describe 'GET /api/projects/:id/default_dates' do
+  describe 'GET /api/projects/:id/bill_default_values' do
     let!(:project) do
       create(:contracted_project, end_on: '2016-06-10', payment_type: 'bill_on_15th_and_payment_on_end_of_next_month')
     end
     let(:now) { Time.zone.parse('2016-06-01') }
-    let(:path) { "/api/projects/#{project.id}/default_dates" }
+    let(:path) { "/api/projects/#{project.id}/bill_default_values" }
 
     around { |example| Timecop.travel(now) { example.run } }
 
@@ -388,6 +388,7 @@ RSpec.describe 'projects request' do
       expect(response).to be_success
       expect(response.status).to eq 200
 
+      expect(json['amount']).to        eq project.amount
       expect(json['delivery_on']).to   eq '2016-06-10'
       expect(json['acceptance_on']).to eq '2016-06-10'
       expect(json['payment_type']).to  eq 'bill_on_15th_and_payment_on_end_of_next_month'

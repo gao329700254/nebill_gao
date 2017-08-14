@@ -8,8 +8,8 @@ script type='text/x-template' id='bill_new'
             = text_field_tag :cd, nil, 'v-model' => 'bill.cd'
           .bill_new__form__item
             = label_tag :amount, t('activerecord.attributes.bill.amount')
-            = text_field_tag :amount, @project.amount, 'v-numeric' => 'bill.amount'
-            = hidden_field_tag :defailt_amount, @project.amount, 'v-model' => 'default_amount'
+            = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount'
+            = hidden_field_tag :default_amount, @project.amount, 'v-model' => 'default_amount'
           .bill_new__form__item
             = label_tag :delivery_on, t('activerecord.attributes.bill.delivery_on')
             = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on'

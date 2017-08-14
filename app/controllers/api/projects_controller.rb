@@ -1,5 +1,5 @@
 class Api::ProjectsController < Api::ApiController
-  before_action :set_project, only: [:show, :update, :default_dates, :destroy]
+  before_action :set_project, only: [:show, :update, :bill_default_values, :destroy]
 
   def index
     @projects = if params.key? :group_id
@@ -33,10 +33,11 @@ class Api::ProjectsController < Api::ApiController
     render_action_model_fail_message(@project, :update)
   end
 
-  def default_dates
+  def bill_default_values
     now = Time.zone.now
     @project.payment_type =~ /\Abill_on_(.+)_and_payment_on_(.+)\z/
     result = {
+      amount:         @project.amount,
       delivery_on:    @project.end_on,
       acceptance_on:  @project.end_on,
       payment_type:   @project.payment_type,
