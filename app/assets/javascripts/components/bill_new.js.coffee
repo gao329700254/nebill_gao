@@ -1,6 +1,7 @@
 $ ->
   Vue.component 'billNew',
     template: '#bill_new'
+    mixins: [Vue.modules.modal]
     props: ['projectId']
     data: ->
       bill:
@@ -14,6 +15,7 @@ $ ->
         memo:           undefined
       default_amount: undefined
     methods:
+      cancel: -> @modalHide()
       submit: ->
         try
           submit = $('.bill_new__form__btn--submit')
@@ -25,6 +27,8 @@ $ ->
           .done (response) =>
             toastr.success('', response.message)
             @initializeBill()
+            @modalHide()
+            @$dispatch('loadBillListEvent')
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
@@ -50,3 +54,5 @@ $ ->
           @bill.deposit_on    = response.deposit_on
         .fail (response) =>
           console.error response
+    events:
+      showBillNewEvent: -> @modalShow()

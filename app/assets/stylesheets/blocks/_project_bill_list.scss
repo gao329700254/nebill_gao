@@ -1,0 +1,75 @@
+.project_bill {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  @include outer-container;
+  @include row;
+
+  &__list {
+    @include span-columns(7);
+
+    &__tbl {
+      @include list_tbl;
+
+      &__head {
+        &__row {
+          @include list_tbl__head__row;
+        }
+      }
+
+      &__body {
+        @include list_tbl__body;
+        &__row {
+          @include list_tbl__body__row;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $theme-lighen-color;
+          }
+
+          &--deposited {
+            border-bottom: $bold-border;
+            background-color: $light-grey;
+          }
+        }
+      }
+
+      &__item,
+      %bill_list__tbl__item {
+        @include list_tbl__item;
+
+        &--cd {
+          @extend %bill_list__tbl__item;
+          @include span-columns(2);
+        }
+
+        &--amount {
+          @extend %bill_list__tbl__item;
+          @include span-columns(2);
+          text-align: right;
+        }
+
+        &--payment_type {
+          @extend %bill_list__tbl__item;
+          @include span-columns(3);
+        }
+
+        &--bill_on {
+          @extend %bill_list__tbl__item;
+          @include span-columns(3);
+        }
+
+        &--deposit_on {
+          @extend %bill_list__tbl__item;
+          @include span-columns(2);
+        }
+      }
+    }
+  }
+
+  &__btn {
+    &--bill_new {
+      @include btn--primary;
+    }
+  }
+}
