@@ -16,6 +16,8 @@
         th.bill_list__tbl__item--deposit_on      = t('activerecord.attributes.bill.deposit_on')
     tbody.bill_list__tbl__body
       tr.bill_list__tbl__body__row [
+        v-bind:class = "bill.deposit_on ? 'bill_list__tbl__body__row--deposited'
+                                        : 'bill_list__tbl__body__row'"
         v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
         id         = "bill-{{bill.id}}"
         v-on:click = "linkToShow(bill.id)"

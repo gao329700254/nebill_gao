@@ -184,6 +184,36 @@ RSpec.feature 'Bill Show Page', js: true do
         is_expected.to     have_field 'deposit_on'    , disabled: false, with: '2016-01-05'
         is_expected.to     have_field 'memo'          , disabled: false, with: 'memo'
       end
+
+      scenario 'should only have download button when deposit_on is filled' do
+        fill_in :cd              , with: '0000001'
+        fill_in :amount          , with: 101_010
+        fill_in :delivery_on     , with: '2016-01-01'
+        fill_in :acceptance_on   , with: '2016-01-02'
+        select  '15日締め翌月末払い', from: :payment_type
+        fill_in :bill_on         , with: '2016-01-04'
+        fill_in :deposit_on      , with: '2016-01-05'
+        fill_in :memo            , with: 'memo'
+
+        expect do
+          click_button '更新'
+          wait_for_ajax
+        end.to change { bill.reload && bill.updated_at }
+
+        is_expected.to     have_field 'cd'            , disabled: true, with: '0000001'
+        is_expected.to     have_field 'amount'        , disabled: true, with: 101_010.to_s(:delimited)
+        is_expected.to     have_field 'delivery_on'   , disabled: true, with: '2016-01-01'
+        is_expected.to     have_field 'acceptance_on' , disabled: true, with: '2016-01-02'
+        is_expected.to     have_field 'payment_type'  , disabled: true, with: 'bill_on_15th_and_payment_on_end_of_next_month'
+        is_expected.to     have_field 'bill_on'       , disabled: true, with: '2016-01-04'
+        is_expected.to     have_field 'deposit_on'    , disabled: true, with: '2016-01-05'
+        is_expected.to     have_field 'memo'          , disabled: true, with: 'memo'
+        is_expected.to     have_link  'ダウンロード'
+        is_expected.not_to have_button '編集'
+        is_expected.not_to have_button '削除'
+        is_expected.not_to have_button 'キャンセル'
+        is_expected.not_to have_button '更新'
+      end
     end
   end
 
