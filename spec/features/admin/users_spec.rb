@@ -11,7 +11,7 @@ RSpec.feature 'Admin Users Page', js: true do
     subject { page }
 
     scenario 'show' do
-      is_expected.to have_css '#home'
+      is_expected.to have_css '#project_list'
     end
   end
 

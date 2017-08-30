@@ -5,9 +5,20 @@ RSpec.describe PagesController do
   subject { response }
 
   describe 'GET #home' do
-    before { get :home }
 
-    it { is_expected.to render_template :home }
+    context 'when not logged in' do
+      before { get :home }
+
+      it { is_expected.to render_template :home }
+    end
+
+    context 'when logged in' do
+      let(:user) { create(:user) }
+      before { login(user) }
+      before { get :home }
+
+      it { is_expected.to redirect_to :project_list }
+    end
   end
 
   describe 'GET #project_new' do
