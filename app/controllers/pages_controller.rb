@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   skip_before_action :require_login, only: [:home]
+  before_action :check_login, only: [:home]
   before_action :set_project, only: [:project_show]
   before_action :set_bill   , only: [:bill_show]
   before_action :set_client , only: [:client_show]

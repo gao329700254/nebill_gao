@@ -17,6 +17,12 @@ private
     @current_user = current_user_session && current_user_session.user
   end
 
+  def check_login
+    return unless current_user
+
+    redirect_to project_list_path
+  end
+
   def require_login
     return if current_user
     respond_to do |format|
