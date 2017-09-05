@@ -27,6 +27,7 @@
 #                                 POST   /api/users(.:format)                                    api/users#create
 #                    api_partners GET    /api/partners(.:format)                                 api/partners#index
 #                                 POST   /api/partners(.:format)                                 api/partners#create
+#                                 GET    /api/projects/:id/select_status(.:format)               api/projects#select_status
 #               api_project_users GET    /api/projects/:project_id/users(.:format)               api/users#index
 #            api_project_partners GET    /api/projects/:project_id/partners(.:format)            api/partners#index
 #               api_project_bills GET    /api/projects/:project_id/bills(.:format)               api/bills#index

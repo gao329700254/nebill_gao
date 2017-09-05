@@ -3,7 +3,7 @@
 script type='text/x-template' id='project_bill_list'
   .project_bill
     .project_bill__btn
-      = button_tag 'v-on:click' => 'showBillNew', class: 'project_bill__btn--bill_new' do
+      = button_tag 'v-on:click' => 'showBillNew', 'v-if' => 'project.status != "finished"', class: 'project_bill__btn--bill_new' do
         = fa_icon 'check', text: t('page.project_show.bill.bill_new')
     .project_bill__list
       table.project_bill__list__tbl

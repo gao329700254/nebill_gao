@@ -42,6 +42,7 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to     have_field 'cd'                     , disabled: true, with: project.cd
           is_expected.to     have_field 'name'                   , disabled: true, with: project.name
           is_expected.not_to have_field 'contract_on'
+          is_expected.not_to have_field 'status'
           is_expected.not_to have_field 'contract_type'
           is_expected.not_to have_field 'estimated_amount'
           is_expected.not_to have_field 'is_using_ses'
@@ -76,6 +77,7 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'cd'                     , disabled: false, with: project.cd
             is_expected.to     have_field 'name'                   , disabled: false, with: project.name
             is_expected.not_to have_field 'contract_on'
+            is_expected.not_to have_field 'status'
             is_expected.not_to have_field 'contract_type'
             is_expected.not_to have_field 'estimated_amount'
             is_expected.not_to have_field 'is_using_ses'
@@ -1142,8 +1144,11 @@ RSpec.feature 'Project Show Page', js: true do
 
     describe 'Bill New View' do
       describe 'form' do
-        background { click_on '請求' }
-        background { click_on '請求新規作成' }
+        background do
+          click_on '請求'
+          click_on '請求新規作成'
+        end
+
         subject { find('.bill_new') }
 
         scenario 'show' do
@@ -1203,6 +1208,81 @@ RSpec.feature 'Project Show Page', js: true do
           is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
           is_expected.to have_field  'memo'          , with: 'memo'
         end
+      end
+    end
+  end
+
+  describe 'Project Status Value' do
+    given!(:project) { create(:contracted_project, end_on: '2016-06-10', payment_type: 'bill_on_15th_and_payment_on_end_of_next_month') }
+
+    background { visit project_show_path(project) }
+
+    subject { page }
+
+    context 'when deposit_on is not filled' do
+      background do
+        click_on 'プロジェクト詳細'
+        click_button '編集'
+      end
+      scenario 'status should not have "finished"' do
+        is_expected.to have_select('status', options: %w(受注 売上 請求書発行))
+      end
+    end
+
+    context 'when deposit_on is filled' do
+      background do
+        click_on '請求'
+        wait_for_ajax
+        click_button '請求新規作成'
+      end
+
+      scenario 'and submit bill new then status should have "finished"' do
+        fill_in :cd              , with: 'BILL-1'
+        fill_in :amount          , with: project.amount
+        fill_in :delivery_on     , with: '2016-01-01'
+        fill_in :acceptance_on   , with: '2016-01-02'
+        select  '15日締め翌月末払い', from: :payment_type
+        fill_in :bill_on         , with: '2016-01-04'
+        fill_in :deposit_on      , with: '2016-01-05'
+        fill_in :memo            , with: 'memo'
+
+        expect do
+          click_button '登録'
+          wait_for_ajax
+        end.to change(Bill, :count).by(1)
+
+        visit current_path
+        click_on 'プロジェクト詳細'
+        click_button '編集'
+        expect(page).to have_select('status', options: %w(受注 売上 請求書発行 終了))
+      end
+    end
+
+    context 'When status is "finished"' do
+      given!(:project) { create(:contracted_project, status: 'finished') }
+
+      subject { page }
+
+      scenario 'all pages do not have buttons' do
+        click_on '請求'
+        is_expected.not_to have_button '請求新規作成'
+
+        click_on 'メンバー'
+        expect('.member_list__user').not_to have_button '登録'
+        expect('.member_list__user').not_to have_field 'user'
+        expect('.member_list__user').not_to have_selector 'selected'
+        expect('.member_list__partner').not_to have_field 'partner'
+        expect('.member_list__partner').not_to have_field 'unit_price'
+        expect('.member_list__partner').not_to have_field 'working_rate'
+        expect('.member_list__partner').not_to have_field 'min_limit_time'
+        expect('.member_list__partner').not_to have_button 'max_limit_time'
+        expect('.member_list__partner').not_to have_button '登録'
+        expect('.member_list__partner').not_to have_button 'パートナー新規登録'
+        expect('.member_list__partner').not_to have_selector 'selected'
+
+        click_on 'ファイル'
+        is_expected.not_to have_css '.files_new__form'
+        is_expected.not_to have_css '.files_list__menu'
       end
     end
   end

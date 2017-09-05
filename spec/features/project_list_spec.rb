@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Project List Page', js: true do
   given!(:user) { create(:user) }
-  given!(:project1) { create(:contracted_project,   cd: 'PROJECT-1', name: 'abc', orderer_company_name: 'ABC', contract_on: 5.days.ago) }
+  given!(:project1) { create(:contracted_project,   cd: 'PROJECT-1', name: 'abc', orderer_company_name: 'ABC', contract_on: 5.days.ago, status: :finished) }
   given!(:project2) { create(:contracted_project,   cd: 'PROJECT-2', name: 'bcd', orderer_company_name: 'BCD', contract_on: 2.days.ago) }
   given!(:project3) { create(:contracted_project,   cd: 'PROJECT-3', name: 'cde', orderer_company_name: 'CDE', contract_on: 4.days.ago) }
   given!(:project4) { create(:uncontracted_project, cd: 'PROJECT-4', name: 'def', orderer_company_name: 'DEF') }
@@ -56,6 +56,12 @@ RSpec.feature 'Project List Page', js: true do
     expect(all('.project_list__tbl__body__row td:first-child')[2]).to have_text project1.cd
     expect(all('.project_list__tbl__body__row td:first-child')[3]).to have_text project3.cd
     expect(all('.project_list__tbl__body__row td:first-child')[4]).to have_text project2.cd
+
+    expect(find("#project-#{project1.id}")[:class]).to eq 'project_list__tbl__body__row project_list__tbl__body__row--finished'
+    expect(find("#project-#{project2.id}")[:class]).to eq 'project_list__tbl__body__row'
+    expect(find("#project-#{project3.id}")[:class]).to eq 'project_list__tbl__body__row'
+    expect(find("#project-#{project4.id}")[:class]).to eq 'project_list__tbl__body__row'
+    expect(find("#project-#{project5.id}")[:class]).to eq 'project_list__tbl__body__row'
   end
 
   context 'search' do

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170810082756
+# Schema version: 20170905092430
 #
 # Table name: projects
 #
@@ -31,6 +31,7 @@
 #  orderer_personnel_names :string           is an Array
 #  estimated_amount        :integer
 #  is_regular_contract     :boolean
+#  status                  :string
 #
 # Indexes
 #
@@ -67,6 +68,7 @@ class Project < ActiveRecord::Base
     bill_on_end_of_month_and_payment_on_35th
     bill_on_end_of_month_and_payment_on_45th
   )
+  enumerize :status, in: [:receive_order, :turn_over, :publish_bill, :finished]
 
   composed_of :billing,
               class_name: 'DestinationInformation',

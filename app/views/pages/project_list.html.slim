@@ -27,6 +27,8 @@
         th.project_list__tbl__item--contract_on     = t('activerecord.attributes.project.contract_on')
     tbody.project_list__tbl__body
       tr.project_list__tbl__body__row [
+        v-bind:class = "project.status === 'finished' ? 'project_list__tbl__body__row--finished'
+                                                      : 'project_list__tbl__body__row'"
         v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted'| orderBy sortKey"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"

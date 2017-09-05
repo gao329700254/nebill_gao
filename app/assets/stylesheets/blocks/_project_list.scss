@@ -25,6 +25,11 @@
         &:hover {
           background-color: $theme-lighen-color;
         }
+
+        &--finished {
+          border-bottom: $bold-border;
+          background-color: $light-grey;
+        }
       }
     }
 
