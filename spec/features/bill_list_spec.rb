@@ -4,7 +4,7 @@ RSpec.feature 'Bill List Page', js: true do
   given!(:user) { create(:user) }
   given!(:project1) { create(:contracted_project,   cd: 'CD-1', name: 'abc', billing_company_name: 'ABC', contract_on: 2.days.ago) }
   given!(:project2) { create(:uncontracted_project, cd: 'CD-5', name: 'def', billing_company_name: 'DEF')  }
-  given!(:bill1) { create(:bill, cd: '2016040199', project: project1) }
+  given!(:bill1) { create(:bill, cd: '2016040199', project: project1, deposit_on: '2016-01-05') }
   given!(:bill2) { create(:bill, cd: '2016040300', project: project2) }
   given!(:bill3) { create(:bill, cd: '2016040299', project: project1) }
 
@@ -37,6 +37,10 @@ RSpec.feature 'Bill List Page', js: true do
     expect(all('.bill_list__tbl__body__row td:first-child')[0]).to have_text bill2.cd
     expect(all('.bill_list__tbl__body__row td:first-child')[1]).to have_text bill3.cd
     expect(all('.bill_list__tbl__body__row td:first-child')[2]).to have_text bill1.cd
+
+    expect(find("#bill-#{bill1.id}")[:class]).to eq 'bill_list__tbl__body__row bill_list__tbl__body__row--deposited'
+    expect(find("#bill-#{bill2.id}")[:class]).to eq 'bill_list__tbl__body__row'
+    expect(find("#bill-#{bill3.id}")[:class]).to eq 'bill_list__tbl__body__row'
   end
 
   context 'search' do
