@@ -9,9 +9,6 @@ class PagesController < ApplicationController
     render layout: 'simple'
   end
 
-  def client_new
-  end
-
   def client_list
   end
 

@@ -1,9 +1,5 @@
 nav.sidemenu
   ul.sidemenu__list
-    = link_to client_new_path
-      li.sidemenu__item
-        = fa_icon 'briefcase 2x', class: 'sidemenu__item__icon'
-        span.sidemenu__item__page_title = t('page.client_new.title')
     = link_to client_list_path
       li.sidemenu__item
         = fa_icon 'database 2x', class: 'sidemenu__item__icon'

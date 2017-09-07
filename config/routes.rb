@@ -7,7 +7,6 @@
 #                                 GET    /auth/:provider/callback(.:format)                      user_sessions#create
 #                                 POST   /auth/:provider/callback(.:format)                      user_sessions#create
 #                          logout DELETE /logout(.:format)                                       user_sessions#destroy
-#                      client_new GET    /clients/new(.:format)                                  pages#client_new
 #                     client_list GET    /clients/list(.:format)                                 pages#client_list
 #                     client_show GET    /clients/:client_id/show(.:format)                      pages#client_show
 #                     project_new GET    /projects/new(.:format)                                 pages#project_new
@@ -78,7 +77,6 @@ Rails.application.routes.draw do
   delete '/logout'                 , to: 'user_sessions#destroy'
 
   scope path: 'clients' do
-    get 'new',  to: 'pages#client_new',  as: 'client_new'
     get 'list', to: 'pages#client_list', as: 'client_list'
   end
   scope path: 'clients/:client_id' do

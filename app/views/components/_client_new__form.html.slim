@@ -1,0 +1,28 @@
+= form_tag nil, class: 'client_new__form'
+  .client_new__form__container
+    .client_new__form__container__group
+      .client_new__form__item--cd
+        = label_tag :cd, t('activerecord.attributes.client.cd')
+        = text_field_tag :cd, nil, 'v-model' => 'client.cd'
+      .client_new__form__item
+        = label_tag :company_name, t('activerecord.attributes.client.company_name')
+        = text_field_tag :company_name, nil, 'v-model' => 'client.company_name'
+      .client_new__form__item
+        = label_tag :department_name, t('activerecord.attributes.client.department_name')
+        = text_field_tag :department_name, nil, 'v-model' => 'client.department_name'
+      .client_new__form__item
+        = label_tag :address, t('activerecord.attributes.client.address')
+        = text_field_tag :address, nil, 'v-model' => 'client.address'
+      .client_new__form__item
+        = label_tag :zip_code, t('activerecord.attributes.client.zip_code')
+        = text_field_tag :zip_code, nil, 'v-model' => 'client.zip_code'
+      .client_new__form__item
+        = label_tag :phone_number, t('activerecord.attributes.client.phone_number')
+        = text_field_tag :phone_number, nil, 'v-model' => 'client.phone_number'
+      .client_new__form__item
+        = label_tag :memo, t('activerecord.attributes.client.memo')
+        = text_area_tag :memo, nil, 'v-model' => 'client.memo'
+  = button_tag 'v-on:click.prevent' => 'cancel', class: 'client_new__form__cancel_btn' do
+    = fa_icon 'remove', text: t('helpers.cancel')
+  = button_tag 'v-on:click.prevent' => 'submit', class: 'client_new__form__submit_btn' do
+    = fa_icon 'check', text: t('helpers.submit.create')

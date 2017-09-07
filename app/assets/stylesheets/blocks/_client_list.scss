@@ -53,4 +53,10 @@
       }
     }
   }
+
+  &__btn {
+    &--new_client {
+      @include btn--primary;
+    }
+  }
 }

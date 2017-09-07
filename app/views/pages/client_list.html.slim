@@ -2,9 +2,13 @@
 
 - provide(:title, t('page.client_list.title'))
 
+== render 'components/client_new'
+
 #client_list.client_list
   = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
                      placeholder: t('page.client_list.search_form_placeholder'), lazy: true, class: 'client_list__search'
+  = button_tag 'v-on:click' => 'showClientNew', class: 'client_list__btn--new_client' do
+    = fa_icon 'check', text: t('page.client_new.title')
   table.client_list__tbl
     thead.client_list__tbl__head
       tr.client_list__tbl__head__row
@@ -23,3 +27,8 @@
         td.client_list__tbl__item--company_name         v-text='client.company_name'
         td.client_list__tbl__item--department_name      v-text='client.department_name'
         td.client_list__tbl__item--phone_number         v-text='client.phone_number'
+
+  component [
+    :is        = "'clientNew'"
+    keep-alive = true
+  ]

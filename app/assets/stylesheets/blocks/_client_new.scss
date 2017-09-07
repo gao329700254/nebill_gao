@@ -2,9 +2,22 @@
   /*** variables **************************************************************/
   /****************************************************************************/
 
-  background-color: $white-bg-color;
-  padding: $base-spacing;
-  color: $white-ft-color;
+  &__outer {
+    @include modal__outer;
+    padding-top: 5em;
+
+    &__inner {
+      @include modal__outer__inner;
+
+      &__title {
+        @include modal__outer__inner__title;
+      }
+
+      &__body {
+        @include modal__outer__inner__body;
+      }
+    }
+  }
 
   &__form {
     @include outer-container;
@@ -25,7 +38,8 @@
       }
     }
 
-    &__submit_btn {
+    &__submit_btn,
+    &__cancel_btn {
       @include btn--primary;
     }
   }
