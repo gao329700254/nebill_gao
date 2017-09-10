@@ -32,6 +32,8 @@
 #  estimated_amount        :integer
 #  is_regular_contract     :boolean
 #  status                  :string
+#  orderer_phone_number    :string
+#  billing_phone_number    :string
 #
 # Indexes
 #
@@ -73,10 +75,25 @@ class Project < ActiveRecord::Base
 
   composed_of :billing,
               class_name: 'DestinationInformation',
-              mapping: %w(company_name department_name personnel_names address zip_code memo).map { |attr_name| ["billing_#{attr_name}", attr_name] }
+              mapping: %w(
+                company_name
+                department_name
+                personnel_names
+                address
+                zip_code
+                phone_number
+                memo
+              ).map { |attr_name| ["billing_#{attr_name}", attr_name] }
   composed_of :orderer,
               class_name: 'DestinationInformation',
-              mapping: %w(company_name department_name personnel_names address zip_code memo).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
+              mapping: %w(
+                company_name
+                department_name
+                personnel_names
+                address zip_code
+                phone_number
+                memo
+              ).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
 
   before_save { cd.upcase! }
 

@@ -61,11 +61,13 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:billing_personnel_names) }
     it { is_expected.to validate_presence_of(:billing_address) }
     it { is_expected.to validate_presence_of(:billing_zip_code) }
+    it { is_expected.to validate_presence_of(:billing_phone_number) }
     it { is_expected.to validate_presence_of(:orderer_company_name) }
     it { is_expected.to validate_presence_of(:orderer_department_name) }
     it { is_expected.to validate_presence_of(:orderer_personnel_names) }
     it { is_expected.to validate_presence_of(:orderer_address) }
     it { is_expected.to validate_presence_of(:orderer_zip_code) }
+    it { is_expected.to validate_presence_of(:orderer_phone_number) }
 
     it 'should require contracted to not change to uncontracted' do
       project.contracted = false
@@ -79,6 +81,7 @@ RSpec.describe Project do
       its(:personnel_names) { is_expected.to eq project.billing_personnel_names }
       its(:address)         { is_expected.to eq project.billing_address }
       its(:zip_code)        { is_expected.to eq project.billing_zip_code }
+      its(:phone_number)    { is_expected.to eq project.billing_phone_number }
       its(:memo)            { is_expected.to eq project.billing_memo }
     end
 
@@ -89,6 +92,7 @@ RSpec.describe Project do
       its(:personnel_names) { is_expected.to eq project.orderer_personnel_names }
       its(:address)         { is_expected.to eq project.orderer_address }
       its(:zip_code)        { is_expected.to eq project.orderer_zip_code }
+      its(:phone_number)    { is_expected.to eq project.orderer_phone_number }
       its(:memo)            { is_expected.to eq project.orderer_memo }
     end
   end

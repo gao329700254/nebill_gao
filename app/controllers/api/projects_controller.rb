@@ -21,6 +21,21 @@ class Api::ProjectsController < Api::ApiController
     render_action_model_fail_message(@project, :create)
   end
 
+  def create_with_client
+    @project = Project.new(project_param)
+    @client = Client.new(client_param)
+
+    if @project.valid? && @client.valid?
+      @project.save!
+      @client.save!
+      render_action_model_success_message(@project, :create)
+    elsif @project.invalid?
+      render_action_model_fail_message(@project, :create)
+    elsif @client.invalid?
+      render_action_model_fail_message(@client, :create)
+    end
+  end
+
   def show
     render json: @project, status: :ok
   end
@@ -120,14 +135,27 @@ private
       :billing_department_name,
       :billing_address,
       :billing_zip_code,
+      :billing_phone_number,
       :billing_memo,
       :orderer_company_name,
       :orderer_department_name,
       :orderer_address,
       :orderer_zip_code,
+      :orderer_phone_number,
       :orderer_memo,
       billing_personnel_names: [],
       orderer_personnel_names: [],
+    )
+  end
+
+  def client_param
+    params.require(:client).permit(
+      :company_name,
+      :department_name,
+      :address,
+      :zip_code,
+      :phone_number,
+      :memo,
     )
   end
 end

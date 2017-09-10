@@ -22,4 +22,10 @@ class Client < ActiveRecord::Base
   validates :company_name, presence: true
 
   before_save { cd.upcase! if cd.present? }
+  before_save :set_cd, unless: :cd?
+
+  def set_cd
+    max_cd = Client.all.pluck(:cd).compact.map { |cd| cd.gsub(/[^\d]/, "").to_i }.max if Client.all.present?
+    self.cd = max_cd ? "CD-" + (max_cd + 1).to_s : "CD-1"
+  end
 end

@@ -22,12 +22,14 @@ FactoryGirl.define do
       billing_personnel_names { [Faker::Name.name, Faker::Name.name] }
       billing_address         { "#{Faker::Address.city} #{Faker::Address.secondary_address}" }
       billing_zip_code        { Faker::Address.zip_code }
+      billing_phone_number    { Faker::PhoneNumber.phone_number }
       billing_memo            { Faker::Lorem.sentence }
       orderer_company_name    { Faker::Company.name }
       orderer_department_name { Faker::Commerce.department }
       orderer_personnel_names { [Faker::Name.name, Faker::Name.name] }
       orderer_address         { "#{Faker::Address.city} #{Faker::Address.secondary_address}" }
       orderer_zip_code        { Faker::Address.zip_code }
+      orderer_phone_number    { Faker::PhoneNumber.phone_number }
       orderer_memo            { Faker::Lorem.sentence }
     end
 
@@ -48,12 +50,14 @@ FactoryGirl.define do
       billing_personnel_names nil
       billing_address         nil
       billing_zip_code        nil
+      billing_phone_number    nil
       billing_memo            nil
       orderer_company_name    nil
       orderer_department_name nil
       orderer_personnel_names nil
       orderer_address         nil
       orderer_zip_code        nil
+      orderer_phone_number    nil
       orderer_memo            nil
     end
   end

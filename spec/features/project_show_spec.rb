@@ -56,12 +56,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
           is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: project.orderer_personnel_names&.join(', ')
           is_expected.to     have_field 'orderer_address'        , disabled: true, with: project.orderer_address
           is_expected.to     have_field 'orderer_zip_code'       , disabled: true, with: project.orderer_zip_code
+          is_expected.to     have_field 'orderer_phone_number'   , disabled: true, with: project.orderer_phone_number
           is_expected.to     have_field 'orderer_memo'           , disabled: true, with: project.orderer_memo
           is_expected.to     have_field 'billing_company_name'   , disabled: true, with: project.billing_company_name
           is_expected.to     have_field 'billing_department_name', disabled: true, with: project.billing_department_name
           is_expected.to     have_field 'billing_personnel_names', disabled: true, with: project.billing_personnel_names&.join(', ')
           is_expected.to     have_field 'billing_address'        , disabled: true, with: project.billing_address
           is_expected.to     have_field 'billing_zip_code'       , disabled: true, with: project.billing_zip_code
+          is_expected.to     have_field 'billing_phone_number'   , disabled: true, with: project.billing_phone_number
           is_expected.to     have_field 'billing_memo'           , disabled: true, with: project.billing_memo
           is_expected.to     have_button '編集'
           is_expected.not_to have_button 'キャンセル'
@@ -91,12 +93,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: project.orderer_personnel_names&.join(', ')
             is_expected.to     have_field 'orderer_address'        , disabled: false, with: project.orderer_address
             is_expected.to     have_field 'orderer_zip_code'       , disabled: false, with: project.orderer_zip_code
+            is_expected.to     have_field 'orderer_phone_number'   , disabled: false, with: project.orderer_phone_number
             is_expected.to     have_field 'orderer_memo'           , disabled: false, with: project.orderer_memo
             is_expected.to     have_field 'billing_company_name'   , disabled: false, with: project.billing_company_name
             is_expected.to     have_field 'billing_department_name', disabled: false, with: project.billing_department_name
             is_expected.to     have_field 'billing_personnel_names', disabled: false, with: project.billing_personnel_names&.join(', ')
             is_expected.to     have_field 'billing_address'        , disabled: false, with: project.billing_address
             is_expected.to     have_field 'billing_zip_code'       , disabled: false, with: project.billing_zip_code
+            is_expected.to     have_field 'billing_phone_number'   , disabled: false, with: project.billing_phone_number
             is_expected.to     have_field 'billing_memo'           , disabled: false, with: project.billing_memo
             is_expected.not_to have_button '編集'
             is_expected.to     have_button 'キャンセル'
@@ -113,12 +117,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             original_orderer_personnel_names =  project.orderer_personnel_names&.join(', ')
             original_orderer_address         =  project.orderer_address
             original_orderer_zip_code        =  project.orderer_zip_code
+            original_orderer_phone_number    =  project.orderer_phone_number
             original_orderer_memo            =  project.orderer_memo
             original_billing_company_name    =  project.billing_company_name
             original_billing_department_name =  project.billing_department_name
             original_billing_personnel_names =  project.billing_personnel_names&.join(', ')
             original_billing_address         =  project.billing_address
             original_billing_zip_code        =  project.billing_zip_code
+            original_billing_phone_number    =  project.billing_phone_number
             original_billing_memo            =  project.billing_memo
 
             select 'Group2', from: :group_id
@@ -129,12 +135,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             fill_in :orderer_personnel_names , with: 'test person1, test person2'
             fill_in :orderer_address         , with: 'test orderer address'
             fill_in :orderer_zip_code        , with: '1234567'
+            fill_in :orderer_phone_number    , with: '123456789'
             fill_in :orderer_memo            , with: 'test orderer memo'
             fill_in :billing_company_name    , with: 'test billing company'
             fill_in :billing_department_name , with: 'test billing department'
             fill_in :billing_personnel_names , with: 'test person3, test person4'
             fill_in :billing_address         , with: 'test billing address'
             fill_in :billing_zip_code        , with: '2345678'
+            fill_in :billing_phone_number    , with: '123456789'
             fill_in :billing_memo            , with: 'test billing memo'
 
             expect do
@@ -150,12 +158,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: original_orderer_personnel_names
             is_expected.to     have_field 'orderer_address'        , disabled: true, with: original_orderer_address
             is_expected.to     have_field 'orderer_zip_code'       , disabled: true, with: original_orderer_zip_code
+            is_expected.to     have_field 'orderer_phone_number'   , disabled: true, with: original_orderer_phone_number
             is_expected.to     have_field 'orderer_memo'           , disabled: true, with: original_orderer_memo
             is_expected.to     have_field 'billing_company_name'   , disabled: true, with: original_billing_company_name
             is_expected.to     have_field 'billing_department_name', disabled: true, with: original_billing_department_name
             is_expected.to     have_field 'billing_personnel_names', disabled: true, with: original_billing_personnel_names
             is_expected.to     have_field 'billing_address'        , disabled: true, with: original_billing_address
             is_expected.to     have_field 'billing_zip_code'       , disabled: true, with: original_billing_zip_code
+            is_expected.to     have_field 'billing_phone_number'   , disabled: true, with: original_billing_phone_number
             is_expected.to     have_field 'billing_memo'           , disabled: true, with: original_billing_memo
           end
 
@@ -168,12 +178,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             fill_in :orderer_personnel_names , with: 'test person1, test person2'
             fill_in :orderer_address         , with: 'test orderer address'
             fill_in :orderer_zip_code        , with: '1234567'
+            fill_in :orderer_phone_number    , with: '123456789'
             fill_in :orderer_memo            , with: 'test orderer memo'
             fill_in :billing_company_name    , with: 'test billing company'
             fill_in :billing_department_name , with: 'test billing department'
             fill_in :billing_personnel_names , with: 'test person3, test person4'
             fill_in :billing_address         , with: 'test billing address'
             fill_in :billing_zip_code        , with: '2345678'
+            fill_in :billing_phone_number    , with: '123456789'
             fill_in :billing_memo            , with: 'test billing memo'
 
             expect do
@@ -189,12 +201,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: 'test person1, test person2'
             is_expected.to     have_field 'orderer_address'        , disabled: true, with: 'test orderer address'
             is_expected.to     have_field 'orderer_zip_code'       , disabled: true, with: '1234567'
+            is_expected.to     have_field 'orderer_phone_number'   , disabled: true, with: '123456789'
             is_expected.to     have_field 'orderer_memo'           , disabled: true, with: 'test orderer memo'
             is_expected.to     have_field 'billing_company_name'   , disabled: true, with: 'test billing company'
             is_expected.to     have_field 'billing_department_name', disabled: true, with: 'test billing department'
             is_expected.to     have_field 'billing_personnel_names', disabled: true, with: 'test person3, test person4'
             is_expected.to     have_field 'billing_address'        , disabled: true, with: 'test billing address'
             is_expected.to     have_field 'billing_zip_code'       , disabled: true, with: '2345678'
+            is_expected.to     have_field 'billing_phone_number'   , disabled: true, with: '123456789'
             is_expected.to     have_field 'billing_memo'           , disabled: true, with: 'test billing memo'
 
             expect(page).to    have_content '最終更新日時: ' + I18n.l(project.updated_at.in_time_zone('Tokyo'))
@@ -209,12 +223,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             fill_in :orderer_personnel_names , with: 'test person1, test person2'
             fill_in :orderer_address         , with: 'test orderer address'
             fill_in :orderer_zip_code        , with: '1234567'
+            fill_in :orderer_phone_number    , with: '123456789'
             fill_in :orderer_memo            , with: 'test orderer memo'
             fill_in :billing_company_name    , with: 'test billing company'
             fill_in :billing_department_name , with: 'test billing department'
             fill_in :billing_personnel_names , with: 'test person3, test person4'
             fill_in :billing_address         , with: 'test billing address'
             fill_in :billing_zip_code        , with: '2345678'
+            fill_in :billing_phone_number    , with: '123456789'
             fill_in :billing_memo            , with: 'test billing memo'
 
             expect do
@@ -230,12 +246,14 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: 'test person1, test person2'
             is_expected.to     have_field 'orderer_address'        , disabled: false, with: 'test orderer address'
             is_expected.to     have_field 'orderer_zip_code'       , disabled: false, with: '1234567'
+            is_expected.to     have_field 'orderer_phone_number'   , disabled: false, with: '123456789'
             is_expected.to     have_field 'orderer_memo'           , disabled: false, with: 'test orderer memo'
             is_expected.to     have_field 'billing_company_name'   , disabled: false, with: 'test billing company'
             is_expected.to     have_field 'billing_department_name', disabled: false, with: 'test billing department'
             is_expected.to     have_field 'billing_personnel_names', disabled: false, with: 'test person3, test person4'
             is_expected.to     have_field 'billing_address'        , disabled: false, with: 'test billing address'
             is_expected.to     have_field 'billing_zip_code'       , disabled: false, with: '2345678'
+            is_expected.to     have_field 'billing_phone_number'   , disabled: false, with: '123456789'
             is_expected.to     have_field 'billing_memo'           , disabled: false, with: 'test billing memo'
           end
         end

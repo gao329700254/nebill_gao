@@ -12,6 +12,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       department_name: 'client department name',
       address: 'client address',
       zip_code: 'client zip code',
+      phone_number: 'client phone number',
     )
   end
   given!(:project_group) { create(:project_group, name: 'GroupA') }
@@ -326,6 +327,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to have_field 'orderer_department_name' , with: 'client department name'
         is_expected.to have_field 'orderer_address'         , with: 'client address'
         is_expected.to have_field 'orderer_zip_code'        , with: 'client zip code'
+        is_expected.to have_field 'orderer_phone_number'    , with: 'client phone number'
       end
 
       scenario 'click billing fill button' do
@@ -337,6 +339,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to have_field 'billing_department_name' , with: 'client department name'
         is_expected.to have_field 'billing_address'         , with: 'client address'
         is_expected.to have_field 'billing_zip_code'        , with: 'client zip code'
+        is_expected.to have_field 'billing_phone_number'    , with: 'client phone number'
       end
 
       scenario 'click copy button' do
@@ -345,6 +348,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         fill_in :orderer_personnel_names , with: 'test person1, test person2'
         fill_in :orderer_address         , with: 'test orderer address'
         fill_in :orderer_zip_code        , with: '1234567'
+        fill_in :orderer_phone_number    , with: '1234567'
         fill_in :orderer_memo            , with: 'test orderer memo'
 
         is_expected.to have_field 'billing_company_name'    , with: ''
@@ -352,6 +356,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to have_field 'billing_personnel_names' , with: ''
         is_expected.to have_field 'billing_address'         , with: ''
         is_expected.to have_field 'billing_zip_code'        , with: ''
+        is_expected.to have_field 'billing_phone_number'    , with: ''
         is_expected.to have_field 'billing_memo'            , with: ''
 
         click_button '受注先から請求先に値をコピー'
@@ -361,6 +366,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to have_field 'billing_personnel_names' , with: 'test person1, test person2'
         is_expected.to have_field 'billing_address'         , with: 'test orderer address'
         is_expected.to have_field 'billing_zip_code'        , with: '1234567'
+        is_expected.to have_field 'billing_phone_number'    , with: '1234567'
         is_expected.to have_field 'billing_memo'            , with: ''
         is_expected.not_to have_field 'billing_memo'        , with: 'test orderer memo'
       end
@@ -386,12 +392,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           is_expected.to     have_field 'orderer_personnel_names'
           is_expected.to     have_field 'orderer_address'
           is_expected.to     have_field 'orderer_zip_code'
+          is_expected.to     have_field 'orderer_phone_number'
           is_expected.to     have_field 'orderer_memo'
           is_expected.to     have_field 'billing_company_name'
           is_expected.to     have_field 'billing_department_name'
           is_expected.to     have_field 'billing_personnel_names'
           is_expected.to     have_field 'billing_address'
           is_expected.to     have_field 'billing_zip_code'
+          is_expected.to     have_field 'billing_phone_number'
           is_expected.to     have_field 'billing_memo'
           is_expected.to     have_button '受注先から請求先に値をコピー'
           is_expected.to     have_button 'キャンセル'
@@ -407,12 +415,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
           fill_in :orderer_address         , with: 'test orderer address'
           fill_in :orderer_zip_code        , with: '1234567'
+          fill_in :orderer_phone_number    , with: '123456789'
           fill_in :orderer_memo            , with: 'test orderer memo'
           fill_in :billing_company_name    , with: 'test billing company'
           fill_in :billing_department_name , with: 'test billing department'
           fill_in :billing_personnel_names , with: 'test person3, test person4'
           fill_in :billing_address         , with: 'test billing address'
           fill_in :billing_zip_code        , with: '2345678'
+          fill_in :billing_phone_number    , with: '23456789'
           fill_in :billing_memo            , with: 'test billing memo'
 
           expect do
@@ -433,12 +443,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
           fill_in :orderer_address         , with: 'test orderer address'
           fill_in :orderer_zip_code        , with: '1234567'
+          fill_in :orderer_phone_number    , with: '123456789'
           fill_in :orderer_memo            , with: 'test orderer memo'
           fill_in :billing_company_name    , with: 'test billing company'
           fill_in :billing_department_name , with: 'test billing department'
           fill_in :billing_personnel_names , with: 'test person3, test person4'
           fill_in :billing_address         , with: 'test billing address'
           fill_in :billing_zip_code        , with: '2345678'
+          fill_in :billing_phone_number    , with: '23456789'
           fill_in :billing_memo            , with: 'test billing memo'
 
           expect do
@@ -455,12 +467,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           is_expected.to have_field 'orderer_personnel_names' , with: 'test person1, test person2'
           is_expected.to have_field 'orderer_address'         , with: 'test orderer address'
           is_expected.to have_field 'orderer_zip_code'        , with: '1234567'
+          is_expected.to have_field 'orderer_phone_number'    , with: '123456789'
           is_expected.to have_field 'orderer_memo'            , with: 'test orderer memo'
           is_expected.to have_field 'billing_company_name'    , with: 'test billing company'
           is_expected.to have_field 'billing_department_name' , with: 'test billing department'
           is_expected.to have_field 'billing_personnel_names' , with: 'test person3, test person4'
           is_expected.to have_field 'billing_address'         , with: 'test billing address'
           is_expected.to have_field 'billing_zip_code'        , with: '2345678'
+          is_expected.to have_field 'billing_phone_number'    , with: '23456789'
           is_expected.to have_field 'billing_memo'            , with: 'test billing memo'
         end
       end
@@ -486,12 +500,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           is_expected.to     have_field 'orderer_personnel_names'
           is_expected.to     have_field 'orderer_address'
           is_expected.to     have_field 'orderer_zip_code'
+          is_expected.to     have_field 'orderer_phone_number'
           is_expected.to     have_field 'orderer_memo'
           is_expected.to     have_field 'billing_company_name'
           is_expected.to     have_field 'billing_department_name'
           is_expected.to     have_field 'billing_personnel_names'
           is_expected.to     have_field 'billing_address'
           is_expected.to     have_field 'billing_zip_code'
+          is_expected.to     have_field 'billing_phone_number'
           is_expected.to     have_field 'billing_memo'
           is_expected.to     have_button '受注先から請求先に値をコピー'
           is_expected.to     have_button '登録'
@@ -515,12 +531,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
           fill_in :orderer_address         , with: 'test orderer address'
           fill_in :orderer_zip_code        , with: '1234567'
+          fill_in :orderer_phone_number    , with: '123456789'
           fill_in :orderer_memo            , with: 'test orderer memo'
           fill_in :billing_company_name    , with: 'test billing company'
           fill_in :billing_department_name , with: 'test billing department'
           fill_in :billing_personnel_names , with: 'test person3, test person4'
           fill_in :billing_address         , with: 'test billing address'
           fill_in :billing_zip_code        , with: '2345678'
+          fill_in :billing_phone_number    , with: '23456789'
           fill_in :billing_memo            , with: 'test billing memo'
 
           expect do
@@ -550,12 +568,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
           fill_in :orderer_address         , with: 'test orderer address'
           fill_in :orderer_zip_code        , with: '1234567'
+          fill_in :orderer_phone_number    , with: '123456789'
           fill_in :orderer_memo            , with: 'test orderer memo'
           fill_in :billing_company_name    , with: 'test billing company'
           fill_in :billing_department_name , with: 'test billing department'
           fill_in :billing_personnel_names , with: 'test person3, test person4'
           fill_in :billing_address         , with: 'test billing address'
           fill_in :billing_zip_code        , with: '2345678'
+          fill_in :billing_phone_number    , with: '23456789'
           fill_in :billing_memo            , with: 'test billing memo'
 
           expect do
@@ -581,12 +601,96 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           is_expected.to have_field 'orderer_personnel_names' , with: 'test person1, test person2'
           is_expected.to have_field 'orderer_address'         , with: 'test orderer address'
           is_expected.to have_field 'orderer_zip_code'        , with: '1234567'
+          is_expected.to have_field 'orderer_phone_number'    , with: '123456789'
           is_expected.to have_field 'orderer_memo'            , with: 'test orderer memo'
           is_expected.to have_field 'billing_company_name'    , with: 'test billing company'
           is_expected.to have_field 'billing_department_name' , with: 'test billing department'
           is_expected.to have_field 'billing_personnel_names' , with: 'test person3, test person4'
           is_expected.to have_field 'billing_address'         , with: 'test billing address'
           is_expected.to have_field 'billing_zip_code'        , with: '2345678'
+          is_expected.to have_field 'billing_phone_number'    , with: '23456789'
+          is_expected.to have_field 'billing_memo'            , with: 'test billing memo'
+        end
+      end
+
+      context "when select 'client_new'" do
+        scenario 'click submit button with correct values' do
+          select 'GroupA', from: :group_id
+          fill_in :cd         , with: '0000001'
+          fill_in :name       , with: 'test project'
+
+          select '新規作成', from: :orderer_client_id
+
+          fill_in :orderer_company_name    , with: 'test orderer company'
+          fill_in :orderer_department_name , with: 'test orderer department'
+          fill_in :orderer_personnel_names , with: 'test person1, test person2'
+          fill_in :orderer_address         , with: 'test orderer address'
+          fill_in :orderer_zip_code        , with: '1234567'
+          fill_in :orderer_phone_number    , with: '1234567'
+          fill_in :orderer_memo            , with: 'test orderer memo'
+          fill_in :billing_company_name    , with: 'test billing company'
+          fill_in :billing_department_name , with: 'test billing department'
+          fill_in :billing_personnel_names , with: 'test person3, test person4'
+          fill_in :billing_address         , with: 'test billing address'
+          fill_in :billing_zip_code        , with: '2345678'
+          fill_in :billing_phone_number    , with: '23456789'
+          fill_in :billing_memo            , with: 'test billing memo'
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.to change(Project, :count).by(1)
+
+          is_expected.not_to  have_css 'project_new'
+          expect(page).to     have_content 'test project'
+
+          visit client_list_path
+          expect(page).to     have_content 'test orderer company'
+        end
+
+        scenario 'click submit button with uncorrect values' do
+          select 'GroupA', from: :group_id
+          fill_in :cd         , with: '0000001'
+          fill_in :name       , with: 'test project'
+
+          select '新規作成', from: :orderer_client_id
+
+          fill_in :orderer_company_name    , with: ''
+          fill_in :orderer_department_name , with: 'test orderer department'
+          fill_in :orderer_personnel_names , with: 'test person1, test person2'
+          fill_in :orderer_address         , with: 'test orderer address'
+          fill_in :orderer_zip_code        , with: '1234567'
+          fill_in :orderer_phone_number    , with: '123456789'
+          fill_in :orderer_memo            , with: 'test orderer memo'
+          fill_in :billing_company_name    , with: 'test billing company'
+          fill_in :billing_department_name , with: 'test billing department'
+          fill_in :billing_personnel_names , with: 'test person3, test person4'
+          fill_in :billing_address         , with: 'test billing address'
+          fill_in :billing_zip_code        , with: '2345678'
+          fill_in :billing_phone_number    , with: '23456789'
+          fill_in :billing_memo            , with: 'test billing memo'
+
+          expect do
+            click_button '登録'
+            wait_for_ajax
+          end.not_to change(Project, :count)
+
+          select 'GroupA', from: :group_id
+          is_expected.to have_field 'cd'                      , with: '0000001'
+          is_expected.to have_field 'name'                    , with: 'test project'
+          is_expected.to have_field 'orderer_company_name'    , with: ''
+          is_expected.to have_field 'orderer_department_name' , with: 'test orderer department'
+          is_expected.to have_field 'orderer_personnel_names' , with: 'test person1, test person2'
+          is_expected.to have_field 'orderer_address'         , with: 'test orderer address'
+          is_expected.to have_field 'orderer_zip_code'        , with: '1234567'
+          is_expected.to have_field 'orderer_phone_number'    , with: '123456789'
+          is_expected.to have_field 'orderer_memo'            , with: 'test orderer memo'
+          is_expected.to have_field 'billing_company_name'    , with: 'test billing company'
+          is_expected.to have_field 'billing_department_name' , with: 'test billing department'
+          is_expected.to have_field 'billing_personnel_names' , with: 'test person3, test person4'
+          is_expected.to have_field 'billing_address'         , with: 'test billing address'
+          is_expected.to have_field 'billing_zip_code'        , with: '2345678'
+          is_expected.to have_field 'billing_phone_number'    , with: '23456789'
           is_expected.to have_field 'billing_memo'            , with: 'test billing memo'
         end
       end
@@ -599,12 +703,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         fill_in :orderer_personnel_names , with: 'test person1, test person2'
         fill_in :orderer_address         , with: 'test orderer address'
         fill_in :orderer_zip_code        , with: '1234567'
+        fill_in :orderer_phone_number    , with: '123456789'
         fill_in :orderer_memo            , with: 'test orderer memo'
         fill_in :billing_company_name    , with: 'test billing company'
         fill_in :billing_department_name , with: 'test billing department'
         fill_in :billing_personnel_names , with: 'test person3, test person4'
         fill_in :billing_address         , with: 'test billing address'
         fill_in :billing_zip_code        , with: '2345678'
+        fill_in :billing_phone_number    , with: '23456789'
         fill_in :billing_memo            , with: 'test billing memo'
 
         click_button 'キャンセル'
