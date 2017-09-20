@@ -41,6 +41,12 @@ class Bill < ActiveRecord::Base
 
   before_save { cd.upcase! }
 
+  scope :between, lambda { |start_on, end_on|
+    where(Bill.arel_table[:bill_on].gteq(start_on)).where(Bill.arel_table[:bill_on].lteq(end_on))
+  }
+  scope :gteq_start_on, -> (start_on) { where(Bill.arel_table[:bill_on].gteq(start_on)) }
+  scope :lteq_end_on, -> (end_on) { where(Bill.arel_table[:bill_on].lteq(end_on)) }
+
   def bill_on_cannot_predate_delivery_on
     return if bill_on.nil?
     errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_delivery_on')) if bill_on < delivery_on

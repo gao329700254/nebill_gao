@@ -36,6 +36,20 @@ class Api::BillsController < Api::ApiController
     render_action_model_fail_message(@bill, :update)
   end
 
+  def search_result
+    @bills = if params[:start].present? && params[:end].present?
+               Bill.between(params[:start], params[:end]).includes(:project)
+             elsif params[:start].present?
+               Bill.gteq_start_on(params[:start]).includes(:project)
+             elsif params[:end].present?
+               Bill.lteq_end_on(params[:end]).includes(:project)
+             else
+               Bill.all.includes(:project)
+             end
+
+    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
   def destroy
     if @bill.destroy
       render_action_model_flash_success_message(@bill, :destroy)

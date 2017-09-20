@@ -62,6 +62,8 @@
 #               api_project_group PATCH  /api/project_groups/:id(.:format)                       api/project_groups#update
 #                                 PUT    /api/project_groups/:id(.:format)                       api/project_groups#update
 #                       api_bills GET    /api/bills(.:format)                                    api/bills#index
+#      api_projects_search_result POST   /api/projects/search_result(.:format)                   api/projects#search_result
+#         api_bills_search_result POST   /api/bills/search_result(.:format)                      api/bills#search_result
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index

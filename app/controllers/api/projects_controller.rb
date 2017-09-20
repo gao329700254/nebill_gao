@@ -54,6 +54,19 @@ class Api::ProjectsController < Api::ApiController
     @user_name ||= ''
 
     render 'last_updated_at', formats: 'json', handlers: 'jbuilder', status: :ok
+
+    def search_result
+    @projects = if params[:start].present? && params[:end].present?
+                  Project.between(params[:start], params[:end])
+                elsif params[:start].present?
+                  Project.gteq_start_on(params[:start])
+                elsif params[:end].present?
+                  Project.lteq_end_on(params[:end])
+                else
+                  Project.all
+                end
+
+    render json: @projects, status: :ok
   end
 
   def bill_default_values

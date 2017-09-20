@@ -10,6 +10,8 @@ $ ->
       list: undefined
       searchKeywords: undefined
       contractStatus: undefined
+      start: undefined
+      end: undefined
     methods:
       loadProjects: ->
         $.ajax '/api/projects.json'
@@ -17,6 +19,21 @@ $ ->
             @list = response
       linkToShow: (projectId) -> window.location = "/projects/#{projectId}/show"
       showProjectNew: -> @$broadcast('showProjectNewEvent')
+      search: ->
+        try
+          search = $('.project_list__search__date__btn--search')
+          search.prop('disabled', true)
+          $.ajax
+            url: '/api/projects/search_result.json'
+            type: 'POST'
+            data: {
+              start: @start
+              end: @end
+            }
+          .done (response) =>
+            @list = response
+        finally
+          search.prop('disabled', false)
     compiled: ->
       @loadProjects()
     events:
