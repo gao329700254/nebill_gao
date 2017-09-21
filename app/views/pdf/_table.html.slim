@@ -1,0 +1,37 @@
+.bill_pdf__body__subject
+  .bill_pdf__body__subject--title = t('pdf.subject_title')
+  span.bill_pdf__body__subject--project_name = @bill.project.name
+.bill_pdf__body__price
+  .bill_pdf__body__price--title = t('pdf.charged_price')
+  .bill_pdf__body__price--subject = @bill.pdf_total_price_yen
+table.bill_pdf__tbl
+  thead.bill_pdf__tbl__head
+    tr.bill_pdf__tbl__head__row
+      th.bill_pdf__tbl__head__row__item = t('pdf.uchiwake')
+      th.bill_pdf__tbl__head__row__item = t('pdf.price')
+  tbody.bill_pdf__tbl__body
+    tr.bill_pdf__tbl__body__row
+      td.bill_pdf__tbl__body__row__item--right = @bill.project.name
+      td.bill_pdf__tbl__body__row__item--left = @bill.amount.to_s(:delimited)
+    tr.bill_pdf__tbl__body__row
+      td.bill_pdf__tbl__body__row__item--right--period = @bill.pdf_period
+      td.bill_pdf__tbl__body__row__item--left
+    tr.bill_pdf__tbl__body__row
+      td.bill_pdf__tbl__body__row__item--right--time = t('pdf.exceed')
+      td.bill_pdf__tbl__body__row__item--left = '0'
+    - 12.times do
+      = content_tag :tr, '', class: 'bill_pdf__tbl__body__row'
+        = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item--right'
+        = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item--left'
+    tr.bill_pdf__tbl__body__row__bottom
+      td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.subtotal')
+      td.bill_pdf__tbl__body__row__bottom__item--left = @bill.amount.to_s(:delimited)
+    tr.bill_pdf__tbl__body__row__bottom
+      td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.tax')
+      td.bill_pdf__tbl__body__row__bottom__item--left = @bill.pdf_price_include_tax
+    tr.bill_pdf__tbl__body__row__bottom
+      td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.expenses')
+      td.bill_pdf__tbl__body__row__bottom__item--left = '0'
+    tr.bill_pdf__tbl__body__row__bottom
+      td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.total')
+      td.bill_pdf__tbl__body__row__bottom__item--left = @bill.pdf_total_price

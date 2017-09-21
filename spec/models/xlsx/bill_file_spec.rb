@@ -20,6 +20,7 @@ RSpec.describe Xlsx::BillFile do
       expect(worksheet[9][0].value).to  eq 118
       expect(worksheet[10][0].value).to eq 0
       expect(worksheet[11][0].value).to eq 0
+      expect(worksheet[12][0].value).to eq project.billing_company_name || ''
     end
   end
 end

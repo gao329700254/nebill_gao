@@ -1,0 +1,256 @@
+.bill_pdf {
+  /*** variables **************************************************************/
+  $gray: #c0c0c0;
+  $emerald: #bee6db;
+  /****************************************************************************/
+  padding: 3rem;
+  line-height: 1.2rem;
+  font-family: sans-serif;
+  font-size: .8rem;
+
+  &__header {
+    &--today {
+      text-align: right;
+    }
+
+    &--billing_company_name {
+      margin: 10px 0;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    &__cuon {
+      float: left;
+      margin: 0 1rem 0 15rem;
+
+      &__item,
+      %bill_pdf__header__cuon__item {
+        margin-left: 1rem;
+        text-align: right;
+
+        &--bill_cd {
+          @extend %bill_pdf__header__cuon__item;
+          border-bottom: solid 1px;
+        }
+      }
+
+      &--accept {
+        &--project_no {
+          margin-left: 29rem;
+          border-bottom: solid 1px;
+          padding-right: 1rem;
+          text-align: right;
+        }
+      }
+    }
+
+    &__company_seal {
+      padding-top: 1rem;
+      height: 8rem;
+    }
+
+    &--accept {
+      padding-top: 5rem;
+    }
+  }
+
+  &__body {
+    &__title,
+    %bill_pdf__body__title {
+      text-align: center;
+      letter-spacing: 1px;
+
+      &--accept {
+        @extend %bill_pdf__body__title;
+        margin-top: 3rem;
+      }
+    }
+
+    &__subject {
+      margin: 1rem 0;
+      border-bottom: solid 1px;
+      padding: 0 .5rem;
+      width: 80%;
+
+      &--title {
+        float: left;
+        width: 6rem;
+        letter-spacing: 1px;
+      }
+
+      &--project_name {
+        margin-left: 2rem;
+      }
+    }
+
+    &__price {
+      border-bottom: double;
+      padding: 0 .5rem;
+      width: 30%;
+
+      &--title {
+        float: left;
+        width: 6rem;
+      }
+
+      &--subject {
+        text-align: right;
+      }
+    }
+  }
+
+  &__tbl {
+    margin-top: 2rem;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .6rem;
+
+    &__head {
+      &__row {
+        background-color: $gray;
+        height: 1.2rem;
+
+        &__item {
+          border: solid 1px;
+        }
+      }
+    }
+
+    &__body {
+      border: solid 1px;
+
+      &__row,
+      %bill_pdf__tbl__body__row {
+        height: 1.5rem;
+
+        &__item,
+        %bill_pdf__tbl__body__row__item {
+          border-right: solid 1px;
+          border-bottom: dotted 1px;
+
+          &--right {
+            @extend %bill_pdf__tbl__body__row__item;
+            padding-left: 1rem;
+
+            &--period {
+              @extend %bill_pdf__tbl__body__row__item;
+              padding-left: 2rem;
+            }
+
+            &--time {
+              @extend %bill_pdf__tbl__body__row__item;
+              padding-left: 3rem;
+            }
+          }
+
+          &--left {
+            @extend %bill_pdf__tbl__body__row__item;
+            padding-right: 5px;
+            text-align: right;
+          }
+        }
+
+        &__bottom {
+          @extend %bill_pdf__tbl__body__row;
+
+          &__item,
+          %bill_pdf__tbl__body__row__bottom__item {
+            border: solid 1px;
+
+            &--right {
+              @extend %bill_pdf__tbl__body__row__bottom__item;
+              padding-left: 1rem;
+              font-weight: bold;
+            }
+
+            &--left {
+              @extend %bill_pdf__tbl__body__row__bottom__item;
+              padding-right: 5px;
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: 3rem;
+    line-height: 1.2rem;
+    font-size: .8rem;
+
+    &--limit {
+      &--right {
+        float: left;
+        width: 5rem;
+      }
+
+      &--left {
+        padding-left: 2rem;
+      }
+    }
+
+    &--bank {
+      &--right {
+        float: left;
+        width: 5rem;
+      }
+
+      &--left {
+        padding-left: 2rem;
+      }
+    }
+
+    &--fee {
+      font-size: .6rem;
+    }
+
+    &__tbl {
+      float: left;
+      width: 85%;
+      border-collapse: collapse;
+      font-size: .8rem;
+
+      &__head {
+        &__row {
+          line-height: 2rem;
+
+          &__item {
+            border: solid 1px;
+            background-color: $emerald;
+            width: 4rem;
+
+            &--blank {
+              border: solid 1px;
+              width: 7rem;
+            }
+
+            &--blank2 {
+              border: solid 1px;
+              width: 9rem;
+            }
+          }
+        }
+
+        &__row2 {
+          line-height: 2rem;
+
+          &__item {
+            border: solid 1px;
+            background-color: $emerald;
+
+            &--blank2 {
+              border: solid 1px;
+            }
+          }
+        }
+      }
+    }
+
+    &__seal {
+      border: solid 1px;
+      padding: 27px 2.3rem 29px;
+      line-height: 70px;
+    }
+  }
+}

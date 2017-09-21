@@ -230,7 +230,8 @@ ja:
       submit:   保存
       update:   更新
       upload:   アップロード
-      download: ダウンロード
+      excel:    Excel
+      pdf:      PDF
     edit: 編集
     cancel: キャンセル
     delete: 削除
@@ -402,3 +403,33 @@ ja:
   component:
     member_list:
       new_partner: パートナーを新規登録
+  pdf:
+    pj_no: 'PJNo.: '
+    subject_title: '件名:'
+    charged_price: 'ご請求金額:'
+    uchiwake: 内訳
+    price: 金額
+    period: '期間: '
+    exceed: '超過分: 基準H　実働: H ※0.5単位 @/H'
+    subtotal: 小計
+    tax: 消費税
+    expenses: 経費（交通費）
+    total: 合計
+    bill:
+      title: 請求書
+      onchu: 御中
+      postal_code: 〒101-0064
+      address: 東京都千代田区猿楽町2-1-1 浅田ビル5F
+      company: 株式会社Cuon
+      tel: '電話: 03-5577-4405'
+      number: '請求書No.: '
+      note: 下記の通り、ご請求申し上げます。
+      limit: 'お支払期日:'
+      bank: 'お振込先:'
+      bank_ufj: 三菱東京UFJ銀行 市ヶ谷支店（普）NO.0076904 株式会社Cuon
+      fee: ※お振込手数料はお客様のご負担にてお願い申し上げます。
+    accept:
+      title: 検収書
+      company: 株式会社Cuon行
+      note: 下記項目の検収が完了致しました。
+      seal: 印
