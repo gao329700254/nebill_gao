@@ -1,13 +1,14 @@
 $ ->
-  window.projectNew = new Vue
-    el: '#project_new'
-    mixins: [Vue.modules.projectHelper]
-    data:
+  Vue.component 'projectNew',
+    template: '#project_new'
+    mixins: [Vue.modules.projectHelper, Vue.modules.modal]
+    data: ->
       clients: []
       project: undefined
       ordererClientId: undefined
       billingClientId: undefined
     methods:
+      cancel: -> @modalHide()
       setProjectCd: ->
         projectType =
           if @project.contracted == false
@@ -54,6 +55,8 @@ $ ->
           .done (response) =>
             toastr.success('', response.message)
             @initializeProject()
+            @modalHide()
+            @$dispatch('loadProjectsEvent')
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
@@ -63,3 +66,5 @@ $ ->
       @loadClients()
       @initializeProject()
       @setProjectCd()
+    events:
+      showProjectNewEvent: -> @modalShow()

@@ -9,7 +9,6 @@
 #                          logout DELETE /logout(.:format)                                       user_sessions#destroy
 #                     client_list GET    /clients/list(.:format)                                 pages#client_list
 #                     client_show GET    /clients/:client_id/show(.:format)                      pages#client_show
-#                     project_new GET    /projects/new(.:format)                                 pages#project_new
 #                    project_list GET    /projects/list(.:format)                                pages#project_list
 #                    project_show GET    /projects/:project_id/show(.:format)                    pages#project_show
 #                       bill_list GET    /bills/list(.:format)                                   pages#bill_list
@@ -84,7 +83,6 @@ Rails.application.routes.draw do
     get 'show', to: 'pages#client_show', as: 'client_show'
   end
   scope path: 'projects' do
-    get 'new', to: 'pages#project_new', as: 'project_new'
     get 'list', to: 'pages#project_list', as: 'project_list'
   end
   scope path: 'projects/:project_id' do

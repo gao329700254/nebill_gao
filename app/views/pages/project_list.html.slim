@@ -2,9 +2,13 @@
 
 - provide(:title, t('page.project_list.title'))
 
+== render 'components/project_new'
+
 #project_list.project_list
   = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
                      placeholder: t('page.project_list.search_form_placeholder'), lazy: true, class: 'project_list__search'
+  = button_tag 'v-on:click' => 'showProjectNew', class: 'project_list__btn--new_project' do
+    = fa_icon 'check', text: t('page.project_new.title')
   div.project_list__search
     = radio_button_tag :all, '', true, id: 'all', 'v-model' => 'contractStatus'
     = label_tag :all, t('page.project_list.contract_type.all')
@@ -34,3 +38,8 @@
         td.project_list__tbl__item--start_on        v-text='project.start_on'
         td.project_list__tbl__item--end_on          v-text='project.end_on'
         td.project_list__tbl__item--contract_on     v-text='project.contract_on'
+
+  component [
+    :is        = "'projectNew'"
+    keep-alive = true
+  ]

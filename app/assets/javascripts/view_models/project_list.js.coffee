@@ -11,8 +11,14 @@ $ ->
       searchKeywords: undefined
       contractStatus: undefined
     methods:
+      loadProjects: ->
+        $.ajax '/api/projects.json'
+          .done (response) =>
+            @list = response
       linkToShow: (projectId) -> window.location = "/projects/#{projectId}/show"
+      showProjectNew: -> @$broadcast('showProjectNewEvent')
     compiled: ->
-      $.ajax '/api/projects.json'
-        .done (response) =>
-          @list = response
+      @loadProjects()
+    events:
+      loadProjectsEvent: ->
+        @loadProjects()
