@@ -40,6 +40,8 @@
     = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__btn--submit' do
       = fa_icon 'pencil-square', text: t('helpers.submit.update')
     = link_to bill_download_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
-      = fa_icon 'download', text: t('helpers.submit.download')
+      = fa_icon 'download', text: t('helpers.submit.excel')
+    = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
+      = fa_icon 'download', text: t('helpers.submit.pdf')
     = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode', class: 'bill_show__form__btn--delete' do
       = fa_icon 'trash', text: t('helpers.delete')

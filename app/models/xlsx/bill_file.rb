@@ -32,9 +32,11 @@ module Xlsx
     end
 
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
     def edit_cell(cell, target)
       case target
       when "[Time.zone.today]"         then replace!(cell, target, date_format(Time.zone.today))
+      when "[bill_company_name]"       then replace!(cell, target, @project.billing_company_name || '')
       when "[project_cd]"              then replace!(cell, target, @project.cd)
       when "[project_name]"            then replace!(cell, target, @project.name)
       when "[project_period]"          then replace!(cell, target, project_period)
@@ -50,6 +52,7 @@ module Xlsx
       end
     end
     # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     def replace!(cell, target, value)
       replace_word = value.is_a?(Integer) ? cell.value.gsub(target, value.to_s).to_i : cell.value.gsub(target, value)
