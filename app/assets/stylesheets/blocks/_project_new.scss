@@ -9,10 +9,6 @@
     &__inner {
       @include modal__outer__inner--large;
 
-      &__title {
-        @include modal__outer__inner__title;
-      }
-
       &__body {
         @include modal__outer__inner__body;
       }

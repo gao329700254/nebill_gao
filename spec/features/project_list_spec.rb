@@ -249,6 +249,7 @@ RSpec.feature 'Project List Page', js: true do
           is_expected.to     have_field 'billing_zip_code'
           is_expected.to     have_field 'billing_memo'
           is_expected.to     have_button '受注先から請求先に値をコピー'
+          is_expected.to     have_button 'キャンセル'
           is_expected.to     have_button '登録'
         end
 
@@ -274,7 +275,8 @@ RSpec.feature 'Project List Page', js: true do
             wait_for_ajax
           end.to change(Project, :count).by(1)
 
-          is_expected.not_to have_css 'project_new'
+          is_expected.not_to  have_css 'project_new'
+          expect(page).to     have_content 'test project'
         end
 
         scenario 'click submit button with uncorrect values' do
@@ -381,7 +383,8 @@ RSpec.feature 'Project List Page', js: true do
             wait_for_ajax
           end.to change(Project, :count).by(1)
 
-          is_expected.not_to have_css 'project_new'
+          is_expected.not_to  have_css 'project_new'
+          expect(page).to     have_content 'test project'
         end
 
         scenario 'click submit button with uncorrect values' do
@@ -441,6 +444,28 @@ RSpec.feature 'Project List Page', js: true do
           is_expected.to have_field 'billing_zip_code'        , with: '2345678'
           is_expected.to have_field 'billing_memo'            , with: 'test billing memo'
         end
+      end
+
+      scenario 'click cancel' do
+        fill_in :cd                      , with: '0000001'
+        fill_in :name                    , with: 'test project'
+        fill_in :orderer_company_name    , with: 'test orderer company'
+        fill_in :orderer_department_name , with: 'test orderer department'
+        fill_in :orderer_personnel_names , with: 'test person1, test person2'
+        fill_in :orderer_address         , with: 'test orderer address'
+        fill_in :orderer_zip_code        , with: '1234567'
+        fill_in :orderer_memo            , with: 'test orderer memo'
+        fill_in :billing_company_name    , with: 'test billing company'
+        fill_in :billing_department_name , with: 'test billing department'
+        fill_in :billing_personnel_names , with: 'test person3, test person4'
+        fill_in :billing_address         , with: 'test billing address'
+        fill_in :billing_zip_code        , with: '2345678'
+        fill_in :billing_memo            , with: 'test billing memo'
+
+        click_button 'キャンセル'
+
+        is_expected.not_to  have_css '.project_new__outer'
+        expect(page).not_to have_content 'test project'
       end
     end
   end
