@@ -63,4 +63,11 @@
       }
     }
   }
+
+  &__btn {
+    &--new_project {
+      @include btn--primary;
+      float: right;
+    }
+  }
 }
