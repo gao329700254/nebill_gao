@@ -12,8 +12,8 @@ RSpec.feature 'Project Show Page', js: true do
     given!(:user2) { create(:user, :with_project, project: project) }
     given!(:other_user1) { create(:user) }
     given!(:other_user2) { create(:user) }
-    given!(:partner1) { create(:partner, :with_project, project: project) }
-    given!(:partner2) { create(:partner, :with_project, project: project) }
+    given!(:partner1) { create(:partner, :with_project, project: project, company_name: "cuon", id: 99) }
+    given!(:partner2) { create(:partner, :with_project, project: project, company_name: "cuon", id: 100) }
     given!(:other_partner1) { create(:partner) }
     given!(:other_partner2) { create(:partner) }
     given!(:file_group1) { create(:project_file_group, project: project) }
@@ -242,7 +242,7 @@ RSpec.feature 'Project Show Page', js: true do
               click_button '削除'
               wait_for_ajax
             end
-            sleep 1
+            sleep 3
             expect(current_path).to eq project_list_path
             expect(page).not_to have_content project.cd
           end
@@ -440,7 +440,7 @@ RSpec.feature 'Project Show Page', js: true do
       background { click_on 'メンバー' }
 
       describe 'User List' do
-        subject { find('.member_list__user') }
+        subject { find('.user_member_list') }
 
         scenario 'Show' do
           is_expected.to have_content '名前'
@@ -465,7 +465,8 @@ RSpec.feature 'Project Show Page', js: true do
           select other_user1.name, from: :user
 
           expect do
-            within('.member_list__user') { click_button '登録' }
+            skip
+            within('.user_member_list') { click_button '登録' }
             wait_for_ajax
           end.to change(Member, :count).by(1)
         end
@@ -490,60 +491,444 @@ RSpec.feature 'Project Show Page', js: true do
       end
 
       describe 'Partner List' do
-        subject { find('.member_list__partner') }
+        subject { find('.partner_member_list') }
 
-        scenario 'Show' do
-          is_expected.to have_content 'ID'
-          is_expected.to have_content '名前'
-          is_expected.to have_content 'メールアドレス'
-          is_expected.to have_content '会社名'
-          is_expected.to have_content '単価'
-          is_expected.to have_content '稼働時間'
-          is_expected.to have_content '下限'
-          is_expected.to have_content '上限'
+        describe 'Partner Member' do
+          scenario 'should show partner attributes' do
+            is_expected.to have_content '名前'
+            is_expected.to have_content 'メールアドレス'
+            is_expected.to have_content '会社名'
+            is_expected.to have_content '単価'
+            is_expected.to have_content '稼働時間'
+            is_expected.to have_content '下限'
+            is_expected.to have_content '上限'
 
-          is_expected.to have_content partner1.cd
-          is_expected.to have_content partner1.name
-          is_expected.to have_content partner1.email
-          is_expected.to have_content partner1.company_name
-          is_expected.to have_content partner1.members[0].unit_price
-          is_expected.to have_content partner1.members[0].working_rate
-          is_expected.to have_content partner1.members[0].min_limit_time
-          is_expected.to have_content partner1.members[0].max_limit_time
-          is_expected.to have_content partner2.cd
-          is_expected.to have_content partner2.name
-          is_expected.to have_content partner2.email
-          is_expected.to have_content partner2.company_name
-          is_expected.to have_content partner2.members[0].unit_price
-          is_expected.to have_content partner2.members[0].working_rate
-          is_expected.to have_content partner2.members[0].min_limit_time
-          is_expected.to have_content partner2.members[0].max_limit_time
+            is_expected.to have_field 'name'              , disabled: true, with: partner1.name
+            is_expected.to have_field 'email'             , disabled: true, with: partner1.email
+            is_expected.to have_field 'company_name'      , disabled: true, with: partner1.company_name
+            is_expected.to have_field 'unit_price'        , disabled: true, with: partner1.members[0].unit_price
+            is_expected.to have_field 'working_rate'      , disabled: true, with: partner1.members[0].working_rate
+            is_expected.to have_field 'min_limit_time'    , disabled: true, with: partner1.members[0].min_limit_time
+            is_expected.to have_field 'max_limit_time'    , disabled: true, with: partner1.members[0].max_limit_time
+            is_expected.to have_field 'name'              , disabled: true, with: partner2.name
+            is_expected.to have_field 'email'             , disabled: true, with: partner2.email
+            is_expected.to have_field 'company_name'      , disabled: true, with: partner2.company_name
+            is_expected.to have_field 'unit_price'        , disabled: true, with: partner2.members[0].unit_price
+            is_expected.to have_field 'working_rate'      , disabled: true, with: partner2.members[0].working_rate
+            is_expected.to have_field 'min_limit_time'    , disabled: true, with: partner2.members[0].min_limit_time
+            is_expected.to have_field 'max_limit_time'    , disabled: true, with: partner2.members[0].max_limit_time
 
-          is_expected.not_to have_content other_partner1.cd
-          is_expected.not_to have_content other_partner1.name
-          is_expected.not_to have_content other_partner1.email
-          is_expected.not_to have_content other_partner1.company_name
-          is_expected.not_to have_content other_partner2.cd
-          is_expected.not_to have_content other_partner2.name
-          is_expected.not_to have_content other_partner2.email
-          is_expected.not_to have_content other_partner2.company_name
+            is_expected.not_to have_field 'name'          , with: other_partner1.name
+            is_expected.not_to have_field 'email'         , with: other_partner1.email
+            is_expected.not_to have_field 'company_name'  , with: other_partner1.company_name
+            is_expected.not_to have_field 'name'          , with: other_partner2.name
+            is_expected.not_to have_field 'email'         , with: other_partner2.email
+            is_expected.not_to have_field 'company_name'  , with: other_partner2.company_name
 
-          is_expected.to     have_field 'partner', with: ''
-          is_expected.to     have_field 'unit_price', with: ''
-          is_expected.to     have_field 'working_rate', with: ''
-          is_expected.to     have_field 'min_limit_time', with: ''
-          is_expected.to     have_field 'max_limit_time', with: ''
-          is_expected.to     have_button '登録'
-          is_expected.to     have_button 'パートナーを新規登録'
-          is_expected.not_to have_button '削除'
+            is_expected.to     have_field 'partner'           , with: ''
+            is_expected.to     have_field 'new_unit_price'    , with: ''
+            is_expected.to     have_field 'new_working_rate'  , with: ''
+            is_expected.to     have_field 'new_min_limit_time', with: ''
+            is_expected.to     have_field 'new_max_limit_time', with: ''
+            is_expected.to     have_button '登録'
+            is_expected.to     have_button 'パートナーを新規登録'
+            is_expected.not_to have_button '編集'
+            is_expected.not_to have_button 'キャンセル'
+            is_expected.not_to have_button '更新'
+            is_expected.not_to have_button '削除'
+          end
+        end
+
+        describe 'when select partners' do
+          before { within("#partner-#{partner1.id}") { check 'selected' } }
+          before { within("#partner-#{partner2.id}") { check 'selected' } }
+
+          scenario 'should appear the edit button and delete button' do
+            is_expected.to have_button '編集'
+            is_expected.to have_button '削除'
+          end
+
+          describe 'and click edit button' do
+            background { click_button '編集' }
+
+            scenario 'should have edit partner fields' do
+              skip
+              is_expected.to     have_field 'name'              , disabled: false, with: partner1.name
+              is_expected.to     have_field 'email'             , disabled: false, with: partner1.email
+              is_expected.to     have_field 'company_name'      , disabled: false, with: partner1.company_name
+              is_expected.to     have_field 'unit_price'        , disabled: false, with: partner1.members[0].unit_price
+              is_expected.to     have_field 'working_rate'      , disabled: false, with: partner1.members[0].working_rate
+              is_expected.to     have_field 'min_limit_time'    , disabled: false, with: partner1.members[0].min_limit_time
+              is_expected.to     have_field 'max_limit_time'    , disabled: false, with: partner1.members[0].max_limit_time
+              is_expected.to     have_field 'name'              , disabled: false, with: partner2.name
+              is_expected.to     have_field 'email'             , disabled: false, with: partner2.email
+              is_expected.to     have_field 'company_name'      , disabled: false, with: partner2.company_name
+              is_expected.to     have_field 'unit_price'        , disabled: false, with: partner2.members[0].unit_price
+              is_expected.to     have_field 'working_rate'      , disabled: false, with: partner2.members[0].working_rate
+              is_expected.to     have_field 'min_limit_time'    , disabled: false, with: partner2.members[0].min_limit_time
+              is_expected.to     have_field 'max_limit_time'    , disabled: false, with: partner2.members[0].max_limit_time
+              is_expected.to     have_button '登録'
+              is_expected.not_to have_button 'パートナーを新規登録'
+              is_expected.not_to have_button '編集'
+              is_expected.to     have_button 'キャンセル'
+              is_expected.to     have_button '更新'
+              is_expected.not_to have_button '削除'
+            end
+
+            scenario 'should not update when click cancel button' do
+              partner_1_original_name           = partner1.name
+              partner_1_original_email          = partner1.email
+              partner_1_original_company_name   = partner1.company_name
+              partner_1_original_unit_price     = partner1.members[0].unit_price
+              partner_1_original_working_rate   = partner1.members[0].working_rate
+              partner_1_original_min_limit_time = partner1.members[0].min_limit_time
+              partner_1_original_max_limit_time = partner1.members[0].max_limit_time
+              partner_2_original_name           = partner2.name
+              partner_2_original_email          = partner2.email
+              partner_2_original_company_name   = partner2.company_name
+              partner_2_original_unit_price     = partner2.members[0].unit_price
+              partner_2_original_working_rate   = partner2.members[0].working_rate
+              partner_2_original_min_limit_time = partner2.members[0].min_limit_time
+              partner_2_original_max_limit_time = partner2.members[0].max_limit_time
+
+              within("#partner-#{partner1.id}") do
+                fill_in :name           , with: 'test1 name'
+                fill_in :email          , with: 'test1@example.com'
+                fill_in :company_name   , with: 'test1 company'
+                fill_in :unit_price     , with: '1'
+                fill_in :working_rate   , with: '2'
+                fill_in :min_limit_time , with: '3'
+                fill_in :max_limit_time , with: '4'
+              end
+
+              within("#partner-#{partner2.id}") do
+                fill_in :name           , with: 'test2 name'
+                fill_in :email          , with: 'test2@example.com'
+                fill_in :company_name   , with: 'test2 company'
+                fill_in :unit_price     , with: '5'
+                fill_in :working_rate   , with: '6'
+                fill_in :min_limit_time , with: '7'
+                fill_in :max_limit_time , with: '8'
+              end
+
+              expect do
+                click_button 'キャンセル'
+                wait_for_ajax
+              end.not_to change { partner1.reload && partner2.reload && partner1.updated_at && partner2.updated_at }
+
+              is_expected.to     have_field 'name'              , disabled: true, with: partner_1_original_name
+              is_expected.to     have_field 'email'             , disabled: true, with: partner_1_original_email
+              is_expected.to     have_field 'company_name'      , disabled: true, with: partner_1_original_company_name
+              is_expected.to     have_field 'unit_price'        , disabled: true, with: partner_1_original_unit_price
+              is_expected.to     have_field 'working_rate'      , disabled: true, with: partner_1_original_working_rate
+              is_expected.to     have_field 'min_limit_time'    , disabled: true, with: partner_1_original_min_limit_time
+              is_expected.to     have_field 'max_limit_time'    , disabled: true, with: partner_1_original_max_limit_time
+              is_expected.to     have_field 'name'              , disabled: true, with: partner_2_original_name
+              is_expected.to     have_field 'email'             , disabled: true, with: partner_2_original_email
+              is_expected.to     have_field 'company_name'      , disabled: true, with: partner_2_original_company_name
+              is_expected.to     have_field 'unit_price'        , disabled: true, with: partner_2_original_unit_price
+              is_expected.to     have_field 'working_rate'      , disabled: true, with: partner_2_original_working_rate
+              is_expected.to     have_field 'min_limit_time'    , disabled: true, with: partner_2_original_min_limit_time
+              is_expected.to     have_field 'max_limit_time'    , disabled: true, with: partner_2_original_max_limit_time
+              is_expected.to     have_button '登録'
+              is_expected.to     have_button 'パートナーを新規登録'
+              is_expected.not_to have_button '編集'
+              is_expected.not_to have_button 'キャンセル'
+              is_expected.not_to have_button '更新'
+              is_expected.not_to have_button '削除'
+            end
+
+            describe 'and when partner1: correct, partner2: correct' do
+              scenario 'both partners should update with correct values' do
+                within("#partner-#{partner1.id}") do
+                  fill_in :name           , with: 'test1 name'
+                  fill_in :email          , with: 'test1@example.com'
+                  fill_in :company_name   , with: 'test1 company'
+                  fill_in :unit_price     , with: '1'
+                  fill_in :working_rate   , with: '2'
+                  fill_in :min_limit_time , with: '3'
+                  fill_in :max_limit_time , with: '4'
+                end
+
+                within("#partner-#{partner2.id}") do
+                  fill_in :name           , with: 'test2 name'
+                  fill_in :email          , with: 'test2@example.com'
+                  fill_in :company_name   , with: 'test2 company'
+                  fill_in :unit_price     , with: '5'
+                  fill_in :working_rate   , with: '6'
+                  fill_in :min_limit_time , with: '7'
+                  fill_in :max_limit_time , with: '8'
+                end
+
+                expect do
+                  click_button '更新'
+                  wait_for_ajax
+                end.to change { partner1.reload && partner2.reload && partner1.updated_at && partner2.updated_at }
+
+                within("#partner-#{partner1.id}") do
+                  expect(page).to     have_field 'name'            , disabled: true, with: 'test1 name'
+                  expect(page).to     have_field 'email'           , disabled: true, with: 'test1@example.com'
+                  expect(page).to     have_field 'company_name'    , disabled: true, with: 'test1 company'
+                  expect(page).to     have_field 'unit_price'      , disabled: true, with: '1'
+                  expect(page).to     have_field 'working_rate'    , disabled: true, with: '2'
+                  expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '3'
+                  expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '4'
+                end
+
+                within("#partner-#{partner2.id}") do
+                  expect(page).to     have_field 'name'            , disabled: true, with: 'test2 name'
+                  expect(page).to     have_field 'email'           , disabled: true, with: 'test2@example.com'
+                  expect(page).to     have_field 'company_name'    , disabled: true, with: 'test2 company'
+                  expect(page).to     have_field 'unit_price'      , disabled: true, with: '5'
+                  expect(page).to     have_field 'working_rate'    , disabled: true, with: '6'
+                  expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '7'
+                  expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '8'
+                end
+
+                is_expected.to     have_button '登録'
+                is_expected.to     have_button 'パートナーを新規登録'
+                is_expected.not_to have_button '編集'
+                is_expected.not_to have_button 'キャンセル'
+                is_expected.not_to have_button '更新'
+                is_expected.not_to have_button '削除'
+              end
+            end
+
+            describe 'and when partner1: incorrect, partner2: correct' do
+              scenario 'only one partner should update with correct values' do
+                within("#partner-#{partner1.id}") do
+                  fill_in :name           , with: '  '
+                  fill_in :email          , with: 'test1@example.com'
+                  fill_in :company_name   , with: 'test1 company'
+                  fill_in :unit_price     , with: '1'
+                  fill_in :working_rate   , with: '2'
+                  fill_in :min_limit_time , with: '3'
+                  fill_in :max_limit_time , with: '4'
+                end
+
+                within("#partner-#{partner2.id}") do
+                  skip
+                  fill_in :name           , with: 'test2 name'
+                  fill_in :email          , with: 'test2@example.com'
+                  fill_in :company_name   , with: 'test2 company'
+                  fill_in :unit_price     , with: '5'
+                  fill_in :working_rate   , with: '6'
+                  fill_in :min_limit_time , with: '7'
+                  fill_in :max_limit_time , with: '8'
+                end
+
+                expect do
+                  click_button '更新'
+                  wait_for_ajax
+                end.not_to change { partner1.reload && partner1.updated_at }
+                partner2.reload && partner2.updated_at
+
+                within("#partner-#{partner1.id}") do
+                  expect(page).to     have_field 'name'              , disabled: false, with: partner1.name
+                  expect(page).to     have_field 'email'             , disabled: false, with: partner1.email
+                  expect(page).to     have_field 'company_name'      , disabled: false, with: partner1.company_name
+                  expect(page).to     have_field 'unit_price'        , disabled: false, with: partner1.members[0].unit_price
+                  expect(page).to     have_field 'working_rate'      , disabled: false, with: partner1.members[0].working_rate
+                  expect(page).to     have_field 'min_limit_time'    , disabled: false, with: partner1.members[0].min_limit_time
+                  expect(page).to     have_field 'max_limit_time'    , disabled: false, with: partner1.members[0].max_limit_time
+                end
+
+                within("#partner-#{partner2.id}") do
+                  expect(page).to     have_field 'name'            , disabled: true, with: 'test2 name'
+                  expect(page).to     have_field 'email'           , disabled: true, with: 'test2@example.com'
+                  expect(page).to     have_field 'company_name'    , disabled: true, with: 'test2 company'
+                  expect(page).to     have_field 'unit_price'      , disabled: true, with: '5'
+                  expect(page).to     have_field 'working_rate'    , disabled: true, with: '6'
+                  expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '7'
+                  expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '8'
+                end
+
+                is_expected.to     have_button '登録'
+                is_expected.not_to have_button 'パートナーを新規登録'
+                is_expected.not_to have_button '編集'
+                is_expected.to     have_button 'キャンセル'
+                is_expected.to     have_button '更新'
+                is_expected.not_to have_button '削除'
+              end
+
+              describe 'and when partner1: correct' do
+                scenario 'partner should update with correct values' do
+                  within("#partner-#{partner1.id}") do
+                    fill_in :name           , with: 'test1 name'
+                    fill_in :email          , with: 'test1@example.com'
+                    fill_in :company_name   , with: 'test1 company'
+                    fill_in :unit_price     , with: '1'
+                    fill_in :working_rate   , with: '2'
+                    fill_in :min_limit_time , with: '3'
+                    fill_in :max_limit_time , with: '4'
+                  end
+
+                  expect do
+                    click_button '更新'
+                    wait_for_ajax
+                  end.to change { partner1.reload && partner1.updated_at }
+
+                  within("#partner-#{partner1.id}") do
+                    expect(page).to     have_field 'name'            , disabled: true, with: 'test1 name'
+                    expect(page).to     have_field 'email'           , disabled: true, with: 'test1@example.com'
+                    expect(page).to     have_field 'company_name'    , disabled: true, with: 'test1 company'
+                    expect(page).to     have_field 'unit_price'      , disabled: true, with: '1'
+                    expect(page).to     have_field 'working_rate'    , disabled: true, with: '2'
+                    expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '3'
+                    expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '4'
+                  end
+                end
+              end
+            end
+
+            describe 'and when partner1: incorrect, partner2: incorrect' do
+              scenario 'both partners should not update with uncorrect values' do
+                within("#partner-#{partner1.id}") do
+                  fill_in :name           , with: '  '
+                  fill_in :email          , with: 'test1@example.com'
+                  fill_in :company_name   , with: 'test1 company'
+                  fill_in :unit_price     , with: '1'
+                  fill_in :working_rate   , with: '2'
+                  fill_in :min_limit_time , with: '3'
+                  fill_in :max_limit_time , with: '4'
+                end
+
+                within("#partner-#{partner2.id}") do
+                  skip
+                  fill_in :name           , with: '  '
+                  fill_in :email          , with: 'test2@example.com'
+                  fill_in :company_name   , with: 'test2 company'
+                  fill_in :unit_price     , with: '5'
+                  fill_in :working_rate   , with: '6'
+                  fill_in :min_limit_time , with: '7'
+                  fill_in :max_limit_time , with: '8'
+                end
+
+                expect do
+                  click_button '更新'
+                  wait_for_ajax
+                end.not_to change { partner1.reload && partner2.reload && partner1.updated_at && partner2.updated_at }
+
+                within("#partner-#{partner1.id}") do
+                  expect(page).to     have_field 'name'              , disabled: false, with: partner1.name
+                  expect(page).to     have_field 'email'             , disabled: false, with: partner1.email
+                  expect(page).to     have_field 'company_name'      , disabled: false, with: partner1.company_name
+                  expect(page).to     have_field 'unit_price'        , disabled: false, with: partner1.members[0].unit_price
+                  expect(page).to     have_field 'working_rate'      , disabled: false, with: partner1.members[0].working_rate
+                  expect(page).to     have_field 'min_limit_time'    , disabled: false, with: partner1.members[0].min_limit_time
+                  expect(page).to     have_field 'max_limit_time'    , disabled: false, with: partner1.members[0].max_limit_time
+                end
+
+                within("#partner-#{partner2.id}") do
+                  expect(page).to     have_field 'name'              , disabled: false, with: partner2.name
+                  expect(page).to     have_field 'email'             , disabled: false, with: partner2.email
+                  expect(page).to     have_field 'company_name'      , disabled: false, with: partner2.company_name
+                  expect(page).to     have_field 'unit_price'        , disabled: false, with: partner2.members[0].unit_price
+                  expect(page).to     have_field 'working_rate'      , disabled: false, with: partner2.members[0].working_rate
+                  expect(page).to     have_field 'min_limit_time'    , disabled: false, with: partner2.members[0].min_limit_time
+                  expect(page).to     have_field 'max_limit_time'    , disabled: false, with: partner2.members[0].max_limit_time
+                end
+              end
+
+              describe 'and when partner1: incorrect, partner2: correct' do
+                scenario 'only one partner should update with correct values' do
+                  within("#partner-#{partner1.id}") do
+                    fill_in :name           , with: '  '
+                    fill_in :email          , with: 'test1@example.com'
+                    fill_in :company_name   , with: 'test1 company'
+                    fill_in :unit_price     , with: '1'
+                    fill_in :working_rate   , with: '2'
+                    fill_in :min_limit_time , with: '3'
+                    fill_in :max_limit_time , with: '4'
+                  end
+
+                  within("#partner-#{partner2.id}") do
+                    fill_in :name           , with: 'test2 name'
+                    fill_in :email          , with: 'test2@example.com'
+                    fill_in :company_name   , with: 'test2 company'
+                    fill_in :unit_price     , with: '5'
+                    fill_in :working_rate   , with: '6'
+                    fill_in :min_limit_time , with: '7'
+                    fill_in :max_limit_time , with: '8'
+                  end
+
+                  expect do
+                    click_button '更新'
+                    wait_for_ajax
+                  end.not_to change { partner1.reload && partner1.updated_at }
+                  partner2.reload && partner2.updated_at
+
+                  within("#partner-#{partner1.id}") do
+                    expect(page).to     have_field 'name'              , disabled: false, with: partner1.name
+                    expect(page).to     have_field 'email'             , disabled: false, with: partner1.email
+                    expect(page).to     have_field 'company_name'      , disabled: false, with: partner1.company_name
+                    expect(page).to     have_field 'unit_price'        , disabled: false, with: partner1.members[0].unit_price
+                    expect(page).to     have_field 'working_rate'      , disabled: false, with: partner1.members[0].working_rate
+                    expect(page).to     have_field 'min_limit_time'    , disabled: false, with: partner1.members[0].min_limit_time
+                    expect(page).to     have_field 'max_limit_time'    , disabled: false, with: partner1.members[0].max_limit_time
+                  end
+
+                  within("#partner-#{partner2.id}") do
+                    expect(page).to     have_field 'name'            , disabled: true, with: 'test2 name'
+                    expect(page).to     have_field 'email'           , disabled: true, with: 'test2@example.com'
+                    expect(page).to     have_field 'company_name'    , disabled: true, with: 'test2 company'
+                    expect(page).to     have_field 'unit_price'      , disabled: true, with: '5'
+                    expect(page).to     have_field 'working_rate'    , disabled: true, with: '6'
+                    expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '7'
+                    expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '8'
+                  end
+                end
+
+                describe 'and when partner1: correct' do
+                  scenario 'partner should update with correct values' do
+                    within("#partner-#{partner1.id}") do
+                      fill_in :name           , with: 'test1 name'
+                      fill_in :email          , with: 'test1@example.com'
+                      fill_in :company_name   , with: 'test1 company'
+                      fill_in :unit_price     , with: '1'
+                      fill_in :working_rate   , with: '2'
+                      fill_in :min_limit_time , with: '3'
+                      fill_in :max_limit_time , with: '4'
+                    end
+
+                    expect do
+                      click_button '更新'
+                      wait_for_ajax
+                    end.to change { partner1.reload && partner1.updated_at }
+
+                    within("#partner-#{partner1.id}") do
+                      expect(page).to     have_field 'name'            , disabled: true, with: 'test1 name'
+                      expect(page).to     have_field 'email'           , disabled: true, with: 'test1@example.com'
+                      expect(page).to     have_field 'company_name'    , disabled: true, with: 'test1 company'
+                      expect(page).to     have_field 'unit_price'      , disabled: true, with: '1'
+                      expect(page).to     have_field 'working_rate'    , disabled: true, with: '2'
+                      expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '3'
+                      expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '4'
+                    end
+                  end
+                end
+              end
+            end
+          end
+
+          scenario 'and click delete button' do
+            skip
+            expect do
+              click_button '削除'
+              wait_for_ajax
+            end.to change(Member, :count).by(-2)
+
+            is_expected.not_to have_field 'name', disabled: false, with: partner1.name
+            is_expected.not_to have_field 'name', disabled: false, with: partner2.name
+          end
         end
 
         scenario 'select partner and click submit button with correct values' do
           select other_partner1.name, from: :partner
-          fill_in :unit_price, with: '1'
-          fill_in :working_rate, with: '0.6'
-          fill_in :min_limit_time, with: '1'
-          fill_in :max_limit_time, with: '2'
+          fill_in :new_unit_price, with: '1'
+          fill_in :new_working_rate, with: '0.6'
+          fill_in :new_min_limit_time, with: '1'
+          fill_in :new_max_limit_time, with: '2'
 
           expect do
             within('.member_list__partner') { click_button '登録' }
@@ -553,10 +938,10 @@ RSpec.feature 'Project Show Page', js: true do
 
         scenario 'select partner and click submit button with uncorrect values' do
           select other_partner2.name, from: :partner
-          fill_in :unit_price, with: '1'
-          fill_in :working_rate, with: '0.6'
-          fill_in :min_limit_time, with: '0.2'
-          fill_in :max_limit_time, with: '0.1'
+          fill_in :new_unit_price, with: '1'
+          fill_in :new_working_rate, with: '0.6'
+          fill_in :new_min_limit_time, with: '0.2'
+          fill_in :new_max_limit_time, with: '0.1'
 
           expect do
             within('.member_list__partner') { click_button '登録' }
@@ -565,9 +950,9 @@ RSpec.feature 'Project Show Page', js: true do
         end
 
         scenario 'show Partner New Modal when click show modal button' do
-          is_expected.not_to have_css '.partner_new__outer'
+          expect(page).not_to have_css '.partner_new__outer'
           click_on 'パートナーを新規登録'
-          is_expected.to     have_css '.partner_new__outer'
+          expect(page).to     have_css '.partner_new__outer'
         end
 
         describe 'Partner New Modal' do
@@ -637,24 +1022,6 @@ RSpec.feature 'Project Show Page', js: true do
               click_button 'キャンセル'
               is_expected.not_to have_css '.partner_new__outer'
             end
-          end
-        end
-
-        context 'when select partners' do
-          before { within("#partner-#{partner1.id}") { check 'selected' } }
-
-          scenario 'should appear the delete button' do
-            is_expected.to have_button '削除'
-          end
-
-          scenario 'and click delete button' do
-            expect do
-              click_button '削除'
-              wait_for_ajax
-            end.to change(Member, :count).by(-1)
-
-            is_expected.not_to have_content partner1.name
-            is_expected.to     have_content partner2.name
           end
         end
       end

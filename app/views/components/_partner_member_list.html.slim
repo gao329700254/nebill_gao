@@ -2,55 +2,21 @@
 
 script type='text/x-template' id='partner_member_list'
   .partner_member_list
-    table.partner_member_list__tbl
-      thead.partner_member_list__tbl__head
-        tr.partner_member_list__tbl__head__row
-          th.partner_member_list__tbl__item--cd             = t('activerecord.attributes.partner.cd')
-          th.partner_member_list__tbl__item--name           = t('activerecord.attributes.partner.name')
-          th.partner_member_list__tbl__item--email          = t('activerecord.attributes.partner.email')
-          th.partner_member_list__tbl__item--company_name   = t('activerecord.attributes.partner.company_name')
-          th.partner_member_list__tbl__item--unit_price     = t('activerecord.attributes.partner_member.unit_price')
-          th.partner_member_list__tbl__item--working_rate   = t('activerecord.attributes.partner_member.working_rate')
-          th.partner_member_list__tbl__item--min_limit_time = t('activerecord.attributes.partner_member.min_limit_time')
-          th.partner_member_list__tbl__item--max_limit_time = t('activerecord.attributes.partner_member.max_limit_time')
-      tbody.partner_member_list__tbl__body
-        tr.partner_member_list__tbl__body__row [
-          v-for    = "partner in partners | orderBy 'company_name' 'name'"
-          id       = "partner-{{partner.id}}"
-          track-by = "id"
-          v-bind:class = "partner.selected ? 'partner_member_list__tbl__body__row--selected'
-                                           : 'partner_member_list__tbl__body__row'"
-        ]
-          td.partner_member_list__tbl__item--cd             v-text='partner.cd'
-          td.partner_member_list__tbl__item--check
-            input type="checkbox" name="selected" v-model="partner.selected"
-          td.partner_member_list__tbl__item--name           v-text='partner.name'
-          td.partner_member_list__tbl__item--email          v-text='partner.email'
-          td.partner_member_list__tbl__item--company_name   v-text='partner.company_name'
-          td.partner_member_list__tbl__item--unit_price     v-text='partner.member.unit_price.toLocaleString()'
-          td.partner_member_list__tbl__item--working_rate   v-text='partner.member.working_rate'
-          td.partner_member_list__tbl__item--min_limit_time v-text='partner.member.min_limit_time'
-          td.partner_member_list__tbl__item--max_limit_time v-text='partner.member.max_limit_time'
+    ==render 'components/partner_member_list_tbl'
 
     .partner_member_list__add_member
-      select.partner_member_list__add_member__list name="partner" v-model="selectedPartnerId"
-        option v-for="partner in selectablePartners" value="{{partner.id}}" {{partner.name}}
+      ==render 'components/partner_member_list_add_member'
 
-      .partner_member_list__add_member__form__item
-        = text_field_tag   :unit_price    , nil, placeholder: t('activerecord.attributes.partner_member.unit_price')    , 'v-numeric' => 'member.unit_price'
-      .partner_member_list__add_member__form__item
-        = text_field_tag   :working_rate,   nil, placeholder: t('activerecord.attributes.partner_member.working_rate'),   'v-model' => 'member.working_rate'
-      .partner_member_list__add_member__form__item
-        = number_field_tag :min_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.min_limit_time'), 'v-model' => 'member.min_limit_time'
-      .partner_member_list__add_member__form__item
-        = number_field_tag :max_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.max_limit_time'), 'v-model' => 'member.max_limit_time'
-      .partner_member_list__add_member__form__item
-        = button_tag 'v-on:click' => 'addMember', class: 'partner_member_list__add_member__btn' do
-          = fa_icon 'check', text: t('helpers.submit.create')
     .partner_member_list__btn
-      = button_tag 'v-on:click' => 'showPartnerNew', class: 'partner_member_list__btn--new_partner' do
+      = button_tag 'v-on:click' => 'showPartnerNew', 'v-if' => '!editMode', class: 'partner_member_list__btn--new_partner' do
         = fa_icon 'check', text: t('component.member_list.new_partner')
-      = button_tag 'v-if' => "selectedPartners.length > 0", 'v-on:click' => 'deleteMember', class: 'partner_member_list__btn--delete' do
+      = button_tag 'v-on:click' => 'editModeOn', 'v-if' => "!editMode && selectedPartners.length > 0", class: 'partner_member_list__btn--edit' do
+        = fa_icon 'edit', text: t('helpers.edit')
+      = button_tag 'v-on:click' => 'editModeOff', 'v-if' => 'editMode', class: 'partner_member_list__btn--cancel' do
+        = fa_icon 'remove', text: t('helpers.cancel')
+      = button_tag 'v-on:click' => 'editMember', 'v-if' => 'editMode', class: 'partner_member_list__btn--submit' do
+        = fa_icon 'pencil-square', text: t('helpers.submit.update')
+      = button_tag 'v-if' => "!editMode && selectedPartners.length > 0", 'v-on:click' => 'deleteMember', class: 'partner_member_list__btn--delete' do
         = fa_icon 'trash', text: t('helpers.delete')
 
     component [

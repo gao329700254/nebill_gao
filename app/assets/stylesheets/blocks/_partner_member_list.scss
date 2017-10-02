@@ -13,59 +13,67 @@
 
     &__body {
       @include list_tbl__body;
-      &__row,
-      %partner_member_list__tbl__body__row {
+
+      &__row {
         @include list_tbl__body__row;
 
+        #{$all-text-inputs-disabled},
+        select:disabled,
+        textarea:disabled {
+          border-bottom: $base-border;
+          border-radius: 0;
+          border-color: $white-bg-color;
+          box-shadow: none;
+          background-color: $white-bg-color;
+        }
+
         &--selected {
-          @extend %partner_member_list__tbl__body__row;
+          @include list_tbl__body__row;
           background-color: $yellow;
+
+          #{$all-text-inputs-disabled},
+          select:disabled,
+          textarea:disabled {
+            border-bottom: $base-border;
+            border-radius: 0;
+            border-color: $yellow-bg-color;
+            box-shadow: none;
+            background-color: $yellow-bg-color;
+          }
         }
       }
     }
 
-    &__item,
-    %partner_member_list__tbl__item {
-      @include list_tbl__item;
-
-      &--cd {
-        @extend %partner_member_list__tbl__item;
-        @include span-columns(1);
-      }
-
+    &__item {
       &--name {
-        @extend %partner_member_list__tbl__item;
         @include span-columns(2);
+        &--non_edit {
+          display: table-cell;
+        }
       }
 
       &--email {
-        @extend %partner_member_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
         @include word-wrap;
       }
 
       &--company_name {
-        @extend %partner_member_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--unit_price {
-        @extend %partner_member_list__tbl__item;
         @include span-columns(1);
       }
 
       &--working_rate {
-        @extend %partner_member_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(1);
       }
 
       &--min_limit_time {
-        @extend %partner_member_list__tbl__item;
         @include span-columns(1);
       }
 
       &--max_limit_time {
-        @extend %partner_member_list__tbl__item;
         @include span-columns(1);
       }
     }
@@ -86,13 +94,20 @@
 
     &__btn {
       @include btn--primary;
+      width: 100%;
+      }
     }
-  }
 
   &__btn {
-    &--new_partner,
-    &--delete {
+    &--new_partner {
       @include btn--primary;
+    }
+
+    &--delete,
+    &--edit,
+    &--cancel,
+    &--submit {
+      @include btn--default;
     }
   }
 }

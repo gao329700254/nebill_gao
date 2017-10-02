@@ -6,7 +6,6 @@
     @include list_tbl;
 
     &__head {
-
       &__row {
         @include list_tbl__head__row;
       }
@@ -17,7 +16,7 @@
 
       &__row,
       %user_member_list__tbl__body__row {
-        @include list_tbl__head__row;
+        @include list_tbl__body__row;
 
         &--selected {
           @extend %user_member_list__tbl__body__row;

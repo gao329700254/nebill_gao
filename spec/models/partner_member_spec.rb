@@ -8,4 +8,8 @@ RSpec.describe PartnerMember do
   it { is_expected.to validate_numericality_of(:working_rate).allow_nil }
   it { is_expected.to validate_numericality_of(:max_limit_time).only_integer.allow_nil }
   it { is_expected.to validate_numericality_of(:min_limit_time).only_integer.allow_nil }
+
+  context 'with_partner' do
+    it { is_expected.to accept_nested_attributes_for(:partner) }
+  end
 end
