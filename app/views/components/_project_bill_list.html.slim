@@ -1,0 +1,36 @@
+== render 'components/bill_new'
+
+script type='text/x-template' id='project_bill_list'
+  .project_bill
+    .project_bill__btn
+      = button_tag 'v-on:click' => 'showBillNew', class: 'project_bill__btn--bill_new' do
+        = fa_icon 'check', text: t('page.project_show.bill.bill_new')
+    .project_bill__list
+      table.project_bill__list__tbl
+        thead.project_bill__list__tbl__head
+          tr.project_bill__list__tbl__head__row
+            th.project_bill__list__tbl__item--cd              = t('activerecord.attributes.bill.cd')
+            th.project_bill__list__tbl__item--amount          = t('activerecord.attributes.bill.amount')
+            th.project_bill__list__tbl__item--payment_type    = t('activerecord.attributes.project.payment_type')
+            th.project_bill__list__tbl__item--bill_on         = t('activerecord.attributes.bill.bill_on')
+            th.project_bill__list__tbl__item--deposit_on      = t('activerecord.attributes.bill.deposit_on')
+        tbody.project_bill__list__tbl__body
+          tr.project_bill__list__tbl__body__row [
+            v-bind:class = "bill.deposit_on ? 'project_bill__list__tbl__body__row--deposited'
+                                            : 'project_bill__list__tbl__body__row'"
+            v-for        = "bill in list | orderBy sortKey -1"
+            id           = "bill-{{bill.id}}"
+            v-on:click   = "linkToShow(bill.id)"
+            track-by     = "id"
+          ]
+            td.project_bill__list__tbl__item--cd              v-text='bill.cd'
+            td.project_bill__list__tbl__item--amount          v-text='bill.amount.toLocaleString()'
+            td.project_bill__list__tbl__item--payment_type    v-text='bill.payment_type'
+            td.project_bill__list__tbl__item--bill_on         v-text='bill.bill_on'
+            td.project_bill__list__tbl__item--deposit_on      v-text='bill.deposit_on'
+
+    component [
+      :is        = "'billNew'"
+      :project-id = "projectId"
+      keep-alive = true
+    ]

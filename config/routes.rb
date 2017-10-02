@@ -29,7 +29,8 @@
 #                                 POST   /api/partners(.:format)                                 api/partners#create
 #               api_project_users GET    /api/projects/:project_id/users(.:format)               api/users#index
 #            api_project_partners GET    /api/projects/:project_id/partners(.:format)            api/partners#index
-#               api_project_bills POST   /api/projects/:project_id/bills(.:format)               api/bills#create
+#               api_project_bills GET    /api/projects/:project_id/bills(.:format)               api/bills#index
+#                                 POST   /api/projects/:project_id/bills(.:format)               api/bills#create
 #                        api_bill GET    /api/bills/:id(.:format)                                api/bills#show
 #                                 PATCH  /api/bills/:id(.:format)                                api/bills#update
 #                                 PUT    /api/bills/:id(.:format)                                api/bills#update

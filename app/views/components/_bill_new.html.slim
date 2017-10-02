@@ -1,33 +1,9 @@
 script type='text/x-template' id='bill_new'
   .bill_new
-    = form_tag nil, class: 'bill_new__form'
-      .bill_new__form__container
-        .bill_new__form__container__group
-          .bill_new__form__item--cd
-            = label_tag :cd, t('activerecord.attributes.bill.cd')
-            = text_field_tag :cd, nil, 'v-model' => 'bill.cd'
-          .bill_new__form__item
-            = label_tag :amount, t('activerecord.attributes.bill.amount')
-            = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount'
-            = hidden_field_tag :default_amount, @project.amount, 'v-model' => 'default_amount'
-          .bill_new__form__item
-            = label_tag :delivery_on, t('activerecord.attributes.bill.delivery_on')
-            = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on'
-          .bill_new__form__item
-            = label_tag :acceptance_on, t('activerecord.attributes.bill.acceptance_on')
-            = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on'
-          .bill_new__form__item
-            = label_tag :payment_type, t('activerecord.attributes.project.payment_type')
-            = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type'
-          .bill_new__form__item
-            = label_tag :bill_on, t('activerecord.attributes.bill.bill_on')
-            = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on'
-          .bill_new__form__item
-            = label_tag :deposit_on, t('activerecord.attributes.bill.deposit_on')
-            = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on'
-          .bill_new__form__item
-            = label_tag :memo, t('activerecord.attributes.bill.memo')
-            = text_area_tag :memo, nil, 'v-model' => 'bill.memo'
-
-      = button_tag 'v-on:click.prevent' => 'submit', class: 'bill_new__form__btn--submit' do
-        = fa_icon 'check', text: t('helpers.submit.create')
+    .bill_new__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .bill_new__outer__inner v-on:click.stop=""
+        .bill_new__outer__inner__body
+          == render 'components/bill_new__form'

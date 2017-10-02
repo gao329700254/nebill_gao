@@ -1,9 +1,14 @@
 class Api::BillsController < Api::ApiController
-  before_action :set_project, only: [:create]
+  before_action :set_project, only: [:index, :create], if: -> { params.key? :project_id }
   before_action :set_bill   , only: [:show, :update, :destroy]
 
   def index
-    @bills = Bill.all.includes(:project)
+    @bills = if @project
+               @project.bills
+             else
+               Bill.all.includes(:project)
+             end
+
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 

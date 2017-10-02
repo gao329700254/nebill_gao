@@ -21,6 +21,8 @@ RSpec.feature 'Project Show Page', js: true do
     given!(:file_group3) { create(:project_file_group, project: project) }
     given!(:file1) { create(:project_file, project: project, group: file_group1, original_filename: 'sample1.jpg') }
     given!(:file2) { create(:project_file, project: project, group: file_group2, original_filename: 'sample2.jpg') }
+    given!(:bill1) { create(:bill, created_at: '2016-01-01', deposit_on: '2016-01-05', project: project) }
+    given!(:bill2) { create(:bill, created_at: '2016-01-02', project: project) }
     background { visit project_show_path(project) }
 
     subject { page }
@@ -256,130 +258,180 @@ RSpec.feature 'Project Show Page', js: true do
       end
     end
 
-    describe 'Bill New View' do
-      background { click_on '請求新規作成' }
+    describe 'Bill' do
+      background { click_on '請求' }
 
-      describe 'form' do
-        subject { find('.bill_new__form') }
+      describe 'list' do
+        subject { find('.project_bill') }
 
-        scenario 'show' do
-          is_expected.to have_field 'cd'
-          is_expected.to have_field 'amount', with: project.amount
-          is_expected.to have_field 'delivery_on'
-          is_expected.to have_field 'acceptance_on'
-          is_expected.to have_field 'payment_type'
-          is_expected.to have_field 'bill_on'
-          is_expected.to have_field 'deposit_on'
-          is_expected.to have_field 'memo'
-          is_expected.to have_button '登録'
+        scenario 'Show' do
+          is_expected.to have_button  '請求新規作成'
+          is_expected.to have_content '請求番号'
+          is_expected.to have_content '請求金額'
+          is_expected.to have_content '支払条件'
+          is_expected.to have_content '請求日'
+          is_expected.to have_content '入金日'
+
+          is_expected.to have_content bill1.cd
+          is_expected.to have_content bill1.amount
+          is_expected.to have_content I18n.t("enumerize.defaults.payment_type.#{bill1.payment_type}")
+          is_expected.to have_content bill1.bill_on
+          is_expected.to have_content bill1.deposit_on
+
+          is_expected.to have_content bill2.cd
+
+          expect(all('.project_bill__list__tbl__body__row td:first-child')[0]).to have_text bill2.cd
+          expect(all('.project_bill__list__tbl__body__row td:first-child')[1]).to have_text bill1.cd
+
+          subject { find('#bill-{{bill1.id}}') }
+          is_expected.to have_selector '.project_bill__list__tbl__body__row--deposited'
+          subject { find('#bill-{{bill2.id}}') }
+          is_expected.to have_selector '.project_bill__list__tbl__body__row'
         end
 
-        scenario 'click submit button with correct values' do
-          skip "fail on wercker"
+        scenario 'link to a bill show page when click row' do
+          find("#bill-#{bill1.id}").click
 
-          fill_in :cd           , with: 'BILL-1'
-          fill_in :amount       , with: 222_222
-          fill_in :delivery_on  , with: '2016-01-01'
-          fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
-          fill_in :bill_on      , with: '2016-01-04'
-          fill_in :deposit_on   , with: '2016-01-05'
-          fill_in :memo         , with: 'memo'
-
-          expect do
-            click_button '登録'
-            wait_for_ajax
-          end.to change(Bill, :count).by(1)
-
-          is_expected.to have_field  'cd'            , with: ''
-          is_expected.to have_field  'amount'        , with: project.amount
-          is_expected.to have_field  'delivery_on'   , with: ''
-          is_expected.to have_field  'acceptance_on' , with: ''
-          is_expected.to have_field  'payment_type'  , with: ''
-          is_expected.to have_field  'bill_on'       , with: ''
-          is_expected.to have_field  'deposit_on'    , with: ''
-          is_expected.to have_field  'memo'          , with: ''
+          expect(current_path).to eq bill_show_path(bill1)
+          expect(page).to have_header_title '請求情報'
         end
 
-        scenario 'click submit button with uncorrect values' do
-          skip "fail on wercker"
-
-          fill_in :cd           , with: '  '
-          fill_in :amount       , with: 222_222
-          fill_in :delivery_on  , with: '2016-01-01'
-          fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
-          fill_in :bill_on      , with: '2016-01-04'
-          fill_in :deposit_on   , with: '2016-01-05'
-          fill_in :memo         , with: 'memo'
-
-          expect do
-            click_button '登録'
-            wait_for_ajax
-          end.not_to change(Bill, :count)
-
-          is_expected.to have_field  'cd'            , with: '  '
-          is_expected.to have_field  'amount'        , with: 222_222
-          is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
-          is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
-          is_expected.to have_field  'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
-          is_expected.to have_field  'bill_on'       , with: '2016-01-04'
-          is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
-          is_expected.to have_field  'memo'          , with: 'memo'
+        scenario 'show Bill New Modal when click show modal button' do
+          expect(page).not_to have_css '.bill_new__outer'
+          click_on '請求新規作成'
+          expect(page).to     have_css '.bill_new__outer'
         end
 
-        scenario 'click submit button with uncorrect bill_on predate delivery_on' do
-          skip "fail on wercker"
+        context 'Bill New Modal' do
+          background { click_on '請求新規作成' }
+          subject { find('.bill_new') }
 
-          fill_in :cd           , with: 'BILL-2'
-          fill_in :amount       , with: 222_222
-          fill_in :delivery_on  , with: '2016-01-01'
-          fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
-          fill_in :bill_on      , with: '2015-12-31'
-          fill_in :deposit_on   , with: '2016-01-05'
-          fill_in :memo         , with: 'memo'
+          scenario 'show' do
+            is_expected.to have_field 'cd'
+            is_expected.to have_field 'amount', with: project.amount
+            is_expected.to have_field 'delivery_on'
+            is_expected.to have_field 'acceptance_on'
+            is_expected.to have_field 'payment_type'
+            is_expected.to have_field 'bill_on'
+            is_expected.to have_field 'deposit_on'
+            is_expected.to have_field 'memo'
+            is_expected.to have_button '登録'
+            is_expected.to have_button 'キャンセル'
+          end
 
-          expect do
-            click_button '登録'
-            wait_for_ajax
-          end.not_to change(Bill, :count)
+          scenario 'click submit button with correct values' do
+            skip "fail on wercker"
 
-          is_expected.to have_field  'cd'            , with: 'BILL-2'
-          is_expected.to have_field  'amount'        , with: 222_222
-          is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
-          is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
-          is_expected.to have_field  'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
-          is_expected.to have_field  'bill_on'       , with: '2015-12-31'
-          is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
-          is_expected.to have_field  'memo'          , with: 'memo'
-        end
+            fill_in :cd           , with: 'BILL-1'
+            fill_in :amount       , with: 222_222
+            fill_in :delivery_on  , with: '2016-01-01'
+            fill_in :acceptance_on, with: '2016-01-02'
+            select '15日締め翌月末払い', from: :payment_type
+            fill_in :bill_on      , with: '2016-01-04'
+            fill_in :deposit_on   , with: '2016-01-05'
+            fill_in :memo         , with: 'memo'
 
-        scenario 'click submit button with uncorrect bill_on predate acceptance_on' do
-          skip "fail on wercker"
+            expect do
+              click_button '登録'
+              wait_for_ajax
+            end.to change(Bill, :count).by(1)
 
-          fill_in :cd           , with: 'BILL-2'
-          fill_in :amount       , with: 222_222
-          fill_in :delivery_on  , with: '2016-01-01'
-          fill_in :acceptance_on, with: '2016-01-02'
-          fill_in :payment_type , with: 'bill_on_15th_and_payment_on_end_of_next_month'
-          fill_in :bill_on      , with: '2016-01-01'
-          fill_in :deposit_on   , with: '2016-01-05'
-          fill_in :memo         , with: 'memo'
+            is_expected.to have_field  'cd'            , with: ''
+            is_expected.to have_field  'amount'        , with: project.amount
+            is_expected.to have_field  'delivery_on'   , with: ''
+            is_expected.to have_field  'acceptance_on' , with: ''
+            is_expected.to have_field  'payment_type'  , with: ''
+            is_expected.to have_field  'bill_on'       , with: ''
+            is_expected.to have_field  'deposit_on'    , with: ''
+            is_expected.to have_field  'memo'          , with: ''
+          end
 
-          expect do
-            click_button '登録'
-            wait_for_ajax
-          end.not_to change(Bill, :count)
+          scenario 'click submit button with uncorrect values' do
+            skip "fail on wercker"
 
-          is_expected.to have_field  'cd'            , with: 'BILL-2'
-          is_expected.to have_field  'amount'        , with: 222_222
-          is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
-          is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
-          is_expected.to have_field  'payment_type'  , with: 'bill_on_15th_and_payment_on_end_of_next_month'
-          is_expected.to have_field  'bill_on'       , with: '2016-01-01'
-          is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
-          is_expected.to have_field  'memo'          , with: 'memo'
+            fill_in :cd           , with: '  '
+            fill_in :amount       , with: 222_222
+            fill_in :delivery_on  , with: '2016-01-01'
+            fill_in :acceptance_on, with: '2016-01-02'
+            select '15日締め翌月末払い', from: :payment_type
+            fill_in :bill_on      , with: '2016-01-04'
+            fill_in :deposit_on   , with: '2016-01-05'
+            fill_in :memo         , with: 'memo'
+
+            expect do
+              click_button '登録'
+              wait_for_ajax
+            end.not_to change(Bill, :count)
+
+            is_expected.to have_field  'cd'            , with: '  '
+            is_expected.to have_field  'amount'        , with: 222_222
+            is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
+            is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
+            select '15日締め翌月末払い', from: :payment_type
+            is_expected.to have_field  'bill_on'       , with: '2016-01-04'
+            is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
+            is_expected.to have_field  'memo'          , with: 'memo'
+          end
+
+          scenario 'click submit button with uncorrect bill_on predate delivery_on' do
+            skip "fail on wercker"
+
+            fill_in :cd           , with: 'BILL-2'
+            fill_in :amount       , with: 222_222
+            fill_in :delivery_on  , with: '2016-01-01'
+            fill_in :acceptance_on, with: '2016-01-02'
+            select '15日締め翌月末払い', from: :payment_type
+            fill_in :bill_on      , with: '2015-12-31'
+            fill_in :deposit_on   , with: '2016-01-05'
+            fill_in :memo         , with: 'memo'
+
+            expect do
+              click_button '登録'
+              wait_for_ajax
+            end.not_to change(Bill, :count)
+
+            is_expected.to have_field  'cd'            , with: 'BILL-2'
+            is_expected.to have_field  'amount'        , with: 222_222
+            is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
+            is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
+            select '15日締め翌月末払い', from: :payment_type
+            is_expected.to have_field  'bill_on'       , with: '2015-12-31'
+            is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
+            is_expected.to have_field  'memo'          , with: 'memo'
+          end
+
+          scenario 'click submit button with uncorrect bill_on predate acceptance_on' do
+            skip "fail on wercker"
+
+            fill_in :cd           , with: ''
+            fill_in :amount       , with: 222_222
+            fill_in :delivery_on  , with: '2016-01-01'
+            fill_in :acceptance_on, with: '2016-01-02'
+            select '15日締め翌月末払い', from: :payment_type
+            fill_in :bill_on      , with: '2016-01-01'
+            fill_in :deposit_on   , with: '2016-01-05'
+            fill_in :memo         , with: 'memo'
+
+            expect do
+              click_button '登録'
+              wait_for_ajax
+            end.not_to change(Bill, :count)
+
+            is_expected.to have_field  'cd'            , with: ''
+            is_expected.to have_field  'amount'        , with: 222_222
+            is_expected.to have_field  'delivery_on'   , with: '2016-01-01'
+            is_expected.to have_field  'acceptance_on' , with: '2016-01-02'
+            select '15日締め翌月末払い', from: :payment_type
+            is_expected.to have_field  'bill_on'       , with: '2016-01-01'
+            is_expected.to have_field  'deposit_on'    , with: '2016-01-05'
+            is_expected.to have_field  'memo'          , with: 'memo'
+          end
+
+          scenario 'click cancel' do
+            is_expected.to      have_css '.bill_new__outer'
+            click_button 'キャンセル'
+            is_expected.not_to  have_css '.bill_new__outer'
+          end
         end
       end
     end
@@ -722,13 +774,10 @@ RSpec.feature 'Project Show Page', js: true do
     subject { page }
 
     describe 'Bill New View' do
-      background do
-        click_on '請求新規作成'
-        wait_for_ajax
-      end
-
       describe 'form' do
-        subject { find('.bill_new__form') }
+        background { click_on '請求' }
+        background { click_on '請求新規作成' }
+        subject { find('.bill_new') }
 
         scenario 'show' do
           is_expected.to have_field 'cd'
@@ -758,14 +807,7 @@ RSpec.feature 'Project Show Page', js: true do
             wait_for_ajax
           end.to change(Bill, :count).by(1)
 
-          is_expected.to have_field  'cd'            , with: ''
-          is_expected.to have_field  'amount'        , with: project.amount.to_s(:delimited)
-          is_expected.to have_field  'delivery_on'   , with: ''
-          is_expected.to have_field  'acceptance_on' , with: ''
-          is_expected.to have_field  'payment_type'  , with: ''
-          is_expected.to have_field  'bill_on'       , with: ''
-          is_expected.to have_field  'deposit_on'    , with: ''
-          is_expected.to have_field  'memo'          , with: ''
+          is_expected.not_to have_css '.bill_new__outer'
         end
 
         scenario 'click submit button with uncorrect values' do

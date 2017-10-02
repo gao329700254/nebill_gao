@@ -11,8 +11,8 @@ $ ->
   page hashbang: true, dispatch: false
   page 'project_detail', (ctx) ->
     projectShow.currentView = 'projectDetail'
-  page 'bill_new', (ctx) ->
-    projectShow.currentView = 'billNew'
+  page 'project_bill_list', (ctx) ->
+    projectShow.currentView = 'projectBillList'
   page 'member_list', (ctx) ->
     projectShow.currentView = 'memberList'
   page 'files', (ctx) ->

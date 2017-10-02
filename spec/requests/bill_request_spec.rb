@@ -36,6 +36,55 @@ RSpec.describe 'bills request' do
     end
   end
 
+  describe 'GET /api/projects/:project_id/bills' do
+    context 'with exist bill id' do
+      let(:project) { create(:project) }
+      let!(:bill1) { create(:bill, project: project) }
+      let!(:bill2) { create(:bill, project: project) }
+      let!(:bill3) { create(:bill, project: project) }
+      let!(:bill4) { create(:bill) }
+      let(:path) { "/api/projects/#{project.id}/bills" }
+
+      it 'returns a list of bills which belong to project' do
+        get path
+
+        expect(response).to be_success
+        expect(response.status).to eq 200
+        expect(json.count).to eq 3
+
+        json.sort_by! { |x| x['id'].to_i }
+
+        expect(json[0]['id']).to                               eq bill1.id
+        expect(json[0]['project_id']).to                       eq bill1.project_id
+        expect(json[0]['cd']).to                               eq bill1.cd
+        expect(json[0]['amount']).to                           eq bill1.amount
+        expect(json[0]['delivery_on']).to                      eq bill1.delivery_on.strftime("%Y-%m-%d")
+        expect(json[0]['acceptance_on']).to                    eq bill1.acceptance_on.strftime("%Y-%m-%d")
+        expect(json[0]['payment_type']).to                     eq I18n.t("enumerize.defaults.payment_type.#{bill1.payment_type}")
+        expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
+        expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
+        expect(json[0]['memo']).to                             eq bill1.memo
+        expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[0]['project']['name']).to                  eq bill1.project.name
+        expect(json[0]['project']['billing_company_name']).to  eq bill1.project.billing_company_name
+      end
+    end
+
+    context 'with not exist project id' do
+      let(:path) { '/api/projects/0/bills' }
+
+      it 'return 404 Not Found code and message' do
+        get path
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+  end
+
   describe 'GET /api/bills/:id' do
     context 'with exist bill id' do
       let!(:bill) { create(:bill) }

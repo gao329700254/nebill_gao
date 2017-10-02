@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
       resources :users, only: [:index]
       resources :partners, only: [:index]
-      resources :bills, only: [:create, :show, :update, :destroy]
+      resources :bills, only: [:index, :create, :show, :update, :destroy]
       resources :project_files, only: [:index, :show, :create, :update, :destroy]
       resources :project_file_groups, only: [:index, :create]
       get 'bill_default_values', on: :member

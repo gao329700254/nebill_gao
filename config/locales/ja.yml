@@ -370,7 +370,7 @@ ja:
       title: プロジェクト情報
       component:
         project_detail: プロジェクト詳細
-        bill_new: 請求新規作成
+        bill: 請求
         member_list: メンバー
         files: ファイル
       project_detail:
@@ -382,6 +382,8 @@ ja:
         address: 住所
         zip_code: 郵便番号
         memo: メモ
+      bill:
+        bill_new: 請求新規作成
     file_list:
       new_form_placeholder: 'ファイルグループを登録'
       name: ファイル名

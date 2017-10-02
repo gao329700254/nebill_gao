@@ -2,28 +2,19 @@
   /*** variables **************************************************************/
   /****************************************************************************/
 
-  &__form {
-    @include outer-container;
-    &__container {
-      @include row;
-      &__group {
-        @include span-columns(6);
-      }
-    }
+  background-color: $white-bg-color;
+  padding: $base-spacing;
+  color: $white-ft-color;
 
-    &__item,
-    %bill_new__form__item {
-      margin-bottom: $small-spacing;
+  &__outer {
+    @include modal__outer;
+    padding-top: 5em;
 
-      &--cd {
-        @extend %bill_new__form__item;
-        width: 10em;
-      }
-    }
+    &__inner {
+      @include modal__outer__inner;
 
-    &__btn {
-      &--submit {
-        @include btn--primary;
+      &__body {
+        @include modal__outer__inner__body;
       }
     }
   }
