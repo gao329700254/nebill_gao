@@ -354,6 +354,7 @@ ja:
       search_form_placeholder: 'ID,会社名,部署名,電話番号で検索できます'
     client_show:
       title: 取引先情報
+      last_updated_at: '最終更新日時: '
     project_new:
       title: プロジェクト新規作成
       orderer: 受注先会社情報
