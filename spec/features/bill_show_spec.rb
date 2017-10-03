@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Bill Show Page', js: true do
+RSpec.feature 'Bill Show Page', js: true, versioning: true do
   given!(:user) { create(:user) }
   background { login user, with_capybara: true }
 
@@ -11,6 +11,7 @@ RSpec.feature 'Bill Show Page', js: true do
 
   scenario 'show' do
     is_expected.to have_header_title '請求情報'
+    is_expected.to have_content '最終更新日時: ' + I18n.l(bill.updated_at.in_time_zone('Tokyo'))
   end
 
   describe 'form' do

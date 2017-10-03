@@ -22,7 +22,9 @@ class Api::BillsController < Api::ApiController
   end
 
   def show
-    render json: @bill, status: :ok
+    latest_version = Version.where(item_type: 'Bill', item_id: @bill.id).order(:created_at).last
+    @user = User.find(latest_version.whodunnit) if latest_version && latest_version.whodunnit
+    render 'show', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def update
