@@ -21,6 +21,8 @@ RSpec.describe Bill do
   it { is_expected.to validate_presence_of(:delivery_on) }
   it { is_expected.to validate_presence_of(:acceptance_on) }
 
+  it { is_expected.to be_versioned }
+
   describe "#bill_on_cannot_predate_delivery_on" do
     it "bill_on should not predate delivery_on" do
       bill.bill_on = bill.delivery_on - 1

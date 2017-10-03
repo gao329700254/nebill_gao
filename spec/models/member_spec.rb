@@ -8,6 +8,8 @@ RSpec.describe Member do
     it { is_expected.to belong_to(:employee) }
     it { is_expected.to belong_to(:project) }
 
+    it { is_expected.to be_versioned }
+
     describe 'validate uniqueness of project_id scoped to employee_id' do
       let(:other_user_member) { create(:user_member) }
       context 'when not validate uniqueness' do
@@ -33,6 +35,8 @@ RSpec.describe Member do
 
     it { is_expected.to belong_to(:employee) }
     it { is_expected.to belong_to(:project) }
+
+    it { is_expected.to be_versioned }
 
     describe 'validate uniqueness of employee_id scoped to project_id' do
       let(:other_partner_member) { create(:partner_member) }

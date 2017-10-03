@@ -16,6 +16,8 @@
 #
 
 class Client < ActiveRecord::Base
+  has_paper_trail
+
   validates :cd, uniqueness: { case_sensitive: false }, if: :cd?
   validates :company_name, presence: true
 
