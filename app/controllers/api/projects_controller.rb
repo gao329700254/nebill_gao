@@ -1,5 +1,5 @@
 class Api::ProjectsController < Api::ApiController
-  before_action :set_project, only: [:show, :update, :select_status, :bill_default_values, :destroy], if: -> { params.key? :id }
+  before_action :set_project, only: [:show, :update, :select_status, :last_updated_at, :bill_default_values, :destroy], if: -> { params.key? :id }
 
   def index
     @projects = if params.key? :group_id
@@ -41,6 +41,13 @@ class Api::ProjectsController < Api::ApiController
                      end
 
     render json: @select_status, status: :ok
+  end
+
+  def last_updated_at
+    @latest_version = Version.where(project_id: @project.id).order(:created_at).last
+    @user = User.find(@latest_version.whodunnit) if @latest_version && @latest_version.whodunnit
+
+    render 'last_updated_at', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def bill_default_values

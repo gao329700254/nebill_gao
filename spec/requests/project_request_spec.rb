@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'projects request' do
+RSpec.describe 'projects request', versioning: true do
   let!(:user) { create(:user) }
 
   before { login(user) }
@@ -272,6 +272,38 @@ RSpec.describe 'projects request' do
 
     context 'with not exist project id' do
       let(:path) { '/api/projects/0/select_status' }
+
+      it 'return 404 Not Found code and message' do
+        get path
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+  end
+
+  describe 'GET /api/projects/:id/last_updated_at' do
+
+    context 'with exist project id' do
+      let(:project) { create(:contracted_project) }
+      let!(:bill) { create(:bill, project: project, updated_at: 1.day.since) }
+      let(:path) { "/api/projects/#{project.id}/last_updated_at" }
+
+      it 'return 200 OK' do
+        get path
+
+        expect(response).to be_success
+        expect(response.status).to eq 200
+
+        expect(json['updated_at']).to eq I18n.l(bill.updated_at.in_time_zone('Tokyo'))
+        expect(json['whodunnit']).to eq ''
+      end
+    end
+
+    context 'with not exist project id' do
+      let(:path) { '/api/projects/0/last_updated_at' }
 
       it 'return 404 Not Found code and message' do
         get path

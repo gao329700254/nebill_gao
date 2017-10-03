@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Project List Page', js: true do
+RSpec.feature 'Project List Page', js: true, versioning: true do
   given!(:user) { create(:user) }
   given!(:project1) { create(:contracted_project,   cd: 'PROJECT-1', name: 'abc', orderer_company_name: 'ABC', contract_on: 5.days.ago, status: :finished) }
   given!(:project2) { create(:contracted_project,   cd: 'PROJECT-2', name: 'bcd', orderer_company_name: 'BCD', contract_on: 2.days.ago) }

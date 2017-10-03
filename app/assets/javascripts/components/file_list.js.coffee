@@ -55,6 +55,7 @@ $ ->
           .done (response) =>
             toastr.success('', response.message)
             @loadFiles()
+            @$dispatch('updateFileEvent')
           .fail (response) =>
             json = response.responseJSON
             if _.has(json, 'errors')
@@ -73,6 +74,7 @@ $ ->
               .done (response) =>
                 toastr.success('', response.message)
                 @loadFiles()
+                @$dispatch('deleteFileEvent')
               .fail (response) =>
                 json = response.responseJSON
                 if _.has(json, 'errors')

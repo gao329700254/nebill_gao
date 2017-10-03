@@ -3,4 +3,8 @@ $ ->
     template: '#files'
     props: ['projectId']
     events:
-      uploadFileEvent: -> @$broadcast('loadFilesEvent')
+      uploadFileEvent: ->
+        @$broadcast('loadFilesEvent')
+        @$dispatch('loadLastUpdatedAtEvent')
+      updateFileEvent: -> @$dispatch('loadLastUpdatedAtEvent')
+      deleteFileEvent: -> @$dispatch('loadLastUpdatedAtEvent')
