@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :create]
     resources :partners, only: [:index, :create]
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
+      collection do
+        get ':id/select_status', to: "projects#select_status"
+      end
       resources :users, only: [:index]
       resources :partners, only: [:index]
       resources :bills, only: [:index, :create, :show, :update, :destroy]

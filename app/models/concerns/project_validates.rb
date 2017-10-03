@@ -10,6 +10,7 @@ module ProjectValidates
     with_options if: :contracted? do |contracted|
       contracted.validates :contract_on         , presence: true
       contracted.validates :contract_type       , presence: true
+      contracted.validates :status              , presence: true
       contracted.validates :start_on            , presence: true
       contracted.validates :end_on              , presence: true
       contracted.validates :amount              , presence: true
@@ -29,6 +30,7 @@ module ProjectValidates
     with_options unless: :contracted? do |un_contracted|
       un_contracted.validates :contract_on         , absence: true
       un_contracted.validates :contract_type       , absence: true
+      un_contracted.validates :status              , absence: true
       un_contracted.validates :estimated_amount    , absence: true
       un_contracted.validates :is_using_ses        , absence: true
       un_contracted.validates :start_on            , absence: true

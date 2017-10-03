@@ -8,9 +8,15 @@ $ ->
       files: []
       fileGroupId: undefined
       sortKey: 'group.id'
+      project:
+        status: undefined
     computed:
       selectedFiles: -> _.filter @files, (f) -> f.selected
     methods:
+      loadProject: ->
+        $.ajax "/api/projects/#{@projectId}.json"
+          .done (response) =>
+            @project = response
       createFileGroup: ->
         try
           submit = $('.file_list__group_new__btn')
@@ -77,6 +83,9 @@ $ ->
           destroy.prop('disabled', false)
     events:
       loadFilesEvent: -> @loadFiles()
+      loadProjectEvent: ->
+        @loadProject()
     compiled: ->
       @loadFileGroups()
       @loadFiles()
+      @loadProject()

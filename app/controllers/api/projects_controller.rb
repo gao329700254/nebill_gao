@@ -1,5 +1,5 @@
 class Api::ProjectsController < Api::ApiController
-  before_action :set_project, only: [:show, :update, :bill_default_values, :destroy]
+  before_action :set_project, only: [:show, :update, :select_status, :bill_default_values, :destroy], if: -> { params.key? :id }
 
   def index
     @projects = if params.key? :group_id
@@ -31,6 +31,16 @@ class Api::ProjectsController < Api::ApiController
     render_action_model_success_message(@project, :update)
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@project, :update)
+  end
+
+  def select_status
+    @select_status = if @project.bills.pluck(:deposit_on).any?
+                       Project.status.options
+                     else
+                       Project.status.options.reject { |s| s.include?("finished") }
+                     end
+
+    render json: @select_status, status: :ok
   end
 
   def bill_default_values
@@ -72,6 +82,7 @@ private
       :contract_type,
       :is_using_ses,
       :is_regular_contract,
+      :status,
       :start_on,
       :end_on,
       :amount,

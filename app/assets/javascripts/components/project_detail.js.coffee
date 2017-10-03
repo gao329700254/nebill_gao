@@ -7,9 +7,11 @@ $ ->
       editMode: false
       project: undefined
       projectOriginal: undefined
+      options: []
     watch:
       projectId: ->
         @loadProject()
+        @statusList()
       editMode: (val) ->
         @project = $.extend(true, {}, @projectOriginal) unless val
     methods:
@@ -20,6 +22,10 @@ $ ->
             @project = $.extend(true, {}, @projectOriginal)
           .fail (response) =>
             console.error response
+      statusList: ->
+        $.ajax "/api/projects/#{@projectId}/select_status.json"
+          .done (response) =>
+            @options = response
       submit: ->
         try
           submit = $('.project_detail__form__btn--submit')
@@ -33,6 +39,7 @@ $ ->
             toastr.success('', response.message)
             @loadProject()
             @editMode = false
+            @$dispatch('updateProjectEvent')
           .fail (response) =>
             json = response.responseJSON
             if _.has(json, 'errors')
@@ -59,4 +66,8 @@ $ ->
                 toastr.error('', json.message)
         finally
           destroy.prop('disabled', false)
-    created: -> @initializeProject()
+    created: ->
+      @initializeProject()
+    events:
+      loadStatusEvent: ->
+        @statusList()

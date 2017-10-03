@@ -34,6 +34,7 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
+          @$dispatch('createBillEvent')
       initializeBill: ->
         @bill.cd            = undefined
         @bill.amount        = @default_amount

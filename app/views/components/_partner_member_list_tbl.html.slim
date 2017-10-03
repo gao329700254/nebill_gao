@@ -18,7 +18,7 @@ table.partner_member_list__tbl
     ]
       td.partner_member_list__tbl__item--name
         div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
-          input type="checkbox" name="selected" v-model="partner.selected" v-if='!editMode'
+          input type="checkbox" name="selected" v-model="partner.selected" v-if='!editMode && project.status != "finished"'
         div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
           = text_field_tag :name, nil, 'v-model' => 'partner.name', ':disabled' => 'true'
       td.partner_member_list__tbl__item--email

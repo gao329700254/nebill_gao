@@ -7,6 +7,13 @@ $ ->
     methods:
       viewShow: (view) ->
         page.show view
+      loadStatus: ->
+        @$broadcast('loadStatusEvent')
+      loadProject: ->
+        @$broadcast('loadProjectEvent')
+    events:
+      createBillEvent: -> @loadStatus()
+      updateProjectEvent: -> @loadProject()
 
   page hashbang: true, dispatch: false
   page 'project_detail', (ctx) ->

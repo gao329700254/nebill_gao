@@ -5,7 +5,13 @@ $ ->
     data: ->
       file_input: undefined
       files: undefined
+      project:
+        status: undefined
     methods:
+      loadProject: ->
+        $.ajax "/api/projects/#{@projectId}.json"
+          .done (response) =>
+            @project = response
       fileInputChange: (e) ->
         @file_input = e.target
         @files = @file_input.files
@@ -37,3 +43,8 @@ $ ->
         .fail (response) =>
           json = response.responseJSON
           toastr.error(json.errors.full_messages.join('<br>'), json.message)
+    events:
+      loadProjectEvent: ->
+        @loadProject()
+    compiled: ->
+      @loadProject()

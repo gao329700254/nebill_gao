@@ -6,6 +6,8 @@ $ ->
       partners: []
       allPartners: []
       selectedPartnerId: undefined
+      project:
+        status: undefined
       member:
         unit_price: ''
         working_rate: ''
@@ -37,6 +39,10 @@ $ ->
           elems = document.getElementById('partner-' + v.id).getElementsByTagName('input')
           for i in [0...elems.length]
             elems[i].disabled = true
+      loadProject: ->
+        $.ajax "/api/projects/#{@projectId}.json"
+          .done (response) =>
+            @project = response
       loadPartners: ->
         $.ajax "/api/projects/#{@projectId}/partners"
           .done (response) =>
@@ -140,6 +146,9 @@ $ ->
       loadAllPartnersEvent: (partnerId) ->
         @loadAllPartners()
         @selectedPartnerId = partnerId
+      loadProjectEvent: ->
+        @loadProject()
     compiled: ->
       @loadPartners()
       @loadAllPartners()
+      @loadProject()

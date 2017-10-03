@@ -61,6 +61,7 @@ ja:
         estimated_amount: 見積もり額
         is_using_ses: SES
         is_regular_contract: 定期
+        status: ステータス
         start_on: 開始日
         end_on:   終了日
         amount:   金額
@@ -334,6 +335,11 @@ ja:
         bill_on_end_of_month_and_payment_on_end_of_month_after_next:  末日締め翌々月末払い
         bill_on_end_of_month_and_payment_on_35th:                     末日締め35日払い
         bill_on_end_of_month_and_payment_on_45th:                     末日締め45日払い
+      status:
+        receive_order: 受注
+        turn_over:     売上
+        publish_bill:  請求書発行
+        finished:      終了
     role:
       general: 一般
       superior: 上長

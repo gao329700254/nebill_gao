@@ -24,6 +24,7 @@ RSpec.describe 'projects request' do
       expect(json[0]['name']).to                     eq project1.name
       expect(json[0]['contracted']).to               eq project1.contracted
       expect(json[0]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
+      expect(json[0]['status']).to                   eq project1.status
       expect(json[0]['is_using_ses']).to             eq project1.is_using_ses
       expect(json[0]['is_regular_contract']).to      eq project1.is_regular_contract
       expect(json[0]['contract_type']).to            eq project1.contract_type
@@ -62,6 +63,7 @@ RSpec.describe 'projects request' do
             name: 'name',
             contracted: true,
             contract_on: '2015-01-01',
+            status: 'receive_order',
             contract_type: 'lump_sum',
             estimated_amount: 123,
             is_using_ses: true,
@@ -97,6 +99,7 @@ RSpec.describe 'projects request' do
         expect(project.name).to eq  'name'
         expect(project.contracted).to eq  true
         expect(project.contract_on.to_s).to eq  '2015-01-01'
+        expect(project.status).to eq  'receive_order'
         expect(project.contract_type).to eq  'lump_sum'
         expect(project.estimated_amount).to eq  123
         expect(project.is_using_ses).to eq  true
@@ -139,6 +142,7 @@ RSpec.describe 'projects request' do
             name: 'name',
             contracted: 'true',
             contract_on: '2015-01-01',
+            status: 'receive_order',
             contract_type: 'lump_sum',
             estimated_amount: 123,
             is_using_ses: false,
@@ -196,6 +200,7 @@ RSpec.describe 'projects request' do
         expect(json['name']).to                     eq project.name
         expect(json['contracted']).to               eq project.contracted
         expect(json['contract_on']).to              eq project.contract_on.strftime("%Y-%m-%d")
+        expect(json['status']).to                   eq project.status
         expect(json['is_using_ses']).to             eq project.is_using_ses
         expect(json['is_regular_contract']).to      eq project.is_regular_contract
         expect(json['contract_type']).to            eq project.contract_type
@@ -235,6 +240,50 @@ RSpec.describe 'projects request' do
     end
   end
 
+  describe 'GET /api/projects/:id/select_status' do
+    context 'with exist project id' do
+      context 'and when bills deposit_on is not filled' do
+        let(:project) { create(:contracted_project) }
+        let(:path) { "/api/projects/#{project.id}/select_status" }
+
+        it 'return the 3 status options' do
+          get path
+
+          expect(response).to be_success
+          expect(response.status).to eq 200
+          expect(json.count).to      eq 3
+        end
+      end
+
+      context 'and when bills deposit_on is filled' do
+        let(:project) { create(:contracted_project) }
+        let!(:bill) { create(:bill, project: project, deposit_on: 1.day.ago) }
+        let(:path) { "/api/projects/#{project.id}/select_status" }
+
+        it 'return the 4 status options' do
+          get path
+
+          expect(response).to be_success
+          expect(response.status).to eq 200
+          expect(json.count).to      eq 4
+        end
+      end
+    end
+
+    context 'with not exist project id' do
+      let(:path) { '/api/projects/0/select_status' }
+
+      it 'return 404 Not Found code and message' do
+        get path
+
+        expect(response).not_to be_success
+        expect(response.status).to eq 404
+
+        expect(json['message']).to eq 'リソースが見つかりませんでした'
+      end
+    end
+  end
+
   describe 'PATCH /api/projects/:id' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
@@ -250,6 +299,7 @@ RSpec.describe 'projects request' do
               name: 'name',
               contracted: true,
               contract_on: '2015-01-01',
+              status: 'receive_order',
               contract_type: 'lump_sum',
               estimated_amount: 123,
               is_using_ses: true,
@@ -284,6 +334,7 @@ RSpec.describe 'projects request' do
           expect(project.name).to eq  'name'
           expect(project.contracted).to eq  true
           expect(project.contract_on.to_s).to eq  '2015-01-01'
+          expect(project.status).to eq  'receive_order'
           expect(project.contract_type).to eq  'lump_sum'
           expect(project.estimated_amount).to eq  123
           expect(project.is_using_ses).to eq  true
@@ -326,6 +377,7 @@ RSpec.describe 'projects request' do
               name: 'name',
               contracted: true,
               contract_on: '2015-01-01',
+              status: 'receive_order',
               contract_type: 'lump_sum',
               estimated_amount: 123,
               is_using_ses: false,

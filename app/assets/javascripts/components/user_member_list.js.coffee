@@ -6,6 +6,8 @@ $ ->
       users: []
       allUsers: []
       selectedUserId: undefined
+      project:
+        status: undefined
     computed:
       selectableUsers: ->
         ids = _.pluck(@users, 'id')
@@ -13,6 +15,10 @@ $ ->
           _.includes(ids, p.id)
       selectedUsers: -> _.filter @users, (u) -> u.selected
     methods:
+      loadProject: ->
+        $.ajax "/api/projects/#{@projectId}.json"
+          .done (response) =>
+            @project = response
       loadUsers: ->
         $.ajax "/api/projects/#{@projectId}/users"
           .done (response) =>
@@ -59,6 +65,10 @@ $ ->
                 toastr.error('', json.message)
         finally
           destroy.prop('disabled', false)
+    events:
+      loadProjectEvent: ->
+        @loadProject()
     compiled: ->
       @loadUsers()
       @loadAllUsers()
+      @loadProject()

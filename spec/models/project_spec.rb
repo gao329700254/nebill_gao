@@ -8,6 +8,7 @@ RSpec.describe Project do
   it { is_expected.to respond_to(:name) }
   it { is_expected.to respond_to(:contracted?) }
   it { is_expected.to respond_to(:contract_on) }
+  it { is_expected.to respond_to(:status) }
   it { is_expected.to respond_to(:contract_type) }
   it { is_expected.to respond_to(:estimated_amount) }
   it { is_expected.to respond_to(:is_using_ses) }
@@ -48,6 +49,7 @@ RSpec.describe Project do
 
     it { is_expected.to validate_presence_of(:contract_type) }
     it { is_expected.to validate_presence_of(:contract_on) }
+    it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to validate_presence_of(:start_on) }
     it { is_expected.to validate_presence_of(:end_on) }
     it { is_expected.to validate_presence_of(:amount) }
@@ -97,6 +99,7 @@ RSpec.describe Project do
 
     it { is_expected.to validate_absence_of(:contract_type) }
     it { is_expected.to validate_absence_of(:contract_on) }
+    it { is_expected.to validate_absence_of(:status) }
     it { is_expected.to validate_absence_of(:estimated_amount) }
     it { is_expected.to validate_absence_of(:start_on) }
     it { is_expected.to validate_absence_of(:end_on) }
