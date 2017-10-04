@@ -12,8 +12,8 @@ RSpec.feature 'Project Show Page', js: true do
     given!(:user2) { create(:user, :with_project, project: project) }
     given!(:other_user1) { create(:user) }
     given!(:other_user2) { create(:user) }
-    given!(:partner1) { create(:partner, :with_project, project: project, company_name: "cuon", id: 99) }
-    given!(:partner2) { create(:partner, :with_project, project: project, company_name: "cuon", id: 100) }
+    given!(:partner1) { create(:partner, :with_project, project: project, company_name: "cuon", id: 99_999) }
+    given!(:partner2) { create(:partner, :with_project, project: project, company_name: "cuon", id: 100_000) }
     given!(:other_partner1) { create(:partner) }
     given!(:other_partner2) { create(:partner) }
     given!(:file_group1) { create(:project_file_group, project: project) }
@@ -293,6 +293,7 @@ RSpec.feature 'Project Show Page', js: true do
 
         scenario 'link to a bill show page when click row' do
           find("#bill-#{bill1.id}").click
+          wait_for_ajax
 
           expect(current_path).to eq bill_show_path(bill1)
           expect(page).to have_header_title '請求情報'
