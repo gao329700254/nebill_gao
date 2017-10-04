@@ -17,7 +17,9 @@ class Api::ClientsController < Api::ApiController
   end
 
   def show
-    render json: @client, status: :ok
+    latest_version = Version.where(item_type: 'Client', item_id: @client.id).order(:created_at).last
+    @user = User.find(latest_version.whodunnit) if latest_version && latest_version.whodunnit
+    render 'show', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def update

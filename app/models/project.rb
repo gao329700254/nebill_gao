@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170905092430
+# Schema version: 20171003091655
 #
 # Table name: projects
 #
@@ -56,6 +56,7 @@ class Project < ActiveRecord::Base
   has_many :bills, dependent: :destroy
   has_many :files, class_name: 'ProjectFile', dependent: :destroy
   has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy
+  has_paper_trail meta: { project_id: :id }
 
   enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment, :maintenance, :other]
   enumerize :payment_type, in: %w(

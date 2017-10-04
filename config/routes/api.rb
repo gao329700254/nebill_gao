@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
       collection do
         get ':id/select_status', to: "projects#select_status"
+        get ':id/last_updated_at', to: "projects#last_updated_at"
       end
       resources :users, only: [:index]
       resources :partners, only: [:index]

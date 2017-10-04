@@ -51,7 +51,8 @@ RSpec.describe 'clients request' do
         expect(json['phone_number']).to     eq client.phone_number
         expect(json['memo']).to             eq client.memo
         expect(json['created_at']).to       eq client.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json['updated_at']).to       eq client.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json['updated_at']).to       eq I18n.l(client.updated_at.in_time_zone('Tokyo'))
+        # expect(json['whodunnit'])
       end
 
       context 'with not exist client id' do

@@ -70,6 +70,7 @@ $ ->
             @member.max_limit_time = ''
             @loadPartners()
             @loadAllPartners()
+            @$dispatch('addMemberEvent')
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
@@ -109,6 +110,7 @@ $ ->
             elems = document.getElementById('partner-' + partner.id).getElementsByTagName('input')
             for i in [0...elems.length]
               elems[i].disabled = true
+            @$dispatch('editMemberEvent')
           .fail (response) =>
             json = response.responseJSON
             @loadPartners()
@@ -133,6 +135,7 @@ $ ->
               toastr.success('', response.message)
               @loadPartners()
               @loadAllPartners()
+              @$dispatch('deleteMemberEvent')
             .fail (response) =>
               json = response.responseJSON
               if _.has(json, 'errors')

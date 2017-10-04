@@ -11,6 +11,7 @@ require 'active_record/acts_as/matchers'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
+require 'paper_trail/frameworks/rspec'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 

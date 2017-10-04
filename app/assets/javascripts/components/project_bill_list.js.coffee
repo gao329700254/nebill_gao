@@ -13,6 +13,7 @@ $ ->
         $.ajax "/api/projects/#{@projectId}/bills.json"
           .done (response) =>
             @list = response
+        @$dispatch('loadLastUpdatedAtEvent')
       loadProject: ->
         $.ajax "/api/projects/#{@projectId}.json"
           .done (response) =>

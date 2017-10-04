@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170905092430
+# Schema version: 20171003091655
 #
 # Table name: members
 #
@@ -29,6 +29,7 @@
 class Member < ActiveRecord::Base
   belongs_to :employee
   belongs_to :project
+  has_paper_trail meta: { project_id: :project_id }
 
   validates :employee_id, uniqueness: { scope: :project_id }
 end

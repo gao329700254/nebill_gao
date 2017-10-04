@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170905092430
+# Schema version: 20171003091655
 #
 # Table name: project_files
 #
@@ -19,6 +19,7 @@
 class ProjectFile < ActiveRecord::Base
   belongs_to :project
   belongs_to :group, class_name: 'ProjectFileGroup', foreign_key: :file_group_id
+  has_paper_trail meta: { project_id: :project_id }
 
   mount_uploader :file, ProjectFileUploader
 

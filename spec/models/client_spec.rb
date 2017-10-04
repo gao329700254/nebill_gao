@@ -14,4 +14,6 @@ RSpec.describe Client do
 
   it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }
   it { is_expected.to validate_presence_of(:company_name) }
+
+  it { is_expected.to be_versioned }
 end

@@ -6,6 +6,10 @@
   padding: $base-spacing;
   color: $white-ft-color;
 
+  &__last_updated_at {
+    text-align: right;
+  }
+
   &__form {
     @include outer-container;
     &__container {

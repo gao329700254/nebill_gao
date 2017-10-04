@@ -41,6 +41,8 @@ RSpec.describe Project do
   it { is_expected.to validate_numericality_of(:estimated_amount).is_greater_than_or_equal_to(0) }
   it { is_expected.to validate_numericality_of(:estimated_amount).allow_nil }
 
+  it { is_expected.to be_versioned }
+
   describe 'Contracted Project' do
     let(:project) { build(:contracted_project) }
     subject { project }

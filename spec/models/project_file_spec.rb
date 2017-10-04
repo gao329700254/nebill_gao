@@ -11,4 +11,6 @@ RSpec.describe ProjectFile do
 
   it { is_expected.to validate_presence_of(:file) }
   it { is_expected.to validate_presence_of(:original_filename) }
+
+  it { is_expected.to be_versioned }
 end

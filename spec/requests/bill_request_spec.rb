@@ -107,7 +107,8 @@ RSpec.describe 'bills request' do
         expect(json['deposit_on']).to     eq bill.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json['memo']).to           eq bill.memo
         expect(json['created_at']).to     eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json['updated_at']).to     eq bill.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json['updated_at']).to     eq I18n.l(bill.updated_at.in_time_zone('Tokyo'))
+        # expect(json['shodunnit']).to
       end
 
       context 'with not exist bill id' do

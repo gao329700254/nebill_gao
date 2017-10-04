@@ -5,6 +5,10 @@
 #client_show.client_show
   = hidden_field_tag :client_id, @client.id, 'v-model' => 'clientId'
 
+  .client_show__last_updated_at
+    = t('page.client_show.last_updated_at')
+    span v-text='client.updated_at'
+    span v-text='client.whodunnit' v-if='client.whodunnit'
   = form_tag nil, class: 'client_show__form'
     .client_show__form__container
       .client_show__form__container__group

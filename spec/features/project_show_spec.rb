@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Project Show Page', js: true do
+RSpec.feature 'Project Show Page', js: true, versioning: true do
   given!(:user) { create(:user) }
   background { login user, with_capybara: true }
 
@@ -196,6 +196,8 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to     have_field 'billing_address'        , disabled: true, with: 'test billing address'
             is_expected.to     have_field 'billing_zip_code'       , disabled: true, with: '2345678'
             is_expected.to     have_field 'billing_memo'           , disabled: true, with: 'test billing memo'
+
+            expect(page).to    have_content '最終更新日時: ' + I18n.l(project.updated_at.in_time_zone('Tokyo'))
           end
 
           scenario 'should not update when click submit button with uncorrent values' do
@@ -347,6 +349,8 @@ RSpec.feature 'Project Show Page', js: true do
             is_expected.to have_field  'bill_on'       , with: ''
             is_expected.to have_field  'deposit_on'    , with: ''
             is_expected.to have_field  'memo'          , with: ''
+
+            expect(page).to have_content '最終更新日時: ' + I18n.l(Bill.last.updated_at.in_time_zone('Tokyo'))
           end
 
           scenario 'click submit button with uncorrect values' do
@@ -472,6 +476,8 @@ RSpec.feature 'Project Show Page', js: true do
             within('.user_member_list') { click_button '登録' }
             wait_for_ajax
           end.to change(Member, :count).by(1)
+
+          expect(page).to have_content '最終更新日時: ' + I18n.l(Member.last.updated_at.in_time_zone('Tokyo'))
         end
 
         context 'when select users' do
@@ -489,6 +495,8 @@ RSpec.feature 'Project Show Page', js: true do
 
             is_expected.not_to have_content user1.name
             is_expected.to     have_content user2.name
+
+            expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
           end
         end
       end
@@ -694,6 +702,8 @@ RSpec.feature 'Project Show Page', js: true do
                 is_expected.not_to have_button 'キャンセル'
                 is_expected.not_to have_button '更新'
                 is_expected.not_to have_button '削除'
+
+                expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
               end
             end
 
@@ -752,6 +762,7 @@ RSpec.feature 'Project Show Page', js: true do
                 is_expected.to     have_button 'キャンセル'
                 is_expected.to     have_button '更新'
                 is_expected.not_to have_button '削除'
+                expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
               end
 
               describe 'and when partner1: correct' do
@@ -780,6 +791,8 @@ RSpec.feature 'Project Show Page', js: true do
                     expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '3'
                     expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '4'
                   end
+
+                  expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
                 end
               end
             end
@@ -880,6 +893,8 @@ RSpec.feature 'Project Show Page', js: true do
                     expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '7'
                     expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '8'
                   end
+
+                  expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
                 end
 
                 describe 'and when partner1: correct' do
@@ -908,6 +923,8 @@ RSpec.feature 'Project Show Page', js: true do
                       expect(page).to     have_field 'min_limit_time'  , disabled: true, with: '3'
                       expect(page).to     have_field 'max_limit_time'  , disabled: true, with: '4'
                     end
+
+                    expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
                   end
                 end
               end
@@ -923,6 +940,8 @@ RSpec.feature 'Project Show Page', js: true do
 
             is_expected.not_to have_field 'name', disabled: false, with: partner1.name
             is_expected.not_to have_field 'name', disabled: false, with: partner2.name
+
+            expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
           end
         end
 
@@ -937,6 +956,8 @@ RSpec.feature 'Project Show Page', js: true do
             within('.member_list__partner') { click_button '登録' }
             wait_for_ajax
           end.to change(Member, :count).by(1)
+
+          expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
         end
 
         scenario 'select partner and click submit button with uncorrect values' do
@@ -1043,6 +1064,8 @@ RSpec.feature 'Project Show Page', js: true do
             click_button 'アップロード'
             wait_for_ajax
           end.to change(ProjectFile, :count).by(1)
+
+          expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
         end
       end
 
@@ -1099,7 +1122,10 @@ RSpec.feature 'Project Show Page', js: true do
               is_expected.to     have_content file_group3.name
               is_expected.not_to have_content file_group1.name
               is_expected.not_to have_content file_group2.name
+
+              expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
             end
+
           end
 
           context 'when click delete button' do
@@ -1110,6 +1136,8 @@ RSpec.feature 'Project Show Page', js: true do
               end
               is_expected.not_to have_content file1.original_filename
               is_expected.not_to have_content file2.original_filename
+
+              expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
             end
 
             scenario 'and dismiss the confirm' do
@@ -1181,6 +1209,8 @@ RSpec.feature 'Project Show Page', js: true do
           end.to change(Bill, :count).by(1)
 
           is_expected.not_to have_css '.bill_new__outer'
+
+          expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
         end
 
         scenario 'click submit button with uncorrect values' do
@@ -1256,6 +1286,8 @@ RSpec.feature 'Project Show Page', js: true do
         click_on 'プロジェクト詳細'
         click_button '編集'
         expect(page).to have_select('status', options: %w(受注 売上 請求書発行 終了))
+
+        expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
       end
     end
 
@@ -1284,6 +1316,8 @@ RSpec.feature 'Project Show Page', js: true do
         click_on 'ファイル'
         is_expected.not_to have_css '.files_new__form'
         is_expected.not_to have_css '.files_list__menu'
+
+        expect(page).to have_content '最終更新日時: ' + I18n.l(Version.last.created_at.in_time_zone('Tokyo'))
       end
     end
   end

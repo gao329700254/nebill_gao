@@ -5,6 +5,10 @@
 #bill_show.bill_show
   = hidden_field_tag :bill_id, @bill.id, 'v-model' => 'billId'
 
+  .bill_show__last_updated_at
+    = t('page.bill_show.last_updated_at')
+    span v-text='bill.updated_at'
+    span v-text='bill.whodunnit' 'v-if'=>'bill.whodunnit'
   = form_tag nil, class: 'bill_show__form'
     .bill_show__form__container
       .bill_show__form__container__group
