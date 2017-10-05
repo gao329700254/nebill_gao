@@ -47,7 +47,7 @@ class Api::ProjectsController < Api::ApiController
     latest_version = Version.where(project_id: @project.id).order(:created_at).last
     if latest_version
       @last_updated_at = latest_version.created_at.in_time_zone('Tokyo')
-      @user_name = User.find(latest_version.whodunnit).name if latest_version.whodunnit
+      @user_name = '（' + User.find(latest_version.whodunnit).name + '）' if latest_version.whodunnit
     else
       @last_updated_at = @project.updated_at
     end
