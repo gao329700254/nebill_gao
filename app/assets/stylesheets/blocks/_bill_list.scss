@@ -9,11 +9,6 @@
       @include display(flex);
       margin-bottom: $base-spacing;
 
-      &__bill_on {
-        padding: $base-spacing;
-        font-weight: $large-font-size;
-      }
-
       &__start {
         @include span-columns(3);
       }

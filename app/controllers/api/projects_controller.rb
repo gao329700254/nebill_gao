@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Api::ProjectsController < Api::ApiController
   before_action :set_project, only: [:show, :update, :select_status, :last_updated_at, :bill_default_values, :destroy], if: -> { params.key? :id }
 
@@ -54,8 +55,9 @@ class Api::ProjectsController < Api::ApiController
     @user_name ||= ''
 
     render 'last_updated_at', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
 
-    def search_result
+  def search_result
     @projects = if params[:start].present? && params[:end].present?
                   Project.between(params[:start], params[:end])
                 elsif params[:start].present?
@@ -129,3 +131,4 @@ private
     )
   end
 end
+# rubocop:enable Metrics/ClassLength
