@@ -22,13 +22,13 @@ RSpec.describe User do
   it { is_expected.to validate_presence_of(:role) }
 
   describe '#join!' do
-    let(:project) { create(:project) }
+    let(:bill) { create(:bill) }
     before do
       user.save!
-      user.join!(project)
+      user.join!(bill)
     end
 
-    its(:projects) { is_expected.to include project }
+    its(:bills) { is_expected.to include bill }
   end
 
 end

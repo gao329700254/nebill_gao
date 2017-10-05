@@ -4,6 +4,7 @@
 
   &__tbl {
     @include list_tbl;
+    margin-top: 22px;
 
     &__head {
       &__row {
@@ -53,28 +54,12 @@
       }
 
       &--email {
-        @include span-columns(3);
+        @include span-columns(6);
         @include word-wrap;
       }
 
       &--company_name {
-        @include span-columns(3);
-      }
-
-      &--unit_price {
-        @include span-columns(1);
-      }
-
-      &--working_rate {
-        @include span-columns(1);
-      }
-
-      &--min_limit_time {
-        @include span-columns(1);
-      }
-
-      &--max_limit_time {
-        @include span-columns(1);
+        @include span-columns(4);
       }
     }
   }
@@ -99,11 +84,6 @@
     }
 
   &__btn {
-    &--new_partner {
-      @include btn--primary;
-    }
-
-    &--delete,
     &--edit,
     &--cancel,
     &--submit {

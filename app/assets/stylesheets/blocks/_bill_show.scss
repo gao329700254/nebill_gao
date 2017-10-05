@@ -37,14 +37,188 @@
 
     &__btn {
       &--edit,
-      &--cancel {
-        @include btn--default;
-      }
-
+      &--cancel,
       &--submit,
       &--download,
       &--delete {
         @include btn--primary;
+      }
+    }
+
+    &__member_list {
+      @include span-columns(6);
+
+      &__partner {
+        &__head {
+          &__title {
+            @include span-columns(6);
+          }
+
+          &__member_btn {
+            &--new_partner {
+              @include btn--primary;
+            }
+          }
+        }
+
+        &__tbl {
+          @include list_tbl;
+
+          &__head {
+            &__row {
+              @include list_tbl__head__row;
+            }
+          }
+
+          &__body {
+            @include list_tbl__body;
+            &__row {
+              @include list_tbl__body__row;
+
+              #{$all-text-inputs-disabled},
+              select:disabled,
+              textarea:disabled {
+                border-bottom: $base-border;
+                border-radius: 0;
+                border-color: $white-bg-color;
+                box-shadow: none;
+                background-color: $white-bg-color;
+                text-align: center;
+              }
+
+              &--selected {
+                @include list_tbl__body__row;
+                background-color: $yellow;
+
+                #{$all-text-inputs-disabled},
+                select:disabled,
+                textarea:disabled {
+                  border-bottom: $base-border;
+                  border-radius: 0;
+                  border-color: $yellow-bg-color;
+                  box-shadow: none;
+                  background-color: $yellow-bg-color;
+                  text-align: center;
+                }
+              }
+            }
+          }
+        }
+
+        &__item {
+          &--name {
+            @include span-columns(3);
+            &--non_edit {
+              display: table-cell;
+            }
+          }
+
+          &--unit_price {
+            @include span-columns(2);
+          }
+
+          &--working_rate {
+            @include span-columns(3);
+          }
+
+          &--min_limit_time {
+            @include span-columns(2);
+          }
+
+          &--max_limit_time {
+            @include span-columns(2);
+          }
+        }
+      }
+
+      &__user {
+        &__tbl {
+          @include list_tbl;
+
+          &__head {
+            &__row {
+              @include list_tbl__head__row;
+            }
+          }
+
+          &__body {
+            @include list_tbl__body;
+
+            &__row,
+            %user_member_list__tbl__body__row {
+              @include list_tbl__body__row;
+              font-size: $base-font-size;
+
+              &--selected {
+                @extend %user_member_list__tbl__body__row;
+                background-color: $yellow;
+              }
+            }
+          }
+
+          &__item,
+          %user_member_list__tbl__item {
+            @include list_tbl__item;
+
+            &--name {
+              @extend %user_member_list__tbl__item;
+              @include span-columns(4);
+            }
+
+            &--email {
+              @extend %user_member_list__tbl__item;
+              @include span-columns(8);
+            }
+          }
+        }
+      }
+
+      &__add_user_member {
+        @include display(flex);
+
+        &__list {
+          flex: 1;
+        }
+
+        &__btn {
+          &--submit {
+            @include btn--primary;
+          }
+        }
+
+        &__user_btn {
+          &--delete {
+            @include btn--primary;
+          }
+        }
+      }
+
+      &__add_partner_member {
+        @include display(flex);
+
+        &__list {
+          flex: 2;
+        }
+
+        &__form {
+          &__item {
+            flex: 1;
+          }
+        }
+
+        &__btn {
+          @include btn--primary;
+          width: 100%;
+        }
+      }
+
+      &__partner_btn {
+        &--delete,
+        &--edit,
+        &--cancel,
+        &--submit {
+          @include btn--default;
+        }
       }
     }
   }

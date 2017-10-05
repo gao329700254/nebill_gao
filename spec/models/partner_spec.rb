@@ -18,13 +18,13 @@ RSpec.describe Partner do
   it { is_expected.to validate_presence_of(:company_name) }
 
   describe '#join!' do
-    let(:project) { create(:project) }
+    let(:bill) { create(:bill) }
     before do
       partner.save!
-      partner.join!(project, 1, 0.6, 1, 2)
+      partner.join!(bill, 1, 0.6, 1, 2)
     end
 
-    its(:projects) { is_expected.to include project }
+    its(:bills) { is_expected.to include bill }
   end
 
 end

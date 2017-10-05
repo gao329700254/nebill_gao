@@ -4,6 +4,13 @@ RSpec.describe Bill do
   let(:bill) { build(:bill) }
   subject { bill }
 
+  it { is_expected.to have_many(:members).dependent(:destroy) }
+  it { is_expected.to have_many(:user_members) }
+  it { is_expected.to have_many(:partner_members) }
+  it { is_expected.to have_many(:employees).through(:members) }
+  it { is_expected.to have_many(:users).through(:user_members) }
+  it { is_expected.to have_many(:partners).through(:partner_members) }
+
   it { is_expected.to respond_to(:cd) }
   it { is_expected.to respond_to(:amount) }
   it { is_expected.to respond_to(:delivery_on) }

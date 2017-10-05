@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :member do
-    project
+    bill
   end
 
   factory :user_member, parent: :member, class: UserMember do

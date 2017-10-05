@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20171003091655
+# Schema version: 20171009095141
 #
 # Table name: versions
 #
@@ -11,6 +11,7 @@
 #  whodunnit  :string
 #  object     :text
 #  created_at :datetime
+#  bill_id    :integer
 #
 # Indexes
 #

@@ -1,0 +1,18 @@
+select.bill_show__form__member_list__add_partner_member__list name="partner" v-model="selectedPartnerId" v-if="!bill.deposit_on"
+  option v-for="partner in selectablePartners" value="{{partner.id}}" {{partner.name}}
+.bill_show__form__member_list__add_partner_member__form__item
+  = text_field_tag   :new_unit_price    , nil, placeholder: t('activerecord.attributes.partner_member.unit_price'),
+    'v-numeric' => 'member.unit_price', 'v-if' => '!bill.deposit_on'
+.bill_show__form__member_list__add_partner_member__form__item
+  = text_field_tag   :new_working_rate,   nil, placeholder: t('activerecord.attributes.partner_member.working_rate'),
+    'v-model' => 'member.working_rate', 'v-if' => '!bill.deposit_on'
+.bill_show__form__member_list__add_partner_member__form__item
+  = number_field_tag :new_min_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.min_limit_time'),
+    'v-model' => 'member.min_limit_time', 'v-if' => '!bill.deposit_on'
+.bill_show__form__member_list__add_partner_member__form__item
+  = number_field_tag :new_max_limit_time, nil, placeholder: t('activerecord.attributes.partner_member.max_limit_time'),
+    'v-model' => 'member.max_limit_time', 'v-if' => '!bill.deposit_on'
+.bill_show__form__member_list__add_partner_member__form__item
+  = button_tag 'v-on:click.prevent' => 'addMember', 'v-if' => '!bill.deposit_on',
+  class: 'bill_show__form__member_list__add_partner_member__btn' do
+    = fa_icon 'check', text: t('helpers.submit.create')

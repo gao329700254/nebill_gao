@@ -5,17 +5,13 @@
   @include outer-container;
   @include row;
 
-  &__out {
-    @include span-columns(4);
-
-    &__user {
-      @include span-columns(4);
-      margin-bottom: $large-spacing;
-    }
+  &__user {
+    @include span-columns(5);
+    margin-bottom: $large-spacing;
   }
 
   &__partner {
-    @include span-columns(12);
+    @include span-columns(7);
     margin-bottom: $large-spacing;
   }
 }

@@ -1,9 +1,9 @@
 class Api::UserMembersController < Api::ApiController
-  before_action :set_project, only: [:create]
+  before_action :set_bill, only: [:create]
   before_action :set_user   , only: [:create, :destroy]
 
   def create
-    @member = @user.join!(@project)
+    @member = @user.join!(@bill)
 
     render_action_model_success_message(@member, :create)
   rescue ActiveRecord::RecordInvalid
@@ -11,7 +11,7 @@ class Api::UserMembersController < Api::ApiController
   end
 
   def destroy
-    @member = @user.members.find_by!(project: params[:project_id])
+    @member = @user.members.find_by!(bill: params[:bill_id])
 
     if @member.destroy
       render_action_model_success_message(@member, :destroy)
@@ -22,8 +22,8 @@ class Api::UserMembersController < Api::ApiController
 
 private
 
-  def set_project
-    @project = Project.find(params[:project_id])
+  def set_bill
+    @bill = Bill.find(params[:bill_id])
   end
 
   def set_user

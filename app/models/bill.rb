@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20171003091655
+# Schema version: 20171009095141
 #
 # Table name: bills
 #
@@ -29,7 +29,14 @@ class Bill < ActiveRecord::Base
   extend Enumerize
 
   belongs_to :project
-  has_paper_trail meta: { project_id: :project_id }
+  has_many :members, dependent: :destroy
+  has_many :user_members
+  has_many :partner_members
+  has_many :employees, through: :members
+  has_many :users, through: :user_members
+  has_many :partners, through: :partner_members
+
+  has_paper_trail meta: { project_id: :project_id, bill_id: :id }
 
   validates :project      , presence: true
   validates :cd           , presence: true, uniqueness: { case_sensitive: false }
