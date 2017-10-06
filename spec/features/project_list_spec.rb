@@ -2,9 +2,6 @@ require 'rails_helper'
 
 RSpec.feature 'Project List Page', js: true, versioning: true do
   given!(:user) { create(:user) }
-  given!(:project1) { create(:contracted_project,   cd: 'PROJECT-1', name: 'abc', orderer_company_name: 'ABC', contract_on: 5.days.ago, status: :finished) }
-  given!(:project2) { create(:contracted_project,   cd: 'PROJECT-2', name: 'bcd', orderer_company_name: 'BCD', contract_on: 2.days.ago) }
-  given!(:project3) { create(:contracted_project,   cd: 'PROJECT-3', name: 'cde', orderer_company_name: 'CDE', contract_on: 4.days.ago) }
   given!(:project4) { create(:uncontracted_project, cd: 'PROJECT-4', name: 'def', orderer_company_name: 'DEF') }
   given!(:project5) { create(:uncontracted_project, cd: 'PROJECT-5', name: 'efg', orderer_company_name: 'EFG') }
   given!(:client) do
@@ -18,6 +15,37 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
     )
   end
   given!(:project_group) { create(:project_group, name: 'GroupA') }
+  given!(:project1) do
+    create(:contracted_project,
+           cd: 'PROJECT-1',
+           name: 'abc',
+           contract_on: 5.days.ago,
+           orderer_company_name: 'ABC',
+           start_on: 1.month.ago,
+           end_on: 1.week.ago,
+           status: :finished,
+          )
+  end
+  given!(:project2) do
+    create(:contracted_project,
+           cd: 'PROJECT-2',
+           name: 'bcd',
+           orderer_company_name: 'BCD',
+           contract_on: 2.days.ago,
+           start_on: 1.week.ago,
+           end_on: 3.days.ago,
+          )
+  end
+  given!(:project3) do
+    create(:contracted_project,
+           cd: 'PROJECT-3',
+           name: 'cde',
+           orderer_company_name: 'CDE',
+           contract_on: 4.days.ago,
+           start_on: 3.days.ago,
+           end_on: 1.day.ago,
+          )
+  end
 
   background { login user, with_capybara: true }
   background { visit project_list_path }
@@ -27,11 +55,16 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
   scenario 'show' do
     is_expected.to have_header_title 'プロジェクト一覧'
 
-    is_expected.to have_field 'search', with: ''
-    is_expected.to have_button 'プロジェクト新規作成'
+    is_expected.to have_field           'search', with: ''
+    is_expected.to have_content         '開始日'
+    is_expected.to have_field           'start', with: ''
+    is_expected.to have_content         '終了日'
+    is_expected.to have_field           'end', with: ''
+    is_expected.to have_button          '検索'
     is_expected.to have_checked_field   'all'
     is_expected.to have_unchecked_field 'contracted'
     is_expected.to have_unchecked_field 'uncontracted'
+    is_expected.to have_content         'プロジェクト新規作成'
     is_expected.to have_content 'ID'
     is_expected.to have_content '名前'
     is_expected.to have_content '受注先会社名'
@@ -51,11 +84,11 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
     is_expected.to have_content project4.cd
     is_expected.to have_content project5.cd
 
-    expect(all('.project_list__tbl__body__row td:first-child')[0]).to have_text project4.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[1]).to have_text project5.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[2]).to have_text project1.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[3]).to have_text project3.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[4]).to have_text project2.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[0]).to have_text project1.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[1]).to have_text project3.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[2]).to have_text project2.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[3]).to have_text project4.cd
+    expect(all('.project_list__tbl__body__row td:first-child')[4]).to have_text project5.cd
 
     expect(find("#project-#{project1.id}")[:class]).to eq 'project_list__tbl__body__row project_list__tbl__body__row--finished'
     expect(find("#project-#{project2.id}")[:class]).to eq 'project_list__tbl__body__row'
@@ -117,6 +150,112 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.not_to have_content project3.cd
       is_expected.to     have_content project4.cd
       is_expected.not_to have_content project5.cd
+    end
+  end
+
+  describe 'search_date' do
+    scenario 'with blank' do
+      fill_in :start, with: ''
+      fill_in :end, with: ''
+
+      click_button '検索'
+      wait_for_ajax
+
+      is_expected.to have_content project1.cd
+      is_expected.to have_content project2.cd
+      is_expected.to have_content project3.cd
+      is_expected.to have_content project4.cd
+      is_expected.to have_content project5.cd
+    end
+
+    context 'with only start' do
+      scenario 'when put 1 month ago' do
+        fill_in :start, with: 1.month.ago
+        fill_in :end, with: ''
+
+        click_button '検索'
+        wait_for_ajax
+
+        is_expected.to     have_content project1.cd
+        is_expected.to     have_content project2.cd
+        is_expected.to     have_content project3.cd
+        is_expected.not_to have_content project4.cd
+        is_expected.not_to have_content project5.cd
+      end
+
+      scenario 'when put 1 week ago' do
+        fill_in :start, with: 1.week.ago
+        fill_in :end, with: ''
+
+        click_button '検索'
+        wait_for_ajax
+
+        is_expected.not_to have_content project1.cd
+        is_expected.to     have_content project2.cd
+        is_expected.to     have_content project3.cd
+        is_expected.not_to have_content project4.cd
+        is_expected.not_to have_content project5.cd
+      end
+    end
+
+    context 'with only end' do
+      scenario 'when put 1 week ago' do
+        fill_in :start, with: ''
+        fill_in :end, with: 1.week.ago
+
+        click_button '検索'
+        wait_for_ajax
+
+        is_expected.to     have_content project1.cd
+        is_expected.not_to have_content project2.cd
+        is_expected.not_to have_content project3.cd
+        is_expected.not_to have_content project4.cd
+        is_expected.not_to have_content project5.cd
+      end
+
+      scenario 'when put 3 days ago' do
+        fill_in :start, with: ''
+        fill_in :end, with: 3.days.ago
+
+        click_button '検索'
+        wait_for_ajax
+
+        is_expected.to     have_content project1.cd
+        is_expected.to     have_content project2.cd
+        is_expected.not_to have_content project3.cd
+        is_expected.not_to have_content project4.cd
+        is_expected.not_to have_content project5.cd
+      end
+    end
+
+    context 'with start and end' do
+      scenario 'when put 1 month ago and 3 days ago' do
+        fill_in :start, with: 1.month.ago
+        fill_in :end, with: 3.days.ago
+
+        click_button '検索'
+        wait_for_ajax
+
+        is_expected.to     have_content project1.cd
+        is_expected.to     have_content project2.cd
+        is_expected.not_to have_content project3.cd
+        is_expected.not_to have_content project4.cd
+        is_expected.not_to have_content project5.cd
+      end
+
+      scenario 'when put 1 week ago and 3 days ago' do
+        fill_in :start, with: 1.week.ago
+        fill_in :end, with: 3.days.ago
+
+        click_button '検索'
+        wait_for_ajax
+
+        is_expected.not_to have_content project1.cd
+        is_expected.to     have_content project2.cd
+        is_expected.not_to have_content project3.cd
+        is_expected.not_to have_content project4.cd
+        is_expected.not_to have_content project5.cd
+      end
     end
   end
 

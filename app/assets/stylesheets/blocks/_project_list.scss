@@ -3,7 +3,34 @@
   padding: $base-spacing;
 
   &__search {
-    margin-bottom: $base-spacing;
+    padding-top: $base-spacing;
+
+    &__radio {
+      margin-bottom: $base-spacing;
+    }
+
+    &__date {
+      @include display(flex);
+      margin-bottom: $base-spacing;
+
+      &__start {
+        @include span-columns(3);
+      }
+
+      &__end {
+        @include span-columns(3);
+      }
+
+      &__btn {
+        @include span-columns(3);
+
+        &--search,
+        &--new_project {
+          @include btn--primary;
+          margin-top: $base-spacing;
+        }
+      }
+    }
   }
 
   &__tbl {
@@ -66,13 +93,6 @@
         @extend %project_list__tbl__item;
         @include span-columns(2);
       }
-    }
-  }
-
-  &__btn {
-    &--new_project {
-      @include btn--primary;
-      float: right;
     }
   }
 }

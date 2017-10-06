@@ -7,15 +7,27 @@
 #project_list.project_list
   = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
                      placeholder: t('page.project_list.search_form_placeholder'), lazy: true, class: 'project_list__search'
-  = button_tag 'v-on:click' => 'showProjectNew', class: 'project_list__btn--new_project' do
-    = fa_icon 'check', text: t('page.project_new.title')
-  div.project_list__search
-    = radio_button_tag :all, '', true, id: 'all', 'v-model' => 'contractStatus'
-    = label_tag :all, t('page.project_list.contract_type.all')
-    = radio_button_tag :contracted, true, false, id: 'contracted', 'v-model' => 'contractStatus'
-    = label_tag :contracted, t('page.project_list.contract_type.contracted')
-    = radio_button_tag :uncontracted, false, false, id: 'uncontracted', 'v-model' => 'contractStatus'
-    = label_tag :uncontracted, t('page.project_list.contract_type.uncontracted')
+  .project_list__search
+    .project_list__search__date
+      .project_list__search__date__start
+        = label_tag :start, t('page.project_list.start')
+        = date_field_tag :start, nil, 'v-model' => "start"
+      .project_list__search__date__end
+        = label_tag :start, t('page.project_list.end')
+        = date_field_tag :end, nil, 'v-model' => "end"
+      .project_list__search__date__btn
+        = button_tag 'v-on:click.prevent' => 'search', class: 'project_list__search__date__btn--search' do
+          = fa_icon 'fa-search', text: t('page.project_list.search')
+      .project_list__search__date__btn
+        = button_tag 'v-on:click' => 'showProjectNew', class: 'project_list__search__date__btn--new_project' do
+          = fa_icon 'check', text: t('page.project_new.title')
+    .project_list__search__radio
+      = radio_button_tag :all, '', true, id: 'all', 'v-model' => 'contractStatus'
+      = label_tag :all, t('page.project_list.contract_type.all')
+      = radio_button_tag :contracted, true, false, id: 'contracted', 'v-model' => 'contractStatus'
+      = label_tag :contracted, t('page.project_list.contract_type.contracted')
+      = radio_button_tag :uncontracted, false, false, id: 'uncontracted', 'v-model' => 'contractStatus'
+      = label_tag :uncontracted, t('page.project_list.contract_type.uncontracted')
   table.project_list__tbl
     thead.project_list__tbl__head
       tr.project_list__tbl__head__row

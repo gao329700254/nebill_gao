@@ -107,4 +107,25 @@ RSpec.describe Project do
     it { is_expected.to validate_absence_of(:end_on) }
     it { is_expected.to validate_absence_of(:amount) }
   end
+
+  describe 'Scope' do
+    let!(:project1) { create(:contracted_project, start_on: 1.month.ago, end_on: 1.week.ago) }
+    let!(:project2) { create(:contracted_project, start_on: 1.week.ago, end_on: 3.days.ago) }
+    let!(:project3) { create(:contracted_project, start_on: 3.days.ago, end_on: 1.day.ago) }
+
+    context 'between' do
+      subject { Project.between(1.month.ago, 3.days.ago) }
+      it { is_expected.to include project1, project2 }
+    end
+
+    context 'gteq_start_on' do
+      subject { Project.gteq_start_on(1.week.ago) }
+      it { is_expected.to include project2 }
+    end
+
+    context 'lteq_end_on' do
+      subject { Project.lteq_end_on(1.week.ago) }
+      it { is_expected.to include project1 }
+    end
+  end
 end

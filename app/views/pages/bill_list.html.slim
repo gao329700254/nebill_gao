@@ -5,6 +5,16 @@
 #bill_list.bill_list
   = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
                      placeholder: t('page.bill_list.search_form_placeholder'), lazy: true, class: 'bill_list__search'
+  .bill_list__search
+    .bill_list__search__date
+      .bill_list__search__date__start
+        = label_tag :start, t('page.bill_list.fill_date_form')
+        = date_field_tag :start, nil, 'v-model' => "start"
+      .bill_list__search__date__end
+        = date_field_tag :end, nil, 'v-model' => "end"
+      .bill_list__search__date__btn
+        = button_tag 'v-on:click.prevent' => 'search', class: 'bill_list__search__date__btn--search' do
+          = fa_icon 'fa-search', text: t('page.bill_list.search')
   table.bill_list__tbl
     thead.bill_list__tbl__head
       tr.bill_list__tbl__head__row

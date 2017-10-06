@@ -80,6 +80,12 @@ class Project < ActiveRecord::Base
 
   before_save { cd.upcase! }
 
+  scope :between, lambda { |start_on, end_on|
+    where(Project.arel_table[:start_on].gteq(start_on)).where(Project.arel_table[:end_on].lteq(end_on))
+  }
+  scope :gteq_start_on, -> (start_on) { where(Project.arel_table[:start_on].gteq(start_on)) }
+  scope :lteq_end_on, -> (end_on) { where(Project.arel_table[:end_on].lteq(end_on)) }
+
   def self.sequence(prefix)
     @max_sequence = where('cd LIKE ?', "%#{prefix}%").pluck(:cd).map { |cd| cd.gsub(prefix, "").to_i }.max
     @sequence = @max_sequence ? @max_sequence + 1 : 1

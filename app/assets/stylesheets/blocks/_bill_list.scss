@@ -4,6 +4,29 @@
 
   &__search {
     margin-bottom: $base-spacing;
+
+    &__date {
+      @include display(flex);
+      margin-bottom: $base-spacing;
+
+      &__start {
+        @include span-columns(3);
+      }
+
+      &__end {
+        @include span-columns(3);
+        margin-top: $base-spacing;
+      }
+
+      &__btn {
+        @include span-columns(2);
+        margin-top: $base-spacing;
+
+        &--search {
+          @include btn--default;
+        }
+      }
+    }
   }
 
   &__tbl {

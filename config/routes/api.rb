@@ -25,5 +25,7 @@ Rails.application.routes.draw do
     patch "partner_members/:project_id/:partner_id", to: "partner_members#update", as: "update_partner_members"
     resources :project_groups, only: [:index, :create, :update]
     resources :bills, only: [:index]
+    post "projects/search_result", to: "projects#search_result"
+    post "bills/search_result", to: "bills#search_result"
   end
 end
