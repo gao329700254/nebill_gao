@@ -23,7 +23,6 @@ $ ->
           $.each Array.prototype.slice.call(@files, 0), (i, file) =>
             @_handleUpload(file)
           @file_input.value = ''
-          @$dispatch('uploadFileEvent')
         finally
           submit.prop('disabled', false)
       _handleUpload: (file) ->
@@ -40,6 +39,7 @@ $ ->
           processData: false
         .done (response) =>
           toastr.success('', response.message)
+          @$dispatch('uploadFileEvent')
         .fail (response) =>
           json = response.responseJSON
           toastr.error(json.errors.full_messages.join('<br>'), json.message)
