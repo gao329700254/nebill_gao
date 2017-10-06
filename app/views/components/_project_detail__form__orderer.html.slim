@@ -25,6 +25,12 @@ fieldset.project_detail__form__orderer
       .project_detail__form__item
         = label_tag :orderer_address, t('page.project_show.project_detail.address')
         = text_field_tag :orderer_address, nil, 'v-model' => 'project.orderer_address', ':disabled' => '!editMode'
-  .project_detail__form__item
-    = label_tag :orderer_memo, t('page.project_show.project_detail.memo')
-    = text_area_tag :orderer_memo, nil, 'v-model' => 'project.orderer_memo', ':disabled' => '!editMode'
+  .project_detail__form__container
+    .project_detail__form__container__group_2
+      .project_detail__form__item
+        = label_tag :orderer_phone_number, t('page.project_show.project_detail.phone_number')
+        = text_area_tag :orderer_phone_number, nil, 'v-model' => 'project.orderer_phone_number', ':disabled' => '!editMode'
+    .project_detail__form__container__group_3
+      .project_detail__form__item
+        = label_tag :orderer_memo, t('page.project_detail.memo')
+        = text_area_tag :orderer_memo, nil, 'v-model' => 'project.orderer_memo', ':disabled' => '!editMode'

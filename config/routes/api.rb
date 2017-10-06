@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :clients, only: [:index, :create, :show, :update]
     resources :users, only: [:index, :create]
     resources :partners, only: [:index, :create]
+    post "projects/create_with_client", to: "projects#create_with_client"
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
       collection do
         get ':id/select_status', to: "projects#select_status"

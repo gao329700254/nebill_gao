@@ -33,6 +33,12 @@ fieldset.project_new__form__orderer
       .project_new__form__item
         = label_tag :orderer_address, t('page.project_new.address')
         = text_field_tag :orderer_address, nil, 'v-model' => 'project.orderer_address'
-  .project_new__form__item
-    = label_tag :orderer_memo, t('page.project_new.memo')
-    = text_area_tag :orderer_memo, nil, 'v-model' => 'project.orderer_memo'
+  .project_new__form__container
+    .project_new__form__container__group_2
+      .project_new__form__item
+        = label_tag :orderer_phone_number, t('page.project_new.phone_number')
+        = text_area_tag :orderer_phone_number, nil, 'v-model' => 'project.orderer_phone_number'
+    .project_new__form__container__group_3
+      .project_new__form__item
+        = label_tag :orderer_memo, t('page.project_new.memo')
+        = text_area_tag :orderer_memo, nil, 'v-model' => 'project.orderer_memo'

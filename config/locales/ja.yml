@@ -360,11 +360,13 @@ ja:
       orderer: 受注先会社情報
       billing: 請求先会社情報
       copy: 受注先から請求先に値をコピー
+      client_new: 新規作成
       company_name: 会社名
       department_name: 部署名
       personnel_names: 担当者名
       address: 住所
       zip_code: 郵便番号
+      phone_number: 電話番号
       memo: メモ
     project_list:
       title: プロジェクト一覧
@@ -392,6 +394,7 @@ ja:
         personnel_names: 担当者名
         address: 住所
         zip_code: 郵便番号
+        phone_number: 電話番号
         memo: メモ
       bill:
         bill_new: 請求新規作成

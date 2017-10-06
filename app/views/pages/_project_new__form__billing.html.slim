@@ -31,6 +31,12 @@ fieldset.project_new__form__billing
       .project_new__form__item
         = label_tag :billing_address, t('page.project_new.address')
         = text_field_tag :billing_address, nil, 'v-model' => 'project.billing_address'
-  .project_new__form__item
-    = label_tag :billing_memo, t('page.project_new.memo')
-    = text_area_tag :billing_memo, nil, 'v-model' => 'project.billing_memo'
+  .project_new__form__container
+    .project_new__form__container__group_2
+      .project_new__form__item
+        = label_tag :billing_phone_number, t('page.project_new.phone_number')
+        = text_area_tag :billing_phone_number, nil, 'v-model' => 'project.billing_phone_number'
+    .project_new__form__container__group_3
+      .project_new__form__item
+        = label_tag :billing_memo, t('page.project_new.memo')
+        = text_area_tag :billing_memo, nil, 'v-model' => 'project.billing_memo'

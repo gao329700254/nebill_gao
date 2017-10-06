@@ -61,6 +61,9 @@ Vue.modules.projectHelper = {
       orderer_zip_code:
         init: ''
         exist: { contracted: true, uncontracted: true }
+      orderer_phone_number:
+        init: ''
+        exist: { contracted: true, uncontracted: true }
       orderer_memo:
         init: ''
         exist: { contracted: true, uncontracted: true }
@@ -77,6 +80,9 @@ Vue.modules.projectHelper = {
         init: ''
         exist: { contracted: true, uncontracted: true }
       billing_zip_code:
+        init: ''
+        exist: { contracted: true, uncontracted: true }
+      billing_phone_number:
         init: ''
         exist: { contracted: true, uncontracted: true }
       billing_memo:

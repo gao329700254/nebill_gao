@@ -134,6 +134,8 @@ ActiveRecord::Schema.define(version: 20171003091655) do
     t.integer  "estimated_amount"
     t.boolean  "is_regular_contract"
     t.string   "status"
+    t.string   "orderer_phone_number"
+    t.string   "billing_phone_number"
   end
 
   add_index "projects", ["cd"], name: "index_projects_on_cd", unique: true, using: :btree

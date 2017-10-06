@@ -7,6 +7,7 @@ FactoryGirl.define do
         [Faker::Name.name, Faker::Name.name],
         "#{Faker::Address.city} #{Faker::Address.secondary_address}",
         Faker::Address.zip_code,
+        Faker::PhoneNumber.phone_number,
         Faker::Lorem.sentence,
       )
     end
