@@ -116,6 +116,7 @@ RSpec.describe Project do
     let!(:project1) { create(:contracted_project, start_on: 1.month.ago, end_on: 1.week.ago) }
     let!(:project2) { create(:contracted_project, start_on: 1.week.ago, end_on: 3.days.ago) }
     let!(:project3) { create(:contracted_project, start_on: 3.days.ago, end_on: 1.day.ago) }
+    let!(:project4) { create(:contracted_project, start_on: 1.day.ago, end_on: 1.month.since) }
 
     context 'between' do
       subject { Project.between(1.month.ago, 3.days.ago) }
@@ -130,6 +131,11 @@ RSpec.describe Project do
     context 'lteq_end_on' do
       subject { Project.lteq_end_on(1.week.ago) }
       it { is_expected.to include project1 }
+    end
+
+    context 'progress' do
+      subject { Project.progress(Time.zone.now) }
+      it { is_expected.to include project4 }
     end
   end
 end

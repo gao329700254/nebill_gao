@@ -28,6 +28,10 @@
       = label_tag :contracted, t('page.project_list.contract_type.contracted')
       = radio_button_tag :uncontracted, false, false, id: 'uncontracted', 'v-model' => 'contractStatus'
       = label_tag :uncontracted, t('page.project_list.contract_type.uncontracted')
+      = check_box_tag :progress, true, false, id: 'progress', 'v-model' => 'progressProject', 'v-bind:disabled' => 'finishedStatus'
+      = label_tag :progress, t('page.project_list.progress')
+      = check_box_tag :finished, true, false, id: 'finished', 'v-model' => 'finishedStatus', 'v-bind:disabled' => 'progressProject'
+      = label_tag :finished, t('page.project_list.finished')
   table.project_list__tbl
     thead.project_list__tbl__head
       tr.project_list__tbl__head__row
@@ -43,7 +47,7 @@
       tr.project_list__tbl__body__row [
         v-bind:class = "project.status === '#{t('enumerize.defaults.status.finished')}' ? 'project_list__tbl__body__row--finished'
                                                                                         : 'project_list__tbl__body__row'"
-        v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted'| orderBy sortKey"
+        v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted' | filterBy finished in 'status'"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"
         track-by   = "id"
