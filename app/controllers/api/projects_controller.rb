@@ -9,7 +9,7 @@ class Api::ProjectsController < Api::ApiController
                   Project.all
                 end
 
-    render json: @projects, status: :ok
+    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def create

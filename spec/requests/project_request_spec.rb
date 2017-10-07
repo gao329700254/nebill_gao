@@ -6,7 +6,7 @@ RSpec.describe 'projects request', versioning: true do
   before { login(user) }
 
   describe 'GET /api/projects' do
-    let!(:project1) { create(:contracted_project) }
+    let!(:project1) { create(:contracted_project, is_regular_contract: true) }
     let!(:project2) { create(:contracted_project) }
     let!(:project3) { create(:uncontracted_project) }
     let(:path) { "/api/projects" }
@@ -24,11 +24,11 @@ RSpec.describe 'projects request', versioning: true do
       expect(json[0]['name']).to                     eq project1.name
       expect(json[0]['contracted']).to               eq project1.contracted
       expect(json[0]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
-      expect(json[0]['status']).to                   eq project1.status
       expect(json[0]['is_using_ses']).to             eq project1.is_using_ses
-      expect(json[0]['is_regular_contract']).to      eq project1.is_regular_contract
       expect(json[0]['contract_type']).to            eq project1.contract_type
       expect(json[0]['estimated_amount']).to         eq project1.estimated_amount
+      expect(json[0]['status']).to                   eq I18n.t("enumerize.defaults.status.#{project1.status}")
+      expect(json[0]['is_regular_contract']).to      eq I18n.t("enumerize.defaults.regular_contract")
       expect(json[0]['start_on']).to                 eq project1.start_on.strftime("%Y-%m-%d")
       expect(json[0]['end_on']).to                   eq project1.end_on.strftime("%Y-%m-%d")
       expect(json[0]['amount']).to                   eq project1.amount

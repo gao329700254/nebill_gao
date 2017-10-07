@@ -25,6 +25,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
            start_on: 1.month.ago,
            end_on: 1.week.ago,
            status: :finished,
+           is_regular_contract: true,
           )
   end
   given!(:project2) do
@@ -65,31 +66,36 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
     is_expected.to have_checked_field   'all'
     is_expected.to have_unchecked_field 'contracted'
     is_expected.to have_unchecked_field 'uncontracted'
-    is_expected.to have_content         'プロジェクト新規作成'
+    is_expected.to have_content 'プロジェクト新規作成'
+    is_expected.to have_content 'ステータス'
     is_expected.to have_content 'ID'
     is_expected.to have_content '名前'
     is_expected.to have_content '受注先会社名'
     is_expected.to have_content '開始日'
     is_expected.to have_content '終了日'
     is_expected.to have_content '契約日'
+    is_expected.to have_content '金額'
 
     is_expected.to have_content project1.cd
+    is_expected.to have_content I18n.t("enumerize.defaults.regular_contract")
+    is_expected.to have_content I18n.t("enumerize.defaults.status.#{project1.status}")
     is_expected.to have_content project1.name
     is_expected.to have_content project1.orderer_company_name
     is_expected.to have_content project1.start_on
     is_expected.to have_content project1.end_on
     is_expected.to have_content project1.contract_on
+    is_expected.to have_content project1.amount.to_s(:delimited)
 
     is_expected.to have_content project2.cd
     is_expected.to have_content project3.cd
     is_expected.to have_content project4.cd
     is_expected.to have_content project5.cd
 
-    expect(all('.project_list__tbl__body__row td:first-child')[0]).to have_text project1.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[1]).to have_text project3.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[2]).to have_text project2.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[3]).to have_text project4.cd
-    expect(all('.project_list__tbl__body__row td:first-child')[4]).to have_text project5.cd
+    expect(all('.project_list__tbl__body__row td:nth-child(2)')[0]).to have_text project1.cd
+    expect(all('.project_list__tbl__body__row td:nth-child(2)')[1]).to have_text project3.cd
+    expect(all('.project_list__tbl__body__row td:nth-child(2)')[2]).to have_text project2.cd
+    expect(all('.project_list__tbl__body__row td:nth-child(2)')[3]).to have_text project4.cd
+    expect(all('.project_list__tbl__body__row td:nth-child(2)')[4]).to have_text project5.cd
 
     expect(find("#project-#{project1.id}")[:class]).to eq 'project_list__tbl__body__row project_list__tbl__body__row--finished'
     expect(find("#project-#{project2.id}")[:class]).to eq 'project_list__tbl__body__row'

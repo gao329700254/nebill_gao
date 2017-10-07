@@ -31,27 +31,32 @@
   table.project_list__tbl
     thead.project_list__tbl__head
       tr.project_list__tbl__head__row
+        th.project_list__tbl__item--status          = t('activerecord.attributes.project.status')
         th.project_list__tbl__item--cd              = t('activerecord.attributes.project.cd')
         th.project_list__tbl__item--project_name    = t('activerecord.attributes.project.name')
         th.project_list__tbl__item--orderer_company = t('activerecord.attributes.project.orderer_company_name')
         th.project_list__tbl__item--start_on        = t('activerecord.attributes.project.start_on')
         th.project_list__tbl__item--end_on          = t('activerecord.attributes.project.end_on')
         th.project_list__tbl__item--contract_on     = t('activerecord.attributes.project.contract_on')
+        th.project_list__tbl__item--amount          = t('activerecord.attributes.project.amount')
     tbody.project_list__tbl__body
       tr.project_list__tbl__body__row [
-        v-bind:class = "project.status === 'finished' ? 'project_list__tbl__body__row--finished'
-                                                      : 'project_list__tbl__body__row'"
+        v-bind:class = "project.status === '#{t('enumerize.defaults.status.finished')}' ? 'project_list__tbl__body__row--finished'
+                                                                                        : 'project_list__tbl__body__row'"
         v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted'| orderBy sortKey"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"
         track-by   = "id"
       ]
+        td.project_list__tbl__item--status          v-text='project.is_regular_contract + project.status' v-if='project.contracted'
+        td.project_list__tbl__item--status          v-if='!project.contracted'
         td.project_list__tbl__item--cd              v-text='project.cd'
         td.project_list__tbl__item--project_name    v-text='project.name'
         td.project_list__tbl__item--orderer_company v-text='project.orderer_company_name'
         td.project_list__tbl__item--start_on        v-text='project.start_on'
         td.project_list__tbl__item--end_on          v-text='project.end_on'
         td.project_list__tbl__item--contract_on     v-text='project.contract_on'
+        td.project_list__tbl__item--amount          v-numeric='project.amount'
 
   component [
     :is        = "'projectNew'"

@@ -64,6 +64,12 @@
     %project_list__tbl__item {
       @include list_tbl__item;
 
+      &--status {
+        @extend %project_list__tbl__item;
+        @include span-columns(3);
+        text-align: center;
+      }
+
       &--cd {
         @extend %project_list__tbl__item;
         @include span-columns(2);
@@ -71,27 +77,33 @@
 
       &--project_name {
         @extend %project_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--orderer_company {
         @extend %project_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--start_on {
         @extend %project_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--end_on {
         @extend %project_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--contract_on {
         @extend %project_list__tbl__item;
+        @include span-columns(3);
+      }
+
+      &--amount {
         @include span-columns(2);
+        padding-right: 5rem;
+        text-align: right;
       }
     }
   }

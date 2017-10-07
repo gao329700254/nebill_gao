@@ -340,6 +340,7 @@ ja:
         turn_over:     売上
         publish_bill:  請求書発行
         finished:      終了
+      regular_contract: 定期　
     role:
       general: 一般
       superior: 上長
