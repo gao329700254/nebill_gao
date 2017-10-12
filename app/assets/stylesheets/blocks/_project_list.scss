@@ -101,7 +101,7 @@
       }
 
       &--amount {
-        @include span-columns(2);
+        @include span-columns(3);
         padding-right: 5rem;
         text-align: right;
       }

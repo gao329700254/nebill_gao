@@ -102,6 +102,7 @@ class Project < ActiveRecord::Base
   }
   scope :gteq_start_on, -> (start_on) { where(Project.arel_table[:start_on].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Project.arel_table[:end_on].lteq(end_on)) }
+  scope :progress, -> (today) { where(Project.arel_table[:start_on].lteq(today)).where(Project.arel_table[:end_on].gteq(today)) }
 
   def self.sequence(prefix)
     @max_sequence = where('cd LIKE ?', "%#{prefix}%").pluck(:cd).map { |cd| cd.gsub(prefix, "").to_i }.max

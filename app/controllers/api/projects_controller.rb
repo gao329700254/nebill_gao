@@ -6,7 +6,7 @@ class Api::ProjectsController < Api::ApiController
     @projects = if params.key? :group_id
                   Project.where(group_id: params[:group_id].presence)
                 else
-                  Project.all
+                  Project.all.order("status desc, contracted asc")
                 end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
@@ -72,6 +72,7 @@ class Api::ProjectsController < Api::ApiController
     render 'last_updated_at', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
+  # rubocop:disable Metrics/AbcSize
   def search_result
     @projects = if params[:start].present? && params[:end].present?
                   Project.between(params[:start], params[:end])
@@ -83,8 +84,12 @@ class Api::ProjectsController < Api::ApiController
                   Project.all
                 end
 
-    render json: @projects, status: :ok
+    @projects = @projects.progress(params[:today]) if params[:today]
+    @projects.order!("status desc, contracted asc")
+
+    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
+  # rubocop:enable Metrics/AbcSize
 
   def bill_default_values
     now = Time.zone.now

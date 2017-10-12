@@ -2,7 +2,6 @@ $ ->
   window.projectList = new Vue
     el:  '#project_list'
     data:
-      sortKey: 'contract_on'
       selectSchema:
         cd: 'eq'
         name: 'like'
@@ -12,6 +11,20 @@ $ ->
       contractStatus: undefined
       start: undefined
       end: undefined
+      progressProject: true
+      today: new Date()
+      finishedStatus: undefined
+      postDate : undefined
+    watch:
+      progressProject: (val) ->
+        if val == true
+          @postDate = @today.getFullYear() + '-' + ( @today.getMonth() + 1 ) + '-' + @today.getDate()
+        else
+          @postDate = undefined
+        @search()
+      finishedStatus: (val) ->
+        @finished = if val == true then '終了' else undefined
+        @search()
     methods:
       loadProjects: ->
         $.ajax '/api/projects.json'
@@ -29,13 +42,15 @@ $ ->
             data: {
               start: @start
               end: @end
+              today: @postDate
             }
           .done (response) =>
             @list = response
         finally
           search.prop('disabled', false)
     compiled: ->
-      @loadProjects()
+      @postDate = @today.getFullYear() + '-' + ( @today.getMonth() + 1 ) + '-' + @today.getDate()
+      @search()
     events:
       loadProjectsEvent: ->
         @loadProjects()
