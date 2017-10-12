@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20171009095141) do
   end
 
   add_index "members", ["bill_id"], name: "index_members_on_bill_id", using: :btree
-  add_index "members", ["employee_id"], name: "index_members_on_employee_id", using: :btree
+  add_index "members", ["employee_id", "bill_id"], name: "index_members_on_employee_id_and_bill_id", unique: true, using: :btree
   add_index "members", ["type"], name: "index_members_on_type", using: :btree
 
   create_table "partners", force: :cascade do |t|

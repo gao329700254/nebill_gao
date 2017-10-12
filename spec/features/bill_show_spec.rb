@@ -241,7 +241,6 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
       let(:file_name) { ['請求書', bill.project.billing_company_name, bill.cd].compact.join("_") + '.xlsx' }
 
       it 'should download an excel file' do
-        skip
         click_on 'Excel'
         expect(page.response_headers['Content-Disposition']).to include(file_name)
         expect(page.response_headers['Content-Type']).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -338,7 +337,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
     end
 
     describe 'Partner List' do
-      subject { find('.partner') }
+      subject { find('.bill_show__form__member_list__partner') }
 
       describe 'Partner Member' do
         scenario 'should show partner attributes' do
@@ -386,7 +385,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
         end
 
         describe 'and click edit button' do
-          background { within('.partner') { click_button '編集' } }
+          background { within('.bill_show__form__member_list__partner') { click_button '編集' } }
 
           scenario 'should have edit partner fields' do
             is_expected.to     have_field 'name'              , disabled: false, with: partner1.name
@@ -700,7 +699,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
 
         scenario 'and click delete button' do
           expect do
-            within('.partner') { click_button '削除' }
+            within('.bill_show__form__member_list__partner') { click_button '削除' }
             wait_for_ajax
           end.to change(Member, :count).by(-2)
 
@@ -719,7 +718,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
         fill_in :new_max_limit_time, with: '2'
 
         expect do
-          within('.partner') { click_button '登録' }
+          within('.bill_show__form__member_list__partner') { click_button '登録' }
           wait_for_ajax
         end.to change(Member, :count).by(1)
 
@@ -734,7 +733,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
         fill_in :new_max_limit_time, with: '0.1'
 
         expect do
-          within('.partner') { click_button '登録' }
+          within('.bill_show__form__member_list__partner') { click_button '登録' }
           wait_for_ajax
         end.not_to change(Member, :count)
       end

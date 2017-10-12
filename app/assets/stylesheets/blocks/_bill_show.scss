@@ -49,56 +49,62 @@
       @include span-columns(6);
 
       &__partner {
+        @include list_tbl;
+
         &__head {
+          @include list_tbl__head__row;
+          border-color: $white-bg-color;
+
           &__title {
-            @include span-columns(6);
+            float: left;
           }
 
           &__member_btn {
             &--new_partner {
               @include btn--primary;
+              float: right;
             }
           }
         }
 
-        &__tbl {
-          @include list_tbl;
+        &__list {
+          &__tbl {
+            @include list_tbl;
 
-          &__head {
-            &__row {
-              @include list_tbl__head__row;
-            }
-          }
-
-          &__body {
-            @include list_tbl__body;
-            &__row {
-              @include list_tbl__body__row;
-
-              #{$all-text-inputs-disabled},
-              select:disabled,
-              textarea:disabled {
-                border-bottom: $base-border;
-                border-radius: 0;
-                border-color: $white-bg-color;
-                box-shadow: none;
-                background-color: $white-bg-color;
-                text-align: center;
+            &__head {
+              &__row {
+                @include list_tbl__head__row;
               }
+            }
 
-              &--selected {
+            &__body {
+              @include list_tbl__body;
+              &__row {
                 @include list_tbl__body__row;
-                background-color: $yellow;
 
                 #{$all-text-inputs-disabled},
                 select:disabled,
                 textarea:disabled {
                   border-bottom: $base-border;
                   border-radius: 0;
-                  border-color: $yellow-bg-color;
+                  border-color: $white-bg-color;
                   box-shadow: none;
-                  background-color: $yellow-bg-color;
-                  text-align: center;
+                  background-color: $white-bg-color;
+                }
+
+                &--selected {
+                  @include list_tbl__body__row;
+                  background-color: $yellow;
+
+                  #{$all-text-inputs-disabled},
+                  select:disabled,
+                  textarea:disabled {
+                    border-bottom: $base-border;
+                    border-radius: 0;
+                    border-color: $yellow-bg-color;
+                    box-shadow: none;
+                    background-color: $yellow-bg-color;
+                  }
                 }
               }
             }
@@ -132,6 +138,8 @@
       }
 
       &__user {
+        margin-top: 5rem;
+
         &__tbl {
           @include list_tbl;
 

@@ -8,7 +8,8 @@ FactoryGirl.define do
   end
 
   factory :partner_member, parent: :member, class: PartnerMember do
-    after(:build) { |partner_member| partner_member.employee = create(:partner).employee }
+    transient { partner { create(:partner) } }
+    after(:build) { |partner_member, evaluator| partner_member.employee = evaluator.partner.employee }
     unit_price 1
     working_rate 0.6
     min_limit_time 1

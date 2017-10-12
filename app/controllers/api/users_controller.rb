@@ -7,7 +7,7 @@ class Api::UsersController < Api::ApiController
     @users =  if @bill
                 @bill.users
               elsif @project
-                User.where(id: Employee.where(id: UserMember.where(bill_id: @project.bills).pluck(:employee_id)).pluck(:actable_id)).uniq!
+                User.where(id: @project.bills.map { |bill| bill.users.pluck(:id) }.flatten.uniq)
               else
                 User.all
               end

@@ -1,13 +1,13 @@
-table.bill_show__form__member_list__partner__tbl
-  thead.bill_show__form__member_list__partner__tbl__head
-    tr.bill_show__form__member_list__partner__tbl__head__row
+table.bill_show__form__member_list__partner__list__tbl
+  thead.bill_show__form__member_list__partner__list__tbl__head
+    tr.bill_show__form__member_list__partner__list__tbl__head__row
       th.bill_show__form__member_list__partner__item--name           = t('activerecord.attributes.partner.name')
       th.bill_show__form__member_list__partner__item--unit_price     = t('activerecord.attributes.partner_member.unit_price')
       th.bill_show__form__member_list__partner__item--working_rate   = t('activerecord.attributes.partner_member.working_rate')
       th.bill_show__form__member_list__partner__item--min_limit_time = t('activerecord.attributes.partner_member.min_limit_time')
       th.bill_show__form__member_list__partner__item--max_limit_time = t('activerecord.attributes.partner_member.max_limit_time')
-  tbody.bill_show__form__member_list__partner__tbl__body
-    tr.bill_show__form__member_list__partner__tbl__body__row [
+  tbody.bill_show__form__member_list__partner__list__tbl__body
+    tr.bill_show__form__member_list__partner__list__tbl__body__row [
       v-for = "partner in partners"
       v-bind:class = "partner.selected ? 'bill_show__form__member_list__partner__tbl__body__row--selected'
                                        : 'bill_show__form__member_list__partner__tbl__body__row'"

@@ -33,6 +33,7 @@ RSpec.describe 'partner request' do
       let!(:partner1) { create(:partner, :with_bill, bill: bill) }
       let!(:partner2) { create(:partner, :with_bill, bill: bill) }
       let!(:partner3) { create(:partner, :with_bill, bill: bill) }
+      let!(:partner4) { create(:partner, :with_bill) }
       let(:path) { "/api/bills/#{bill.id}/partners" }
 
       it 'return a list of bill_partners' do
@@ -91,9 +92,11 @@ RSpec.describe 'partner request' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
       let(:bill) { create(:bill, project: project) }
+      let(:bill2) { create(:bill, project: project) }
       let!(:partner1) { create(:partner, :with_bill, bill: bill) }
       let!(:partner2) { create(:partner, :with_bill, bill: bill) }
       let!(:partner3) { create(:partner, :with_bill, bill: bill) }
+      let!(:partner4) { create(:partner_member, bill: bill2, partner: partner3) }
       let(:path) { "/api/projects/#{project.id}/partners" }
 
       it 'return a list of partners' do

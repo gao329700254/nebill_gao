@@ -6,7 +6,7 @@ class ModifyMembersForeignKey < ActiveRecord::Migration
     add_column :members, :bill_id, :integer, null: false
     add_foreign_key :members, :bills, on_delete: :cascade
     add_index :members, [:bill_id]
-    add_index :members, [:employee_id]
+    add_index :members, [:employee_id, :bill_id], unique: true
   end
 
   def down

@@ -54,19 +54,19 @@
           = fa_icon 'trash', text: t('helpers.delete')
 
       .bill_show__form__member_list
-        .partner
+        .bill_show__form__member_list__partner
           .bill_show__form__member_list__partner__head
-            .bill_show__form__member_list__partner__title
+            .bill_show__form__member_list__partner__head__title
               = t('page.bill_show.partner')
             .bill_show__form__member_list__partner__head__member_btn
               = button_tag 'v-on:click.prevent' => 'showPartnerNew', 'v-if' => '!bill.deposit_on',
               class: 'bill_show__form__member_list__partner__head__member_btn--new_partner' do
                 = fa_icon 'check', text: t('component.member_list.new_partner')
-          .bill_show__form__member_list__partner
+          .bill_show__form__member_list__partner__list
             == render 'components/bill_show_partner_member_list_tbl'
 
-          .bill_show__form__member_list__add_partner_member
-            == render 'components/bill_show__form__member_list__add_partner_member'
+            .bill_show__form__member_list__add_partner_member
+              == render 'components/bill_show__form__member_list__add_partner_member'
 
           .bill_show__form__member_list__partner_btn
             = button_tag 'v-on:click.prevent' => 'editModeOn', 'v-if' => '!partnerEditMode && selectedPartners.length > 0',

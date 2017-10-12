@@ -602,7 +602,6 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
                 end
 
                 within("#partner-#{partner2.id}") do
-                  skip
                   fill_in :name           , with: 'test2 name'
                   fill_in :email          , with: 'test2@example.com'
                   fill_in :company_name   , with: 'test2 company'
@@ -963,7 +962,6 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
       end
 
       scenario 'and submit bill new then status should have "finished"' do
-        skip
         fill_in :cd              , with: 'BILL-1'
         fill_in :amount          , with: project.amount
         fill_in :delivery_on     , with: '2016-01-01'

@@ -16,9 +16,9 @@
 #
 # Indexes
 #
-#  index_members_on_bill_id      (bill_id)
-#  index_members_on_employee_id  (employee_id)
-#  index_members_on_type         (type)
+#  index_members_on_bill_id                  (bill_id)
+#  index_members_on_employee_id_and_bill_id  (employee_id,bill_id) UNIQUE
+#  index_members_on_type                     (type)
 #
 # Foreign Keys
 #
@@ -31,8 +31,9 @@ class Member < ActiveRecord::Base
   belongs_to :bill
   has_paper_trail meta: { bill_id: :bill_id, project_id: :project_id }
 
+  validates :employee_id, uniqueness: { scope: :bill_id }
+
   def project_id
     bill.project.id
   end
-  validates :employee_id, uniqueness: { scope: :bill_id }
 end
