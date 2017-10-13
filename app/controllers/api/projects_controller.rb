@@ -37,6 +37,12 @@ class Api::ProjectsController < Api::ApiController
   end
 
   def show
+    @project = if params[:bill_id]
+                 Bill.find_by(id: params[:bill_id]).project
+               else
+                 Project.find(params[:id])
+               end
+
     render json: @project, status: :ok
   end
 

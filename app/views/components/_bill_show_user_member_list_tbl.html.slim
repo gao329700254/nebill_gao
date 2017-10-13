@@ -13,6 +13,6 @@ table.bill_show__form__member_list__user__tbl
     ]
 
       td
-        input type="checkbox" name="selected" v-model="user.selected" v-if="!bill.deposit_on"
+        input type="checkbox" name='selected' v-model='user.selected' v-if='!bill.deposit_on && project.status != "finished"'
       td.bill_show__form__member_list__user__tbl__item--name v-text='user.name'
       td.bill_show__form__member_list__user__tbl__item--email v-text='user.email'

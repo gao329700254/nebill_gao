@@ -4,7 +4,6 @@ $ ->
     props: ['projectId']
     data: ->
       partners: []
-      allPartners: []
       selectedPartnerId: undefined
       project:
         status: undefined
@@ -71,7 +70,6 @@ $ ->
             elems = document.getElementById('partner-' + partner.id).getElementsByTagName('input')
             for i in [0...elems.length]
               elems[i].disabled = true
-            @$dispatch('editMemberEvent')
           .fail (response) =>
             json = response.responseJSON
             @loadPartners()

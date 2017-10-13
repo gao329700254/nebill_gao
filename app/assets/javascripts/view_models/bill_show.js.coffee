@@ -32,6 +32,7 @@ $ ->
         max_limit_time: ''
       users: []
       allUsers: []
+      project: []
       selectedUserId: undefined
     computed:
       billInit: -> _.mapObject @billSchema, (value, key) -> value.init
@@ -48,6 +49,7 @@ $ ->
     watch:
       billId: ->
         @loadBill()
+        @loadProject()
       editMode: (val) ->
         @bill = $.extend(true, {}, @billOriginal) unless val
       partnerEditMode: (val) ->
@@ -78,6 +80,10 @@ $ ->
         $.ajax '/api/users'
           .done (response) =>
             @allUsers = response
+      loadProject: ->
+        $.ajax "/api/projects/bill/#{@billId}.json"
+          .done (response) =>
+            @project = response
       editModeOn: ->
         @partnerEditMode = true
         _.each @selectedPartners, (v, k) ->
@@ -278,3 +284,5 @@ $ ->
       loadAllPartnersEvent: (partnerId) ->
         @loadAllPartners()
         @selectedPartnerId = partnerId
+      loadProjectEvent: ->
+        @loadProject()

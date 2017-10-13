@@ -40,7 +40,8 @@
             = label_tag :contracted, t('activerecord.attributes.bill.memo')
             = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
 
-        = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode', class: 'bill_show__form__btn--edit' do
+        = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
+        class: 'bill_show__form__btn--edit' do
           = fa_icon 'edit', text: t('helpers.edit')
         = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
           = fa_icon 'remove', text: t('helpers.cancel')
@@ -50,7 +51,8 @@
           = fa_icon 'download', text: t('helpers.submit.excel')
         = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
           = fa_icon 'download', text: t('helpers.submit.pdf')
-        = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode', class: 'bill_show__form__btn--delete' do
+        = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
+        class: 'bill_show__form__btn--delete' do
           = fa_icon 'trash', text: t('helpers.delete')
 
       .bill_show__form__member_list
@@ -59,7 +61,7 @@
             .bill_show__form__member_list__partner__head__title
               = t('page.bill_show.partner')
             .bill_show__form__member_list__partner__head__member_btn
-              = button_tag 'v-on:click.prevent' => 'showPartnerNew', 'v-if' => '!bill.deposit_on',
+              = button_tag 'v-on:click.prevent' => 'showPartnerNew', 'v-if' => '!bill.deposit_on && project.status != "finished"',
               class: 'bill_show__form__member_list__partner__head__member_btn--new_partner' do
                 = fa_icon 'check', text: t('component.member_list.new_partner')
           .bill_show__form__member_list__partner__list
@@ -80,19 +82,18 @@
             class: 'bill_show__form__member_list__partner_btn--delete' do
               = fa_icon 'trash', text: t('helpers.delete')
 
-        .user
-          .bill_show__form__member_list__user
-            = t('page.bill_show.member')
-            ==render 'components/bill_show_user_member_list_tbl'
+        .bill_show__form__member_list__user
+          = t('page.bill_show.member')
+          == render 'components/bill_show_user_member_list_tbl'
 
           .bill_show__form__member_list__add_user_member
-            select.bill_show__form__member_list__add_user_member__list name="user" v-model="selectedUserId" v-if="!bill.deposit_on"
+            select.bill_show__form__member_list__add_user_member__list name='user' v-model='selectedUserId' v-if='!bill.deposit_on && project.status != "finished"'
               option v-for="user in selectableUsers" value="{{user.id}}" {{user.name}}
-            = button_tag 'v-on:click.prevent' => 'addUserMember', 'v-if' => '!bill.deposit_on',
+            = button_tag 'v-on:click.prevent' => 'addUserMember', 'v-if' => '!bill.deposit_on && project.status != "finished"',
             class: 'bill_show__form__member_list__add_user_member__btn--submit' do
               = fa_icon 'check', text: t('helpers.submit.create')
           .user_member_list__delete_member v-if="selectedUsers.length > 0"
-            = button_tag 'v-on:click.prevent' => 'deleteUserMember', 'v-if' => '!bill.deposit_on',
+            = button_tag 'v-on:click.prevent' => 'deleteUserMember', 'v-if' => '!bill.deposit_on && project.status != "finished"',
             class: 'bill_show__form__member_list__add_user_member__user_btn--delete' do
               = fa_icon 'trash', text: t('helpers.delete')
 

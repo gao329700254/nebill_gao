@@ -32,6 +32,7 @@
 # api_projects_create_with_client POST   /api/projects/create_with_client(.:format)              api/projects#create_with_client
 #                                 GET    /api/projects/:id/select_status(.:format)               api/projects#select_status
 #                                 GET    /api/projects/:id/last_updated_at(.:format)             api/projects#last_updated_at
+#                                 GET    /api/projects/bill/:bill_id(.:format)                   api/projects#show
 #               api_project_users GET    /api/projects/:project_id/users(.:format)               api/users#index
 #               api_bill_partners GET    /api/bills/:bill_id/partners(.:format)                  api/partners#index
 #                  api_bill_users GET    /api/bills/:bill_id/users(.:format)                     api/users#index

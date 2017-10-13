@@ -9,14 +9,14 @@ table.bill_show__form__member_list__partner__list__tbl
   tbody.bill_show__form__member_list__partner__list__tbl__body
     tr.bill_show__form__member_list__partner__list__tbl__body__row [
       v-for = "partner in partners"
-      v-bind:class = "partner.selected ? 'bill_show__form__member_list__partner__tbl__body__row--selected'
-                                       : 'bill_show__form__member_list__partner__tbl__body__row'"
+      v-bind:class = "partner.selected ? 'bill_show__form__member_list__partner__list__tbl__body__row--selected'
+                                       : 'bill_show__form__member_list__partner__list__tbl__body__row'"
       id = "partner-{{partner.id}}"
       track-by     = "id"
     ]
       td.bill_show__form__member_list__partner__item--name
         div v-bind:class = "[partnerEditMode ? '' : 'bill_show__form__member_list__partner__item--name--non_edit']"
-          input type="checkbox" name="selected" v-model="partner.selected" v-if='!partnerEditMode && !bill.deposit_on'
+          input type="checkbox" name="selected" v-model="partner.selected" v-if='!partnerEditMode && !bill.deposit_on && project.status != "finished"'
         div v-bind:class = "[partnerEditMode ? '' : 'bill_show__form__member_list__partner__item--name--non_edit']"
           = text_field_tag :name, nil, 'v-model' => 'partner.name', ':disabled' => 'true'
       td.bill_show__form__member_list__partner__item--unit_price

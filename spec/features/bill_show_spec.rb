@@ -241,6 +241,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
       let(:file_name) { ['請求書', bill.project.billing_company_name, bill.cd].compact.join("_") + '.xlsx' }
 
       it 'should download an excel file' do
+        sleep 1
         click_on 'Excel'
         expect(page.response_headers['Content-Disposition']).to include(file_name)
         expect(page.response_headers['Content-Type']).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -251,6 +252,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
       let(:file_name) { ['請求書', bill.project.billing_company_name, bill.cd].compact.join("_") + '.pdf' }
 
       it 'should download a PDF file' do
+        sleep 1
         click_on 'PDF'
         expect(page.response_headers['Content-Disposition']).to include(file_name)
         expect(page.response_headers['Content-Type']).to eq('application/pdf')
@@ -283,7 +285,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
 
   describe 'Member List View' do
     describe 'User List' do
-      subject { find('.user') }
+      subject { find('.bill_show__form__member_list__user') }
 
       scenario 'Show' do
         is_expected.to have_content '名前'
@@ -308,7 +310,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
         select other_user1.name, from: :user
 
         expect do
-          within('.user') { click_button '登録' }
+          within('.bill_show__form__member_list__user') { click_button '登録' }
           wait_for_ajax
         end.to change(Member, :count).by(1)
 
@@ -324,7 +326,7 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
 
         scenario 'and click delete button' do
           expect do
-            within('.user') { click_button '削除' }
+            within('.bill_show__form__member_list__user') { click_button '削除' }
             wait_for_ajax
           end.to change(Member, :count).by(-1)
 
@@ -812,6 +814,65 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
             is_expected.not_to have_css '.partner_new__outer'
           end
         end
+      end
+    end
+  end
+
+  describe 'Buttons' do
+    context 'when bills projects status is "finished"' do
+      given!(:project) { create(:contracted_project, status: 'finished') }
+      given!(:bill) { create(:bill, project: project) }
+
+      scenario 'bill_show page only have download buttons' do
+        expect(page).to                                           have_link 'Excel'
+        expect(page).to                                           have_link 'PDF'
+        expect('.bill_show__form__container__group').not_to       have_button '編集'
+        expect('.bill_show__form__container__group').not_to       have_button '削除'
+        expect('.bill_show__form__container__group').not_to       have_button 'キャンセル'
+        expect('.bill_show__form__container__group').not_to       have_button '更新'
+        expect('.bill_show__form__member_list__user').not_to      have_button '登録'
+        expect('.bill_show__form__member_list__user').not_to      have_field 'user'
+        expect('.bill_show__form__member_list__user').not_to      have_selector 'selected'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'partner'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'unit_price'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'working_rate'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'min_limit_time'
+        expect('.bill_show__form__member_list__partner').not_to   have_button 'max_limit_time'
+        expect('.bill_show__form__member_list__partner').not_to   have_button '登録'
+        expect('.bill_show__form__member_list__partner').not_to   have_button 'パートナー新規登録'
+        expect('.bill_show__form__member_list__partner').not_to   have_selector 'selected'
+      end
+    end
+
+    context 'when bills deposit_on is filled' do
+      background { click_button '編集' }
+
+      scenario 'bill_show page only have download buttons' do
+        sleep 1
+        fill_in :deposit_on, with: '2016-01-05'
+
+        expect do
+          click_button '更新'
+          wait_for_ajax
+        end.to change { bill.reload && bill.updated_at }
+
+        expect(page).to                                           have_link 'Excel'
+        expect(page).to                                           have_link 'PDF'
+        expect('.bill_show__form__container__group').not_to       have_button '編集'
+        expect('.bill_show__form__container__group').not_to       have_button '削除'
+        expect('.bill_show__form__container__group').not_to       have_button 'キャンセル'
+        expect('.bill_show__form__container__group').not_to       have_button '更新'
+        expect('.bill_show__form__member_list__user').not_to      have_button '登録'
+        expect('.bill_show__form__member_list__user').not_to      have_field 'user'
+        expect('.bill_show__form__member_list__user').not_to      have_selector 'selected'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'partner'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'unit_price'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'working_rate'
+        expect('.bill_show__form__member_list__partner').not_to   have_field 'min_limit_time'
+        expect('.bill_show__form__member_list__partner').not_to   have_button 'max_limit_time'
+        expect('.bill_show__form__member_list__partner').not_to   have_button '登録'
+        expect('.bill_show__form__member_list__partner').not_to   have_button 'パートナー新規登録'
+        expect('.bill_show__form__member_list__partner').not_to   have_selector 'selected'
       end
     end
   end
