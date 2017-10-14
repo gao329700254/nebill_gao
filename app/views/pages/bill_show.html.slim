@@ -87,7 +87,11 @@
           == render 'components/bill_show_user_member_list_tbl'
 
           .bill_show__form__member_list__add_user_member
-            select.bill_show__form__member_list__add_user_member__list name='user' v-model='selectedUserId' v-if='!bill.deposit_on && project.status != "finished"'
+            select.bill_show__form__member_list__add_user_member__list [
+              name='user'
+              v-model='selectedUserId'
+              v-if='!bill.deposit_on && project.status != "finished"'
+            ]
               option v-for="user in selectableUsers" value="{{user.id}}" {{user.name}}
             = button_tag 'v-on:click.prevent' => 'addUserMember', 'v-if' => '!bill.deposit_on && project.status != "finished"',
             class: 'bill_show__form__member_list__add_user_member__btn--submit' do

@@ -4,12 +4,14 @@
 script type='text/x-template' id='member_list'
   .member_list
     .member_list__user
+      = t('component.member_list.user')
       component [
         :is         = "'userMemberList'"
         :project-id = "projectId"
         keep-alive  = true
       ]
     .member_list__partner
+      = t('component.member_list.partner')
       component [
         :is         = "'partnerMemberList'"
         :project-id = "projectId"

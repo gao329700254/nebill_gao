@@ -64,25 +64,6 @@
     }
   }
 
-  &__add_member {
-    @include display(flex);
-
-    &__list {
-      flex: 1;
-    }
-
-    &__form {
-      &__item {
-        flex: 1;
-      }
-    }
-
-    &__btn {
-      @include btn--primary;
-      width: 100%;
-      }
-    }
-
   &__btn {
     &--edit,
     &--cancel,

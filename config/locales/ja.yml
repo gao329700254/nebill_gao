@@ -427,6 +427,8 @@ ja:
   component:
     member_list:
       new_partner: パートナーを新規登録
+      partner: パートナー
+      user: メンバー
   pdf:
     pj_no: 'PJNo.: '
     subject_title: '件名:'

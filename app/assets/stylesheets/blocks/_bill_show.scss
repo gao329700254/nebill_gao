@@ -204,11 +204,8 @@
       &__add_partner_member {
         @include display(flex);
 
-        &__list {
-          flex: 2;
-        }
-
         &__form {
+          &__list,
           &__item {
             flex: 1;
           }

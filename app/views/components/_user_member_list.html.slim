@@ -7,11 +7,7 @@ script type='text/x-template' id='user_member_list'
           th.user_member_list__tbl__item--email = t('activerecord.attributes.user.email')
       tbody.user_member_list__tbl__body
         tr.user_member_list__tbl__body__row [
-          v-for        = "user in users | orderBy 'name'"
-          id           = "user-{{user.id}}"
-          track-by     = "id"
-          v-bind:class = "user.selected ? 'user_member_list__tbl__body__row--selected'
-                                        : 'user_member_list__tbl__body__row'"
+          v-for = "user in users | orderBy 'name'"
         ]
           td.user_member_list__tbl__item--name v-text='user.name'
           td.user_member_list__tbl__item--email v-text='user.email'

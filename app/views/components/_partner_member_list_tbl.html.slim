@@ -8,7 +8,7 @@ table.partner_member_list__tbl
     tr.partner_member_list__tbl__body__row [
       v-for = "partner in partners"
       v-bind:class = "partner.selected ? 'partner_member_list__tbl__body__row--selected'
-                                      : 'partner_member_list__tbl__body__row'"
+                                       : 'partner_member_list__tbl__body__row'"
       id = "partner-{{partner.id}}"
       track-by     = "id"
     ]

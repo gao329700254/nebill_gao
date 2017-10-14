@@ -147,7 +147,7 @@ $ ->
       addMember: ->
         return unless @selectedPartnerId?
         try
-          addMember = $('.partner_member_list__add_member__btn')
+          addMember = $('.bill_show__form__member_list__add_partner_member__btn')
           addMember.prop('disabled', true)
           $.ajax
             url: "/api/partner_members/#{@billId}/#{@selectedPartnerId}.json"
@@ -170,7 +170,7 @@ $ ->
           addMember.prop('disabled', false)
       editMember: ->
         success_count = 0
-        edit = $('.bill_show__form__member_btn--submit')
+        edit = $('.bill_show__form__member_list__partner_btn--submit')
         edit.prop('disabled', true)
         if @failurePartnerIds.length > 0
           ids = @failurePartnerIds
@@ -214,7 +214,7 @@ $ ->
               @partnerEditMode = false
       deleteMember: ->
         try
-          destroy = $('.bill_show__form__member_btn--delete')
+          destroy = $('.bill_show__form__member_list__partner_btn--delete')
           destroy.prop('disabled', true)
           $.each @selectedPartners, (i, partner) =>
             $.ajax
@@ -236,7 +236,7 @@ $ ->
       addUserMember: ->
         return unless @selectedUserId?
         try
-          submit = $('.user_member_list__new_member__btn--submit')
+          submit = $('.bill_show__form__member_list__add_user_member__btn--submit')
           submit.prop('disabled', true)
           $.ajax
             url: "/api/user_members/#{@billId}/#{@selectedUserId}.json"
@@ -254,7 +254,7 @@ $ ->
           submit.prop('disabled', false)
       deleteUserMember: ->
         try
-          destroy = $('.user_member_list__delete_member--btn')
+          destroy = $('.bill_show__form__member_list__add_user_member__user_btn--delete')
           destroy.prop('disabled', true)
           $.each @selectedUsers, (i, user) =>
             $.ajax

@@ -18,11 +18,6 @@
       %user_member_list__tbl__body__row {
         @include list_tbl__body__row;
         font-size: $base-font-size;
-
-        &--selected {
-          @extend %user_member_list__tbl__body__row;
-          background-color: $yellow;
-        }
       }
     }
 
@@ -39,26 +34,6 @@
         @extend %user_member_list__tbl__item;
         @include span-columns(8);
       }
-    }
-  }
-
-  &__new_member {
-    @include display(flex);
-
-    &__list {
-      flex: 1;
-    }
-
-    &__btn {
-      &--submit {
-        @include btn--primary;
-      }
-    }
-  }
-
-  &__delete_member {
-    &--btn {
-      @include btn--primary;
     }
   }
 }

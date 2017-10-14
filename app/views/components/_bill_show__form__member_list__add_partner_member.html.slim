@@ -1,4 +1,8 @@
-select.bill_show__form__member_list__add_partner_member__list name='partner' v-model='selectedPartnerId' v-if='!bill.deposit_on && project.status != "finished"'
+select.bill_show__form__member_list__add_partner_member__form__list [
+  name='partner'
+  v-model='selectedPartnerId'
+  v-if='!bill.deposit_on && project.status != "finished"'
+]
   option v-for="partner in selectablePartners" value="{{partner.id}}" {{partner.name}}
 .bill_show__form__member_list__add_partner_member__form__item
   = text_field_tag   :new_unit_price    , nil, placeholder: t('activerecord.attributes.partner_member.unit_price'),
