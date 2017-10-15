@@ -1,10 +1,13 @@
 class Api::UsersController < Api::ApiController
   before_action :require_login_with_admin, only: [:create]
   before_action :set_project, only: [:index], if: -> { params.key? :project_id }
+  before_action :set_bill, only: [:index], if: -> { params.key? :bill_id }
 
   def index
-    @users =  if @project
-                @project.users
+    @users =  if @bill
+                @bill.users
+              elsif @project
+                User.where(id: @project.bills.map { |bill| bill.users.pluck(:id) }.flatten.uniq)
               else
                 User.all
               end
@@ -37,6 +40,10 @@ private
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def set_bill
+    @bill = Bill.find(params[:bill_id])
   end
 
   def user_param

@@ -9,5 +9,5 @@ json.bill_on       @bill.bill_on
 json.deposit_on    @bill.deposit_on
 json.memo          @bill.memo
 json.created_at    @bill.created_at
-json.updated_at    I18n.l(@bill.updated_at.in_time_zone('Tokyo'))
+json.updated_at    I18n.l(@last_updated_at.in_time_zone('Tokyo'))
 json.whodunnit      '（' + @user.name + '）' if @user

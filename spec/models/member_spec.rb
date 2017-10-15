@@ -6,7 +6,7 @@ RSpec.describe Member do
     subject { user_member }
 
     it { is_expected.to belong_to(:employee) }
-    it { is_expected.to belong_to(:project) }
+    it { is_expected.to belong_to(:bill) }
 
     it { is_expected.to be_versioned }
 
@@ -14,7 +14,7 @@ RSpec.describe Member do
       let(:other_user_member) { create(:user_member) }
       context 'when not validate uniqueness' do
         before do
-          user_member.project  = other_user_member.project
+          user_member.bill  = other_user_member.bill
           user_member.employee = other_user_member.employee
         end
         it { is_expected.to be_invalid }
@@ -22,7 +22,7 @@ RSpec.describe Member do
 
       context 'when validate uniqueness' do
         before do
-          user_member.project  = other_user_member.project
+          user_member.bill  = other_user_member.bill
         end
         it { is_expected.to be_valid }
       end
@@ -34,7 +34,7 @@ RSpec.describe Member do
     subject { partner_member }
 
     it { is_expected.to belong_to(:employee) }
-    it { is_expected.to belong_to(:project) }
+    it { is_expected.to belong_to(:bill) }
 
     it { is_expected.to be_versioned }
 
@@ -42,7 +42,7 @@ RSpec.describe Member do
       let(:other_partner_member) { create(:partner_member) }
       context 'when not validate uniqueness' do
         before do
-          partner_member.project = other_partner_member.project
+          partner_member.bill = other_partner_member.bill
           partner_member.employee = other_partner_member.employee
         end
         it { is_expected.to be_invalid }
@@ -50,7 +50,7 @@ RSpec.describe Member do
 
       context 'when validate uniqueness' do
         before do
-          partner_member.project = other_partner_member.project
+          partner_member.bill = other_partner_member.bill
         end
         it { is_expected.to be_valid }
       end

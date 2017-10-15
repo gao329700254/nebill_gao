@@ -2,20 +2,13 @@
   /*** variables **************************************************************/
   /****************************************************************************/
 
-  @include outer-container;
   @include row;
 
-  &__out {
-    @include span-columns(4);
-
-    &__user {
-      @include span-columns(4);
-      margin-bottom: $large-spacing;
-    }
+  &__user {
+    @include span-columns(5);
   }
 
   &__partner {
-    @include span-columns(12);
-    margin-bottom: $large-spacing;
+    @include span-columns(7);
   }
 }

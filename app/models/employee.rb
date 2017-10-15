@@ -20,7 +20,7 @@ class Employee < ActiveRecord::Base
   actable
 
   has_many :members
-  has_many :projects, through: :members
+  has_many :bills, through: :members
 
   validates :email,
             presence: true,

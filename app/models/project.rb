@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20171003091655
+# Schema version: 20171009095141
 #
 # Table name: projects
 #
@@ -49,12 +49,6 @@ class Project < ActiveRecord::Base
   include ProjectValidates
 
   belongs_to :group, class_name: 'ProjectGroup'
-  has_many :members, dependent: :destroy
-  has_many :user_members
-  has_many :partner_members
-  has_many :employees, through: :members
-  has_many :users, through: :user_members
-  has_many :partners, through: :partner_members
   has_many :bills, dependent: :destroy
   has_many :files, class_name: 'ProjectFile', dependent: :destroy
   has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy

@@ -2,26 +2,26 @@ require 'rails_helper'
 
 RSpec.describe 'user members request' do
   let!(:user) { create(:user) }
-  let!(:project) { create(:project) }
+  let!(:bill) { create(:bill) }
 
   before { login(user) }
 
-  describe 'POST /api/user_members/:project_id/:user_id' do
-    let(:path) { "/api/user_members/#{project.id}/#{user.id}" }
+  describe 'POST /api/user_members/:bill_id/:user_id' do
+    let(:path) { "/api/user_members/#{bill.id}/#{user.id}" }
 
     it 'create a user member' do
       expect do
         post path
       end.to change(Member, :count).by(1)
 
-      expect(project.users).to include user
+      expect(bill.users).to include user
     end
   end
 
-  describe 'DELETE /api/user_members/:project_id/:user_id' do
+  describe 'DELETE /api/user_members/:bill_id/:user_id' do
     context 'with exist user' do
-      let!(:member) { create(:user_member, project: project) }
-      let(:path) { "/api/user_members/#{project.id}/#{member.user.id}" }
+      let!(:member) { create(:user_member, bill: bill) }
+      let(:path) { "/api/user_members/#{bill.id}/#{member.user.id}" }
 
       it 'delete the user_member and return success message' do
         expect do
@@ -35,7 +35,7 @@ RSpec.describe 'user members request' do
       end
     end
 
-    context 'with not exist project' do
+    context 'with not exist bill' do
       let!(:member) { create(:user_member) }
       let(:path) { "/api/user_members/0/#{member.user.id}" }
 
@@ -52,7 +52,7 @@ RSpec.describe 'user members request' do
     end
 
     context 'with not exist member' do
-      let(:path) { "/api/user_members/#{project.id}/#{user.id}" }
+      let(:path) { "/api/user_members/#{bill.id}/#{user.id}" }
 
       it "return 404 Not Found code and message" do
         expect do
@@ -67,7 +67,7 @@ RSpec.describe 'user members request' do
     end
 
     context 'with not exist user_member' do
-      let(:path) { "/api/user_members/#{project.id}/0" }
+      let(:path) { "/api/user_members/#{bill.id}/0" }
 
       it 'return 404 Not Found code and message' do
         expect do

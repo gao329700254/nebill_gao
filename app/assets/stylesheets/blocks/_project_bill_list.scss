@@ -6,7 +6,7 @@
   @include row;
 
   &__list {
-    @include span-columns(7);
+    @include span-columns(8);
 
     &__tbl {
       @include list_tbl;

@@ -409,6 +409,8 @@ ja:
     bill_show:
       title: 請求情報
       last_updated_at: '最終更新日時: '
+      partner: パートナー
+      member: メンバー
     project_groups:
       title: プロジェクトグループ
       new_form_placeholder: 'プロジェクトグループを登録'
@@ -425,6 +427,8 @@ ja:
   component:
     member_list:
       new_partner: パートナーを新規登録
+      partner: パートナー
+      user: メンバー
   pdf:
     pj_no: 'PJNo.: '
     subject_title: '件名:'

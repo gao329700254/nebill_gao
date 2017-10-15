@@ -1,6 +1,6 @@
 # rubocop:disable Metrics/ClassLength
 class Api::ProjectsController < Api::ApiController
-  before_action :set_project, only: [:show, :update, :select_status, :last_updated_at, :bill_default_values, :destroy], if: -> { params.key? :id }
+  before_action :set_project, only: [:update, :select_status, :last_updated_at, :bill_default_values, :destroy], if: -> { params.key? :id }
 
   def index
     @projects = if params.key? :group_id
@@ -37,6 +37,12 @@ class Api::ProjectsController < Api::ApiController
   end
 
   def show
+    @project = if params[:bill_id]
+                 Bill.find_by(id: params[:bill_id]).project
+               else
+                 Project.find(params[:id])
+               end
+
     render json: @project, status: :ok
   end
 

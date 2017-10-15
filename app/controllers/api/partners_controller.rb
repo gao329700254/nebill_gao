@@ -1,9 +1,13 @@
 class Api::PartnersController < Api::ApiController
+  before_action :set_bill, only: [:index], if: -> { params.key? :bill_id }
   before_action :set_project, only: [:index], if: -> { params.key? :project_id }
+  before_action :set_partner, only: [:update]
 
   def index
-    @partners = if @project
-                  @project.partners.order(:company_name, :id)
+    @partners = if @bill
+                  @bill.partners.order(:company_name, :id)
+                elsif @project
+                  Partner.where(id: @project.bills.map { |bill| bill.partners.pluck(:id) }.flatten.uniq)
                 else
                   Partner.all
                 end
@@ -20,10 +24,27 @@ class Api::PartnersController < Api::ApiController
     render_action_model_fail_message(@partner, :create)
   end
 
+  def update
+    @partner.attributes = partner_param
+    @partner.save!
+
+    render_action_model_success_message(@partner, :update)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@partner, :update)
+  end
+
 private
+
+  def set_bill
+    @bill = Bill.find(params[:bill_id])
+  end
 
   def set_project
     @project = Project.find(params[:project_id])
+  end
+
+  def set_partner
+    @partner = Partner.find(params[:id])
   end
 
   def partner_param
