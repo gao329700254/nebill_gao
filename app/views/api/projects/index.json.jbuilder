@@ -26,7 +26,7 @@ json.array!(@projects) do |project|
   )
   json.is_regular_contract           project.is_regular_contract ? I18n.t("enumerize.defaults.regular_contract") : ''
   json.cd                            project.cd
-  json.status                        I18n.t("enumerize.defaults.status.#{project.status}") if project.status.present?
+  json.status                        project.status ? I18n.t("enumerize.defaults.status.#{project.status}") : ''
   json.name                          project.name
   json.orderer_company_name          project.orderer_company_name
   json.start_on                      project.start_on
