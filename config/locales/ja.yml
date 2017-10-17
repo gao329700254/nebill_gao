@@ -71,12 +71,14 @@ ja:
         billing_personnel_names: 請求先担当者名
         billing_address:         請求先住所
         billing_zip_code:        請求先郵便番号
+        billing_phone_number:    請求先電話番号
         billing_memo:            請求先メモ
         orderer_company_name:    受注先会社名
         orderer_department_name: 受注先部署名
         orderer_personnel_names: 受注先担当者名
         orderer_address:         受注先住所
         orderer_zip_code:        受注先郵便番号
+        orderer_phone_number:    受注先電話番号
         orderer_memo:            受注先メモ
       project_group:
         name: 名前
@@ -322,7 +324,6 @@ ja:
     defaults:
       contract_type:
         lump_sum:    請負開発
-        uasimandate: 準委任
         consignment: 委託
         maintenance: 保守
         other:       その他
@@ -347,7 +348,7 @@ ja:
   page:
     home:
       title: ホーム
-      description: シンプルで高機能な請求管理システム
+      description: シンプルで高機能なプロジェクト管理システム
     client_new:
       title: 取引先新規作成
     client_list:

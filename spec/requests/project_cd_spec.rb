@@ -8,12 +8,10 @@ RSpec.describe 'project_cds request' do
   describe "GET /api/projects/cd/:project_type" do
     let!(:project1)  { create(:contracted_project,   cd: "#{year}D001A", contract_type: 'lump_sum') }
     let!(:project2)  { create(:contracted_project,   cd: "#{year}S001A", contract_type: 'lump_sum',    is_using_ses: true) }
-    let!(:project3)  { create(:contracted_project,   cd: "#{year}K001A", contract_type: 'uasimandate') }
-    let!(:project4)  { create(:contracted_project,   cd: "#{year}K002A", contract_type: 'uasimandate') }
-    let!(:project5)  { create(:contracted_project,   cd: "#{year}K003A", contract_type: 'consignment') }
-    let!(:project7)  { create(:contracted_project,   cd: "#{year}S002A", contract_type: 'consignment', is_using_ses: true) }
-    let!(:project8)  { create(:contracted_project,   cd: "#{year}M001A", contract_type: 'maintenance') }
-    let!(:project9)  { create(:uncontracted_project, cd: "#{year}D002B") }
+    let!(:project3)  { create(:contracted_project,   cd: "#{year}K001A", contract_type: 'consignment') }
+    let!(:project4)  { create(:contracted_project,   cd: "#{year}S002A", contract_type: 'consignment', is_using_ses: true) }
+    let!(:project5)  { create(:contracted_project,   cd: "#{year}M001A", contract_type: 'maintenance') }
+    let!(:project6)  { create(:uncontracted_project, cd: "#{year}D002B") }
     let!(:year)   { Time.zone.today.strftime("%y") }
 
     context 'defined contract type' do
@@ -43,19 +41,6 @@ RSpec.describe 'project_cds request' do
         end
       end
 
-      context 'GET /api/projects/cd/uasimandate' do
-        let(:path) { '/api/projects/cd/uasimandate' }
-
-        it 'return cd with identifier K and ending A' do
-          get path
-
-          expect(response).to be_success
-          expect(response.status).to eq 200
-
-          expect(json['cd']).to eq "#{year}K004A"
-        end
-      end
-
       context 'GET /api/projects/cd/consignment' do
         let(:path) { '/api/projects/cd/consignment' }
 
@@ -65,7 +50,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq "#{year}K004A"
+          expect(json['cd']).to eq "#{year}K002A"
         end
       end
 
