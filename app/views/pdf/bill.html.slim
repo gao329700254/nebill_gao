@@ -12,7 +12,6 @@
       .bill_pdf__header__cuon__item = @bill.pdf_project_no
       .bill_pdf__header__cuon__item--bill_cd = @bill.pdf_bill_no
     .bill_pdf__header__company_seal = wicked_pdf_image_tag 'pdf/company_seal.png', size: '80x80'
-      / = image_tag 'pdf/company_seal.png', size: '80x80'
   .bill_pdf__body
     .bill_pdf__body__title
       h2 = t('pdf.bill.title')
@@ -20,13 +19,13 @@
     == render 'pdf/table'
 
   .bill_pdf__footer
-    .bill_pdf__footer--limit
-      .bill_pdf__footer--limit--right = t('pdf.bill.limit')
-      span.bill_pdf__footer--limit--left = I18n.t("enumerize.defaults.payment_type.#{@bill.payment_type}")
-    .bill_pdf__footer--bank
-      .bill_pdf__footer--bank--right = t('pdf.bill.bank')
-      span.bill_pdf__footer--bank--left = t('pdf.bill.bank_ufj')
-    .bill_pdf__footer--fee = t('pdf.bill.fee')
+    .bill_pdf__footer__limit
+      .bill_pdf__footer__limit--right = t('pdf.bill.limit')
+      span.bill_pdf__footer__limit--left = I18n.t("enumerize.defaults.payment_type.#{@bill.payment_type}")
+    .bill_pdf__footer__bank
+      .bill_pdf__footer__bank--right = t('pdf.bill.bank')
+      span.bill_pdf__footer__bank--left = t('pdf.bill.bank_ufj')
+    .bill_pdf__footer__fee = t('pdf.bill.fee')
 
     == render 'pdf/accept', locals: { today: @today }
 
