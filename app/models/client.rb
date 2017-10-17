@@ -25,7 +25,7 @@ class Client < ActiveRecord::Base
   before_save :set_cd, unless: :cd?
 
   def set_cd
-    max_cd = Client.all.pluck(:cd).compact.map { |cd| cd.gsub(/[^\d]/, "").to_i if cd.include?("CD") }.compact.max if Client.all.present?
+    max_cd = Client.all.pluck(:cd).compact.map { |cd| cd.gsub(/[^\d]/, "").to_i if cd.start_with?("CD") }.compact.max if Client.all.present?
     self.cd = max_cd ? "CD-" + (max_cd + 1).to_s : "CD-1"
   end
 end
