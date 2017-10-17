@@ -30,7 +30,7 @@ linters:
     enabled: true
 
   ColorVariable:
-    enabled: true
+    enabled: false
 
   Comment:
     enabled: false

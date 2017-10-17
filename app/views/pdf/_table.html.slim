@@ -11,17 +11,17 @@ table.bill_pdf__tbl
       th.bill_pdf__tbl__head__row__item = t('pdf.price')
   tbody.bill_pdf__tbl__body
     tr.bill_pdf__tbl__body__row
-      td.bill_pdf__tbl__body__row__item--right = @bill.project.name
+      td.bill_pdf__tbl__body__row__item__right = @bill.project.name
       td.bill_pdf__tbl__body__row__item--left = @bill.amount.to_s(:delimited)
     tr.bill_pdf__tbl__body__row
-      td.bill_pdf__tbl__body__row__item--right--period = @bill.pdf_period
+      td.bill_pdf__tbl__body__row__item__right--period = @bill.pdf_period
       td.bill_pdf__tbl__body__row__item--left
     tr.bill_pdf__tbl__body__row
-      td.bill_pdf__tbl__body__row__item--right--time = t('pdf.exceed')
+      td.bill_pdf__tbl__body__row__item__right--time = t('pdf.exceed')
       td.bill_pdf__tbl__body__row__item--left = '0'
     - 12.times do
       = content_tag :tr, '', class: 'bill_pdf__tbl__body__row'
-        = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item--right'
+        = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item__right'
         = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item--left'
     tr.bill_pdf__tbl__body__row__bottom
       td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.subtotal')
