@@ -54,7 +54,7 @@ class Project < ActiveRecord::Base
   has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy
   has_paper_trail meta: { project_id: :id }
 
-  enumerize :contract_type, in: [:lump_sum, :uasimandate, :consignment, :maintenance, :other]
+  enumerize :contract_type, in: [:lump_sum, :consignment, :maintenance, :other]
   enumerize :payment_type, in: %w(
     bill_on_15th_and_payment_on_end_of_next_month
     bill_on_20th_and_payment_on_end_of_next_month
@@ -96,7 +96,7 @@ class Project < ActiveRecord::Base
   }
   scope :gteq_start_on, -> (start_on) { where(Project.arel_table[:start_on].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Project.arel_table[:end_on].lteq(end_on)) }
-  scope :progress, -> (today) { where(Project.arel_table[:start_on].lteq(today)).where(Project.arel_table[:end_on].gteq(today)) }
+  scope :progress, -> (today) { where(Project.arel_table[:end_on].gteq(today)) }
 
   def self.sequence(prefix)
     @max_sequence = where('cd LIKE ?', "%#{prefix}%").pluck(:cd).map { |cd| cd.gsub(prefix, "").to_i }.max

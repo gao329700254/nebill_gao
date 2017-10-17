@@ -1,5 +1,5 @@
 class Api::ProjectCdsController < Api::ApiController
-  PROJECT_TYPES = %w(lump_sum uncontracted uasimandate consignment maintenance ses other).freeze
+  PROJECT_TYPES = %w(lump_sum uncontracted consignment maintenance ses other).freeze
 
   before_action :set_project_type, only: [:cd]
 
@@ -16,7 +16,7 @@ private
     case project_type
     when 'lump_sum', 'uncontracted'
       return 'D'
-    when 'consignment', 'uasimandate'
+    when 'consignment'
       return 'K'
     when 'maintenance'
       return 'M'
