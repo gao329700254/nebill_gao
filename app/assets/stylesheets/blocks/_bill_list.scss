@@ -65,12 +65,12 @@
 
       &--project_name {
         @extend %bill_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--billing_company {
         @extend %bill_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--amount {

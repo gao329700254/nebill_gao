@@ -77,27 +77,27 @@
 
       &--project_name {
         @extend %project_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(4);
       }
 
       &--orderer_company {
         @extend %project_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(4);
       }
 
       &--start_on {
         @extend %project_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2);
       }
 
       &--end_on {
         @extend %project_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2);
       }
 
       &--contract_on {
         @extend %project_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2);
       }
 
       &--amount {

@@ -34,7 +34,7 @@
 
       &--cd {
         @extend %client_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2);
       }
 
       &--company_name {
@@ -49,7 +49,7 @@
 
       &--phone_number {
         @extend %client_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2);
       }
     }
   }
