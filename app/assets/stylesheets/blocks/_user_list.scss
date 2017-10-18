@@ -37,7 +37,7 @@
 
       &--role {
         @extend %user_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2);
 
         select {
           border: none;
@@ -47,7 +47,7 @@
 
       &--is_admin {
         @extend %user_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(1);
       }
     }
   }
