@@ -26,10 +26,6 @@ $ ->
         @finished = if val == true then '終了' else undefined
         @search()
     methods:
-      loadProjects: ->
-        $.ajax '/api/projects.json'
-          .done (response) =>
-            @list = response
       linkToShow: (projectId) -> window.location = "/projects/#{projectId}/show"
       showProjectNew: -> @$broadcast('showProjectNewEvent')
       search: ->
@@ -52,5 +48,5 @@ $ ->
       @postDate = @today.getFullYear() + '-' + ( @today.getMonth() + 1 ) + '-' + @today.getDate()
       @search()
     events:
-      loadProjectsEvent: ->
-        @loadProjects()
+      loadSearchEvent: ->
+        @search()

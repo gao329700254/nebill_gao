@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.feature 'Project List Page', js: true, versioning: true do
   given!(:user) { create(:user) }
-  given!(:project5) { create(:uncontracted_project, cd: 'PROJECT-5', name: 'efg', orderer_company_name: 'EFG') }
+  given!(:project5) { create(:uncontracted_project, cd: '17M001A', name: 'efg', orderer_company_name: 'EFG') }
+  given!(:project6) { create(:uncontracted_project, cd: '17S001A', name: 'hij', orderer_company_name: 'HIJ') }
   given!(:client) do
     create(
       :client,
@@ -17,29 +18,29 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
   given!(:project_group) { create(:project_group, name: 'GroupA') }
   given!(:project1) do
     create(:contracted_project,
-           cd: 'PROJECT-1',
+           cd: '16D001A',
            name: 'abc',
            contract_on: 5.days.ago,
            orderer_company_name: 'ABC',
            start_on: 1.day.ago,
            end_on: 1.month.since,
            status: :finished,
-           is_regular_contract: true,
           )
   end
   given!(:project2) do
     create(:contracted_project,
-           cd: 'PROJECT-2',
+           cd: '17D001A',
            name: 'bcd',
            orderer_company_name: 'BCD',
            contract_on: 2.days.ago,
            start_on: 1.week.ago,
            end_on: 3.days.ago,
+           is_regular_contract: true,
           )
   end
   given!(:project3) do
     create(:contracted_project,
-           cd: 'PROJECT-3',
+           cd: '17D002A',
            name: 'cde',
            orderer_company_name: 'CDE',
            contract_on: 4.days.ago,
@@ -49,7 +50,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
   end
   given!(:project4) do
     create(:contracted_project,
-           cd: 'PROJECT-4',
+           cd: '17D001B',
            name: 'def',
            contract_on: 5.days.ago,
            orderer_company_name: 'DEF',
@@ -89,19 +90,18 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
     is_expected.to have_content '契約日'
     is_expected.to have_content '金額'
 
-    is_expected.to have_content project1.cd
+    is_expected.to have_content project2.cd
     is_expected.to have_content I18n.t("enumerize.defaults.regular_contract")
-    is_expected.to have_content I18n.t("enumerize.defaults.status.#{project1.status}")
-    is_expected.to have_content project1.name
-    is_expected.to have_content project1.orderer_company_name
-    is_expected.to have_content project1.start_on
-    is_expected.to have_content project1.end_on
-    is_expected.to have_content project1.contract_on
-    is_expected.to have_content project1.amount.to_s(:delimited)
+    is_expected.to have_content I18n.t("enumerize.defaults.status.#{project2.status}")
+    is_expected.to have_content project2.name
+    is_expected.to have_content project2.orderer_company_name
+    is_expected.to have_content project2.start_on
+    is_expected.to have_content project2.end_on
+    is_expected.to have_content project2.contract_on
+    is_expected.to have_content project2.amount.to_s(:delimited)
 
-    expect(all('.project_list__tbl__body__row td:nth-child(2)')[0]).to have_text project1.cd
-
-    expect(find("#project-#{project1.id}")[:class]).to eq 'project_list__tbl__body__row project_list__tbl__body__row--finished'
+    expect(all('.project_list__tbl__body__row td:nth-child(2)')[0]).to have_text project2.cd
+    expect(all('.project_list__tbl__body__row td:nth-child(2)')[1]).to have_text project3.cd
   end
 
   context 'search' do
@@ -115,6 +115,14 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.to have_content project3.cd
       is_expected.to have_content project4.cd
       is_expected.to have_content project5.cd
+      is_expected.to have_content project6.cd
+
+      expect(all('.project_list__tbl__body__row td:nth-child(2)')[0]).to have_text project1.cd
+      expect(all('.project_list__tbl__body__row td:nth-child(2)')[1]).to have_text project2.cd
+      expect(all('.project_list__tbl__body__row td:nth-child(2)')[2]).to have_text project3.cd
+      expect(all('.project_list__tbl__body__row td:nth-child(2)')[3]).to have_text project4.cd
+      expect(all('.project_list__tbl__body__row td:nth-child(2)')[4]).to have_text project5.cd
+      expect(all('.project_list__tbl__body__row td:nth-child(2)')[5]).to have_text project6.cd
     end
 
     scenario 'with a part of cd' do
@@ -127,18 +135,20 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.not_to have_content project3.cd
       is_expected.not_to have_content project4.cd
       is_expected.not_to have_content project5.cd
+      is_expected.not_to have_content project6.cd
     end
 
     scenario 'with just a cd' do
       skip "fail on wercker"
       uncheck 'progress'
-      fill_in :search, with: 'PROJECT-1'
+      fill_in :search, with: '16D001A'
 
       is_expected.to     have_content project1.cd
       is_expected.not_to have_content project2.cd
       is_expected.not_to have_content project3.cd
       is_expected.not_to have_content project4.cd
       is_expected.not_to have_content project5.cd
+      is_expected.not_to have_content project6.cd
     end
 
     scenario 'with a part of name' do
@@ -151,6 +161,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.to     have_content project3.cd
       is_expected.to     have_content project4.cd
       is_expected.not_to have_content project5.cd
+      is_expected.not_to have_content project6.cd
     end
 
     scenario 'with a part of orderer_company_name' do
@@ -163,18 +174,20 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.to     have_content project3.cd
       is_expected.to     have_content project4.cd
       is_expected.to     have_content project5.cd
+      is_expected.not_to have_content project6.cd
     end
 
     scenario 'with multiple keywords' do
       skip "fail on wercker"
       uncheck 'progress'
-      fill_in :search, with: '　 PROJECT-4 　d　 　EF　 '
+      fill_in :search, with: '　 17D001B 　d　 　EF　 '
 
       is_expected.not_to have_content project1.cd
       is_expected.not_to have_content project2.cd
       is_expected.not_to have_content project3.cd
       is_expected.to     have_content project4.cd
       is_expected.not_to have_content project5.cd
+      is_expected.not_to have_content project6.cd
     end
   end
 
@@ -192,6 +205,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.to have_content project3.cd
       is_expected.to have_content project4.cd
       is_expected.to have_content project5.cd
+      is_expected.to have_content project6.cd
     end
 
     context 'with only start' do
@@ -209,6 +223,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to     have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'when put 1 week ago' do
@@ -225,6 +240,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to     have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
     end
 
@@ -243,6 +259,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'when put 3 days ago' do
@@ -259,6 +276,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
     end
 
@@ -277,6 +295,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'when put 1 week ago and 3 days ago' do
@@ -293,12 +312,13 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
     end
   end
 
   scenario 'link to a project show page when click row' do
-    find("#project-#{project1.id}").click
+    find("#project-#{project2.id}").click
 
     is_expected.to have_header_title 'プロジェクト情報'
   end
@@ -318,6 +338,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.to have_content project3.cd
       is_expected.to have_content project4.cd
       is_expected.to have_content project5.cd
+      is_expected.to have_content project6.cd
     end
 
     scenario 'with contracted' do
@@ -334,6 +355,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.to     have_content project3.cd
       is_expected.to     have_content project4.cd
       is_expected.not_to have_content project5.cd
+      is_expected.not_to have_content project6.cd
     end
 
     scenario 'with uncontracted' do
@@ -350,6 +372,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       is_expected.not_to have_content project3.cd
       is_expected.not_to have_content project4.cd
       is_expected.to     have_content project5.cd
+      is_expected.to     have_content project6.cd
     end
   end
 
@@ -359,22 +382,24 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         skip "fail on wercker"
         choose 'all'
 
-        is_expected.to     have_content project1.cd
-        is_expected.not_to have_content project2.cd
-        is_expected.not_to have_content project3.cd
+        is_expected.not_to have_content project1.cd
+        is_expected.to     have_content project2.cd
+        is_expected.to     have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'with contracted' do
         skip "fail on wercker"
         choose 'contracted'
 
-        is_expected.to     have_content project1.cd
-        is_expected.not_to have_content project2.cd
-        is_expected.not_to have_content project3.cd
+        is_expected.not_to have_content project1.cd
+        is_expected.to     have_content project2.cd
+        is_expected.to     have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'with uncontracted' do
@@ -386,6 +411,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
     end
 
@@ -400,6 +426,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to have_content project3.cd
         is_expected.to have_content project4.cd
         is_expected.to have_content project5.cd
+        is_expected.to have_content project6.cd
       end
 
       scenario 'with contracted' do
@@ -412,6 +439,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to     have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'with uncontracted' do
@@ -424,6 +452,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.to     have_content project5.cd
+        is_expected.to     have_content project6.cd
       end
     end
   end
@@ -442,6 +471,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
 
         expect(find("#project-#{project1.id}")[:class]).to eq 'project_list__tbl__body__row project_list__tbl__body__row--finished'
         expect(find("#project-#{project4.id}")[:class]).to eq 'project_list__tbl__body__row project_list__tbl__body__row--finished'
@@ -458,6 +488,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'with uncontracted' do
@@ -471,6 +502,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
     end
 
@@ -485,6 +517,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to have_content project3.cd
         is_expected.to have_content project4.cd
         is_expected.to have_content project5.cd
+        is_expected.to have_content project6.cd
       end
 
       scenario 'with contracted' do
@@ -497,6 +530,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.to     have_content project3.cd
         is_expected.to     have_content project4.cd
         is_expected.not_to have_content project5.cd
+        is_expected.not_to have_content project6.cd
       end
 
       scenario 'with uncontracted' do
@@ -509,6 +543,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
         is_expected.not_to have_content project3.cd
         is_expected.not_to have_content project4.cd
         is_expected.to     have_content project5.cd
+        is_expected.to     have_content project6.cd
       end
     end
   end
@@ -520,7 +555,10 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
   end
 
   context 'Project New Modal' do
-    background { click_button 'プロジェクト新規作成' }
+    background do
+      uncheck 'progress'
+      click_button 'プロジェクト新規作成'
+    end
     subject { find('.project_new') }
 
     describe 'form' do

@@ -3,11 +3,7 @@ class Api::ProjectsController < Api::ApiController
   before_action :set_project, only: [:update, :select_status, :last_updated_at, :bill_default_values, :destroy], if: -> { params.key? :id }
 
   def index
-    @projects = if params.key? :group_id
-                  Project.where(group_id: params[:group_id].presence)
-                else
-                  Project.all.order("status desc, contracted asc")
-                end
+    @projects = Project.where(group_id: params[:group_id].presence)
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
@@ -80,7 +76,9 @@ class Api::ProjectsController < Api::ApiController
 
   # rubocop:disable Metrics/AbcSize
   def search_result
-    @projects = if params[:start].present? && params[:end].present?
+    @projects = if params[:today]
+                  Project.where(Project.arel_table[:status].not_eq("finished"))
+                elsif params[:start].present? && params[:end].present?
                   Project.between(params[:start], params[:end])
                 elsif params[:start].present?
                   Project.gteq_start_on(params[:start])
@@ -90,8 +88,10 @@ class Api::ProjectsController < Api::ApiController
                   Project.all
                 end
 
-    @projects = @projects.progress(params[:today]) if params[:today]
-    @projects.order!("status desc, contracted asc")
+    @projects = @projects.sort_by do |i|
+      year, identifier, sequence, contract = *i.cd.scan(/(.{2})(.)(.{3})(.*)/).first
+      next identifier, year, contract, sequence
+    end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
