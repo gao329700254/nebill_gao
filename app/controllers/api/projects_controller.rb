@@ -76,9 +76,7 @@ class Api::ProjectsController < Api::ApiController
 
   # rubocop:disable Metrics/AbcSize
   def search_result
-    @projects = if params[:today]
-                  Project.where(Project.arel_table[:status].not_eq("finished"))
-                elsif params[:start].present? && params[:end].present?
+    @projects = if params[:start].present? && params[:end].present?
                   Project.between(params[:start], params[:end])
                 elsif params[:start].present?
                   Project.gteq_start_on(params[:start])
@@ -88,9 +86,10 @@ class Api::ProjectsController < Api::ApiController
                   Project.all
                 end
 
+    @projects = @projects.where(Project.arel_table[:status].not_eq("finished")) if params[:today]
     @projects = @projects.sort_by do |i|
       year, identifier, sequence, contract = *i.cd.scan(/(.{2})(.)(.{3})(.*)/).first
-      next identifier, year, contract, sequence
+      next identifier, year, sequence, contract
     end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
