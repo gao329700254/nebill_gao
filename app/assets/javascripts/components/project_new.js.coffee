@@ -80,7 +80,7 @@ $ ->
               toastr.success('', response.message)
               @initializeProject()
               @modalHide()
-              @$dispatch('loadProjectsEvent')
+              @$dispatch('loadSearchEvent')
             .fail (response) =>
               json = response.responseJSON
               toastr.error(json.errors.full_messages.join('<br>'), json.message)
@@ -93,7 +93,7 @@ $ ->
               toastr.success('', response.message)
               @initializeProject()
               @modalHide()
-              @$dispatch('loadProjectsEvent')
+              @$dispatch('loadSearchEvent')
             .fail (response) =>
               json = response.responseJSON
               toastr.error(json.errors.full_messages.join('<br>'), json.message)

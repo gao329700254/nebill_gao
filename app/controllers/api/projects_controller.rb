@@ -3,11 +3,7 @@ class Api::ProjectsController < Api::ApiController
   before_action :set_project, only: [:update, :select_status, :last_updated_at, :bill_default_values, :destroy], if: -> { params.key? :id }
 
   def index
-    @projects = if params.key? :group_id
-                  Project.where(group_id: params[:group_id].presence)
-                else
-                  Project.all.order("status desc, contracted asc")
-                end
+    @projects = Project.where(group_id: params[:group_id].presence)
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
@@ -90,8 +86,11 @@ class Api::ProjectsController < Api::ApiController
                   Project.all
                 end
 
-    @projects = @projects.progress(params[:today]) if params[:today]
-    @projects.order!("status desc, contracted asc")
+    @projects = @projects.where(Project.arel_table[:status].not_eq("finished")) if params[:today]
+    @projects = @projects.sort_by do |i|
+      year, identifier, sequence, contract = *i.cd.scan(/(.{2})(.)(.{3})(.*)/).first
+      next identifier, year, sequence, contract
+    end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end

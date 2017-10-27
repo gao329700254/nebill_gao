@@ -6,49 +6,50 @@ RSpec.describe 'projects request', versioning: true do
   before { login(user) }
 
   describe 'GET /api/projects' do
-    let!(:project1) { create(:contracted_project, is_regular_contract: true) }
-    let!(:project2) { create(:contracted_project, status: :finished) }
-    let!(:project3) { create(:uncontracted_project) }
-    let(:path) { "/api/projects" }
+    let!(:project1) { create(:contracted_project, cd: '17D001A', is_regular_contract: true) }
+    let!(:project2) { create(:contracted_project, cd: '17D002A', status: :finished) }
+    let!(:project3) { create(:uncontracted_project, cd: '17D001B') }
+    let(:params) { { today: Time.zone.now } }
+    let(:path) { "/api/projects/search_result" }
 
     it 'return a list of projects' do
-      get path
+      post path, params
 
       expect(response).to be_success
       expect(response.status).to eq 200
-      expect(json.count).to eq 3
+      expect(json.count).to eq 1
 
-      expect(json[1]['id']).to                       eq project1.id
-      expect(json[1]['group_id']).to                 eq project1.group_id
-      expect(json[1]['cd']).to                       eq project1.cd
-      expect(json[1]['name']).to                     eq project1.name
-      expect(json[1]['contracted']).to               eq project1.contracted
-      expect(json[1]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
-      expect(json[1]['is_using_ses']).to             eq project1.is_using_ses
-      expect(json[1]['contract_type']).to            eq project1.contract_type
-      expect(json[1]['estimated_amount']).to         eq project1.estimated_amount
-      expect(json[1]['status']).to                   eq I18n.t("enumerize.defaults.status.#{project1.status}")
-      expect(json[1]['is_regular_contract']).to      eq I18n.t("enumerize.defaults.regular_contract")
-      expect(json[1]['start_on']).to                 eq project1.start_on.strftime("%Y-%m-%d")
-      expect(json[1]['end_on']).to                   eq project1.end_on.strftime("%Y-%m-%d")
-      expect(json[1]['amount']).to                   eq project1.amount
-      expect(json[1]['payment_type']).to             eq project1.payment_type
-      expect(json[1]['billing_company_name']).to     eq project1.billing_company_name
-      expect(json[1]['billing_department_name']).to  eq project1.billing_department_name
-      expect(json[1]['billing_personnel_names']).to  eq project1.billing_personnel_names
-      expect(json[1]['billing_address']).to          eq project1.billing_address
-      expect(json[1]['billing_zip_code']).to         eq project1.billing_zip_code
-      expect(json[1]['billing_phone_number']).to     eq project1.billing_phone_number
-      expect(json[1]['billing_memo']).to             eq project1.billing_memo
-      expect(json[1]['orderer_company_name']).to     eq project1.orderer_company_name
-      expect(json[1]['orderer_department_name']).to  eq project1.orderer_department_name
-      expect(json[1]['orderer_personnel_names']).to  eq project1.orderer_personnel_names
-      expect(json[1]['orderer_address']).to          eq project1.orderer_address
-      expect(json[1]['orderer_zip_code']).to         eq project1.orderer_zip_code
-      expect(json[1]['orderer_phone_number']).to     eq project1.orderer_phone_number
-      expect(json[1]['orderer_memo']).to             eq project1.orderer_memo
-      expect(json[1]['created_at']).to               eq project1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-      expect(json[1]['updated_at']).to               eq project1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+      expect(json[0]['id']).to                       eq project1.id
+      expect(json[0]['group_id']).to                 eq project1.group_id
+      expect(json[0]['cd']).to                       eq project1.cd
+      expect(json[0]['name']).to                     eq project1.name
+      expect(json[0]['contracted']).to               eq project1.contracted
+      expect(json[0]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
+      expect(json[0]['is_using_ses']).to             eq project1.is_using_ses
+      expect(json[0]['contract_type']).to            eq project1.contract_type
+      expect(json[0]['estimated_amount']).to         eq project1.estimated_amount
+      expect(json[0]['status']).to                   eq I18n.t("enumerize.defaults.status.#{project1.status}")
+      expect(json[0]['is_regular_contract']).to      eq I18n.t("enumerize.defaults.regular_contract")
+      expect(json[0]['start_on']).to                 eq project1.start_on.strftime("%Y-%m-%d")
+      expect(json[0]['end_on']).to                   eq project1.end_on.strftime("%Y-%m-%d")
+      expect(json[0]['amount']).to                   eq project1.amount
+      expect(json[0]['payment_type']).to             eq project1.payment_type
+      expect(json[0]['billing_company_name']).to     eq project1.billing_company_name
+      expect(json[0]['billing_department_name']).to  eq project1.billing_department_name
+      expect(json[0]['billing_personnel_names']).to  eq project1.billing_personnel_names
+      expect(json[0]['billing_address']).to          eq project1.billing_address
+      expect(json[0]['billing_zip_code']).to         eq project1.billing_zip_code
+      expect(json[0]['billing_phone_number']).to     eq project1.billing_phone_number
+      expect(json[0]['billing_memo']).to             eq project1.billing_memo
+      expect(json[0]['orderer_company_name']).to     eq project1.orderer_company_name
+      expect(json[0]['orderer_department_name']).to  eq project1.orderer_department_name
+      expect(json[0]['orderer_personnel_names']).to  eq project1.orderer_personnel_names
+      expect(json[0]['orderer_address']).to          eq project1.orderer_address
+      expect(json[0]['orderer_zip_code']).to         eq project1.orderer_zip_code
+      expect(json[0]['orderer_phone_number']).to     eq project1.orderer_phone_number
+      expect(json[0]['orderer_memo']).to             eq project1.orderer_memo
+      expect(json[0]['created_at']).to               eq project1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+      expect(json[0]['updated_at']).to               eq project1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
     end
   end
 

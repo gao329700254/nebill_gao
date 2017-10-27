@@ -126,10 +126,5 @@ RSpec.describe Project do
       subject { Project.lteq_end_on(1.week.ago) }
       it { is_expected.to include project1 }
     end
-
-    context 'progress' do
-      subject { Project.progress(Time.zone.now) }
-      it { is_expected.to include project4 }
-    end
   end
 end
