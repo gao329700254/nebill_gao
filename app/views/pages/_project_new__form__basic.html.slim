@@ -7,7 +7,7 @@
     .project_new__form__container__group
       .project_new__form__item
         = label_tag :cd, t('activerecord.attributes.project.cd')
-        = text_field_tag :cd, nil, 'v-model' => 'project.cd', maxlength: 7
+        = text_field_tag :cd, nil, 'v-model' => 'project.cd', placeholder: t('activerecord.attributes.project.placeholder')
   .project_new__form__container
     .project_new__form__container__group
       .project_new__form__item

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.feature 'Bill List Page', js: true do
   given!(:user) { create(:user) }
-  given!(:project1) { create(:contracted_project,   cd: 'CD-1', name: 'abc', billing_company_name: 'ABC', contract_on: 2.days.ago) }
-  given!(:project2) { create(:uncontracted_project, cd: 'CD-5', name: 'def', billing_company_name: 'DEF')  }
+  given!(:project1) { create(:contracted_project,   cd: '17D001A', name: 'abc', billing_company_name: 'ABC', contract_on: 2.days.ago) }
+  given!(:project2) { create(:uncontracted_project, cd: '17D002A', name: 'def', billing_company_name: 'DEF')  }
   given!(:bill1) { create(:bill, cd: '2016040199', project: project1, deposit_on: '2016-01-05', bill_on: 1.month.ago) }
   given!(:bill2) { create(:bill, cd: '2016040300', project: project2, bill_on: 1.week.ago) }
   given!(:bill3) { create(:bill, cd: '2016040299', project: project1, bill_on: 1.day.ago) }

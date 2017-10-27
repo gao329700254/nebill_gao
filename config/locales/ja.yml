@@ -54,6 +54,7 @@ ja:
       project:
         group: グループ
         cd: ID
+        placeholder: 記入例) 17D001A
         name: 名前
         contracted: 契約済
         contract_on: 契約日

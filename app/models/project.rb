@@ -89,6 +89,8 @@ class Project < ActiveRecord::Base
                 memo
               ).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
 
+  validates :cd, format: { with: /\A\d{2}[a-z|A-Z]\d{3}[AB]?\z/ }
+
   before_save { cd.upcase! }
 
   scope :between, lambda { |start_on, end_on|

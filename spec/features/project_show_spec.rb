@@ -167,7 +167,7 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
 
           scenario 'should update when click submit button with correct values' do
             select 'Group2', from: :group_id
-            fill_in :cd        , with: '0000001'
+            fill_in :cd        , with: '17D001A'
             fill_in :name       , with: 'test project'
             fill_in :orderer_company_name    , with: 'test orderer company'
             fill_in :orderer_department_name , with: 'test orderer department'
@@ -190,7 +190,7 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             end.to change { project.reload && project.updated_at }
 
             is_expected.to     have_field 'group_id'               , disabled: true, with: project_group2.id
-            is_expected.to     have_field 'cd'                     , disabled: true, with: '0000001'
+            is_expected.to     have_field 'cd'                     , disabled: true, with: '17D001A'
             is_expected.to     have_field 'name'                   , disabled: true, with: 'test project'
             is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: 'test orderer company'
             is_expected.to     have_field 'orderer_department_name', disabled: true, with: 'test orderer department'

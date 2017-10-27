@@ -62,7 +62,7 @@ RSpec.describe 'projects request', versioning: true do
         {
           project: {
             group_id: project_group.id,
-            cd: 'cd',
+            cd: '17D001A',
             name: 'name',
             contracted: true,
             contract_on: '2015-01-01',
@@ -100,7 +100,7 @@ RSpec.describe 'projects request', versioning: true do
 
         project = Project.first
         expect(project.group_id).to eq project_group.id
-        expect(project.cd).to eq  'CD'
+        expect(project.cd).to eq  '17D001A'
         expect(project.name).to eq  'name'
         expect(project.contracted).to eq  true
         expect(project.contract_on.to_s).to eq  '2015-01-01'
@@ -338,7 +338,7 @@ RSpec.describe 'projects request', versioning: true do
           {
             project: {
               group_id: project_group.id,
-              cd: 'cd',
+              cd: '17D001A',
               name: 'name',
               contracted: true,
               contract_on: '2015-01-01',
@@ -375,7 +375,7 @@ RSpec.describe 'projects request', versioning: true do
           end.to change { project.reload && project.updated_at }
 
           expect(project.group_id).to eq  project_group.id
-          expect(project.cd).to eq  'CD'
+          expect(project.cd).to eq  '17D001A'
           expect(project.name).to eq  'name'
           expect(project.contracted).to eq  true
           expect(project.contract_on.to_s).to eq  '2015-01-01'
@@ -548,7 +548,7 @@ RSpec.describe 'projects request', versioning: true do
         {
           project: {
             group_id: project_group.id,
-            cd: 'cd',
+            cd: '17D001A',
             name: 'name',
             contracted: true,
             contract_on: '2015-01-01',
@@ -595,7 +595,7 @@ RSpec.describe 'projects request', versioning: true do
         project = Project.first
         client = Client.first
         expect(project.group_id).to eq project_group.id
-        expect(project.cd).to eq  'CD'
+        expect(project.cd).to eq  '17D001A'
         expect(project.name).to eq  'name'
         expect(project.contracted).to eq  true
         expect(project.contract_on.to_s).to eq  '2015-01-01'
@@ -646,7 +646,7 @@ RSpec.describe 'projects request', versioning: true do
           {
             project: {
               group_id: project_group.id,
-              cd: 'cd',
+              cd: '17D001A',
               name: 'name',
               contracted: true,
               contract_on: '2015-01-01',
