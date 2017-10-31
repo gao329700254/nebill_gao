@@ -652,7 +652,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
 
         scenario 'click submit button with correct values' do
           select 'GroupA', from: :group_id
-          fill_in :cd         , with: '0000001'
+          fill_in :cd         , with: '18D001A'
           fill_in :name       , with: 'test project'
           fill_in :orderer_company_name    , with: 'test orderer company'
           fill_in :orderer_department_name , with: 'test orderer department'
@@ -769,7 +769,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :end_on     , with: '2016-03-30'
           fill_in :amount     , with: 1_000_000
           select '15日締め翌月末払い', from: :payment_type
-          fill_in :cd         , with: '0000001'
+          fill_in :cd         , with: '18D001A'
           fill_in :orderer_company_name    , with: 'test orderer company'
           fill_in :orderer_department_name , with: 'test orderer department'
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -806,7 +806,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :end_on     , with: '2016-03-30'
           fill_in :amount     , with: 1_000_000
           select '15日締め翌月末払い', from: :payment_type
-          fill_in :cd         , with: '0000001'
+          fill_in :cd         , with: '18D001A'
           fill_in :orderer_company_name    , with: 'test orderer company'
           fill_in :orderer_department_name , with: 'test orderer department'
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -829,7 +829,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
 
           is_expected.to have_checked_field 'contracted'
           select 'GroupA', from: :group_id
-          is_expected.to have_field 'cd'                      , with: '0000001'
+          is_expected.to have_field 'cd'                      , with: '18D001A'
           is_expected.to have_field 'name'                    , with: '  '
           is_expected.to have_field 'contract_on'             , with: '2016-01-01'
           select '委託', from: :contract_type
@@ -860,7 +860,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       context "when select 'client_new'" do
         scenario 'click submit button with correct values' do
           select 'GroupA', from: :group_id
-          fill_in :cd         , with: '0000001'
+          fill_in :cd         , with: '18D001A'
           fill_in :name       , with: 'test project'
 
           select '新規作成', from: :orderer_client_id
@@ -894,7 +894,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
 
         scenario 'click submit button with uncorrect values' do
           select 'GroupA', from: :group_id
-          fill_in :cd         , with: '0000001'
+          fill_in :cd         , with: '18D001A'
           fill_in :name       , with: 'test project'
 
           select '新規作成', from: :orderer_client_id
@@ -920,7 +920,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           end.not_to change(Project, :count)
 
           select 'GroupA', from: :group_id
-          is_expected.to have_field 'cd'                      , with: '0000001'
+          is_expected.to have_field 'cd'                      , with: '18D001A'
           is_expected.to have_field 'name'                    , with: 'test project'
           is_expected.to have_field 'orderer_company_name'    , with: ''
           is_expected.to have_field 'orderer_department_name' , with: 'test orderer department'
@@ -940,7 +940,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       end
 
       scenario 'click cancel' do
-        fill_in :cd                      , with: '0000001'
+        fill_in :cd                      , with: '18D001A'
         fill_in :name                    , with: 'test project'
         fill_in :orderer_company_name    , with: 'test orderer company'
         fill_in :orderer_department_name , with: 'test orderer department'

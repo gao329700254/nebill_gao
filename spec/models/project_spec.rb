@@ -127,4 +127,46 @@ RSpec.describe Project do
       it { is_expected.to include project1 }
     end
   end
+
+  describe 'CD' do
+    context 'correct' do
+      context '17D001A' do
+        let(:project) { build(:uncontracted_project, cd: '17D001A') }
+        subject { project }
+        it { is_expected.to be_valid }
+      end
+
+      context '17D001' do
+        let(:project) { build(:uncontracted_project, cd: '17D001') }
+        subject { project }
+        it { is_expected.to be_valid }
+      end
+    end
+
+    context 'incorrect' do
+      context '17' do
+        let(:project) { build(:uncontracted_project, cd: '17') }
+        subject { project }
+        it { is_expected.not_to be_valid }
+      end
+
+      context '17D01' do
+        let(:project) { build(:uncontracted_project, cd: '17D01') }
+        subject { project }
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'D001' do
+        let(:project) { build(:uncontracted_project, cd: 'D001') }
+        subject { project }
+        it { is_expected.not_to be_valid }
+      end
+
+      context '17001' do
+        let(:project) { build(:uncontracted_project, cd: '17001') }
+        subject { project }
+        it { is_expected.not_to be_valid }
+      end
+    end
+  end
 end

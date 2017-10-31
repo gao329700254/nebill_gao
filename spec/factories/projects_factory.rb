@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :project do
     association :group, factory: :project_group
 
-    sequence(:cd) { |n| "CD-#{n}" }
+    sequence(:cd) { |n| "#{rand(11..20)}D#{n.to_s.rjust(3, '0')}A" }
     name { Faker::App.name }
     contracted false
 
