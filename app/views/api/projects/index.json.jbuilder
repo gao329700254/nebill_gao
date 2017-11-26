@@ -3,6 +3,7 @@ json.array!(@projects) do |project|
     project,
     :id,
     :group_id,
+    :memo,
     :contracted,
     :contract_type,
     :is_using_ses,

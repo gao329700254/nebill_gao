@@ -622,6 +622,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           is_expected.to     have_field 'group_id'
           is_expected.to     have_field 'cd'
           is_expected.to     have_field 'name'
+          is_expected.to     have_field 'memo'
           is_expected.not_to have_field 'contract_on'
           is_expected.not_to have_field 'contract_type'
           is_expected.not_to have_field 'estimated_amount'
@@ -654,6 +655,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           select 'GroupA', from: :group_id
           fill_in :cd         , with: '18D001A'
           fill_in :name       , with: 'test project'
+          fill_in :memo       , with: 'test memo'
           fill_in :orderer_company_name    , with: 'test orderer company'
           fill_in :orderer_department_name , with: 'test orderer department'
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -682,6 +684,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           select 'GroupA', from: :group_id
           fill_in :cd         , with: ' '
           fill_in :name       , with: 'test project'
+          fill_in :memo       , with: 'test memo'
           fill_in :orderer_company_name    , with: 'test orderer company'
           fill_in :orderer_department_name , with: 'test orderer department'
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -706,6 +709,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           select 'GroupA', from: :group_id
           is_expected.to have_field 'cd'                      , with: ' '
           is_expected.to have_field 'name'                    , with: 'test project'
+          is_expected.to have_field 'memo'                    , with: 'test memo'
           is_expected.to have_field 'orderer_company_name'    , with: 'test orderer company'
           is_expected.to have_field 'orderer_department_name' , with: 'test orderer department'
           is_expected.to have_field 'orderer_personnel_names' , with: 'test person1, test person2'
@@ -730,6 +734,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           is_expected.to     have_field 'group_id'
           is_expected.to     have_field 'cd'
           is_expected.to     have_field 'name'
+          is_expected.to     have_field 'memo'
           is_expected.to     have_field 'contract_on'
           is_expected.to     have_field 'contract_type'
           is_expected.to     have_field 'estimated_amount'
@@ -770,6 +775,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :amount     , with: 1_000_000
           select '15日締め翌月末払い', from: :payment_type
           fill_in :cd         , with: '18D001A'
+          fill_in :memo         , with: 'test memo'
           fill_in :orderer_company_name    , with: 'test orderer company'
           fill_in :orderer_department_name , with: 'test orderer department'
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -807,6 +813,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           fill_in :amount     , with: 1_000_000
           select '15日締め翌月末払い', from: :payment_type
           fill_in :cd         , with: '18D001A'
+          fill_in :memo         , with: 'test memo'
           fill_in :orderer_company_name    , with: 'test orderer company'
           fill_in :orderer_department_name , with: 'test orderer department'
           fill_in :orderer_personnel_names , with: 'test person1, test person2'
@@ -831,6 +838,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           select 'GroupA', from: :group_id
           is_expected.to have_field 'cd'                      , with: '18D001A'
           is_expected.to have_field 'name'                    , with: '  '
+          is_expected.to have_field 'memo'                    , with: 'test memo'
           is_expected.to have_field 'contract_on'             , with: '2016-01-01'
           select '委託', from: :contract_type
           is_expected.to have_field 'estimated_amount'        , with: '1,000,000'
@@ -862,6 +870,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           select 'GroupA', from: :group_id
           fill_in :cd         , with: '18D001A'
           fill_in :name       , with: 'test project'
+          fill_in :memo       , with: 'test memo'
 
           select '新規作成', from: :orderer_client_id
 
@@ -896,6 +905,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           select 'GroupA', from: :group_id
           fill_in :cd         , with: '18D001A'
           fill_in :name       , with: 'test project'
+          fill_in :memo       , with: 'test memo'
 
           select '新規作成', from: :orderer_client_id
 
@@ -922,6 +932,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
           select 'GroupA', from: :group_id
           is_expected.to have_field 'cd'                      , with: '18D001A'
           is_expected.to have_field 'name'                    , with: 'test project'
+          is_expected.to have_field 'memo'                    , with: 'test memo'
           is_expected.to have_field 'orderer_company_name'    , with: ''
           is_expected.to have_field 'orderer_department_name' , with: 'test orderer department'
           is_expected.to have_field 'orderer_personnel_names' , with: 'test person1, test person2'
@@ -942,6 +953,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
       scenario 'click cancel' do
         fill_in :cd                      , with: '18D001A'
         fill_in :name                    , with: 'test project'
+        fill_in :memo                    , with: 'test memo'
         fill_in :orderer_company_name    , with: 'test orderer company'
         fill_in :orderer_department_name , with: 'test orderer department'
         fill_in :orderer_personnel_names , with: 'test person1, test person2'
