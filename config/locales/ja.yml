@@ -56,6 +56,7 @@ ja:
         cd: ID
         placeholder: 記入例) 17D001A
         name: 名前
+        memo: メモ
         contracted: 契約済
         contract_on: 契約日
         contract_type: 契約形態

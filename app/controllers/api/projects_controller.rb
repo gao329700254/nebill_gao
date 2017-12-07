@@ -125,10 +125,12 @@ private
     @project = Project.find(params[:id])
   end
 
+  # rubocop:disable Metrics/MethodLength
   def project_param
     params.require(:project).permit(
       :group_id,
       :cd,
+      :memo,
       :name,
       :contracted,
       :contract_on,
@@ -157,6 +159,7 @@ private
       orderer_personnel_names: [],
     )
   end
+  # rubocop:enable Metrics/MethodLength
 
   def client_param
     params.require(:client).permit(

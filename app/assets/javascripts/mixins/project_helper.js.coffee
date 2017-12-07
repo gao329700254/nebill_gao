@@ -16,6 +16,9 @@ Vue.modules.projectHelper = {
       name:
         init: ''
         exist: { contracted: true, uncontracted: true }
+      memo:
+        init: ''
+        exist: { contracted: true, uncontracted: true }
       contract_on:
         init: ''
         exist: { contracted: true, uncontracted: false }

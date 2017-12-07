@@ -23,6 +23,7 @@ RSpec.describe 'projects request', versioning: true do
       expect(json[0]['group_id']).to                 eq project1.group_id
       expect(json[0]['cd']).to                       eq project1.cd
       expect(json[0]['name']).to                     eq project1.name
+      expect(json[0]['memo']).to                     eq project1.memo
       expect(json[0]['contracted']).to               eq project1.contracted
       expect(json[0]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
       expect(json[0]['is_using_ses']).to             eq project1.is_using_ses
@@ -64,6 +65,7 @@ RSpec.describe 'projects request', versioning: true do
             group_id: project_group.id,
             cd: '17D001A',
             name: 'name',
+            memo: 'memo',
             contracted: true,
             contract_on: '2015-01-01',
             status: 'receive_order',
@@ -102,6 +104,7 @@ RSpec.describe 'projects request', versioning: true do
         expect(project.group_id).to eq project_group.id
         expect(project.cd).to eq  '17D001A'
         expect(project.name).to eq  'name'
+        expect(project.memo).to eq  'memo'
         expect(project.contracted).to eq  true
         expect(project.contract_on.to_s).to eq  '2015-01-01'
         expect(project.status).to eq  'receive_order'
@@ -147,6 +150,7 @@ RSpec.describe 'projects request', versioning: true do
             group_id: 1,
             cd: '',
             name: 'name',
+            memo: 'memo',
             contracted: 'true',
             contract_on: '2015-01-01',
             status: 'receive_order',
@@ -207,6 +211,7 @@ RSpec.describe 'projects request', versioning: true do
         expect(json['group_id']).to                 eq project.group_id
         expect(json['cd']).to                       eq project.cd
         expect(json['name']).to                     eq project.name
+        expect(json['memo']).to                     eq project.memo
         expect(json['contracted']).to               eq project.contracted
         expect(json['contract_on']).to              eq project.contract_on.strftime("%Y-%m-%d")
         expect(json['status']).to                   eq project.status
@@ -340,6 +345,7 @@ RSpec.describe 'projects request', versioning: true do
               group_id: project_group.id,
               cd: '17D001A',
               name: 'name',
+              memo: 'memo',
               contracted: true,
               contract_on: '2015-01-01',
               status: 'receive_order',
@@ -377,6 +383,7 @@ RSpec.describe 'projects request', versioning: true do
           expect(project.group_id).to eq  project_group.id
           expect(project.cd).to eq  '17D001A'
           expect(project.name).to eq  'name'
+          expect(project.memo).to eq  'memo'
           expect(project.contracted).to eq  true
           expect(project.contract_on.to_s).to eq  '2015-01-01'
           expect(project.status).to eq  'receive_order'
@@ -422,6 +429,7 @@ RSpec.describe 'projects request', versioning: true do
               group_id: 1,
               cd: '',
               name: 'name',
+              memo: 'memo',
               contracted: true,
               contract_on: '2015-01-01',
               status: 'receive_order',
@@ -550,6 +558,7 @@ RSpec.describe 'projects request', versioning: true do
             group_id: project_group.id,
             cd: '17D001A',
             name: 'name',
+            memo: 'memo',
             contracted: true,
             contract_on: '2015-01-01',
             status: 'receive_order',
@@ -597,6 +606,7 @@ RSpec.describe 'projects request', versioning: true do
         expect(project.group_id).to eq project_group.id
         expect(project.cd).to eq  '17D001A'
         expect(project.name).to eq  'name'
+        expect(project.memo).to eq  'memo'
         expect(project.contracted).to eq  true
         expect(project.contract_on.to_s).to eq  '2015-01-01'
         expect(project.status).to eq  'receive_order'
@@ -648,6 +658,7 @@ RSpec.describe 'projects request', versioning: true do
               group_id: project_group.id,
               cd: '17D001A',
               name: 'name',
+              memo: 'memo',
               contracted: true,
               contract_on: '2015-01-01',
               status: 'receive_order',

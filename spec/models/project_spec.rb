@@ -6,6 +6,7 @@ RSpec.describe Project do
 
   it { is_expected.to respond_to(:cd) }
   it { is_expected.to respond_to(:name) }
+  it { is_expected.to respond_to(:memo) }
   it { is_expected.to respond_to(:contracted?) }
   it { is_expected.to respond_to(:contract_on) }
   it { is_expected.to respond_to(:status) }

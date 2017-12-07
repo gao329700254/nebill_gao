@@ -14,6 +14,10 @@ fieldset.project_detail__form__basic
       .project_detail__form__item
         = label_tag :name, t('activerecord.attributes.project.name')
         = text_field_tag :name, nil, 'v-model' => 'project.name', ':disabled' => '!editMode'
+    .project_detail__form__container__group
+      .project_detail__form__item
+        = label_tag :memo, t('activerecord.attributes.project.memo')
+        = text_area_tag :memo, nil, 'v-model' => 'project.memo', ':disabled' => '!editMode'
   .project_detail__form__container
     .project_detail__form__container__group
       .project_detail__form__item
