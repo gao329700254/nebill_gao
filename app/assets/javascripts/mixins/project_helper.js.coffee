@@ -10,6 +10,9 @@ Vue.modules.projectHelper = {
       contracted:
         init: false
         exist: { contracted: true, uncontracted: true }
+      unprocessed:
+        init: false
+        exist: { contracted: true, uncontracted: true }
       cd:
         init: ''
         exist: { contracted: true, uncontracted: true }

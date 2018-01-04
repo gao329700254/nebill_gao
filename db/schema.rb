@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124162740) do
+ActiveRecord::Schema.define(version: 20180104041749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,9 +106,9 @@ ActiveRecord::Schema.define(version: 20171124162740) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "cd",                      null: false
-    t.string   "name",                    null: false
-    t.boolean  "contracted",              null: false
+    t.string   "cd",                                      null: false
+    t.string   "name",                                    null: false
+    t.boolean  "contracted",                              null: false
     t.date     "contract_on"
     t.string   "contract_type"
     t.date     "start_on"
@@ -124,19 +124,20 @@ ActiveRecord::Schema.define(version: 20171124162740) do
     t.string   "orderer_address"
     t.string   "orderer_zip_code"
     t.text     "orderer_memo"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.boolean  "is_using_ses"
     t.integer  "group_id"
     t.string   "payment_type"
-    t.string   "billing_personnel_names",              array: true
-    t.string   "orderer_personnel_names",              array: true
+    t.string   "billing_personnel_names",                              array: true
+    t.string   "orderer_personnel_names",                              array: true
     t.integer  "estimated_amount"
     t.boolean  "is_regular_contract"
     t.string   "status"
     t.string   "orderer_phone_number"
     t.string   "billing_phone_number"
     t.text     "memo"
+    t.boolean  "unprocessed",             default: false
   end
 
   add_index "projects", ["cd"], name: "index_projects_on_cd", unique: true, using: :btree

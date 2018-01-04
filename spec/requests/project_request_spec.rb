@@ -25,6 +25,7 @@ RSpec.describe 'projects request', versioning: true do
       expect(json[0]['name']).to                     eq project1.name
       expect(json[0]['memo']).to                     eq project1.memo
       expect(json[0]['contracted']).to               eq project1.contracted
+      expect(json[0]['unprocessed']).to              eq project1.unprocessed
       expect(json[0]['contract_on']).to              eq project1.contract_on.strftime("%Y-%m-%d")
       expect(json[0]['is_using_ses']).to             eq project1.is_using_ses
       expect(json[0]['contract_type']).to            eq project1.contract_type
@@ -67,6 +68,7 @@ RSpec.describe 'projects request', versioning: true do
             name: 'name',
             memo: 'memo',
             contracted: true,
+            unprocessed: false,
             contract_on: '2015-01-01',
             status: 'receive_order',
             contract_type: 'lump_sum',
@@ -106,6 +108,7 @@ RSpec.describe 'projects request', versioning: true do
         expect(project.name).to eq  'name'
         expect(project.memo).to eq  'memo'
         expect(project.contracted).to eq  true
+        expect(project.unprocessed).to eq  false
         expect(project.contract_on.to_s).to eq  '2015-01-01'
         expect(project.status).to eq  'receive_order'
         expect(project.contract_type).to eq  'lump_sum'
@@ -152,6 +155,7 @@ RSpec.describe 'projects request', versioning: true do
             name: 'name',
             memo: 'memo',
             contracted: 'true',
+            unprocessed: 'false',
             contract_on: '2015-01-01',
             status: 'receive_order',
             contract_type: 'lump_sum',
@@ -213,6 +217,7 @@ RSpec.describe 'projects request', versioning: true do
         expect(json['name']).to                     eq project.name
         expect(json['memo']).to                     eq project.memo
         expect(json['contracted']).to               eq project.contracted
+        expect(json['unprocessed']).to              eq project.unprocessed
         expect(json['contract_on']).to              eq project.contract_on.strftime("%Y-%m-%d")
         expect(json['status']).to                   eq project.status
         expect(json['is_using_ses']).to             eq project.is_using_ses
@@ -347,6 +352,7 @@ RSpec.describe 'projects request', versioning: true do
               name: 'name',
               memo: 'memo',
               contracted: true,
+              unprocessed: false,
               contract_on: '2015-01-01',
               status: 'receive_order',
               contract_type: 'lump_sum',
@@ -385,6 +391,7 @@ RSpec.describe 'projects request', versioning: true do
           expect(project.name).to eq  'name'
           expect(project.memo).to eq  'memo'
           expect(project.contracted).to eq  true
+          expect(project.unprocessed).to eq  false
           expect(project.contract_on.to_s).to eq  '2015-01-01'
           expect(project.status).to eq  'receive_order'
           expect(project.contract_type).to eq  'lump_sum'
@@ -431,6 +438,7 @@ RSpec.describe 'projects request', versioning: true do
               name: 'name',
               memo: 'memo',
               contracted: true,
+              unprocessed: false,
               contract_on: '2015-01-01',
               status: 'receive_order',
               contract_type: 'lump_sum',
@@ -473,6 +481,74 @@ RSpec.describe 'projects request', versioning: true do
 
           expect(json['message']).to eq 'プロジェクトが更新できませんでした'
         end
+      end
+    end
+
+    context 'with unprocessed parameter' do
+      let(:project) { create(:uncontracted_project) }
+      let(:path) { "/api/projects/#{project.id}" }
+
+      let(:params) do
+        {
+          project: {
+            cd: '17D001A',
+            name: 'name',
+            memo: 'memo',
+            contracted: false,
+            unprocessed: true,
+            billing_company_name:    'billing_company_name',
+            billing_department_name: 'billing_department_name',
+            billing_personnel_names: ['billing_personnel_names'],
+            billing_address:         'billing_address',
+            billing_zip_code:        'billing_zip_code',
+            billing_phone_number:    'billing_phone_number',
+            billing_memo:            'billing_memo',
+            orderer_company_name:    'orderer_company_name',
+            orderer_department_name: 'orderer_department_name',
+            orderer_personnel_names: ['orderer_personnel_names'],
+            orderer_address:         'orderer_address',
+            orderer_zip_code:        'orderer_zip_code',
+            orderer_phone_number:    'orderer_phone_number',
+            orderer_memo:            'orderer_memo',
+          },
+        }
+      end
+
+      it 'update the project' do
+        expect do
+          patch path, params
+        end.to change { project.reload && project.updated_at }
+
+        expect(project.cd).to eq  '17D001A'
+        expect(project.name).to eq  'name'
+        expect(project.memo).to eq  'memo'
+        expect(project.contracted).to eq  false
+        expect(project.unprocessed).to eq  true
+        expect(project.status).to eq 'finished'
+        expect(project.billing_company_name).to eq     'billing_company_name'
+        expect(project.billing_department_name).to eq  'billing_department_name'
+        expect(project.billing_personnel_names).to eq  ['billing_personnel_names']
+        expect(project.billing_address).to eq          'billing_address'
+        expect(project.billing_zip_code).to eq         'billing_zip_code'
+        expect(project.billing_phone_number).to eq     'billing_phone_number'
+        expect(project.billing_memo).to eq             'billing_memo'
+        expect(project.orderer_company_name).to eq     'orderer_company_name'
+        expect(project.orderer_department_name).to eq  'orderer_department_name'
+        expect(project.orderer_personnel_names).to eq  ['orderer_personnel_names']
+        expect(project.orderer_address).to eq          'orderer_address'
+        expect(project.orderer_zip_code).to eq         'orderer_zip_code'
+        expect(project.orderer_phone_number).to eq     'orderer_phone_number'
+        expect(project.orderer_memo).to eq             'orderer_memo'
+      end
+
+      it 'return success code and message' do
+        patch path, params
+
+        expect(response).to be_success
+        expect(response.status).to eq 201
+
+        expect(json['id']).not_to eq nil
+        expect(json['message']).to eq 'プロジェクトを更新しました'
       end
     end
 
@@ -560,6 +636,7 @@ RSpec.describe 'projects request', versioning: true do
             name: 'name',
             memo: 'memo',
             contracted: true,
+            unprocessed: false,
             contract_on: '2015-01-01',
             status: 'receive_order',
             contract_type: 'lump_sum',
@@ -608,6 +685,7 @@ RSpec.describe 'projects request', versioning: true do
         expect(project.name).to eq  'name'
         expect(project.memo).to eq  'memo'
         expect(project.contracted).to eq  true
+        expect(project.unprocessed).to eq  false
         expect(project.contract_on.to_s).to eq  '2015-01-01'
         expect(project.status).to eq  'receive_order'
         expect(project.contract_type).to eq  'lump_sum'
@@ -660,6 +738,7 @@ RSpec.describe 'projects request', versioning: true do
               name: 'name',
               memo: 'memo',
               contracted: true,
+              unprocessed: false,
               contract_on: '2015-01-01',
               status: 'receive_order',
               contract_type: 'lump_sum',

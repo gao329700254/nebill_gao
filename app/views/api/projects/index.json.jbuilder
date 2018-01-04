@@ -5,6 +5,7 @@ json.array!(@projects) do |project|
     :group_id,
     :memo,
     :contracted,
+    :unprocessed,
     :contract_type,
     :is_using_ses,
     :payment_type,
@@ -27,7 +28,13 @@ json.array!(@projects) do |project|
   )
   json.is_regular_contract           project.is_regular_contract ? I18n.t("enumerize.defaults.regular_contract") : ''
   json.cd                            project.cd
-  json.status                        project.status ? I18n.t("enumerize.defaults.status.#{project.status}") : ''
+  if project.unprocessed
+    json.status I18n.t("enumerize.defaults.status.unprocessed")
+  elsif project.status.nil?
+    json.status ''
+  else
+    json.status I18n.t("enumerize.defaults.status.#{project.status}")
+  end
   json.name                          project.name
   json.orderer_company_name          project.orderer_company_name
   json.start_on                      project.start_on
