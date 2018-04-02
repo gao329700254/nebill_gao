@@ -44,6 +44,7 @@ class Api::ProjectsController < Api::ApiController
 
   def update
     @project.attributes = project_param
+    @project.status = :finished if @project.unprocessed
     @project.save!
 
     render_action_model_success_message(@project, :update)
@@ -133,6 +134,7 @@ private
       :memo,
       :name,
       :contracted,
+      :unprocessed,
       :contract_on,
       :contract_type,
       :is_using_ses,

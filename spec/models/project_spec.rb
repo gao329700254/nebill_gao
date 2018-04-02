@@ -100,7 +100,6 @@ RSpec.describe Project do
 
     it { is_expected.to validate_absence_of(:contract_type) }
     it { is_expected.to validate_absence_of(:contract_on) }
-    it { is_expected.to validate_absence_of(:status) }
     it { is_expected.to validate_absence_of(:estimated_amount) }
     it { is_expected.to validate_absence_of(:start_on) }
     it { is_expected.to validate_absence_of(:end_on) }

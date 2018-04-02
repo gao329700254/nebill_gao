@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20171124162740
+# Schema version: 20180104041749
 #
 # Table name: projects
 #
@@ -35,6 +35,7 @@
 #  orderer_phone_number    :string
 #  billing_phone_number    :string
 #  memo                    :text
+#  unprocessed             :boolean          default(FALSE)
 #
 # Indexes
 #

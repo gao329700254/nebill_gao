@@ -8,6 +8,7 @@ FactoryGirl.define do
 
     factory :contracted_project do
       contracted true
+      unprocessed false
       contract_on { Faker::Date.between(6.months.ago, 5.months.ago) }
       status :receive_order
       contract_type :lump_sum
@@ -35,6 +36,7 @@ FactoryGirl.define do
 
     factory :uncontracted_project do
       contracted false
+      unprocessed false
       contract_on          nil
       status               nil
       contract_type        nil

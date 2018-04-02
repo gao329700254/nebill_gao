@@ -38,6 +38,8 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
           is_expected.to     have_field 'cd'                     , disabled: true, with: project.cd
           is_expected.to     have_field 'name'                   , disabled: true, with: project.name
           is_expected.to     have_field 'memo'                   , disabled: true, with: project.memo
+          is_expected.to     have_unchecked_field 'contracted'   , disabled: true
+          is_expected.to     have_unchecked_field 'unprocessed'  , disabled: true
           is_expected.not_to have_field 'contract_on'
           is_expected.not_to have_field 'status'
           is_expected.not_to have_field 'contract_type'
@@ -76,6 +78,8 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'cd'                     , disabled: false, with: project.cd
             is_expected.to     have_field 'name'                   , disabled: false, with: project.name
             is_expected.to     have_field 'memo'                   , disabled: false, with: project.memo
+            is_expected.to     have_unchecked_field 'contracted'   , disabled: false
+            is_expected.to     have_unchecked_field 'unprocessed'  , disabled: false
             is_expected.not_to have_field 'contract_on'
             is_expected.not_to have_field 'status'
             is_expected.not_to have_field 'contract_type'
@@ -217,7 +221,7 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             expect(page).to    have_content '最終更新日時: ' + I18n.l(project.updated_at.in_time_zone('Tokyo'))
           end
 
-          scenario 'should not update when click submit button with uncorrent values' do
+          scenario 'should not update when click submit button with uncorrect values' do
             select 'Group2', from: :group_id
             fill_in :cd         , with: '  '
             fill_in :name       , with: 'test project'
@@ -246,6 +250,8 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'cd'                     , disabled: false, with: '  '
             is_expected.to     have_field 'name'                   , disabled: false, with: 'test project'
             is_expected.to     have_field 'memo'                   , disabled: false, with: 'test memo'
+            is_expected.to     have_unchecked_field 'contracted'   , disabled: false
+            is_expected.to     have_unchecked_field 'unprocessed'  , disabled: false
             is_expected.to     have_field 'orderer_company_name'   , disabled: false, with: 'test orderer company'
             is_expected.to     have_field 'orderer_department_name', disabled: false, with: 'test orderer department'
             is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: 'test person1, test person2'
@@ -260,6 +266,168 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'billing_zip_code'       , disabled: false, with: '2345678'
             is_expected.to     have_field 'billing_phone_number'   , disabled: false, with: '123456789'
             is_expected.to     have_field 'billing_memo'           , disabled: false, with: 'test billing memo'
+          end
+
+          scenario 'should update when unprocessed is true and accept the confirm with correct values' do
+            select 'Group2', from: :group_id
+            fill_in :cd        , with: '17D001A'
+            fill_in :name       , with: 'test project'
+            fill_in :memo       , with: 'test memo'
+            check   :unprocessed
+            fill_in :orderer_company_name    , with: 'test orderer company'
+            fill_in :orderer_department_name , with: 'test orderer department'
+            fill_in :orderer_personnel_names , with: 'test person1, test person2'
+            fill_in :orderer_address         , with: 'test orderer address'
+            fill_in :orderer_zip_code        , with: '1234567'
+            fill_in :orderer_phone_number    , with: '123456789'
+            fill_in :orderer_memo            , with: 'test orderer memo'
+            fill_in :billing_company_name    , with: 'test billing company'
+            fill_in :billing_department_name , with: 'test billing department'
+            fill_in :billing_personnel_names , with: 'test person3, test person4'
+            fill_in :billing_address         , with: 'test billing address'
+            fill_in :billing_zip_code        , with: '2345678'
+            fill_in :billing_phone_number    , with: '123456789'
+            fill_in :billing_memo            , with: 'test billing memo'
+
+            expect do
+              page.accept_confirm('本当に失注にしてよろしいですか？') do
+                click_button '更新'
+                wait_for_ajax
+                sleep 3
+              end
+            end.to change { project.reload && project.updated_at }
+
+            is_expected.to     have_field 'group_id'               , disabled: true, with: project_group2.id
+            is_expected.to     have_field 'cd'                     , disabled: true, with: '17D001A'
+            is_expected.to     have_field 'name'                   , disabled: true, with: 'test project'
+            is_expected.to     have_field 'memo'                   , disabled: true, with: 'test memo'
+            is_expected.to     have_checked_field 'unprocessed'    , disabled: true, with: 'true'
+            is_expected.to     have_field 'orderer_company_name'   , disabled: true, with: 'test orderer company'
+            is_expected.to     have_field 'orderer_department_name', disabled: true, with: 'test orderer department'
+            is_expected.to     have_field 'orderer_personnel_names', disabled: true, with: 'test person1, test person2'
+            is_expected.to     have_field 'orderer_address'        , disabled: true, with: 'test orderer address'
+            is_expected.to     have_field 'orderer_zip_code'       , disabled: true, with: '1234567'
+            is_expected.to     have_field 'orderer_phone_number'   , disabled: true, with: '123456789'
+            is_expected.to     have_field 'orderer_memo'           , disabled: true, with: 'test orderer memo'
+            is_expected.to     have_field 'billing_company_name'   , disabled: true, with: 'test billing company'
+            is_expected.to     have_field 'billing_department_name', disabled: true, with: 'test billing department'
+            is_expected.to     have_field 'billing_personnel_names', disabled: true, with: 'test person3, test person4'
+            is_expected.to     have_field 'billing_address'        , disabled: true, with: 'test billing address'
+            is_expected.to     have_field 'billing_zip_code'       , disabled: true, with: '2345678'
+            is_expected.to     have_field 'billing_phone_number'   , disabled: true, with: '123456789'
+            is_expected.to     have_field 'billing_memo'           , disabled: true, with: 'test billing memo'
+            is_expected.not_to have_button '編集'
+            is_expected.not_to have_button 'キャンセル'
+            is_expected.not_to have_button '更新'
+            is_expected.to     have_button '削除'
+          end
+
+          scenario 'should not update when unprocessed is true and dismiss the confirm' do
+            select 'Group2', from: :group_id
+            fill_in :cd        , with: '17D001A'
+            fill_in :name       , with: 'test project'
+            fill_in :memo       , with: 'test memo'
+            check   :unprocessed
+            fill_in :orderer_company_name    , with: 'test orderer company'
+            fill_in :orderer_department_name , with: 'test orderer department'
+            fill_in :orderer_personnel_names , with: 'test person1, test person2'
+            fill_in :orderer_address         , with: 'test orderer address'
+            fill_in :orderer_zip_code        , with: '1234567'
+            fill_in :orderer_phone_number    , with: '123456789'
+            fill_in :orderer_memo            , with: 'test orderer memo'
+            fill_in :billing_company_name    , with: 'test billing company'
+            fill_in :billing_department_name , with: 'test billing department'
+            fill_in :billing_personnel_names , with: 'test person3, test person4'
+            fill_in :billing_address         , with: 'test billing address'
+            fill_in :billing_zip_code        , with: '2345678'
+            fill_in :billing_phone_number    , with: '123456789'
+            fill_in :billing_memo            , with: 'test billing memo'
+
+            expect do
+              page.dismiss_confirm do
+                click_button '更新'
+                wait_for_ajax
+                sleep 3
+              end
+            end.not_to change { project.reload && project.updated_at }
+
+            is_expected.to     have_field 'group_id'               , disabled: false, with: project_group2.id
+            is_expected.to     have_field 'cd'                     , disabled: false, with: '17D001A'
+            is_expected.to     have_field 'name'                   , disabled: false, with: 'test project'
+            is_expected.to     have_field 'memo'                   , disabled: false, with: 'test memo'
+            is_expected.to     have_checked_field 'unprocessed'    , disabled: false, with: 'true'
+            is_expected.to     have_field 'orderer_company_name'   , disabled: false, with: 'test orderer company'
+            is_expected.to     have_field 'orderer_department_name', disabled: false, with: 'test orderer department'
+            is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: 'test person1, test person2'
+            is_expected.to     have_field 'orderer_address'        , disabled: false, with: 'test orderer address'
+            is_expected.to     have_field 'orderer_zip_code'       , disabled: false, with: '1234567'
+            is_expected.to     have_field 'orderer_phone_number'   , disabled: false, with: '123456789'
+            is_expected.to     have_field 'orderer_memo'           , disabled: false, with: 'test orderer memo'
+            is_expected.to     have_field 'billing_company_name'   , disabled: false, with: 'test billing company'
+            is_expected.to     have_field 'billing_department_name', disabled: false, with: 'test billing department'
+            is_expected.to     have_field 'billing_personnel_names', disabled: false, with: 'test person3, test person4'
+            is_expected.to     have_field 'billing_address'        , disabled: false, with: 'test billing address'
+            is_expected.to     have_field 'billing_zip_code'       , disabled: false, with: '2345678'
+            is_expected.to     have_field 'billing_phone_number'   , disabled: false, with: '123456789'
+            is_expected.to     have_field 'billing_memo'           , disabled: false, with: 'test billing memo'
+            is_expected.not_to have_button '編集'
+            is_expected.to     have_button 'キャンセル'
+            is_expected.to     have_button '更新'
+            is_expected.not_to have_button '削除'
+          end
+
+          scenario 'should not update when unprocessed is true and accept the confirm with uncorrect value' do
+            select 'Group2', from: :group_id
+            fill_in :cd        , with: '  '
+            fill_in :name       , with: 'test project'
+            fill_in :memo       , with: 'test memo'
+            check   :unprocessed
+            fill_in :orderer_company_name    , with: 'test orderer company'
+            fill_in :orderer_department_name , with: 'test orderer department'
+            fill_in :orderer_personnel_names , with: 'test person1, test person2'
+            fill_in :orderer_address         , with: 'test orderer address'
+            fill_in :orderer_zip_code        , with: '1234567'
+            fill_in :orderer_phone_number    , with: '123456789'
+            fill_in :orderer_memo            , with: 'test orderer memo'
+            fill_in :billing_company_name    , with: 'test billing company'
+            fill_in :billing_department_name , with: 'test billing department'
+            fill_in :billing_personnel_names , with: 'test person3, test person4'
+            fill_in :billing_address         , with: 'test billing address'
+            fill_in :billing_zip_code        , with: '2345678'
+            fill_in :billing_phone_number    , with: '123456789'
+            fill_in :billing_memo            , with: 'test billing memo'
+
+            expect do
+              page.accept_confirm('本当に失注にしてよろしいですか？') do
+                click_button '更新'
+                wait_for_ajax
+                sleep 3
+              end
+            end.not_to change { project.reload && project.updated_at }
+
+            is_expected.to     have_field 'group_id'               , disabled: false, with: project_group2.id
+            is_expected.to     have_field 'cd'                     , disabled: false, with: '  '
+            is_expected.to     have_field 'name'                   , disabled: false, with: 'test project'
+            is_expected.to     have_field 'memo'                   , disabled: false, with: 'test memo'
+            is_expected.to     have_checked_field 'unprocessed'    , disabled: false, with: 'true'
+            is_expected.to     have_field 'orderer_company_name'   , disabled: false, with: 'test orderer company'
+            is_expected.to     have_field 'orderer_department_name', disabled: false, with: 'test orderer department'
+            is_expected.to     have_field 'orderer_personnel_names', disabled: false, with: 'test person1, test person2'
+            is_expected.to     have_field 'orderer_address'        , disabled: false, with: 'test orderer address'
+            is_expected.to     have_field 'orderer_zip_code'       , disabled: false, with: '1234567'
+            is_expected.to     have_field 'orderer_phone_number'   , disabled: false, with: '123456789'
+            is_expected.to     have_field 'orderer_memo'           , disabled: false, with: 'test orderer memo'
+            is_expected.to     have_field 'billing_company_name'   , disabled: false, with: 'test billing company'
+            is_expected.to     have_field 'billing_department_name', disabled: false, with: 'test billing department'
+            is_expected.to     have_field 'billing_personnel_names', disabled: false, with: 'test person3, test person4'
+            is_expected.to     have_field 'billing_address'        , disabled: false, with: 'test billing address'
+            is_expected.to     have_field 'billing_zip_code'       , disabled: false, with: '2345678'
+            is_expected.to     have_field 'billing_phone_number'   , disabled: false, with: '123456789'
+            is_expected.to     have_field 'billing_memo'           , disabled: false, with: 'test billing memo'
+            is_expected.not_to have_button '編集'
+            is_expected.to     have_button 'キャンセル'
+            is_expected.to     have_button '更新'
+            is_expected.not_to have_button '削除'
           end
         end
 
@@ -785,7 +953,7 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
           is_expected.to have_content file2.group.name
         end
 
-        scenario 'click create button with corrent value' do
+        scenario 'click create button with correct value' do
           fill_in :name, with: 'New Group'
 
           expect do
@@ -796,7 +964,7 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
           is_expected.to have_field 'name', with: ''
         end
 
-        scenario 'click create button with uncorrent value' do
+        scenario 'click create button with uncorrect value' do
           fill_in :name, with: '  '
 
           expect do

@@ -45,15 +45,16 @@
         th.project_list__tbl__item--amount          = t('activerecord.attributes.project.amount')
     tbody.project_list__tbl__body
       tr.project_list__tbl__body__row [
-        v-bind:class = "project.status === '#{t('enumerize.defaults.status.finished')}' ? 'project_list__tbl__body__row--finished'
-                                                                                        : 'project_list__tbl__body__row'"
-        v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted' | filterBy finished in 'status'"
+        v-bind:class = "project.status === '#{t('enumerize.defaults.status.finished')}'
+                       || project.status === '#{t('enumerize.defaults.status.unprocessed')}'
+                         ? 'project_list__tbl__body__row--finished'
+                         : 'project_list__tbl__body__row'"
+        v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted' | statusBy finishedStatus"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"
         track-by   = "id"
       ]
-        td.project_list__tbl__item--status          v-text='project.is_regular_contract + project.status' v-if='project.contracted'
-        td.project_list__tbl__item--status          v-if='!project.contracted'
+        td.project_list__tbl__item--status          v-text='project.is_regular_contract + project.status'
         td.project_list__tbl__item--cd              v-text='project.cd'
         td.project_list__tbl__item--project_name    v-text='project.name'
         td.project_list__tbl__item--orderer_company v-text='project.orderer_company_name'

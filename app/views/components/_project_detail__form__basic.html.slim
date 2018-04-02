@@ -22,7 +22,12 @@ fieldset.project_detail__form__basic
     .project_detail__form__container__group
       .project_detail__form__item
         = label_tag :contracted, t('activerecord.attributes.project.contracted')
-        = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', ':disabled' => '!editMode || projectOriginal.contracted'
+        = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted',
+        ':disabled' => '!editMode || projectOriginal.contracted || project.unprocessed'
+    .project_detail__form__container__group v-if='!project.contracted'
+      .project_detail__form__item
+        = label_tag :unprocessed, t('activerecord.attributes.project.unprocessed')
+        = check_box_tag :unprocessed, true, false, 'v-model' => 'project.unprocessed', ':disabled' => '!editMode'
 
   .project_detail__form__contracted v-if='project.contracted'
     .project_detail__form__container

@@ -58,6 +58,7 @@ ja:
         name: 名前
         memo: メモ
         contracted: 契約済
+        unprocessed: 失注
         contract_on: 契約日
         contract_type: 契約形態
         estimated_amount: 見積もり額
@@ -313,6 +314,10 @@ ja:
       confirm: '本当に削除してよろしいですか？'
       success: '%{model}を削除しました'
       fail: '%{model}が削除できませんでした'
+    unprocessed:
+      confirm: '本当に失注にしてよろしいですか？'
+      success: '%{model}を失注にしました'
+      fail: '%{model}を失注にできませんでした'
     login:
       success: ログインしました
       fail: ログインできませんでした
@@ -343,6 +348,7 @@ ja:
         turn_over:     売上
         publish_bill:  請求書発行
         finished:      終了
+        unprocessed:   失注
       regular_contract: 定期　
     role:
       general: 一般

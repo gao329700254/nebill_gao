@@ -22,9 +22,6 @@ $ ->
         else
           @postDate = undefined
         @search()
-      finishedStatus: (val) ->
-        @finished = if val == true then '終了' else undefined
-        @search()
     methods:
       linkToShow: (projectId) -> window.location = "/projects/#{projectId}/show"
       showProjectNew: -> @$broadcast('showProjectNewEvent')
