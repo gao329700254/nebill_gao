@@ -83,7 +83,7 @@ RSpec.feature 'Project List Page', js: true, versioning: true do
     is_expected.to have_content 'プロジェクト新規作成'
     is_expected.to have_content 'ステータス'
     is_expected.to have_content 'ID'
-    is_expected.to have_content '名前'
+    is_expected.to have_content '案件名'
     is_expected.to have_content '受注先会社名'
     is_expected.to have_content '開始日'
     is_expected.to have_content '終了日'

@@ -55,7 +55,7 @@ ja:
         group: グループ
         cd: ID
         placeholder: 記入例) 17D001A
-        name: 名前
+        name: 案件名
         memo: メモ
         contracted: 契約済
         unprocessed: 失注
