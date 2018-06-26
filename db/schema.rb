@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180704084822) do
+ActiveRecord::Schema.define(version: 20180720081012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "approval_files", force: :cascade do |t|
+    t.integer  "approval_id",       null: false
+    t.string   "file",              null: false
+    t.string   "original_filename", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "approval_users", force: :cascade do |t|
     t.integer  "approval_id"
@@ -22,6 +30,7 @@ ActiveRecord::Schema.define(version: 20180704084822) do
     t.integer  "status"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "comment"
   end
 
   add_index "approval_users", ["approval_id", "user_id"], name: "index_approval_users_on_approval_id_and_user_id", unique: true, using: :btree
@@ -37,6 +46,8 @@ ActiveRecord::Schema.define(version: 20180704084822) do
     t.string   "approved_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "status"
+    t.integer  "category"
   end
 
   add_index "approvals", ["approved_type", "approved_id"], name: "index_approvals_on_approved_type_and_approved_id", using: :btree

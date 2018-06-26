@@ -25,3 +25,7 @@ nav.sidemenu
         li.sidemenu__item
           = fa_icon 'user 2x', class: 'sidemenu__item__icon'
           span.sidemenu__item__page_title = t('page.admin.users.title')
+    = link_to approval_list_path
+      li.sidemenu__item
+        = fa_icon 'check-square 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = t('page.approval_list.title')

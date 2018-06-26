@@ -6,6 +6,7 @@
 //= require sortable/Sortable
 //= require page/page
 //= require autoNumeric/autoNumeric
+//= require nested_form_fields
 
 //= require core
 //= require_directory .

@@ -22,6 +22,7 @@ ja:
       bill: 請求
       project_file: プロジェクトファイル
       project_file_group: プロジェクトファイルグループ
+      approval: 稟議
     attributes:
       employee: &employee
         name: 名前
@@ -96,6 +97,22 @@ ja:
         memo:           メモ
       project_file_group:
         name: 名前
+      approval:
+        name: 件名
+        project_id: プロジェクトID
+        status: ステータス
+        created_user_name: 作成者
+        approvel_user_name: 承認者
+        comment: コメント
+        updated_at: 更新日
+        created_at: 作成日
+        notes: 概要
+        file: 添付ファイル
+        category: 種別
+      approval_user:
+        name: 承認者
+        status: ステータス
+        comment: コメント
   date:
     abbr_day_names:
     - 日
@@ -222,6 +239,7 @@ ja:
       change: は%{value}にすることはできません
       wrong_bill_on_predate_delivery_on: は納品日以降を入力してください
       wrong_bill_on_predate_acceptance_on: は検収日以降を入力してください
+      wrong_status: 取り消しした稟議は変更できません
     template:
       body: 次の項目を確認してください
       header:
@@ -244,6 +262,7 @@ ja:
     login: ログイン
     logout: ログアウト
     unauthorized: 許可されていません
+    plus: 追加
   number:
     currency:
       format:
@@ -307,6 +326,7 @@ ja:
       success: '%{model}を作成しました'
       fail: '%{model}が作成できませんでした'
     update:
+      confirm: '本当に%{model}を更新してよろしいでしょうか？'
       success: '%{model}を更新しました'
       fail: '%{model}が更新できませんでした'
     destroy:
@@ -326,6 +346,22 @@ ja:
     upload:
       success: '%{name}をアップロードしました'
       fail: '%{name}がアップロードできませんでした'
+    invalid:
+      confirm: "本当に取り消してよろしいですか？\n取り消し後一切の変更ができなくなります"
+      success: '%{model}を取り消しました'
+      fail: '%{model}を取り消しました'
+    permission:
+      confirm: '本当に承認してよろしいですか？'
+      success: '%{model}を承認しました'
+      fail: '%{model}を承認できませんでした'
+    disconfirm:
+      confirm: "本当に差し戻ししてよろしいですか？"
+      success: '%{model}を差し戻ししました'
+      fail: '%{model}を差し戻しできませんでした'
+    reassignment:
+      confirm: '本当に再割り当てをしてよろしいですか？'
+      success: '承認者を再割り当てしました'
+      fail: '承認者を再割り当てできませんでした'
   enumerize:
     defaults:
       contract_type:
@@ -348,12 +384,24 @@ ja:
         publish_bill:  請求書発行
         finished:      終了
         unprocessed:   失注
-      regular_contract: 定期　
+      regular_contract: 定期 
     role:
       general: 一般
       superior: 上長
       backoffice: バックオフィス
       admin: 管理者
+    status:
+      pending:      承認待ち
+      permission:   承認済み
+      disconfirm:   差し戻し
+      reassignment: 再割り当て
+      invalid:      取り消し
+    category:
+      contract_relationship:  契約関係
+      new_client:             新規取引先
+      consumables:            消耗品
+      other_purchasing:       その他購買
+      other:                  その他
   page:
     home:
       title: ホーム
@@ -431,6 +479,35 @@ ja:
       search: 検索
     partners:
       title: パートナー一覧
+    approval_list:
+      title: 稟議一覧
+      search_form_placeholder: '件名,作成者で検索できます'
+      fill_date_form: 作成日検索
+      search: 検索
+      status_type:
+        all: 全て
+        pending: 承認待ち
+        permission: 承認済み
+        disconfirm: 差し戻し
+        invalid: 取り消し
+    approval_show:
+      title: 稟議情報
+      note_no_contents: なし
+      file_no_contents: なし
+      user_no_contents: 承認者が存在しません
+      history: 承認履歴
+      invalid: 承認申請の取り消し
+      permission: 承認
+      disconfirm: 差し戻し
+      reassignment: 再割り当て
+      action: アクション
+      edit: 編集
+      comment_placeholder: コメントを入力してください
+    approval_new:
+      title: 稟議新規作成
+    approval_edit:
+      title: 稟議編集
+      uploaded_file: 保存済ファイル
     admin:
       users:
         title: ユーザ管理
@@ -469,3 +546,26 @@ ja:
       company: 株式会社Cuon行
       note: 下記項目の検収が完了致しました。
       seal: 印
+  mail:
+    from: nebill
+    approval:
+      assignment:
+        subject:  "【稟議】%{user}さんより,承認申請「%{name}」が申請されました."
+        message:  "%{user}さんより,承認申請「%{name}」が申請されました."
+        massage2: "以下のリンクをクリックして,内容を確認ください."
+        company:  "nebill by 株式会社Cuon"
+      update:
+        subject:  "【稟議】%{user}さんより,承認申請「%{name}」が更新されました."
+        message:  "%{user}さんより,承認申請「%{name}」が更新されました."
+        massage2: "以下のリンクをクリックして,内容を確認ください."
+        company:  "nebill by 株式会社Cuon"
+      permission:
+        subject:  "【稟議】%{user}さんの承認申請「%{name}」が承認済みになりました."
+        message:  "%{user}さんの承認申請「%{name}」が承認済みになりました."
+        massage2: "以下のリンクをクリックして,内容を確認ください."
+        company:  "nebill by 株式会社Cuon"
+      disconfirm:
+        subject:  "【稟議】%{user}さんの承認申請「%{name}」が差し戻しされました."
+        message:  "%{user}さんの承認申請「%{name}」が差し戻しされました."
+        massage2: "以下のリンクをクリックして,内容を確認ください."
+        company:  "nebill by 株式会社Cuon"

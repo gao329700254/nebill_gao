@@ -34,5 +34,10 @@ Rails.application.routes.draw do
     resources :bills, only: [:index]
     post "projects/search_result", to: "projects#search_result"
     post "bills/search_result", to: "bills#search_result"
+    post "approvals/search_result", to: "approvals#search_result"
+    resources :approvals, only: [:show, :create, :update, :destroy, :index]
+    scope path: 'files/:files_id' do
+      get 'approval_file_download', to: 'files#approval_file_download'
+    end
   end
 end

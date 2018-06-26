@@ -1,0 +1,31 @@
+
+- provide(:title, t('page.approval_new.title'))
+
+#approval_new.approval_new
+
+  = form_for [:api, @approval], class: 'approval_new__form' do |f|
+    .approval_new__form__container
+      .approval_new__form__container__group
+        .approval_new__form__item
+          = f.label :name, Approval.human_attribute_name(:name)
+          = f.text_field :name,  class: 'approval_new__form__item__text'
+        .approval_new__form__item
+          = f.label :category, Approval.human_attribute_name(:category)
+          = f.select :category, options_for_select(Approval.category.options)
+        .approval_new__form__item
+          = f.label :notes, Approval.human_attribute_name(:notes)
+          = f.text_area :notes, maxlength: "2000", class: 'approval_new__form__item__area'
+        = button_tag type: 'button', onclick: "history.back()", class: 'approval_new__form__btn--cancel' do
+          = fa_icon 'remove', text: t('helpers.cancel')
+        = button_tag 'submit', class: 'approval_new__form__btn--submit' , value: "submit" do
+          = fa_icon 'check', text: t('helpers.submit.create')
+      .approval_new__form__container__group
+        .approval_new__form__item
+          = f.label :files, Approval.human_attribute_name(:file)
+          = f.nested_fields_for :files do |q|
+            .approval_new__form__item__file
+              = q.file_field :file, class: 'form-control'
+              = q.remove_nested_fields_link 'Delete', class: 'btn btn-danger approval_new__form__btn--file_delete', role: 'button' do
+                = fa_icon 'remove', text: t('helpers.delete')
+        = f.add_nested_fields_link :files, 'Add new', class: 'btn btn-primary approval_new__form__btn--file_new', role: 'button'
+          = fa_icon 'plus', text: t('helpers.plus')

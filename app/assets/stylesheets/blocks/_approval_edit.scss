@@ -1,0 +1,56 @@
+.approval_edit {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  background-color: $white-bg-color;
+  padding: $base-spacing;
+  color: $white-ft-color;
+
+  &__form {
+    @include outer-container;
+
+    &__container {
+      @include row;
+
+      &__group {
+        @include span-columns(6);
+      }
+    }
+
+    &__item {
+      margin-bottom: $small-spacing;
+
+      &__area {
+        @include span-columns(12);
+        margin-bottom: $small-spacing;
+        height: 300px;
+      }
+
+      &__file {
+        border-bottom: $base-border;
+        padding-top: $base-spacing;
+        padding-bottom: $base-spacing;
+
+        &__name {
+          margin: $small-spacing 0 $small-spacing $base-spacing;
+        }
+      }
+    }
+
+    &__btn {
+      &--delete,
+      &--new {
+        @include btn--default;
+        padding: $small-spacing;
+      }
+
+      &--cancel {
+        @include btn--default;
+      }
+
+      &--submit {
+        @include btn--primary;
+      }
+    }
+  }
+}

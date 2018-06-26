@@ -13,3 +13,5 @@ spec/examples.txt
 !/vendor/assets/bower.json
 
 erd.pdf
+
+.env
