@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20180104041749
+# Schema version: 20180620035125
 #
 # Table name: bills
 #
@@ -35,6 +35,7 @@ class Bill < ActiveRecord::Base
   has_many :employees, through: :members
   has_many :users, through: :user_members
   has_many :partners, through: :partner_members
+  has_many :approvals, as: :approved
 
   has_paper_trail meta: { project_id: :project_id, bill_id: :id }
 

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20180104041749
+# Schema version: 20180620035125
 #
 # Table name: project_files
 #
@@ -10,6 +10,7 @@
 #  updated_at        :datetime         not null
 #  file_group_id     :integer
 #  original_filename :string           not null
+#  type              :integer
 #
 # Foreign Keys
 #

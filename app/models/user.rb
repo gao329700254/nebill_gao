@@ -28,6 +28,9 @@ class User < ActiveRecord::Base
 
   has_many :members, through: :employee, class_name: 'UserMember'
 
+  has_many :approval_users
+  has_many :approvals, through: :approval_users
+
   enumerize :role, in: { general: 10, superior: 30 }, default: :general
 
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
