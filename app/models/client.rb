@@ -16,6 +16,9 @@
 #
 
 class Client < ActiveRecord::Base
+  has_many :approvals, as: :approved
+  has_many :files, class_name: 'ClientFile', dependent: :destroy
+
   has_paper_trail
 
   validates :cd, uniqueness: { case_sensitive: false }, if: :cd?

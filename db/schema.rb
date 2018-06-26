@@ -11,10 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180104041749) do
+ActiveRecord::Schema.define(version: 20180620035125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "approval_users", force: :cascade do |t|
+    t.integer  "approval_id"
+    t.integer  "user_id"
+    t.integer  "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "approval_users", ["approval_id", "user_id"], name: "index_approval_users_on_approval_id_and_user_id", unique: true, using: :btree
+  add_index "approval_users", ["approval_id"], name: "index_approval_users_on_approval_id", using: :btree
+  add_index "approval_users", ["user_id"], name: "index_approval_users_on_user_id", using: :btree
+
+  create_table "approvals", force: :cascade do |t|
+    t.string   "name",            null: false
+    t.string   "project_id"
+    t.integer  "created_user_id", null: false
+    t.string   "notes"
+    t.integer  "approved_id"
+    t.string   "approved_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "approvals", ["approved_type", "approved_id"], name: "index_approvals_on_approved_type_and_approved_id", using: :btree
 
   create_table "bills", force: :cascade do |t|
     t.integer  "project_id",                null: false
@@ -31,6 +56,15 @@ ActiveRecord::Schema.define(version: 20180104041749) do
   end
 
   add_index "bills", ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
+
+  create_table "client_files", force: :cascade do |t|
+    t.integer  "client_id",         null: false
+    t.string   "file",              null: false
+    t.string   "original_filename", null: false
+    t.integer  "type"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "clients", force: :cascade do |t|
     t.string   "cd"
@@ -97,6 +131,7 @@ ActiveRecord::Schema.define(version: 20180104041749) do
     t.datetime "updated_at",        null: false
     t.integer  "file_group_id"
     t.string   "original_filename", null: false
+    t.integer  "type"
   end
 
   create_table "project_groups", force: :cascade do |t|
@@ -171,6 +206,8 @@ ActiveRecord::Schema.define(version: 20180104041749) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "approval_users", "approvals", on_delete: :cascade
+  add_foreign_key "approval_users", "users", on_delete: :cascade
   add_foreign_key "bills", "projects", on_delete: :cascade
   add_foreign_key "members", "bills", on_delete: :cascade
   add_foreign_key "members", "employees", on_delete: :cascade
