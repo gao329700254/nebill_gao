@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20180620035125
+# Schema version: 20180703032543
 #
 # Table name: bills
 #

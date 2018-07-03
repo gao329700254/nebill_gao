@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180620035125) do
+ActiveRecord::Schema.define(version: 20180703032543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -189,6 +189,7 @@ ActiveRecord::Schema.define(version: 20180620035125) do
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.integer  "role",               default: 10,    null: false
+    t.integer  "immediate_boss"
   end
 
   add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, using: :btree
@@ -214,4 +215,5 @@ ActiveRecord::Schema.define(version: 20180620035125) do
   add_foreign_key "project_file_groups", "projects", on_delete: :cascade
   add_foreign_key "project_files", "projects", on_delete: :cascade
   add_foreign_key "projects", "project_groups", column: "group_id", on_delete: :nullify
+  add_foreign_key "users", "users", column: "immediate_boss", on_delete: :nullify
 end
