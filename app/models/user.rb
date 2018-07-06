@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20170512072051
+# Schema version: 20180703032543
 #
 # Table name: users
 #
@@ -15,10 +15,15 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  role               :integer          default(10), not null
+#  immediate_boss     :integer
 #
 # Indexes
 #
 #  index_users_on_provider_and_uid  (provider,uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_f76f7dd8cc  (immediate_boss => users.id)
 #
 
 class User < ActiveRecord::Base
