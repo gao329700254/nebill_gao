@@ -44,11 +44,6 @@
           box-shadow: none;
         }
       }
-
-      &--is_admin {
-        @extend %user_list__tbl__item;
-        @include span-columns(1);
-      }
     }
   }
 }

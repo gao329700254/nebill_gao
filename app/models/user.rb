@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20180703032543
+# Schema version: 20180704084822
 #
 # Table name: users
 #
@@ -11,7 +11,6 @@
 #  failed_login_count :integer          default(0), not null
 #  current_login_at   :datetime
 #  last_login_at      :datetime
-#  is_admin           :boolean          default(FALSE), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  role               :integer          default(10), not null
@@ -36,7 +35,7 @@ class User < ActiveRecord::Base
   has_many :approval_users
   has_many :approvals, through: :approval_users
 
-  enumerize :role, in: { general: 10, superior: 30 }, default: :general
+  enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50 }, default: :general
 
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
   validates :role, presence: true

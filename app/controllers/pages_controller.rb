@@ -1,11 +1,15 @@
 class PagesController < ApplicationController
-  skip_before_action :require_login, only: [:home]
-  before_action :check_login, only: [:home]
+  skip_authorize_resource     only: [:home]
+
   before_action :set_project, only: [:project_show]
   before_action :set_bill   , only: [:bill_show]
   before_action :set_client , only: [:client_show]
 
   def home
+    unless current_user.blank?
+      redirect_to project_list_path
+      return
+    end
     render layout: 'simple'
   end
 

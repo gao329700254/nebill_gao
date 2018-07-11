@@ -2,7 +2,21 @@ module SessionConcern
   extend ActiveSupport::Concern
 
   included do
-    before_action :current_user, :require_login
+    authorize_resource
+    before_action :current_user
+
+    rescue_from CanCan::AccessDenied do |exception|
+      respond_to do |format|
+        format.html do
+          if current_user.present? && !(exception.action == :users && exception.subject == Page)
+            redirect_to project_list_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') }
+          else
+            redirect_to root_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') }
+          end
+        end
+        format.json { render(json: { message: t('helpers.unauthorized') }, status: :unauthorized) }
+      end
+    end
   end
 
 private
@@ -17,25 +31,11 @@ private
     @current_user = current_user_session && current_user_session.user
   end
 
-  def check_login
-    return unless current_user
-
-    redirect_to project_list_path
-  end
-
-  def require_login
-    return if current_user
-    respond_to do |format|
-      format.html { redirect_to root_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') } }
-      format.json { render(json: { message: t('helpers.unauthorized') }, status: :unauthorized) }
-    end
-  end
-
-  def require_login_with_admin
-    return if current_user.is_admin?
-    respond_to do |format|
-      format.html { redirect_to root_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') } }
-      format.json { render(json: { message: t('helpers.unauthorized') }, status: :unauthorized) }
-    end
+  def current_ability
+    # I am sure there is a slicker way to capture the controller namespace
+    controller_name_segments = params[:controller].split('/')
+    controller_name_segments.pop
+    controller_namespace = controller_name_segments.join('/').camelize
+    Ability.new(current_user, controller_namespace)
   end
 end

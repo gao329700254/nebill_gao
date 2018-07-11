@@ -74,6 +74,7 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.9.0)
     byebug (8.2.2)
+    cancancan (2.2.0)
     capybara (2.6.0)
       addressable
       mime-types (>= 1.16)
@@ -408,6 +409,7 @@ DEPENDENCIES
   bourbon
   bower-rails
   bullet
+  cancancan
   capybara
   carrierwave!
   coffee-rails (~> 4.1.0)

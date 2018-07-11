@@ -1,5 +1,4 @@
 class Api::UsersController < Api::ApiController
-  before_action :require_login_with_admin, only: [:create]
   before_action :set_project, only: [:index], if: -> { params.key? :project_id }
   before_action :set_bill, only: [:index], if: -> { params.key? :bill_id }
 
@@ -47,6 +46,6 @@ private
   end
 
   def user_param
-    params.require(:user).permit(:email, :role, :is_admin)
+    params.require(:user).permit(:email, :role)
   end
 end

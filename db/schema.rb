@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180703032543) do
+ActiveRecord::Schema.define(version: 20180704084822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,15 +180,14 @@ ActiveRecord::Schema.define(version: 20180703032543) do
   create_table "users", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
-    t.string   "persistence_token",                  null: false
-    t.integer  "login_count",        default: 0,     null: false
-    t.integer  "failed_login_count", default: 0,     null: false
+    t.string   "persistence_token",               null: false
+    t.integer  "login_count",        default: 0,  null: false
+    t.integer  "failed_login_count", default: 0,  null: false
     t.datetime "current_login_at"
     t.datetime "last_login_at"
-    t.boolean  "is_admin",           default: false, null: false
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.integer  "role",               default: 10,    null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "role",               default: 10, null: false
     t.integer  "immediate_boss"
   end
 

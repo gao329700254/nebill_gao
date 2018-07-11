@@ -20,7 +20,8 @@ nav.sidemenu
       li.sidemenu__item
         = fa_icon 'users 2x', class: 'sidemenu__item__icon'
         span.sidemenu__item__page_title = t('page.partners.title')
-    = link_to admin_users_path
-      li.sidemenu__item
-        = fa_icon 'user 2x', class: 'sidemenu__item__icon'
-        span.sidemenu__item__page_title = t('page.admin.users.title')
+    - if can? :manage, User
+      = link_to admin_users_path
+        li.sidemenu__item
+          = fa_icon 'user 2x', class: 'sidemenu__item__icon'
+          span.sidemenu__item__page_title = t('page.admin.users.title')
