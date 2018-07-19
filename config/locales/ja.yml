@@ -28,7 +28,6 @@ ja:
         email: メールアドレス
       user:
         <<: *employee
-        is_admin: 管理者
         role: ロール
       partner:
         <<: *employee
@@ -353,6 +352,8 @@ ja:
     role:
       general: 一般
       superior: 上長
+      backoffice: バックオフィス
+      admin: 管理者
   page:
     home:
       title: ホーム

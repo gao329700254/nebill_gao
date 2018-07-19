@@ -6,10 +6,9 @@ FactoryGirl.define do
     email    { Faker::Internet.safe_email }
     persistence_token { Faker::Lorem.characters(10) }
     role     :general
-    is_admin false
 
     factory :admin_user do
-      is_admin true
+      role :admin
     end
 
     factory :un_register_user do

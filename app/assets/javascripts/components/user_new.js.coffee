@@ -5,7 +5,6 @@ $ ->
       user:
         email: ''
         role: 'general'
-        is_admin: false
     methods:
       createUser: ->
         try
@@ -18,12 +17,10 @@ $ ->
               user:
                 email:    @user.email
                 role:     @user.role
-                is_admin: @user.is_admin
           .done (response) =>
             toastr.success('', response.message)
             @user.email = ''
             @user.role = 'general'
-            @user.is_admin = false
             @$dispatch('createUserEvent')
           .fail (response) =>
             json = response.responseJSON
