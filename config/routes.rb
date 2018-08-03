@@ -11,6 +11,10 @@
 #                     client_show GET    /clients/:client_id/show(.:format)                      pages#client_show
 #                    project_list GET    /projects/list(.:format)                                pages#project_list
 #                    project_show GET    /projects/:project_id/show(.:format)                    pages#project_show
+#                    approval_new GET    /approvals/new(.:format)                                pages#approval_new
+#                   approval_list GET    /approvals/list(.:format)                               pages#approval_list
+#                   approval_show GET    /approvals/:approval_id/show(.:format)                  pages#approval_show
+#                   approval_edit GET    /approvals/:approval_id/edit(.:format)                  pages#approval_edit
 #                       bill_list GET    /bills/list(.:format)                                   pages#bill_list
 #                       bill_show GET    /bills/:bill_id/show(.:format)                          pages#bill_show
 #                   bill_download GET    /bills/:bill_id/xlsx(.:format)                          bills/xlsx#download
@@ -71,6 +75,14 @@
 #                       api_bills GET    /api/bills(.:format)                                    api/bills#index
 #      api_projects_search_result POST   /api/projects/search_result(.:format)                   api/projects#search_result
 #         api_bills_search_result POST   /api/bills/search_result(.:format)                      api/bills#search_result
+#     api_approvals_search_result POST   /api/approvals/search_result(.:format)                  api/approvals#search_result
+#                   api_approvals GET    /api/approvals(.:format)                                api/approvals#index
+#                                 POST   /api/approvals(.:format)                                api/approvals#create
+#                    api_approval GET    /api/approvals/:id(.:format)                            api/approvals#show
+#                                 PATCH  /api/approvals/:id(.:format)                            api/approvals#update
+#                                 PUT    /api/approvals/:id(.:format)                            api/approvals#update
+#                                 DELETE /api/approvals/:id(.:format)                            api/approvals#destroy
+#      api_approval_file_download GET    /api/files/:files_id/approval_file_download(.:format)   api/files#approval_file_download
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index
@@ -99,6 +111,14 @@ Rails.application.routes.draw do
   end
   scope path: 'projects/:project_id' do
     get 'show', to: 'pages#project_show', as: 'project_show'
+  end
+  scope path: 'approvals' do
+    get 'new', to: 'pages#approval_new', as: 'approval_new'
+    get 'list', to: 'pages#approval_list', as: 'approval_list'
+  end
+  scope path: 'approvals/:approval_id' do
+    get 'show', to: 'pages#approval_show', as: 'approval_show'
+    get 'edit', to: 'pages#approval_edit', as: 'approval_edit'
   end
   scope path: 'bills' do
     get 'list', to: 'pages#bill_list', as: 'bill_list'

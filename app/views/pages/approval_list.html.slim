@@ -1,0 +1,53 @@
+= javascript_include_tag 'view_models/approval_list'
+
+- provide(:title, t('page.approval_list.title'))
+
+#approval_list.approval_list
+  = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+                     placeholder: t('page.approval_list.search_form_placeholder'), lazy: true, class: 'approval_list__search'
+  .approval_list__search
+    .approval_list__search__date
+      .approval_list__search__date__created_at
+        = label_tag :created_at, t('page.approval_list.fill_date_form')
+        = date_field_tag :created_at, nil, 'v-model' => "created_at"
+      .approval_list__search__date__btn
+        = button_tag 'v-on:click.prevent' => 'search', class: 'approval_list__search__date__btn--search' do
+          = fa_icon 'fa-search', text: t('page.approval_list.search')
+      .approval_list__search__date__btn
+        = button_tag 'v-on:click' => 'showApprovalNew', class: 'approval_list__search__date__btn--new_approval' do
+          = fa_icon 'check', text: t('page.approval_new.title')
+    .approval_list__search__radio
+      = radio_button_tag :all, '', true, id: 'all', 'v-model' => 'status'
+      = label_tag :all, t('page.approval_list.status_type.all')
+      = radio_button_tag :pending, t('page.approval_list.status_type.pending'), false, id: 'pending', 'v-model' => 'status'
+      = label_tag :pending, t('page.approval_list.status_type.pending')
+      = radio_button_tag :permission, t('page.approval_list.status_type.permission'), false, id: 'permission', 'v-model' => 'status'
+      = label_tag :permission, t('page.approval_list.status_type.permission')
+      = radio_button_tag :disconfirm, t('page.approval_list.status_type.disconfirm'), false, id: 'disconfirm', 'v-model' => 'status'
+      = label_tag :disconfirm, t('page.approval_list.status_type.disconfirm')
+      = radio_button_tag :invalid, t('page.approval_list.status_type.invalid'), false, id: 'disconfirm', 'v-model' => 'status'
+      = label_tag :invalid, t('page.approval_list.status_type.invalid')
+  table.approval_list__tbl
+    thead.approval_list__tbl__head
+      tr.approval_list__tbl__head__row
+        th.approval_list__tbl__item--name              = Approval.human_attribute_name(:name)
+        th.approval_list__tbl__item--category          = Approval.human_attribute_name(:category)
+        th.approval_list__tbl__item--status            = Approval.human_attribute_name(:status)
+        th.approval_list__tbl__item--created_user_name = Approval.human_attribute_name(:created_user_name)
+        th.approval_list__tbl__item--created_at        = Approval.human_attribute_name(:created_at)
+    tbody.approval_list__tbl__body
+      tr.approval_list__tbl__body__row [
+        v-bind:class = "approval.status === '#{t('enumerize.status.disconfirm')}'
+                       || approval.status === '#{t('enumerize.status.invalid')}'
+                         ? 'approval_list__tbl__body__row--repudiation'
+                         : 'approval_list__tbl__body__row'"
+        v-for = "approval in list | selectBy searchKeywords selectSchema | filterBy status in 'status' |orderBy sortKey -1"
+        id         = "approval-{{approval.id}}"
+        v-on:click = "linkToShow(approval.id)"
+        track-by   = "id"
+      ]
+        td.approval_list__tbl__item--name              v-text='approval.name'
+        td.approval_list__tbl__item--category          v-text='approval.category'
+        td.approval_list__tbl__item--status            v-text='approval.status'
+        td.approval_list__tbl__item--created_user_name v-text='approval.created_user_name'
+        td.approval_list__tbl__item--created_at        v-text='approval.created_at'

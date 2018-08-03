@@ -54,4 +54,12 @@ private
       status: :not_found,
     )
   end
+
+  def action_model_flash_success_message(model, action)
+    flash[:success] = I18n.t("action.#{action}.success", model: I18n.t("activerecord.models.#{model.class.name.underscore}"))
+  end
+
+  def model_flash_success_message(action)
+    flash[:success] = I18n.t("action.#{action}.success")
+  end
 end

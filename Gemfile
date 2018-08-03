@@ -30,6 +30,8 @@ gem 'wkhtmltopdf-binary'
 gem 'draper'
 gem 'paper_trail'
 gem 'cancancan'
+gem 'nested_form_fields'
+gem 'sendgrid-actionmailer'
 
 group :development do
   gem 'web-console', '~> 2.0'
@@ -60,6 +62,7 @@ group :development, :test, :demo do
   gem 'teaspoon-jasmine'
   gem 'simplecov', require: false
   gem 'timecop'
+  gem 'dotenv-rails'
 end
 
 group :production, :demo do

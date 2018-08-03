@@ -1,0 +1,97 @@
+
+- provide(:title, t('page.approval_show.title'))
+
+#approval_show.approval_show
+
+  = form_for [:api, @approval], class: 'approval_show__reassignment__form' do
+    .approval_show__time
+      .approval_show__time__last_updated_at
+        = Approval.human_attribute_name(:updated_at)
+        = @approval.updated_at
+    .approval_show__detail
+      .approval_show__detail__container
+        .approval_show__detail__container__group
+          .approval_show__detail__item
+            = Approval.human_attribute_name(:name)
+            .approval_show__detail__item__contents
+              = @approval.name
+          .approval_show__detail__item
+            = Approval.human_attribute_name(:category)
+            .approval_show__detail__item__contents
+              = @approval.category_text
+          .approval_show__detail__item
+            = Approval.human_attribute_name(:status)
+            .approval_show__detail__item__contents
+              = @approval.status_text
+          .approval_show__detail__item
+            = Approval.human_attribute_name(:created_user_name)
+            .approval_show__detail__item__contents
+              = @approval.created_user.name
+          .approval_show__detail__item
+            = Approval.human_attribute_name(:created_at)
+            .approval_show__detail__item__contents
+              = @approval.created_at
+          .approval_show__detail__item
+            = Approval.human_attribute_name(:notes)
+            - if @approval.notes.present?
+              .approval_show__detail__item__contents
+                = simple_format(h(@approval.notes))
+            - else
+              .approval_show__detail__item__contents
+                = t('page.approval_show.note_no_contents')
+          .approval_show__detail__update
+            - if (can?(:allread, Approval) && @approval.status != 40) || (@approval.status.in?([10, 30]) && @approval.created_user_id == @current_user.id)
+              = button_tag 'invalid', data: { confirm: I18n.t("action.invalid.confirm") },
+                                      class: 'approval_show__detail__update__btn--invalid', value: "invalid" do
+                = fa_icon 'trash', text: t('page.approval_show.invalid')
+            - if @approval.status == 30 && (@approval.created_user_id == @current_user.id || can?(:allread, Approval))
+              = link_to approval_edit_path(params[:approval_id]), type: 'button', class: 'approval_show__detail__update__btn--edit' do
+                = fa_icon 'edit', text: t('page.approval_show.edit')
+        .approval_show__detail__container__group
+          .approval_show__detail__file
+            = Approval.human_attribute_name(:file)
+            - if !@approval_files.empty?
+              - @approval_files.each do |approval_file|
+                .approval_show__detail__file__contents
+                  = link_to approval_file.original_filename, api_approval_file_download_path(approval_file)
+            - else
+              .approval_show__detail__file__contents
+                = t('page.approval_show.file_no_contents')
+          .approval_show__detail__approval_user_list
+            = t('page.approval_show.history')
+            - if !@approval_users.empty?
+              table.approval_show__detail__approval_user_list__tbl
+                thead.approval_show__detail__approval_user_list__tbl__head
+                  tr.approval_show__detail__approval_user_list__tbl__head__row
+                    th.approval_show__detail__approval_user_list__item--approval_user_name = ApprovalUser.human_attribute_name(:name)
+                    th.approval_show__detail__approval_user_list__item--approval_user_status = ApprovalUser.human_attribute_name(:status)
+                    th.approval_show__detail__approval_user_list__item--approval_user_comment = ApprovalUser.human_attribute_name(:comment)
+                tbody.approval_show__detail__approval_user_list__tbl__body
+                  - @approval_users.each do |approval_user|
+                    tr.approval_show__detail__approval_user_list__tbl__body__row
+                      td.approval_show__detail__approval_user_list__item--approval_user_name = approval_user.user.name
+                      td.approval_show__detail__approval_user_list__item--approval_user_status = approval_user.status_text
+                      td.approval_show__detail__approval_user_list__item--approval_user_comment = approval_user.comment
+            - else
+              .approval_show__detail__file__contents
+                = t('page.approval_show.user_no_contents')
+          - if (can?(:allread, Approval) && @approval.status != 40) || (@approval.status != 40 && @approval.status != 20 && @current_user_approval)
+            .approval_show__detail__update__add_approval_user
+              = fields_for @new_user do |u|
+                = u.collection_select(:id, @users, :id, :name,
+                                      { include_blank: true } , prompt: "" , class: "approval_show__detail__update__add_approval_user__list")
+              = button_tag 'reassignment', class: 'approval_show__detail__update__add_approval_user__btn--reassignment', value: "reassignment" do
+                = fa_icon 'refresh', text: t('page.approval_show.reassignment')
+          - if @approval.status != 40 && @approval.status != 20 && @current_user_approval.present?
+            .approval_show__detail__update
+              = t('page.approval_show.action')
+              .approval_show__detail__update__action
+                = fields_for @current_user_approval do |a|
+                  = a.text_field :comment, placeholder: t('page.approval_show.comment_placeholder'),
+                                           class: 'approval_show__detail__update__action__text', value: ""
+                = button_tag 'permission', class: 'approval_show__detail__update__action__btn--permission', value: "permission" do
+                  = fa_icon 'check', text: t('page.approval_show.permission')
+                = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
+                                           class: 'approval_show__detail__update__action__btn--disconfirm',
+                                           value: "disconfirm" do
+                  = fa_icon 'remove', text: t('page.approval_show.disconfirm')
