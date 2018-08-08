@@ -1,4 +1,6 @@
-box: cuon/nebill
+box: 
+    id: cuon/nebill
+    tag: 1.1
 services:
     - postgres
 build-test:
