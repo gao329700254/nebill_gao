@@ -29,8 +29,8 @@ RSpec.describe 'bills request' do
       expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill1.memo
-      expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-      expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+      expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+      expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       expect(json[0]['project']['name']).to                  eq bill1.project.name
       expect(json[0]['project']['billing_company_name']).to  eq bill1.project.billing_company_name
     end
@@ -64,8 +64,8 @@ RSpec.describe 'bills request' do
         expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
         expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json[0]['memo']).to                             eq bill1.memo
-        expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[0]['project']['name']).to                  eq bill1.project.name
         expect(json[0]['project']['billing_company_name']).to  eq bill1.project.billing_company_name
       end
@@ -106,7 +106,7 @@ RSpec.describe 'bills request' do
         expect(json['bill_on']).to        eq bill.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
         expect(json['deposit_on']).to     eq bill.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json['memo']).to           eq bill.memo
-        expect(json['created_at']).to     eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json['created_at']).to     eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json['updated_at']).to     eq I18n.l(bill.updated_at.in_time_zone('Tokyo'))
         # expect(json['shodunnit']).to
       end

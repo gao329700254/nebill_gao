@@ -22,8 +22,8 @@ RSpec.describe 'partner request' do
       expect(json[0]['name']).to         eq partner1.name
       expect(json[0]['email']).to        eq partner1.email
       expect(json[0]['company_name']).to eq partner1.company_name
-      expect(json[0]['created_at']).to   eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-      expect(json[0]['updated_at']).to   eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+      expect(json[0]['created_at']).to   eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+      expect(json[0]['updated_at']).to   eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
     end
   end
 
@@ -51,8 +51,8 @@ RSpec.describe 'partner request' do
         expect(json[0]['member']['min_limit_time']).to eq partner1.members[0].min_limit_time
         expect(json[0]['member']['max_limit_time']).to eq partner1.members[0].max_limit_time
         expect(json[0]['member']['working_rate']).to   eq partner1.members[0].working_rate
-        expect(json[0]['created_at']).to               eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json[0]['updated_at']).to               eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[0]['created_at']).to               eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json[0]['updated_at']).to               eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
 
         expect(json[1]['id']).to                       eq partner2.id
         expect(json[1]['name']).to                     eq partner2.name
@@ -60,8 +60,8 @@ RSpec.describe 'partner request' do
         expect(json[1]['member']['min_limit_time']).to eq partner2.members[0].min_limit_time
         expect(json[1]['member']['max_limit_time']).to eq partner2.members[0].max_limit_time
         expect(json[1]['member']['working_rate']).to   eq partner2.members[0].working_rate
-        expect(json[1]['created_at']).to               eq partner2.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json[1]['updated_at']).to               eq partner2.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[1]['created_at']).to               eq partner2.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json[1]['updated_at']).to               eq partner2.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
 
         expect(json[2]['id']).to                       eq partner3.id
         expect(json[2]['name']).to                     eq partner3.name
@@ -69,8 +69,8 @@ RSpec.describe 'partner request' do
         expect(json[2]['member']['min_limit_time']).to eq partner3.members[0].min_limit_time
         expect(json[2]['member']['max_limit_time']).to eq partner3.members[0].max_limit_time
         expect(json[2]['member']['working_rate']).to   eq partner3.members[0].working_rate
-        expect(json[2]['created_at']).to               eq partner3.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json[2]['updated_at']).to               eq partner3.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[2]['created_at']).to               eq partner3.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json[2]['updated_at']).to               eq partner3.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       end
     end
 
@@ -112,22 +112,22 @@ RSpec.describe 'partner request' do
         expect(json[0]['name']).to         eq partner1.name
         expect(json[0]['email']).to        eq partner1.email
         expect(json[0]['company_name']).to eq partner1.company_name
-        expect(json[0]['created_at']).to   eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json[0]['updated_at']).to   eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[0]['created_at']).to   eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json[0]['updated_at']).to   eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
 
         expect(json[1]['id']).to           eq partner2.id
         expect(json[1]['name']).to         eq partner2.name
         expect(json[1]['email']).to        eq partner2.email
         expect(json[1]['company_name']).to eq partner2.company_name
-        expect(json[1]['created_at']).to   eq partner2.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json[1]['updated_at']).to   eq partner2.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[1]['created_at']).to   eq partner2.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json[1]['updated_at']).to   eq partner2.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
 
         expect(json[2]['id']).to           eq partner3.id
         expect(json[2]['name']).to         eq partner3.name
         expect(json[2]['email']).to        eq partner3.email
         expect(json[2]['company_name']).to eq partner3.company_name
-        expect(json[2]['created_at']).to   eq partner3.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json[2]['updated_at']).to   eq partner3.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json[2]['created_at']).to   eq partner3.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json[2]['updated_at']).to   eq partner3.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       end
     end
 

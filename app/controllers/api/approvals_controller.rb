@@ -11,6 +11,7 @@ class Api::ApprovalsController < Api::ApiController
   end
 
   def create
+    immediate_boss_is_nill? && return
     @approval = Approval.new(approval_param)
     @approval.created_user_id = @current_user.id
     if @approval.save!
@@ -91,6 +92,11 @@ private
 
   def approval_user_param
     params.require(:approval_user).permit(:comment)
+  end
+
+  def immediate_boss_is_nill?
+    return unless @current_user.immediate_boss.blank?
+    redirect_to approval_new_path, flash: { error:  I18n.t("errors.messages.immediate_boss_is_nill") }
   end
 
   def file_create
