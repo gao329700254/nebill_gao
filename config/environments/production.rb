@@ -79,7 +79,7 @@ Rails.application.configure do
 
   config.action_controller.asset_host = 'https://nebill.herokuapp.com/'
   config.action_mailer.asset_host = config.action_controller.asset_host
-  config.action_mailer.default_url_options = { host: 'nebill.herokuapp.com/' }
+  config.action_mailer.default_url_options = { host: 'nebill.herokuapp.com', protocol: 'https' }
   config.action_mailer.delivery_method = :sendgrid_actionmailer
   config.action_mailer.sendgrid_actionmailer_settings = {
     api_key: ENV['SENDGRID_API_KEY'],
