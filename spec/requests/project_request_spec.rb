@@ -50,8 +50,8 @@ RSpec.describe 'projects request', versioning: true do
       expect(json[0]['orderer_zip_code']).to         eq project1.orderer_zip_code
       expect(json[0]['orderer_phone_number']).to     eq project1.orderer_phone_number
       expect(json[0]['orderer_memo']).to             eq project1.orderer_memo
-      expect(json[0]['created_at']).to               eq project1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-      expect(json[0]['updated_at']).to               eq project1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+      expect(json[0]['created_at']).to               eq project1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+      expect(json[0]['updated_at']).to               eq project1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
     end
   end
 
@@ -242,8 +242,8 @@ RSpec.describe 'projects request', versioning: true do
         expect(json['orderer_zip_code']).to         eq project.orderer_zip_code
         expect(json['orderer_phone_number']).to     eq project.orderer_phone_number
         expect(json['orderer_memo']).to             eq project.orderer_memo
-        expect(json['created_at']).to               eq project.created_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
-        expect(json['updated_at']).to               eq project.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%LZ")
+        expect(json['created_at']).to               eq project.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json['updated_at']).to               eq project.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       end
     end
 

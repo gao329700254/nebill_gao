@@ -240,6 +240,7 @@ ja:
       wrong_bill_on_predate_delivery_on: は納品日以降を入力してください
       wrong_bill_on_predate_acceptance_on: は検収日以降を入力してください
       wrong_status: 取り消しした稟議は変更できません
+      immediate_boss_is_nill: 上長が設定されていません。管理者に連絡してください。
     template:
       body: 次の項目を確認してください
       header:
