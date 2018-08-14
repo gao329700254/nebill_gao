@@ -1,0 +1,39 @@
+= javascript_include_tag 'view_models/user_show'
+
+- provide(:title, t('page.admin.user_show.title'))
+
+#user_show.user_show
+  = hidden_field_tag :user_id, @user.id, 'v-model' => 'userId'
+
+  .user_show__last_updated_at
+    = t('page.admin.user_show.last_updated_at')
+    span v-text='user.updated_at'
+  = form_tag nil, class: 'user_show__form'
+    .user_show__form__container
+      .user_show__form__container__group
+        .user_show__form__item
+          = label_tag :name, t('activerecord.attributes.user.name')
+          = text_field_tag :name, nil, 'v-model' => 'user.name', ':disabled' => '!editMode'
+        .user_show__form__item
+          = label_tag :email, t('activerecord.attributes.user.email')
+          = text_field_tag :email, nil, 'v-model' => 'user.email', ':disabled' => '!editMode'
+        .user_show__form__item
+          = label_tag :role, t('activerecord.attributes.user.role')
+          = select_tag :role,  options_for_select(User.role.options), 'v-model' => 'user.role', ':disabled' => '!editMode'
+        .user_show__form__item
+          = label_tag :default_allower, t('activerecord.attributes.user.default_allower')
+          select [
+              name='default_allower'
+              id='default_allower'
+              v-model='user.default_allower'
+              :disabled='!editMode'
+            ]
+              option v-for="user in allUser" value="{{user.id}}" {{user.name}}
+    = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'user_show__form__btn--edit' do
+      = fa_icon 'edit', text: t('helpers.edit')
+    = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'user_show__form__btn--cancel' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'user_show__form__btn--submit' do
+      = fa_icon 'pencil-square', text: t('helpers.submit.update')
+    = button_tag 'v-on:click.prevent' => 'destroy'         , 'v-if' => '!editMode', class: 'project_detail__form__btn--delete' do
+      = fa_icon 'trash', text: t('helpers.delete')

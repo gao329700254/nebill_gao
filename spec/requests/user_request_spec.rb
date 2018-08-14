@@ -27,6 +27,39 @@ RSpec.describe 'user request' do
     end
   end
 
+  describe 'GET /api/user/:id' do
+    context 'with exist user id' do
+      let!(:user) { create(:user) }
+      let(:path) { "/api/users/#{user.id}" }
+
+      it 'return the user' do
+        get path
+
+        expect(response).to be_success
+        expect(response.status).to eq 200
+
+        expect(json['id']).to               eq user.id
+        expect(json['name']).to             eq user.name
+        expect(json['email']).to            eq user.email
+        expect(json['role']).to             eq user.role
+        expect(json['created_at']).to       eq user.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json['updated_at']).to       eq user.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        # expect(json['whodunnit'])
+      end
+
+      context 'with not exist user id' do
+        let(:path) { '/api/users/0' }
+
+        it 'return 404 Not Found code and message' do
+          get path
+          expect(response).not_to be_success
+          expect(response.status).to eq 404
+          expect(json['message']).to eq 'リソースが見つかりませんでした'
+        end
+      end
+    end
+  end
+
   describe 'GET /api/projects/:project_id/users' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }

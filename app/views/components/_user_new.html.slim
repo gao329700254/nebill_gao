@@ -1,11 +1,9 @@
 script type='text/x-template' id='user_new'
   .user_new
-    = form_tag nil, class: 'user_new__form'
-      .user_new__form__item
-        = label_tag :email, t('activerecord.attributes.user.email')
-        = email_field_tag :email, nil, 'v-model' => 'user.email'
-      .user_new__form__item
-        = label_tag :role, t('activerecord.attributes.user.role')
-        = select_tag :role, options_for_select(User.role.options), 'v-model' => 'user.role'
-
-      = submit_tag t('helpers.submit.create'), 'v-on:click.prevent' => 'createUser', class: 'user_new__form__submit_btn'
+    .user_new__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .user_new__outer__inner v-on:click.stop=""
+        .user_new__outer__inner__body
+          == render 'components/user_new__form'

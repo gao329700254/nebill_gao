@@ -1,0 +1,49 @@
+.user_show {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  background-color: $white-bg-color;
+  padding: $base-spacing;
+  color: $white-ft-color;
+
+  &__last_updated_at {
+    text-align: right;
+  }
+
+  &__form {
+    @include outer-container;
+    &__container {
+      @include row;
+      &__group {
+        @include span-columns(6);
+      }
+    }
+
+    &__item {
+      margin-bottom: $small-spacing;
+
+      #{$all-text-inputs-disabled},
+      select:disabled,
+      textarea:disabled {
+        border-bottom: $base-border;
+        border-radius: 0;
+        border-top-color: $white-bg-color;
+        border-right-color: $white-bg-color;
+        border-left-color: $white-bg-color;
+        box-shadow: none;
+        background-color: $white-bg-color;
+      }
+    }
+
+    &__btn {
+      &--edit,
+      &--cancel {
+        @include btn--default;
+      }
+
+      &--submit {
+        @include btn--primary;
+      }
+    }
+  }
+}

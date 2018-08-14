@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   namespace :api, format: :json do
     resources :clients, only: [:index, :create, :show, :update]
-    resources :users, only: [:index, :create]
+    resources :users, only: [:index, :create, :show, :update, :destroy], shallow: true do
+      collection do
+        get 'roles', to: "users#roles"
+      end
+    end
     resources :partners, only: [:index, :create, :update]
     post "projects/create_with_client", to: "projects#create_with_client"
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do

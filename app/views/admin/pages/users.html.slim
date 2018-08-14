@@ -6,13 +6,16 @@
 == render 'components/user_list'
 
 #admin_users.admin_users
-  .admin_users__new
-    component [
-      :is         = "'userNew'"
-      keep-alive  = true
-    ]
+  = button_tag 'v-on:click' => 'showUserNew', class: 'user_list__btn--new_user' do
+    = fa_icon 'check', text: t('page.admin.user_new.title')
+
   .admin_users__list
     component [
       :is         = "'userList'"
+      keep-alive  = true
+    ]
+
+    component [
+      :is         = "'userNew'"
       keep-alive  = true
     ]

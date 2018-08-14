@@ -22,14 +22,20 @@
 #                  project_groups GET    /project_groups(.:format)                               pages#project_groups
 #                        partners GET    /partners(.:format)                                     pages#partners
 #                     admin_users GET    /admin/users(.:format)                                  admin/pages#users
+#                 admin_user_show GET    /admin/users/:user_id/show(.:format)                    admin/pages#user_show
 #               letter_opener_web        /letter_opener                                          LetterOpenerWeb::Engine
 #                     api_clients GET    /api/clients(.:format)                                  api/clients#index
 #                                 POST   /api/clients(.:format)                                  api/clients#create
 #                      api_client GET    /api/clients/:id(.:format)                              api/clients#show
 #                                 PATCH  /api/clients/:id(.:format)                              api/clients#update
 #                                 PUT    /api/clients/:id(.:format)                              api/clients#update
+#                 roles_api_users GET    /api/users/roles(.:format)                              api/users#roles
 #                       api_users GET    /api/users(.:format)                                    api/users#index
 #                                 POST   /api/users(.:format)                                    api/users#create
+#                        api_user GET    /api/users/:id(.:format)                                api/users#show
+#                                 PATCH  /api/users/:id(.:format)                                api/users#update
+#                                 PUT    /api/users/:id(.:format)                                api/users#update
+#                                 DELETE /api/users/:id(.:format)                                api/users#destroy
 #                    api_partners GET    /api/partners(.:format)                                 api/partners#index
 #                                 POST   /api/partners(.:format)                                 api/partners#create
 #                     api_partner PATCH  /api/partners/:id(.:format)                             api/partners#update
@@ -141,6 +147,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'users', to: 'pages#users'
+    scope path: 'users/:user_id' do
+      get 'show', to: 'pages#user_show', as: 'user_show'
+    end
   end
 
   # letter opener

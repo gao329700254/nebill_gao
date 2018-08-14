@@ -1,5 +1,7 @@
 $ ->
   window.adminUsers = new Vue
     el: '#admin_users'
+    methods:
+      showUserNew: -> @$broadcast('showUserNewEvent')
     events:
-      createUserEvent: -> @$broadcast('loadUsersEvent')
+      loadUsersEvent: -> @loadUsers()

@@ -27,9 +27,11 @@ ja:
       employee: &employee
         name: 名前
         email: メールアドレス
+        default_allower: 承認者
       user:
         <<: *employee
         role: ロール
+        default_allower: 承認者
       partner:
         <<: *employee
         cd: ID
@@ -514,6 +516,11 @@ ja:
     admin:
       users:
         title: ユーザ管理
+      user_new:
+        title: ユーザ新規作成
+      user_show:
+        title: ユーザ情報
+        last_updated_at: '最終更新日時: '
   component:
     member_list:
       new_partner: パートナーを新規登録
