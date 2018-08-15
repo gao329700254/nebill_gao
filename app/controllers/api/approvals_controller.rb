@@ -11,14 +11,14 @@ class Api::ApprovalsController < Api::ApiController
   end
 
   def create
-    immediate_boss_is_nill? && return
+    default_allower_is_nill? && return
     @approval = Approval.new(approval_param)
     @approval.created_user_id = @current_user.id
     if @approval.save!
 
       file_create
 
-      @approval_user = @approval.approval_users.build(user_id: @current_user.immediate_boss)
+      @approval_user = @approval.approval_users.build(user_id: @current_user.default_allower)
       if @approval_user.save!
         ApprovalMailer.assignment_user(user: @approval_user.user, approval: @approval).deliver_now
         action_model_flash_success_message(@approval, :create)
@@ -94,9 +94,9 @@ private
     params.require(:approval_user).permit(:comment)
   end
 
-  def immediate_boss_is_nill?
-    return unless @current_user.immediate_boss.blank?
-    redirect_to approval_new_path, flash: { error:  I18n.t("errors.messages.immediate_boss_is_nill") }
+  def default_allower_is_nill?
+    return unless @current_user.default_allower.blank?
+    redirect_to approval_new_path, flash: { error:  I18n.t("errors.messages.default_allower_is_nill") }
   end
 
   def file_create
