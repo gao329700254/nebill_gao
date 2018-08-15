@@ -1,0 +1,8 @@
+doctype html
+html
+  head
+    meta[content="text/html; charset=UTF-8"]
+  body
+    p
+      = I18n.t("mail.approval.disconfirm.message", user: @user.name, name: @expense_approval.name)
+    = render 'expense_approval_mailer/mail'

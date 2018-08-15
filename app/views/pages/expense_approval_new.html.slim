@@ -1,0 +1,21 @@
+
+- provide(:title, t('page.expense_approval_new.title'))
+
+#expense_approval_new.expense_approval_new
+
+  = form_for [:api, @expense_approval], class: 'expense_approval_new__form' do |f|
+    .expense_approval_new__form__container
+      .expense_approval_new__form__container__group
+        .expense_approval_new__form__item
+          = f.label :name, ExpenseApproval.human_attribute_name(:name)
+            /件名は　経費申請のid + ユーザーの名前　+ 経費精算申請 + 経費の合計　で固定
+          .expense_approval_new__form__item__contents
+            = "1 ユーザーさん 経費精算申請 2000"
+        .expense_approval_new__form__item
+          = f.label :notes, ExpenseApproval.human_attribute_name(:notes)
+          = f.text_area :notes, maxlength: "2000", class: 'expense_approval_new__form__item__area'
+        = button_tag type: 'button', onclick: "history.back()", class: 'expense_approval_new__form__btn--cancel' do
+          = fa_icon 'remove', text: t('helpers.cancel')
+        = button_tag 'submit', class: 'expense_approval_new__form__btn--submit' , value: "submit",
+                                data: { disable_with: t('page.expense_approval_new.wait') } do
+          = fa_icon 'check', text: t('helpers.submit.create')

@@ -6,4 +6,12 @@ class Api::FilesController < Api::ApiController
     file.download!(file.url) if Rails.env.production?
     send_file file.path, filename: @apprival_file.original_filename
   end
+
+  def expense_file_download
+    @expense_file = ExpenseFile.find(params[:files_id])
+    file = @expense_file.file
+
+    file.download!(file.url) if Rails.env.production?
+    send_file file.path, filename: @expense_file.original_filename
+  end
 end

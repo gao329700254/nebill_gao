@@ -1,0 +1,86 @@
+  .expense_approval_list {
+
+  padding: $base-spacing;
+
+  &__search {
+    margin-bottom: $base-spacing;
+
+    &__radio {
+      margin-bottom: $base-spacing;
+    }
+
+    &__date {
+      @include display(flex);
+      margin-bottom: $base-spacing;
+
+      &__created_at {
+        @include span-columns(6);
+      }
+
+      &__btn {
+        @include span-columns(3);
+        margin-top: $base-spacing;
+
+        &--search,
+        &--new_expense_approval {
+          @include btn--default;
+        }
+      }
+    }
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+
+      &__row {
+        @include list_tbl__head__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
+
+        &--repudiation {
+          border-bottom: $bold-border;
+          background-color: $light-grey;
+        }
+      }
+    }
+
+    &__item,
+    %expense_approval_list__tbl__item {
+      @include list_tbl__item;
+
+      &--name {
+        @extend %expense_approval_list__tbl__item;
+        @include span-columns(6);
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      &--status {
+        @extend %expense_approval_list__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--created_user_name {
+        @extend %expense_approval_list__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--created_at {
+        @extend %expense_approval_list__tbl__item;
+        @include span-columns(2);
+      }
+    }
+  }
+}

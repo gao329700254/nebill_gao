@@ -1,0 +1,71 @@
+= javascript_include_tag 'view_models/expense_edit'
+
+- provide(:title, t('page.expense_edit.title'))
+
+#expense_edit.expense_edit
+
+  = form_for [:api, @expense], class: 'expense_edit__form' do |f|
+    .expense_edit__form__container
+      .expense_edit__form__container__group
+        .expense_edit__form__container
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              = f.label :use_date, Expense.human_attribute_name(:use_date)
+              = f.date_field("use_date")
+        .expense_edit__form__container
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              = f.label :use_date, Expense.human_attribute_name(:default_id)
+              = fields_for @default_expense_items do |u|
+                = u.collection_select(:name, @default_expense_items, :id, :display_name,
+                                      { include_blank: true, selected: @default.id },
+                                      prompt: "", 'v-on:change' => 'onItemChange', class: 'expense_edit__form__item--default')
+        .expense_edit__form__container v-if="defaule_expense_items.is_routing"
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              = f.label :depatture_location, Expense.human_attribute_name(:depatture_location)
+              = f.text_field :depatture_location, class: 'expense_edit__form__item__area'
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              = f.label :arrival_location, Expense.human_attribute_name(:arrival_location)
+              = f.text_field :arrival_location, class: 'expense_edit__form__item__area'
+        .expense_edit__form__container
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              = f.label :amount, Expense.human_attribute_name(:amount)
+              = f.number_field("amount", 'v-model': 'defaule_expense_items.standard_amount')
+          .expense_edit__form__container__group v-if='defaule_expense_items.is_quntity'
+            .expense_edit__form__item
+              = f.label :quantity, Expense.human_attribute_name(:quantity)
+              = f.number_field("quantity")
+        .expense_edit__form__container
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              = f.label :payment_type, Expense.human_attribute_name(:payment_type)
+              = f.select :payment_type, Expense.payment_type.options
+        .expense_edit__form__item
+          = f.label :notes, Expense.human_attribute_name(:notes)
+          = f.text_area :notes, class: 'expense_edit__form__item__area'
+        = button_tag type: 'button', onclick: "history.back()", class: 'expense_edit__form__btn--cancel' do
+          = fa_icon 'remove', text: t('helpers.cancel')
+        = button_tag 'submit', class: 'expense_edit__form__btn--submit' , value: "submit", data: { disable_with: t('page.expense_edit.wait') } do
+          = fa_icon 'check', text: t('helpers.submit.create')
+      .expense_edit__form__container__group v-if='defaule_expense_items.is_receipt'
+        .expense_edit__form__item
+          = f.fields_for :file do |q|
+            = q.label :file, Expense.human_attribute_name(:file)
+            .expense_edit__form__item__file
+              - if q.object.id
+                = t('page.expense_edit.uploaded_file')
+                .expense_edit__form__item__file__name
+                  = link_to q.object.original_filename, api_expense_file_download_path(q.object)
+                  = '&nbsp;&nbsp;&nbsp;'.html_safe
+                  = check_box_tag :__delete, true, false, id: '__delete', 'v-model' => 'delete'
+                  = label_tag :__delete, t('page.expense_edit.__delete')
+              div v-if='!delete'
+                = q.file_field :file, accept: 'image/jpg,image/jpeg,image/png,image/gif', class: 'form-control', 'v-on:change' => 'onFileChange'
+            div v-if='!delete'
+              div v-if='image'
+                img.expense_edit__form__img :src='image'
+              div v-else='!image'
+                = image_tag q.object.file.to_s, class: 'expense_edit__form__img'

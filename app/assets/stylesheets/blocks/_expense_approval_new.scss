@@ -1,0 +1,43 @@
+.expense_approval_new {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+
+  &__outer {
+    @include modal__outer;
+    padding-top: 5em;
+
+    &__inner {
+      @include modal__outer__inner;
+
+      &__title {
+        @include modal__outer__inner__title;
+      }
+
+      &__body {
+        @include modal__outer__inner__body;
+      }
+    }
+  }
+
+  &__form {
+    @include outer-container;
+    &__container {
+      @include row;
+      &__group {
+        @include span-columns(6);
+      }
+    }
+
+    &__item,
+    %expense_approval_new__form__item {
+      margin-bottom: $small-spacing;
+
+    }
+
+    &__submit_btn,
+    &__cancel_btn {
+      @include btn--primary;
+    }
+  }
+}

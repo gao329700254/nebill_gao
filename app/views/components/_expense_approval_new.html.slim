@@ -1,0 +1,9 @@
+script type='text/x-template' id='expense_approval_new'
+  .expense_approval_new
+    .expense_approval_new__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .expense_approval_new__outer__inner v-on:click.stop=""
+        .expense_approval_new__outer__inner__body
+          == render 'components/expense_approval_new__form'

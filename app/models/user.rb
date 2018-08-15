@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20180815005533
+# Schema version: 20181018043025
 #
 # Table name: users
 #
@@ -15,6 +15,8 @@
 #  updated_at         :datetime         not null
 #  role               :integer          default(10), not null
 #  default_allower    :integer
+#  chatwork_id        :integer
+#  chatwork_name      :string
 #
 # Indexes
 #
@@ -22,7 +24,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_f76f7dd8cc  (default_allower => users.id)
+#  fk_rails_21f6e031b2  (default_allower => users.id)
 #
 
 class User < ActiveRecord::Base
@@ -34,6 +36,12 @@ class User < ActiveRecord::Base
 
   has_many :approval_users
   has_many :approvals, through: :approval_users
+
+  has_many :expenses
+  has_many :expense_approvals
+
+  has_many :expense_approval_users
+  has_many :expense_approvals, through: :expense_approval_users
 
   enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50 }, default: :general
 

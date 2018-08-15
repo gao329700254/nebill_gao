@@ -17,9 +17,43 @@
     @include align-items(center);
     @include justify-content(center);
     @include padding($base-spacing null);
+    position: relative;
     color: $light-black-ft-non-accent-color;
     &:hover { color: $light-black-ft-color; }
+    &:hover &__submenu {
+      &__list {
+        background-color: $light-black-bg-color;
+        width: 100%;
+      }
+
+      &__item {
+        display: block;
+
+        &:hover {
+          color: $light-black-ft-color;
+        }
+      }
+    }
 
     &__page_title { font-size: $small-font-size; }
+    &__submenu {
+      &__list {
+        position: absolute;
+        top: 20%;
+        left: 100%;
+        width: 0;
+        a { text-decoration: none; }
+      }
+
+      &__item {
+        display: none;
+        padding: 5px 0;
+        color: $light-black-ft-non-accent-color;
+
+        &__page_title {
+          font-size: $base-font-size;
+        }
+      }
+    }
   }
 }

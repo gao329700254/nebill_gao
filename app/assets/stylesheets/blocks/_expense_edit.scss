@@ -1,0 +1,59 @@
+.expense_edit {
+    /*** variables **************************************************************/
+    /****************************************************************************/
+
+  background-color: $white-bg-color;
+  padding: $base-spacing;
+  color: $white-ft-color;
+
+  &__form {
+    @include outer-container;
+
+    &__container {
+      @include row;
+
+      &__group {
+        @include span-columns(6);
+      }
+    }
+
+    &__item {
+      margin-bottom: $small-spacing;
+
+      &__area {
+        margin-bottom: $small-spacing;
+        height: 100px;
+      }
+
+      &__file {
+        padding-top: $base-spacing;
+        padding-bottom: $base-spacing;
+
+        &__name {
+          margin: $small-spacing 0 $small-spacing $base-spacing;
+        }
+      }
+    }
+
+    &__btn {
+      &--file_delete,
+      &--file_new {
+        @include btn--default;
+        padding: $small-spacing;
+      }
+
+      &--cancel {
+        @include btn--default;
+      }
+
+      &--submit {
+        @include btn--primary;
+        width: 130px;
+      }
+    }
+
+    &__img {
+      @include span-columns(12);
+    }
+  }
+}

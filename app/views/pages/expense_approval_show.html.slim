@@ -1,0 +1,108 @@
+
+- provide(:title, t('page.expense_approval_show.title'))
+#expense_approval_show.expense_approval_show
+  = form_for [:api, @expense_approval], class: 'expense_approval_show__reassignment__form' do
+    .expense_approval_show__time
+      = ExpenseApproval.human_attribute_name(:created_at)
+      = @expense_approval.created_at
+      /HACK(yoshinaka) もっといい書き方があるはず
+      = '&nbsp;&nbsp;&nbsp;'.html_safe
+      = ExpenseApproval.human_attribute_name(:updated_at)
+      = @expense_approval.updated_at
+    .expense_approval_show__detail
+      .expense_approval_show__detail__container
+        .expense_approval_show__detail__container__group
+          .expense_approval_show__detail__item
+            = ExpenseApproval.human_attribute_name(:name)
+            .expense_approval_show__detail__item__contents
+              = @expense_approval.name
+          .expense_approval_show__detail__item
+            = ExpenseApproval.human_attribute_name(:status)
+            .expense_approval_show__detail__item__contents
+              = @expense_approval.status_text
+          .expense_approval_show__detail__item
+            = ExpenseApproval.human_attribute_name(:created_user_name)
+            .expense_approval_show__detail__item__contents
+              = @expense_approval.created_user.name
+          .expense_approval_show__detail__container
+            .expense_approval_show__detail__container__group
+              .expense_approval_show__detail__item
+                = ExpenseApproval.human_attribute_name(:reimbursement_start_date)
+                .expense_approval_show__detail__item__contents
+                  / もっとも古い経費のuse_dateを入れる
+                  = @expense_approval.expense.min_by(&:use_date).use_date
+            .expense_approval_show__detail__container__group
+              .expense_approval_show__detail__item
+                = ExpenseApproval.human_attribute_name(:reimbursement_last_date)
+                .expense_approval_show__detail__item__contents
+                  / もっとも新しい経費のuse_dateを入れる
+                  = @expense_approval.expense.max_by(&:use_date).use_date
+          .expense_approval_show__detail__container
+            .expense_approval_show__detail__container__group
+              .expense_approval_show__detail__item
+                = ExpenseApproval.human_attribute_name(:reimbursement_count)
+                .expense_approval_show__detail__item__contents
+                  = "#{@expense_approval.expenses_number}件"
+            .expense_approval_show__detail__container__group
+              .expense_approval_show__detail__item
+                = ExpenseApproval.human_attribute_name(:reimbursement_amount)
+                .expense_approval_show__detail__item__contents
+                  = "#{@expense_approval.total_amount}円"
+          .expense_approval_show__detail__item
+            = ExpenseApproval.human_attribute_name(:notes)
+            - if @expense_approval.notes.present?
+              .expense_approval_show__detail__item__contents
+                = simple_format(h(@expense_approval.notes))
+            - else
+              .expense_approval_show__detail__item__contents
+                = t('page.expense_approval_show.note_no_contents')
+          .expense_approval_show__detail__update
+            - if (can?(:allread, ExpenseApproval) && @expense_approval.status != 40) \
+              || (@expense_approval.status.in?([10, 30]) && @expense_approval.created_user_id == @current_user.id)
+              = button_tag 'invalid', data: { confirm: I18n.t("action.invalid.confirm") },
+                                      class: 'expense_approval_show__detail__update__btn--invalid', value: "invalid" do
+                = fa_icon 'trash', text: t('page.expense_approval_show.invalid')
+            = link_to expense_list_path(selectedApproval: params[:expense_approval_id]), type: 'button',
+              class: 'expense_approval_show__detail__update__btn--edit' do
+              = fa_icon 'edit', text: t('page.expense_approval_show.expense_list')
+        .expense_approval_show__detail__container__group
+          .expense_approval_show__detail__approval_user_list
+            = t('page.expense_approval_show.history')
+            - if !@expense_approval_users.empty?
+              table.expense_approval_show__detail__approval_user_list__tbl
+                thead.expense_approval_show__detail__approval_user_list__tbl__head
+                  tr.expense_approval_show__detail__approval_user_list__tbl__head__row
+                    th.expense_approval_show__detail__approval_user_list__item--approval_user_name = ExpenseApprovalUser.human_attribute_name(:name)
+                    th.expense_approval_show__detail__approval_user_list__item--approval_user_status = ExpenseApprovalUser.human_attribute_name(:status)
+                    th.expense_approval_show__detail__approval_user_list__item--approval_user_comment = ExpenseApprovalUser.human_attribute_name(:comment)
+                tbody.expense_approval_show__detail__approval_user_list__tbl__body
+                  - @expense_approval_users.each do |approval_user|
+                    tr.expense_approval_show__detail__approval_user_list__tbl__body__row
+                      td.expense_approval_show__detail__approval_user_list__item--approval_user_name = approval_user.user.name
+                      td.expense_approval_show__detail__approval_user_list__item--approval_user_status = approval_user.status_text
+                      td.expense_approval_show__detail__approval_user_list__item--approval_user_comment = approval_user.comment
+            - else
+              .expense_approval_show__detail__file__contents
+                = t('page.expense_approval_show.user_no_contents')
+          - if (can?(:allread, ExpenseApproval) && @expense_approval.status != 40) \
+            || (@expense_approval.status != 40 && @expense_approval.status != 20 && @current_user_approval)
+            .expense_approval_show__detail__update__add_approval_user
+              = fields_for @new_user do |u|
+                = u.collection_select(:id, @users, :id, :name,
+                                      { include_blank: true } , prompt: "" , class: "expense_approval_show__detail__update__add_approval_user__list")
+              = button_tag 'reassignment', class: 'expense_approval_show__detail__update__add_approval_user__btn--reassignment',
+                           value: "reassignment", data: { disable_with: t('page.expense_approval_show.wait') } do
+                = fa_icon 'refresh', text: t('page.expense_approval_show.reassignment')
+          - if @expense_approval.status != 40 && @expense_approval.status != 20 && @current_user_approval.present?
+            .expense_approval_show__detail__update
+              = t('page.expense_approval_show.action')
+              .expense_approval_show__detail__update__action
+                = fields_for @current_user_approval do |a|
+                  = a.text_field :comment, placeholder: t('page.expense_approval_show.comment_placeholder'),
+                                           class: 'expense_approval_show__detail__update__action__text', value: ""
+                = button_tag 'permission', class: 'expense_approval_show__detail__update__action__btn--permission', value: "permission" do
+                  = fa_icon 'check', text: t('page.expense_approval_show.permission')
+                = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
+                                           class: 'expense_approval_show__detail__update__action__btn--disconfirm',
+                                           value: "disconfirm" do
+                  = fa_icon 'remove', text: t('page.expense_approval_show.disconfirm')

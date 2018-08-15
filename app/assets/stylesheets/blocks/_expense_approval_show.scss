@@ -1,0 +1,147 @@
+.expense_approval_show {
+    /*** variables **************************************************************/
+    /****************************************************************************/
+
+  background-color: $white-bg-color;
+  padding: $base-spacing;
+  color: $white-ft-color;
+
+  &__time {
+    margin-right: $small-spacing;
+    text-align: right;
+  }
+
+  &__detail {
+    @include outer-container;
+
+    &__container {
+      @include row;
+
+      &__group {
+        @include span-columns(6);
+      }
+    }
+
+    &__item {
+      margin-bottom: $small-spacing;
+      border-bottom: $base-border;
+
+      &__contents {
+        margin-left: $small-spacing;
+        white-space: normal;
+        word-break: break-word;
+      }
+    }
+
+    &__approval_user_list {
+      margin-bottom: $small-spacing;
+
+      &__tbl {
+        @include list_tbl;
+
+        &__head {
+
+          &__row {
+            @include list_tbl__head__row;
+          }
+        }
+
+        &__body {
+
+          &__row {
+            @include list_tbl__body__row;
+            white-space: normal;
+            word-break: break-word;
+          }
+        }
+      }
+
+      &__item {
+
+        &--approval_user_name {
+          @include span-columns(3);
+        }
+
+        &--approval_user_status {
+          @include span-columns(3);
+        }
+      }
+    }
+
+    &__file {
+      margin-bottom: $large-spacing;
+
+      &__contents {
+        margin-bottom: $small-spacing;
+        margin-left: $large-spacing;
+        border-bottom: $base-border;
+      }
+    }
+
+    &__update {
+      margin-bottom: $small-spacing;
+
+      &__btn {
+        &--invalid,
+        &--edit {
+          @include btn--default;
+        }
+      }
+
+      &__action {
+        @include display(flex);
+        margin-bottom: $small-spacing;
+
+        &__text {
+          flex: 1;
+        }
+
+        &__btn {
+          @include span-columns(3);
+
+          &--permission {
+            border: solid 2px $active-action-color;
+            background-color: $active-action-color;
+            color: $white;
+
+            &:hover,
+            &:focus {
+              transition: .4s;
+              text-shadow: -6px 0 15px #fffff0d4, 6px 0 15px #fffff0d4;
+            }
+          }
+
+          &--disconfirm {
+            $disconfirm_back: #c9c9c9;
+            border: solid 2px $black;
+            background-color: $disconfirm_back;
+            color: $black;
+
+            &:hover,
+            &:focus {
+              background-color: $light-grey;
+              color: $white;
+            }
+          }
+        }
+      }
+
+      &__add_approval_user {
+        @include display(flex);
+
+        &__list {
+          margin-bottom: $base-spacing;
+          flex: 1;
+        }
+
+        &__btn {
+          &--reassignment {
+            @include btn--default;
+            margin-bottom: $base-spacing;
+            width: 170px;
+          }
+        }
+      }
+    }
+  }
+}

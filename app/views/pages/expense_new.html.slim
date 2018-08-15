@@ -1,0 +1,60 @@
+= javascript_include_tag 'view_models/expense_new'
+
+- provide(:title, t('page.expense_new.title'))
+
+#expense_new.expense_new
+
+  = form_for [:api, @expense], class: 'expense_new__form' do |f|
+    .expense_new__form__container
+      .expense_new__form__container__group
+        .expense_new__form__container
+          .expense_new__form__container__group
+            .expense_new__form__item
+              = f.label :use_date, Expense.human_attribute_name(:use_date)
+              = f.date_field("use_date")
+        .expense_edit__form__container
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              = f.label :use_date, Expense.human_attribute_name(:default_id)
+              = fields_for @default_expense_items do |u|
+                = u.collection_select(:name, @default_expense_items, :id, :display_name,
+                                      { include_blank: true }, prompt: "", 'v-on:change' => 'onItemChange', class: 'expense_edit__form__item--default')
+        .expense_new__form__container v-if="defaule_expense_items.is_routing"
+          .expense_new__form__container__group
+            .expense_new__form__item
+              = f.label :depatture_location, Expense.human_attribute_name(:depatture_location)
+              = f.text_field :depatture_location, class: 'expense_new__form__item__area'
+          .expense_new__form__container__group
+            .expense_new__form__item
+              = f.label :arrival_location, Expense.human_attribute_name(:arrival_location)
+              = f.text_field :arrival_location, class: 'expense_new__form__item__area'
+        .expense_new__form__container
+          .expense_new__form__container__group
+            .expense_new__form__item
+              = f.label :amount, Expense.human_attribute_name(:amount)
+              = f.number_field("amount", 'v-model': 'defaule_expense_items.standard_amount')
+          .expense_new__form__container__group v-if='defaule_expense_items.is_quntity'
+            .expense_new__form__item
+              = f.label :quantity, Expense.human_attribute_name(:quantity)
+              = f.number_field("quantity")
+        .expense_new__form__container
+          .expense_new__form__container__group
+            .expense_new__form__item
+              = f.label :payment_type, Expense.human_attribute_name(:payment_type)
+              = f.select :payment_type, options_for_select(Expense.payment_type.options)
+        .expense_new__form__item
+          = f.label :notes, Expense.human_attribute_name(:notes)
+          = f.text_area :notes, class: 'expense_new__form__item__area'
+        = f.hidden_field :expense_approval_id, value: params[:selectedApproval]
+        = button_tag type: 'button', onclick: "history.back()", class: 'expense_new__form__btn--cancel' do
+          = fa_icon 'remove', text: t('helpers.cancel')
+        = button_tag 'submit', class: 'expense_new__form__btn--submit' , value: "submit", data: { disable_with: t('page.expense_new.wait') } do
+          = fa_icon 'check', text: t('helpers.submit.create')
+      .expense_new__form__container__group v-if='defaule_expense_items.is_receipt'
+        .expense_new__form__item
+          = f.fields_for :file do |q|
+            = q.label :file, Expense.human_attribute_name(:file)
+            .expense_new__form__item__file
+              = q.file_field :file, accept: 'image/jpg,image/jpeg,image/png,image/gif', class: 'form-control', 'v-on:change' => 'onFileChange'
+            div v-if="image"
+              img.expense_new__form__img :src='image'
