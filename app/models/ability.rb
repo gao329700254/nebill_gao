@@ -44,6 +44,7 @@ private
     can :download, Bill
     can :download, Xlsx
     can :download, Pdf
+    can :approval_file_download, File
 
     cannot :allread, Approval
   end
