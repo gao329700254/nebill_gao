@@ -1,10 +1,9 @@
 class Api::FilesController < Api::ApiController
   def approval_file_download
-    @file = ApprovalFile.find(params[:files_id])
+    @apprival_file = ApprovalFile.find(params[:files_id])
+    file = @apprival_file.file
 
-    @file.file.cache_stored_file!
-    @file.file.retrieve_from_cache!(@file.file.cache_name)
-
-    send_file @file.file.current_path, filename: @file.original_filename, length: @file.file.size
+    file.download!(file.url) if Rails.env.production?
+    send_file file.path, filename: @apprival_file.original_filename
   end
 end
