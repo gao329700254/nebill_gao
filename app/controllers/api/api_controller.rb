@@ -2,7 +2,12 @@ class Api::ApiController < ApplicationController
   rescue_from Exception                   , with: :handle_internal_server_error if Rails.env.produciton?
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
-  def handle_internal_server_error(_ = nil)
+  def handle_internal_server_error(e = nil)
+    if e.present?
+      logger.error e
+      logger.error e.backtrace.join("\n")
+    end
+    
     render_internal_server_error_message
   end
 

@@ -6,6 +6,7 @@ module SessionConcern
     before_action :current_user
 
     rescue_from CanCan::AccessDenied do |exception|
+      logger.info { "rescue_from CanCan::AccessDenied action=#{exception.action}, subject=#{exception.subject}" }
       respond_to do |format|
         format.html do
           if current_user.present? && !(exception.action == :users && exception.subject == Page)
