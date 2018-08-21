@@ -4,7 +4,7 @@ html
     meta[content="text/html; charset=UTF-8"]
   body
     p
-      = I18n.t("mail.approval.assignment.message", user: @user.name, name: @approval.name)
+      = I18n.t("mail.approval.assignment.message", user: @approval.created_user.name, name: @approval.name)
     p
       = I18n.t("mail.approval.assignment.massage2")
     p

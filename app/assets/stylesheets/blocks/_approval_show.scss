@@ -141,6 +141,7 @@
           &--reassignment {
             @include btn--default;
             margin-bottom: $base-spacing;
+            width: 170px;
           }
         }
       }

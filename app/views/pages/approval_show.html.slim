@@ -80,7 +80,8 @@
               = fields_for @new_user do |u|
                 = u.collection_select(:id, @users, :id, :name,
                                       { include_blank: true } , prompt: "" , class: "approval_show__detail__update__add_approval_user__list")
-              = button_tag 'reassignment', class: 'approval_show__detail__update__add_approval_user__btn--reassignment', value: "reassignment" do
+              = button_tag 'reassignment', class: 'approval_show__detail__update__add_approval_user__btn--reassignment',
+                           value: "reassignment", data: { disable_with: t('page.approval_show.wait') } do
                 = fa_icon 'refresh', text: t('page.approval_show.reassignment')
           - if @approval.status != 40 && @approval.status != 20 && @current_user_approval.present?
             .approval_show__detail__update

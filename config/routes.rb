@@ -22,6 +22,7 @@
 #                  project_groups GET    /project_groups(.:format)                               pages#project_groups
 #                        partners GET    /partners(.:format)                                     pages#partners
 #                     admin_users GET    /admin/users(.:format)                                  admin/pages#users
+#               letter_opener_web        /letter_opener                                          LetterOpenerWeb::Engine
 #                     api_clients GET    /api/clients(.:format)                                  api/clients#index
 #                                 POST   /api/clients(.:format)                                  api/clients#create
 #                      api_client GET    /api/clients/:id(.:format)                              api/clients#show
@@ -90,6 +91,13 @@
 #   suite GET  /:suite(.:format)             teaspoon/suite#show {:suite=>"default"}
 #         POST /:suite/:hook(.:format)       teaspoon/suite#hook {:suite=>"default", :hook=>"default"}
 #
+# Routes for LetterOpenerWeb::Engine:
+# clear_letters DELETE /clear(.:format)                 letter_opener_web/letters#clear
+# delete_letter DELETE /:id(.:format)                   letter_opener_web/letters#destroy
+#       letters GET    /                                letter_opener_web/letters#index
+#        letter GET    /:id(/:style)(.:format)          letter_opener_web/letters#show
+#               GET    /:id/attachments/:file(.:format) letter_opener_web/letters#attachment
+#
 
 Rails.application.routes.draw do
   root 'pages#home'
@@ -134,4 +142,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'users', to: 'pages#users'
   end
+
+  # letter opener
+  mount LetterOpenerWeb::Engine, at: 'letter_opener' if Rails.env.development?
 end

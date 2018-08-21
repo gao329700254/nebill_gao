@@ -504,8 +504,10 @@ ja:
       action: アクション
       edit: 編集
       comment_placeholder: コメントを入力してください
+      wait: 処理中...
     approval_new:
       title: 稟議新規作成
+      wait: 処理中...
     approval_edit:
       title: 稟議編集
       uploaded_file: 保存済ファイル
@@ -556,8 +558,8 @@ ja:
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
       update:
-        subject:  "【稟議】%{user}さんより,承認申請「%{name}」が更新されました."
-        message:  "%{user}さんより,承認申請「%{name}」が更新されました."
+        subject:  "【稟議】承認申請「%{name}」が更新されました."
+        message:  "承認申請「%{name}」が更新されました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
       permission:
