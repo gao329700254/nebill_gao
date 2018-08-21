@@ -3,7 +3,7 @@ class ApprovalMailer < ApplicationMailer
     @user     = user
     @approval = approval
     mail to:      user.email,
-         subject: I18n.t("mail.approval.assignment.subject", user: @user.name, name: @approval.name)
+         subject: I18n.t("mail.approval.assignment.subject", user: @approval.created_user.name, name: @approval.name)
   end
 
   def update_approval(user:, approval:)

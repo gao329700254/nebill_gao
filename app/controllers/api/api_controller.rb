@@ -7,7 +7,7 @@ class Api::ApiController < ApplicationController
       logger.error e
       logger.error e.backtrace.join("\n")
     end
-    
+
     render_internal_server_error_message
   end
 

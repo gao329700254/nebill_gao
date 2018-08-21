@@ -46,6 +46,7 @@ group :development do
   gem 'slim_lint', require: false
   gem 'scss_lint', require: false
   gem 'coffeelint'
+  gem 'letter_opener_web'
 end
 
 group :development, :test, :demo do
