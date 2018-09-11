@@ -1,0 +1,21 @@
+= form_tag nil, class: 'user_new__form'
+  .user_new__form__container
+    .user_new__form__container__group
+      .user_new__form__item
+        = label_tag :email, t('activerecord.attributes.user.email')
+        = text_field_tag :email, nil, 'v-model' => 'user.email'
+      .user_new__form__item
+        = label_tag :role, t('activerecord.attributes.user.role')
+        = select_tag :role, options_for_select(User.role.options), 'v-model' => 'user.role'
+      .user_new__form__item
+        = label_tag :default_allower, t('activerecord.attributes.user.default_allower')
+        select [
+              name='default_allower'
+              id='default_allower'
+              v-model='user.default_allower'
+            ]
+              option v-for="sUser in allUsers" value="{{sUser.id}}" {{sUser.name}}
+  = button_tag 'v-on:click.prevent' => 'cancel', class: 'user_new__form__cancel_btn' do
+    = fa_icon 'remove', text: t('helpers.cancel')
+  = button_tag 'v-on:click.prevent' => 'submit', class: 'user_new__form__submit_btn' do
+    = fa_icon 'check', text: t('helpers.submit.create')

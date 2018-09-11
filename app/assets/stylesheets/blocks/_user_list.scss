@@ -17,6 +17,11 @@
       @include list_tbl__body;
       &__row {
         @include list_tbl__body__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
       }
     }
 
@@ -31,19 +36,26 @@
 
       &--email {
         @extend %user_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(4);
         @include word-wrap;
       }
 
       &--role {
         @extend %user_list__tbl__item;
         @include span-columns(2);
-
-        select {
-          border: none;
-          box-shadow: none;
-        }
       }
+
+      &--default_allower {
+        @extend %user_list__tbl__item;
+        @include span-columns(3);
+      }
+    }
+  }
+
+  &__btn {
+    &--new_user {
+      @include btn--primary;
+      margin-bottom: $base-spacing;
     }
   }
 }

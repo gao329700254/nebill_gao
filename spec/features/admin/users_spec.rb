@@ -30,61 +30,81 @@ RSpec.feature 'Admin Users Page', js: true do
 
     scenario 'show' do
       is_expected.to have_header_title 'ユーザ管理'
-
-      is_expected.to have_field 'email'
-      is_expected.to have_select 'role', options: %w(一般 上長 バックオフィス 管理者), selected: '一般'
-      is_expected.to have_button '登録'
+      is_expected.to have_button 'ユーザ新規作成'
 
       # HACK(rairei): カスタムマッチャーで定義するときれいになりそう
       expect(all('.user_list__tbl__head__row th:nth-child(1)')[0]).to have_content '名前'
       expect(all('.user_list__tbl__head__row th:nth-child(2)')[0]).to have_content 'メールアドレス'
       expect(all('.user_list__tbl__head__row th:nth-child(3)')[0]).to have_content 'ロール'
+      expect(all('.user_list__tbl__head__row th:nth-child(4)')[0]).to have_content '承認者'
 
       expect(all('.user_list__tbl__body__row td:nth-child(1)')[0]).to have_content admin_user.name
       expect(all('.user_list__tbl__body__row td:nth-child(2)')[0]).to have_content admin_user.email
       expect(all('.user_list__tbl__body__row td:nth-child(3)')[0]).to have_content admin_user.role_text
+      expect(all('.user_list__tbl__body__row td:nth-child(4)')[0]).to have_content admin_user.default_allower
 
       expect(all('.user_list__tbl__body__row td:nth-child(1)')[1]).to have_content user.name
       expect(all('.user_list__tbl__body__row td:nth-child(2)')[1]).to have_content user.email
       expect(all('.user_list__tbl__body__row td:nth-child(3)')[1]).to have_content user.role_text
+      expect(all('.user_list__tbl__body__row td:nth-child(4)')[1]).to have_content user.default_allower
 
       expect(all('.user_list__tbl__body__row td:nth-child(1)')[2]).to have_content un_register_user.name
       expect(all('.user_list__tbl__body__row td:nth-child(2)')[2]).to have_content un_register_user.email
       expect(all('.user_list__tbl__body__row td:nth-child(3)')[2]).to have_content un_register_user.role_text
-
+      expect(all('.user_list__tbl__body__row td:nth-child(4)')[2]).to have_content un_register_user.default_allower
     end
 
-    scenario 'click create button with corrent value' do
-      within '.user_new' do
-        fill_in :email, with: 'foo@example.com'
-        select '管理者', from: 'role'
+    scenario 'link to an admin user show page when click row' do
+      find("#user-#{user.id}").click
+    end
+
+    scenario 'show User New Modal when click show modal button' do
+      is_expected.not_to have_css '.user_new__outer'
+      click_on 'ユーザ新規作成'
+      is_expected.to     have_css '.user_new__outer'
+    end
+
+    context 'User New Modal' do
+      background { click_button 'ユーザ新規作成' }
+      subject { find('.user_new') }
+
+      scenario 'show' do
+        is_expected.to have_field 'email'
+        is_expected.to have_field 'role'
+        is_expected.to have_button '登録'
+        is_expected.to have_button 'キャンセル'
       end
 
-      expect do
-        click_button '登録'
-        wait_for_ajax
-      end.to change(User, :count).by(1)
+      scenario 'click submit button with correct values' do
+        fill_in :email           , with: 'foo@example.com'
+        select '管理者'           , from: 'role'
 
-      user = User.find_by(email: 'foo@example.com')
+        expect do
+          click_button '登録'
+          wait_for_ajax
+        end.to change(User, :count)
 
-      expect(user.role).to eq 'admin'
+        is_expected.not_to have_css '.user_new'
+      end
 
-      is_expected.to have_field 'email', with: ''
-      is_expected.to have_select 'role', selected: '一般'
-      expect(find('.user_list')).to have_content 'foo@example.com'
-    end
+      scenario 'click submit button with uncorrect values' do
+        fill_in :email           , with: 'foo@'
+        select '管理者'           , from: 'role'
 
-    scenario 'click create button with uncorrent value' do
-      fill_in :email, with: 'foo@'
-      select '管理者', from: 'role'
+        expect do
+          click_button '登録'
+          wait_for_ajax
+        end.not_to change(User, :count)
 
-      expect do
-        click_button '登録'
-        wait_for_ajax
-      end.not_to change(User, :count)
+        is_expected.to have_field 'email'                , with: 'foo@'
+        is_expected.to have_field 'role'                 , with: 'admin'
+      end
 
-      is_expected.to have_field 'email', with: 'foo@'
-      is_expected.to have_select 'role', selected: '管理者'
+      scenario 'click cancel' do
+        is_expected.to     have_css '.user_new__outer'
+        click_button 'キャンセル'
+        is_expected.not_to have_css '.user_new__outer'
+      end
     end
   end
 end

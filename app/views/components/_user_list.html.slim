@@ -3,13 +3,20 @@ script type='text/x-template' id='user_list'
     table.user_list__tbl
       thead.user_list__tbl__head
         tr.user_list__tbl__head__row
-          th.user_list__tbl__item--name     = t('activerecord.attributes.user.name')
-          th.user_list__tbl__item--email    = t('activerecord.attributes.user.email')
-          th.user_list__tbl__item--role     = t('activerecord.attributes.user.role')
+          th.user_list__tbl__item--name             = t('activerecord.attributes.user.name')
+          th.user_list__tbl__item--email            = t('activerecord.attributes.user.email')
+          th.user_list__tbl__item--role             = t('activerecord.attributes.user.role')
+          th.user_list__tbl__item--default_allower  = t('activerecord.attributes.user.default_allower')
       tbody.user_list__tbl__body
         tr.user_list__tbl__body__row [
-          v-for = "user in users | orderBy sortKey"
+          v-for = "user in users | selectBy searchKeywords selectSchema | orderBy sortKey"
+          id         = "user-{{user.id}}"
+          v-on:click = "linkToShow(user.id)"
+          track-by   = "id"
         ]
-          td.user_list__tbl__item--name     v-text="user.name"
-          td.user_list__tbl__item--email    v-text="user.email"
-          td.user_list__tbl__item--role     = select_tag :role, options_for_select(User.role.options), :disabled => true, 'v-model' => 'user.role'
+          td.user_list__tbl__item--name               v-text="user.name"
+          td.user_list__tbl__item--email              v-text="user.email"
+          td.user_list__tbl__item--role               v-for="(id, val) in roles" v-if="id==user.role" v-text="val"
+          / td.user_list__tbl__item--role     = select_tag :role, options_for_select(User.role.options), :disabled => true, 'v-model' => 'user.role'
+          td.user_list__tbl__item--default_allower    v-for="us in users" v-if="us.id==user.default_allower" v-text="us.name"
+          td.user_list__tbl__item--default_allower    v-if="!user.default_allower" v-text=""
