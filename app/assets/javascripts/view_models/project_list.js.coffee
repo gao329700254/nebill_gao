@@ -8,19 +8,26 @@ $ ->
         orderer_company_name: 'like'
       list: undefined
       searchKeywords: undefined
-      contractStatus: undefined
+      contractStatus: []
       start: undefined
       end: undefined
-      progressProject: true
+      progressProject: false
       today: new Date()
       finishedStatus: undefined
       postDate : undefined
+      unprocessedProject : undefined
     watch:
       progressProject: (val) ->
         if val == true
           @postDate = @today.getFullYear() + '-' + ( @today.getMonth() + 1 ) + '-' + @today.getDate()
         else
           @postDate = undefined
+        @search()
+      unprocessedProject: (val) ->
+        if val == true
+          @unprocessedProject = true
+        else
+          @unprocessedProject = undefined
         @search()
     methods:
       linkToShow: (projectId) -> window.location = "/projects/#{projectId}/show"
@@ -36,13 +43,13 @@ $ ->
               start: @start
               end: @end
               today: @postDate
+              unprocessed: @unprocessedProject
             }
           .done (response) =>
             @list = response
         finally
           search.prop('disabled', false)
     compiled: ->
-      @postDate = @today.getFullYear() + '-' + ( @today.getMonth() + 1 ) + '-' + @today.getDate()
       @search()
     events:
       loadSearchEvent: ->

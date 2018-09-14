@@ -12,18 +12,17 @@ class Api::ApprovalsController < Api::ApiController
 
   def create
     default_allower_is_nill? && return
-    @approval = Approval.new(approval_param)
-    @approval.created_user_id = @current_user.id
-    if @approval.save!
+    if !params[:user_id].empty?
+      @approval = Approval.new(approval_param)
+      @approval.created_user_id = @current_user.id
+      if @approval.save!
 
-      file_create
-
-      @approval_user = @approval.approval_users.build(user_id: @current_user.default_allower)
-      if @approval_user.save!
-        ApprovalMailer.assignment_user(user: @approval_user.user, approval: @approval).deliver_now
-        action_model_flash_success_message(@approval, :create)
-        redirect_to approval_show_path(approval_id: @approval.id)
+        file_create
+        approval_user_save
       end
+    else
+      flash[:error] = I18n.t("errors.messages.default_allower_is_empty")
+      redirect_to approval_new_path
     end
 
   rescue ActiveRecord::RecordInvalid
@@ -82,6 +81,15 @@ private
     )
   end
 
+  def approval_user_save
+    @approval_user = @approval.approval_users.build(user_id: params[:user_id])
+    if @approval_user.save!
+      ApprovalMailer.assignment_user(user: @approval_user.user, approval: @approval).deliver_now
+      action_model_flash_success_message(@approval, :create)
+      redirect_to approval_show_path(approval_id: @approval.id)
+    end
+  end
+
   def params_file?
     params[:approval][:files_attributes]
   end
@@ -138,7 +146,7 @@ private
 
     @approval_users = @approval.approval_users.includes(:user)
 
-    if @approval_users.all? { |approval_user| approval_user.status == 20 || approval_user.status == 40 }
+    if @approval_users.any? { |approval_user| approval_user.status == 20 }
       @approval.update!(status: 20)
       ApprovalMailer.permission_approval(user: @approval.created_user, approval: @approval).deliver_now
     elsif @approval_users.none? { |approval_user| approval_user.status == 30 }

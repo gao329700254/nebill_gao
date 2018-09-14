@@ -13,6 +13,8 @@
           = f.label :category, Approval.human_attribute_name(:category)
           = f.select :category, options_for_select(Approval.category.options)
         .approval_new__form__item
+          = f.label :user_id, ApprovalUser.human_attribute_name(:name)
+          = select_tag :user_id, options_from_collection_for_select(User.where.not(id: @current_user.id), :id, :name), include_blank: true
           = f.label :notes, Approval.human_attribute_name(:notes)
           = f.text_area :notes, maxlength: "2000", class: 'approval_new__form__item__area'
         = button_tag type: 'button', onclick: "history.back()", class: 'approval_new__form__btn--cancel' do

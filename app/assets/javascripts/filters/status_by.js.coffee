@@ -2,8 +2,9 @@ Vue.filter 'statusBy', (list, value) ->
 
   _.filter list, (item) ->
     val = item['status']
+    # return true
     if value
-      if val == '失注' or val == '終了'
+      if val == '終了'
         return true
       else
         return false

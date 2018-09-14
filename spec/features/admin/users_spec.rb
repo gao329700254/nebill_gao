@@ -71,6 +71,7 @@ RSpec.feature 'Admin Users Page', js: true do
       scenario 'show' do
         is_expected.to have_field 'email'
         is_expected.to have_field 'role'
+        is_expected.to have_field 'default_allower'
         is_expected.to have_button '登録'
         is_expected.to have_button 'キャンセル'
       end
@@ -78,7 +79,7 @@ RSpec.feature 'Admin Users Page', js: true do
       scenario 'click submit button with correct values' do
         fill_in :email           , with: 'foo@example.com'
         select '管理者'           , from: 'role'
-
+        select  ''               , from: 'default_allower'
         expect do
           click_button '登録'
           wait_for_ajax

@@ -173,7 +173,7 @@ RSpec.describe 'user request' do
     let(:path) { "/api/users" }
 
     context 'with correct parameter' do
-      let(:params) { { user: { email: 'foo@example.com', role: 30 } } }
+      let(:params) { { user: { email: 'foo@example.com', role: 30, default_allower: admin_user.id } } }
 
       it 'create a user' do
         expect do
@@ -183,6 +183,7 @@ RSpec.describe 'user request' do
         user = User.last
         expect(user.email).to eq 'foo@example.com'
         expect(user.role).to eq 'superior'
+        expect(user.default_allower).to eq admin_user.id
       end
 
       it 'return success code and message' do

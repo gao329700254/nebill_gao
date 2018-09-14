@@ -37,8 +37,10 @@ class User < ActiveRecord::Base
 
   enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50 }, default: :general
 
+  validates :name, presence: true, on: :update
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
   validates :role, presence: true
+  validates :default_allower, presence: true, on: :whencreate
 
   def self.register_by!(auth)
     user = User.find_by!(email: auth.info.email)
