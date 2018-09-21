@@ -243,6 +243,7 @@ ja:
       wrong_bill_on_predate_acceptance_on: は検収日以降を入力してください
       wrong_status: 取り消しした稟議は変更できません
       default_allower_is_nill: 上長が設定されていません。管理者に連絡してください。
+      default_allower_is_empty: 承認者を選択してください。
     template:
       body: 次の項目を確認してください
       header:
