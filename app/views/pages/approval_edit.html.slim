@@ -11,7 +11,7 @@
           = f.text_field :name,  class: 'approval_edit__form__item__text', disabled: :true
         .approval_edit__form__item
           = f.label :category, Approval.human_attribute_name(:category)
-          = f.select :category, options_for_select(Approval.category.options)
+          = f.select :category, Approval.category.options
         .approval_edit__form__item
           = f.label :notes, Approval.human_attribute_name(:notes)
           = f.text_area :notes,  class: 'approval_edit__form__item__area'

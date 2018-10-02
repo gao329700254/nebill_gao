@@ -154,7 +154,7 @@ private
     end
 
     action_model_flash_success_message(@approval, :permission)
-    redirect_to approval_show_path(params[:id])
+    redirect_to approval_list_path
   end
 
   def disconfirm
@@ -162,7 +162,7 @@ private
     @approval.update!(status: 30)
     ApprovalMailer.disconfirm_approval(user: @approval.created_user, approval: @approval).deliver_now
     action_model_flash_success_message(@approval, :disconfirm)
-    redirect_to approval_show_path(params[:id])
+    redirect_to approval_list_path
   end
 
   def reassignment
@@ -208,17 +208,17 @@ private
 
   def edit_file
     file_param[:files_attributes].each do |file|
-      new_file = file[1][:file]
-      if file[1][:id].present?
+      new_file = file.second[:file]
+      if file.second[:id].present?
         uploaded_file = @approval.files.find(file[1][:id])
-        if file[1][:_destroy].present?
+        if file.second[:_destroy].present?
           # ファイルを削除する
           uploaded_file.destroy!
-        elsif file[1][:file].present?
+        elsif file.second[:file].present?
           # ファイルを更新する
           uploaded_file.update!(file: new_file, original_filename: new_file.original_filename)
         end
-      else
+      elsif file.second[:_destroy].blank?
         # ファイルを作成する
         new_file=@approval.files.build(file: new_file, original_filename: new_file.original_filename)
         new_file.save!
