@@ -81,6 +81,14 @@
       }
     }
 
+    &__btn {
+      &--preview {
+        @include btn--primary;
+        float: right;
+        font-size: .7rem;
+      }
+    }
+
     &__update {
       margin-bottom: $small-spacing;
 

@@ -3,7 +3,7 @@
 - provide(:title, t('page.approval_list.title'))
 
 #approval_list.approval_list
-  = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+  = search_field_tag :search, nil, 'v-model' => 'searchKeywords', \
                      placeholder: t('page.approval_list.search_form_placeholder'), lazy: true, class: 'approval_list__search'
   .approval_list__search
     .approval_list__search__date
@@ -17,7 +17,7 @@
         = button_tag 'v-on:click' => 'showApprovalNew', class: 'approval_list__search__date__btn--new_approval' do
           = fa_icon 'check', text: t('page.approval_new.title')
     .approval_list__search__radio
-      = radio_button_tag :all, '', true, id: 'all', 'v-model' => 'status'
+      = radio_button_tag :all, '', false, id: 'all', 'v-model' => 'status'
       = label_tag :all, t('page.approval_list.status_type.all')
       = radio_button_tag :pending, t('page.approval_list.status_type.pending'), false, id: 'pending', 'v-model' => 'status'
       = label_tag :pending, t('page.approval_list.status_type.pending')

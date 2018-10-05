@@ -7,10 +7,24 @@ $ ->
         name: 'like'
         created_user_name: 'like'
       list: undefined
-      searchKeywords: undefined
-      status: undefined
-      created_at: undefined
+      searchKeywords: ''
+      status: ''
+      created_at: ''
+    watch:
+      searchKeywords: (newSearchKeywords) ->
+        localStorage.searchKeywords = newSearchKeywords
+      status: (newStatus) ->
+        localStorage.status = newStatus
+      created_at: (newCreated_at) ->
+        localStorage.created_at = newCreated_at
     methods:
+      loadLocalStorage: ->
+        if localStorage.searchKeywords
+          @searchKeywords = localStorage.searchKeywords
+        if localStorage.status
+          @status = localStorage.status
+        if localStorage.created_at
+          @created_at = localStorage.created_at
       linkToShow: (approvalId) -> window.location = "/approvals/#{approvalId}/show"
       showApprovalNew: -> window.location = '/approvals/new'
       search: ->
@@ -28,6 +42,5 @@ $ ->
         finally
           search.prop('disabled', false)
     compiled: ->
-      $.ajax '/api/approvals.json'
-        .done (response) =>
-          @list = response
+      @loadLocalStorage()
+      @search()
