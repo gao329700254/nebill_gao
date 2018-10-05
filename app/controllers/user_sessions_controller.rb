@@ -5,7 +5,12 @@ class UserSessionsController < ApplicationController
 
     @session = UserSession.new(user)
     @session.save!
-    redirect_to project_list_path, flash: { success: t('action.login.success') }
+    if session[:request_url].blank?
+      redirect_to project_list_path, flash: { success: t('action.login.success') }
+    else
+      redirect_to session[:request_url], flash: { success: t('action.login.success') }
+      session[:request_url] = nil
+    end
   rescue => e
     logger.error e.message
     redirect_to root_path, flash: { error: t('action.login.fail') }
