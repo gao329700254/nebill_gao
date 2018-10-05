@@ -1,5 +1,8 @@
+= javascript_include_tag 'view_models/approval_show'
 
 - provide(:title, t('page.approval_show.title'))
+
+= render 'components/approval_file'
 
 #approval_show.approval_show
 
@@ -53,10 +56,14 @@
             - if !@approval_files.empty?
               - @approval_files.each do |approval_file|
                 .approval_show__detail__file__contents
-                  = link_to approval_file.original_filename, api_approval_file_download_path(approval_file)
+                  = link_to truncate(approval_file.original_filename, length: 40), api_approval_file_download_path(approval_file)
+                  - if approval_file.original_filename.match(Regexp.union(['.pdf', '.png', '.jpg', '.jpeg', '.gif']))
+                    = button_tag type: 'button', 'v-on:click' => "showApprovalFile('#{approval_file.file}')", class: 'approval_show__detail__btn--preview' do
+                      = fa_icon 'image', text: t('page.approval_show.preview')
             - else
               .approval_show__detail__file__contents
                 = t('page.approval_show.file_no_contents')
+          = hidden_field_tag :file_url, '', 'v-model' => 'url'
           .approval_show__detail__approval_user_list
             = t('page.approval_show.history')
             - if !@approval_users.empty?
@@ -96,3 +103,9 @@
                                            class: 'approval_show__detail__update__action__btn--disconfirm',
                                            value: "disconfirm" do
                   = fa_icon 'remove', text: t('page.approval_show.disconfirm')
+
+  component [
+    :is        = "'approvalFile'"
+    :url       = "url"
+    keep-alive = true
+  ]

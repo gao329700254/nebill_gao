@@ -506,6 +506,7 @@ ja:
       reassignment: 再割り当て
       action: アクション
       edit: 編集
+      preview: プレビュー
       comment_placeholder: コメントを入力してください
       wait: 処理中...
     approval_new:

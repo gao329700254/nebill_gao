@@ -1,0 +1,27 @@
+.approval_file {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  &__outer {
+    @include modal__outer;
+    padding-top: 5em;
+
+    &__inner {
+      @include modal__outer__inner;
+      width: 55%;
+
+      &__body {
+        @include modal__outer__inner__body;
+        &__preview {
+          @include outer-container;
+          display: inline-block;
+
+          &__file {
+            display: inline-block;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
