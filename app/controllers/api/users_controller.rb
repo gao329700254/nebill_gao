@@ -89,6 +89,12 @@ private
   end
 
   def user_param
-    params.require(:user).permit(:name, :email, :role, :default_allower)
+    params.require(:user).permit(:name, :email, :role, :default_allower, :chatwork_id).tap do |user_param|
+      if user_param[:chatwork_id].present?
+        chatwork_user = Chatwork::Member.member_list.find { |mem| mem[:account_id].to_s == user_param[:chatwork_id].to_s }
+
+        user_param[:chatwork_name] = chatwork_user[:name] if chatwork_user.present?
+      end
+    end
   end
 end

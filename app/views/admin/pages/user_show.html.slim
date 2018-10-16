@@ -29,6 +29,9 @@
               :disabled='!editMode'
             ]
               option v-for="user in allUser" value="{{user.id}}" {{user.name}}
+        .user_show__form__item
+          = label_tag :chatwork_id, t('activerecord.attributes.user.chatwork_name')
+          = select_tag :chatwork_id,  options_for_select(User.chatwork_members_options), 'v-model' => 'user.chatwork_id', ':disabled' => '!editMode'
     = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'user_show__form__btn--edit' do
       = fa_icon 'edit', text: t('helpers.edit')
     = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'user_show__form__btn--cancel' do

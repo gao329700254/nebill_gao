@@ -7,6 +7,7 @@ script type='text/x-template' id='user_list'
           th.user_list__tbl__item--email            = t('activerecord.attributes.user.email')
           th.user_list__tbl__item--role             = t('activerecord.attributes.user.role')
           th.user_list__tbl__item--default_allower  = t('activerecord.attributes.user.default_allower')
+          th.user_list__tbl__item--email            = t('activerecord.attributes.user.chatwork_name')
       tbody.user_list__tbl__body
         tr.user_list__tbl__body__row [
           v-for = "user in users | selectBy searchKeywords selectSchema | orderBy sortKey"
@@ -20,3 +21,4 @@ script type='text/x-template' id='user_list'
           / td.user_list__tbl__item--role     = select_tag :role, options_for_select(User.role.options), :disabled => true, 'v-model' => 'user.role'
           td.user_list__tbl__item--default_allower    v-for="us in users" v-if="us.id==user.default_allower" v-text="us.name"
           td.user_list__tbl__item--default_allower    v-if="!user.default_allower" v-text=""
+          td.user_list__tbl__item--email              v-text="user.chatwork_name"

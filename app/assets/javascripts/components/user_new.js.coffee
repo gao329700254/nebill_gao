@@ -7,6 +7,7 @@ $ ->
         email:           ''
         role:            ''
         default_allower: ''
+        chatwork_id:     ''
       allUsers: []
     methods:
       loadAllUsers: ->

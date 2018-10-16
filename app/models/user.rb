@@ -54,4 +54,8 @@ class User < ActiveRecord::Base
   def join!(bill)
     bill.user_members.create!(employee_id: employee.id)
   end
+
+  def self.chatwork_members_options
+    Chatwork::Member.member_list.map { |m| m.values_at('name', 'account_id') }
+  end
 end
