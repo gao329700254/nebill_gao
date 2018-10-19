@@ -15,6 +15,9 @@
               v-model='user.default_allower'
             ]
               option v-for="sUser in allUsers" value="{{sUser.id}}" {{sUser.name}}
+      .user_new__form__item
+        = label_tag :chatwork_id, 'チャットワークユーザー'
+        = select_tag :chatwork_id, options_for_select(User.chatwork_members_options), 'v-model' => 'user.chatwork_id'
   = button_tag 'v-on:click.prevent' => 'cancel', class: 'user_new__form__cancel_btn' do
     = fa_icon 'remove', text: t('helpers.cancel')
   = button_tag 'v-on:click.prevent' => 'submit', class: 'user_new__form__submit_btn' do

@@ -9,6 +9,7 @@ $ ->
         email:            { init: '' }
         role:             { init: '' }
         default_allower:  { init: '' }
+        chatwork_id:      { init: '' }
         created_at:       { init: '' }
         updated_at:       { init: '' }
       editMode: false
@@ -54,6 +55,7 @@ $ ->
                 email:           @user.email
                 role:            @user.role
                 default_allower: @user.default_allower
+                chatwork_id:     @user.chatwork_id
           .done (response) =>
             toastr.success('', response.message)
             @loadUser()

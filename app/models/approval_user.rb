@@ -33,4 +33,5 @@ class ApprovalUser < ActiveRecord::Base
   enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, reassignment: 40 }, default: :pending
 
   scope :id_in, -> (ids) { where(user_id: ids) if ids.present? }
+  scope :with_permission, -> { where(status: 20) }
 end

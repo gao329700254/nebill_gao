@@ -85,6 +85,7 @@ private
     @approval_user = @approval.approval_users.build(user_id: params[:user_id])
     if @approval_user.save!
       ApprovalMailer.assignment_user(user: @approval_user.user, approval: @approval).deliver_now
+      Chatwork::Approval.new(approval: @approval, to_user: @approval_user.user).notify_assigned
       action_model_flash_success_message(@approval, :create)
       redirect_to approval_show_path(approval_id: @approval.id)
     end
@@ -149,6 +150,7 @@ private
     if @approval_users.any? { |approval_user| approval_user.status == 20 }
       @approval.update!(status: 20)
       ApprovalMailer.permission_approval(user: @approval.created_user, approval: @approval).deliver_now
+      Chatwork::Approval.new(approval: @approval, to_user: @approval.created_user).notify_permited
     elsif @approval_users.none? { |approval_user| approval_user.status == 30 }
       @approval.update!(status: 10)
     end
@@ -165,6 +167,7 @@ private
     redirect_to approval_list_path
   end
 
+  # rubocop:disable Metrics/AbcSize
   def reassignment
     if !user_param[:id].empty?
       @approval_user = @approval.approval_users.build(user_id: user_param[:id])
@@ -175,6 +178,7 @@ private
         @approval_user.save!
         @approval.status == 20 && @approval.update!(status: 10)
         ApprovalMailer.assignment_user(user: @approval_user.user, approval: @approval).deliver_now
+        Chatwork::Approval.new(approval: @approval, to_user: @approval_user.user).notify_assigned
 
         model_flash_success_message(:reassignment)
       else
@@ -185,6 +189,7 @@ private
     end
     redirect_to approval_show_path(params[:id])
   end
+  # rubocop:enable Metrics/AbcSize
 
   def edit
     if @approval.status != 30
