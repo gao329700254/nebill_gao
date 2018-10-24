@@ -32,6 +32,7 @@ gem 'paper_trail'
 gem 'cancancan'
 gem 'nested_form_fields'
 gem 'sendgrid-actionmailer'
+gem 'gon'
 
 group :development do
   gem 'web-console', '~> 2.0'

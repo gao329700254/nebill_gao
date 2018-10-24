@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181011141323) do
+ActiveRecord::Schema.define(version: 20181018043025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 20181011141323) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "default_expense_items", force: :cascade do |t|
+    t.string   "name"
+    t.string   "display_name"
+    t.integer  "standard_amount"
+    t.boolean  "is_routing"
+    t.boolean  "is_quantity"
+    t.string   "note"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.boolean  "is_receipt"
+  end
+
   create_table "employees", force: :cascade do |t|
     t.integer  "actable_id",   null: false
     t.string   "actable_type", null: false
@@ -99,6 +111,49 @@ ActiveRecord::Schema.define(version: 20181011141323) do
   end
 
   add_index "employees", ["email"], name: "index_employees_on_email", unique: true, using: :btree
+
+  create_table "expense_approval_users", force: :cascade do |t|
+    t.integer  "expense_approval_id"
+    t.integer  "user_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "status"
+    t.string   "comment"
+  end
+
+  create_table "expense_approvals", force: :cascade do |t|
+    t.integer  "total_amount"
+    t.string   "notes"
+    t.integer  "status"
+    t.integer  "created_user_id"
+    t.integer  "expenses_number"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "name"
+  end
+
+  create_table "expense_files", force: :cascade do |t|
+    t.integer  "expense_id"
+    t.string   "file"
+    t.string   "original_filename"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.integer  "default_id"
+    t.date     "use_date"
+    t.integer  "amount"
+    t.string   "depatture_location"
+    t.string   "arrival_location"
+    t.integer  "quantity"
+    t.string   "notes"
+    t.integer  "payment_type"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "created_user_id"
+    t.integer  "expense_approval_id"
+  end
 
   create_table "members", force: :cascade do |t|
     t.integer  "employee_id",    null: false
@@ -222,6 +277,13 @@ ActiveRecord::Schema.define(version: 20181011141323) do
   add_foreign_key "approval_users", "approvals", on_delete: :cascade
   add_foreign_key "approval_users", "users", on_delete: :cascade
   add_foreign_key "bills", "projects", on_delete: :cascade
+  add_foreign_key "expense_approval_users", "expense_approvals", on_delete: :nullify
+  add_foreign_key "expense_approval_users", "users", on_delete: :nullify
+  add_foreign_key "expense_approvals", "users", column: "created_user_id", on_delete: :nullify
+  add_foreign_key "expense_files", "expenses", on_delete: :nullify
+  add_foreign_key "expenses", "default_expense_items", column: "default_id", on_delete: :nullify
+  add_foreign_key "expenses", "expense_approvals", on_delete: :nullify
+  add_foreign_key "expenses", "users", column: "created_user_id", on_delete: :nullify
   add_foreign_key "members", "bills", on_delete: :cascade
   add_foreign_key "members", "employees", on_delete: :cascade
   add_foreign_key "project_file_groups", "projects", on_delete: :cascade

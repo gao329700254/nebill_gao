@@ -1,0 +1,55 @@
+= javascript_include_tag 'view_models/expense_csv'
+
+- provide(:title, t('page.expense_csv.title'))
+
+#expense_csv.expense_csv
+
+  = form_tag expense_download_csv_path(format: :csv), target: '_blank'
+    .expense_csv__search
+      .expense_csv__search__date
+        .expense_csv__search__date__start
+          = label_tag :start, t('page.expense_csv.use_date')
+          = date_field_tag :start, nil, 'v-model' => "start"
+        .expense_csv__search__date__end
+          = date_field_tag :end, nil, 'v-model' => "end"
+        .expense_csv__search__date__btn
+          = button_tag 'v-on:click.prevent' => 'search', type: 'button', class: 'expense_csv__search__date__btn--search' do
+            = fa_icon 'fa-search', text: t('page.expense_csv.search')
+        .expense_csv__search__date__btn
+          = button_tag 'v-on:click' => '', class: 'expense_csv__search__date__btn--csv' do
+            = fa_icon 'download', text: t('page.expense_csv.download')
+  table.expense_csv__tbl
+    thead.expense_csv__tbl__head
+      tr.expense_csv__tbl__head__row
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense_approval.id')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense_approval.status')
+        th.expense_csv__tbl__item         = t('page.expense_csv.approval_date')
+        th.expense_csv__tbl__item         = t('page.expense_csv.approval_user')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense_approval_user.name')
+        th.expense_csv__tbl__item         = t('page.expense_csv.date')
+        th.expense_csv__tbl__item         = t('page.expense_csv.category_name')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense.amount')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense.depatture_location')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense.arrival_location')
+        th.expense_csv__tbl__item         = t('page.expense_csv.receipt')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense_approval.notes')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense.payment_type')
+    tbody.expense_csv__tbl__body
+      tr.expense_csv__tbl__body__row [
+        v-for      = "expense in csv"
+        id         = "expense-{{expense.id}}"
+        track-by   = "id"
+      ]
+        td.expense_csv__tbl__item        v-text='expense.expense_approval_id'
+        td.expense_csv__tbl__item        v-text='expense.status'
+        td.expense_csv__tbl__item        v-text='expense.approval_created_at'
+        td.expense_csv__tbl__item        v-text='expense.created_user_name'
+        td.expense_csv__tbl__item        v-text='expense.default_allower'
+        td.expense_csv__tbl__item        v-text='expense.use_date'
+        td.expense_csv__tbl__item        v-text='expense.default_id'
+        td.expense_csv__tbl__item        v-text='expense.amount'
+        td.expense_csv__tbl__item        v-text='expense.depatture_location'
+        td.expense_csv__tbl__item        v-text='expense.arrival_location'
+        td.expense_csv__tbl__item        v-text='expense.receipt'
+        td.expense_csv__tbl__item        v-text='expense.notes'
+        td.expense_csv__tbl__item        v-text='expense.payment_type'

@@ -43,5 +43,20 @@ Rails.application.routes.draw do
     scope path: 'files/:files_id' do
       get 'approval_file_download', to: 'files#approval_file_download'
     end
+    resources :expenses, only: [:show, :create, :update, :destroy, :index]
+    scope path: 'expenses' do
+      post "input_item", to: "expenses#input_item"
+      post "load_item", to: "expenses#load_item"
+      post "load_list", to: "expenses#load_list"
+      post "reapproval", to: "expenses#reapproval"
+      post "invalid_approval", to: "expenses#invalid_approval"
+      post "create_expense_approval", to: "expenses#create_expense_approval"
+      post "search_for_csv", to: "expenses#search_for_csv"
+    end
+    scope path: 'files/:files_id' do
+      get 'expense_file_download', to: 'files#expense_file_download'
+    end
+    post "expense_approvals/search_result", to: "expense_approvals#search_result"
+    resources :expense_approvals, only: [:show, :create, :update, :destroy, :index]
   end
 end

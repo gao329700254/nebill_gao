@@ -1,0 +1,154 @@
+.expense_list {
+
+  padding: $base-spacing;
+
+  &__function {
+    padding-top: $base-spacing;
+
+    &__radio {
+      margin-bottom: $base-spacing;
+    }
+
+    &__date {
+      @include display(flex);
+      margin-bottom: $base-spacing;
+
+      &__span {
+        margin: auto 10px;
+      }
+
+      &__select {
+        @include span-columns(3);
+      }
+
+      &__right {
+        @include span-columns(5);
+      }
+
+      &__end {
+        @include span-columns(4);
+      }
+
+      &__text {
+        @include span-columns(2);
+        padding: $small-spacing;
+        font-weight: bold;
+      }
+
+      &__num {
+        @include span-columns(1);
+        padding: $small-spacing;
+        font-weight: bold;
+      }
+
+      &__btn {
+        @include span-columns(2);
+
+        &--unapplied,
+        &--print,
+        &--application,
+        &--reapproval {
+          @include btn--primary;
+        }
+
+        &--receipt {
+          display: block;
+          transition: .3s;
+          margin: 0 auto;
+          border-radius: 50%;
+          background: $light-blue-color;
+          padding: 7px;
+          text-align: center;
+          text-decoration: none;
+          line-height: 15px;
+          color: $white;
+        }
+
+        &--receipt:hover {
+          background: $dark-blue-color;
+        }
+      }
+    }
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+
+      &__row {
+        @include list_tbl__body__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
+
+        &--finished {
+          border-bottom: $bold-border;
+          background-color: $light-grey;
+        }
+      }
+    }
+
+    &__item,
+    %project_list__tbl__item {
+      @include list_tbl__item;
+
+      &--check {
+        @extend %project_list__tbl__item;
+        width: 30px;
+        text-align: center;
+      }
+
+      &--use_date {
+        @extend %project_list__tbl__item;
+        @include span-columns(1);
+      }
+
+      &--default_id {
+        @extend %project_list__tbl__item;
+        @include span-columns(1);
+      }
+
+      &--content {
+        @extend %project_list__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--is_receipt {
+        width: 30px;
+      }
+
+      &--amount {
+        @extend %project_list__tbl__item;
+        @include span-columns(1);
+      }
+
+      &--notes {
+        @extend %project_list__tbl__item;
+        @include span-columns(3);
+        white-space: pre;
+        word-break: break-word;
+      }
+
+    }
+  }
+
+  &__btn {
+    &--new_expense,
+    &--delete,
+    &--invalid_approval {
+      @include btn--primary;
+      margin-top: $base-spacing;
+      margin-right: $base-spacing;
+    }
+  }
+}

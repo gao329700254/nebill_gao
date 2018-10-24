@@ -1,0 +1,130 @@
+.expense_pdf {
+  /*** variables **************************************************************/
+  $bluesky: #e3ecf0;
+  $black:   #000000;
+  $gray:    #c0c0c0;
+  /****************************************************************************/
+  padding: 3rem;
+  line-height: 1.2rem;
+  font-family: sans-serif;
+  font-size: .8rem;
+
+  &__header {
+    &--today {
+      text-align: right;
+    }
+
+    &--title {
+      margin: 10px 0 2rem;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+  }
+
+  &__body {
+    &__title,
+    %expense_pdf__body__title {
+      margin: 1rem 0 0;
+    }
+  }
+
+  &__tbl {
+    margin-top: .3rem;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .8rem;
+
+    &__head {
+      &__row {
+        height: 1.6rem;
+
+
+        &__item {
+          border: solid 1px;
+
+
+          &--amount {
+            border: solid .5px $black;
+            background-color: $bluesky;
+            width: 10%;
+          }
+
+          &--content {
+            border: solid .5px $black;
+            background-color: $bluesky;
+            width: 30%;
+          }
+
+          &--notes {
+            border: solid .5px $black;
+            background-color: $bluesky;
+            width: 25%;
+          }
+
+          &--day {
+            border: solid .5px $black;
+            background-color: $bluesky;
+            width: 5%;
+          }
+
+          &--default,
+          &--use_date {
+            border: solid .5px $black;
+            background-color: $bluesky;
+            width: 15%;
+          }
+
+          &--name,
+          &--status,
+          &--total_amount,
+          &--employee {
+            border: solid .5px $black;
+            background-color: $bluesky;
+          }
+
+          &--receipt {
+            border: dotted 1.9px $gray;
+            padding: .5rem;
+            text-align: center;
+            color: $gray;
+            font-size: .8rem;
+          }
+        }
+      }
+    }
+
+    &__body {
+
+      &__row {
+        height: 1.6rem;
+
+        &__item {
+
+          &--amount {
+            border: solid .5px $black;
+            padding: 0 4px 0 0;
+            text-align: right;
+          }
+
+          &--name,
+          &--status,
+          &--day,
+          &--total_amount,
+          &--employee {
+            border: solid .5px $black;
+            text-align: center;
+          }
+
+          &--use_date,
+          &--content,
+          &--default,
+          &--notes,
+          &--comment {
+            border: solid .5px $black;
+            padding: 0 0 0 4px;
+          }
+        }
+      }
+    }
+  }
+}

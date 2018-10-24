@@ -1,0 +1,107 @@
+= javascript_include_tag 'view_models/expense_list'
+
+- provide(:title, t('page.expense_list.title'))
+
+== render 'components/expense_approval_new'
+== render 'components/expense_file'
+
+input#header__invalid_confirm_message type='hidden' value=I18n.t('action.invalid.confirm')
+input#header__reapproval_confirm_message type='hidden' value=I18n.t('action.reapproval.confirm')
+
+#expense_list.expense_list
+
+  .expense_list__function
+    .expense_list__function__date
+      .expense_list__function__date__select v-if='expense_approval'
+        select name='expense'  v-on:change='loadChoiceExpenseApproval' v-model="selectedApproval"
+          option v-bind:value="0"
+            = t('activerecord.attributes.expense.unapplied')
+          option [
+            v-for = "expense_approval in expense_approval.approval_list"
+            v-bind:value = "expense_approval"
+          ]
+            = "{{expense_approval}}"
+      .expense_list__function__date__btn
+        = link_to expense_download_path + "?id={{selectedApproval}}", type: 'button', class: 'expense_list__function__date__btn--print' do
+          = fa_icon 'print', text: t('activerecord.attributes.expense.print')
+      .expense_list__function__date__text  v-if='total'
+        = ExpenseApproval.human_attribute_name(:status)
+      .expense_list__function__date__num  v-if='total'
+        div  v-if='expense_approval.status'
+          = "{{expense_approval.status}}"
+      .expense_list__function__date__text
+        = t('page.expense_list.reimbursement_amount')
+      .expense_list__function__date__num  v-if='total'
+        = "{{total.reimbursement_amount}}"
+      .expense_list__function__date__btn  v-if='ability.show_expense_approval_new'
+        = button_tag 'v-on:click' => 'showExpenseApprovalNew', class: 'expense_list__function__date__btn--application' do
+          = t('page.expense_list.application')
+      .expense_list__function__date__btn  v-if='ability.reapproval'
+        = button_tag 'v-on:click' => 'Reapproval', class: 'expense_list__function__date__btn--reapproval' do
+          = t('page.expense_list.reapproval')
+
+  table.expense_list__tbl
+    thead.expense_list__tbl__head
+      tr.expense_list__tbl__head__row
+        th.expense_list__tbl__item--check         = check_box_tag :check_all, true, false, 'v-model' => 'isCheckAll', 'v-on:click' => 'checkAll'
+        th.expense_list__tbl__item--use_date      = Expense.human_attribute_name(:use_date)
+        th.expense_list__tbl__item--default_id    = Expense.human_attribute_name(:default_id)
+        th.expense_list__tbl__item--content       = Expense.human_attribute_name(:content)
+        th.expense_list__tbl__item--is_receipt    = ''
+        th.expense_list__tbl__item--amount        = Expense.human_attribute_name(:amount)
+        th.expense_list__tbl__item--notes         = Expense.human_attribute_name(:notes)
+    tbody.expense_list__tbl__body
+      tr.expense_list__tbl__body__row [
+        v-for      = "expense in list"
+        id         = "expense-{{expense.id}}"
+        track-by   = "id"
+      ]
+        td.expense_list__tbl__item--check           = check_box_tag :check, true, false, class: 'check',
+        'v-model' => 'ids', 'v-on:change' => 'updateCheckAll', 'v-bind:value' => 'expense.id'
+        td.expense_list__tbl__item--use_date        v-text='expense.use_date'  v-on:click="linkToShow(expense.id, expense.update_flug)"
+        td.expense_list__tbl__item--default_id      v-text='expense.default_id' v-on:click="linkToShow(expense.id, expense.update_flug)"
+        td.expense_list__tbl__item--content         v-text='expense.content' v-on:click="linkToShow(expense.id, expense.update_flug)"
+        td.expense_list__tbl__item--is_receipt
+          = button_tag class: 'expense_list__function__date__btn--receipt', \
+            'v-on:click' => 'showExpenseFile(expense.file.file)', 'v-if' => 'expense.file != null'do
+            = t('page.expense_list.receipt')
+        td.expense_list__tbl__item--amount          v-numeric='expense.amount' v-on:click="linkToShow(expense.id, expense.update_flug)"
+        td.expense_list__tbl__item--notes           v-text='expense.notes' v-on:click="linkToShow(expense.id, expense.update_flug)"
+  = button_tag 'v-on:click' => 'showExpenseNew', 'v-if' => 'ability.show_expense_new', class: 'expense_list__btn--new_expense' do
+    = fa_icon 'check', text: t('page.expense_list.new')
+  = button_tag 'v-on:click' => 'showExpenseNew', 'v-if' => 'ability.add_expense', class: 'expense_list__btn--new_expense' do
+    = fa_icon 'check', text: t('page.expense_list.add_expense')
+  = button_tag 'v-on:click' => 'destroy', 'v-if' => 'ability.destroy', class: 'expense_list__btn--delete' do
+    = fa_icon 'trash', text: t('helpers.delete')
+  = button_tag 'v-on:click' => 'InvalidApproval', 'v-if' => 'ability.invalid_approval', class: 'expense_list__btn--invalid_approval' do
+    = fa_icon 'trash', text: t('page.expense_list.invalid_approval')
+  .expense_list__function
+    .expense_list__function__date
+      .expense_list__function__date__right
+      .expense_list__function__date__text
+        = t('page.expense_list.reimbursement_amount')
+      .expense_list__function__date__num  v-if='total'
+        = "{{total.reimbursement_amount}}"
+      .expense_list__function__date__text
+        = t('page.expense_list.replacement')
+      .expense_list__function__date__num v-if='total'
+        = "{{total.person_rebuilding}}"
+      .expense_list__function__date__btn  v-if='ability.show_expense_approval_new'
+        = button_tag 'v-on:click' => 'showExpenseApprovalNew', class: 'expense_list__function__date__btn--application' do
+          = t('page.expense_list.application')
+      .expense_list__function__date__btn  v-if='ability.reapproval'
+        = button_tag 'v-on:click' => 'Reapproval', class: 'expense_list__function__date__btn--reapproval' do
+          = t('page.expense_list.reapproval')
+
+  component [
+    :is        = "'expenseApprovalNew'"
+    :ids       = "ids"
+    :list      = "list"
+    keep-alive = true
+  ]
+
+  component [
+    :is        = "'expenseFile'"
+    :url       = "url"
+    keep-alive = true
+  ]

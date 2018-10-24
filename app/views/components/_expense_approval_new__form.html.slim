@@ -1,0 +1,15 @@
+= form_tag nil, class: 'expense_approval_new__form'
+  .expense_approval_new__form__container
+    .expense_approval_new__form__container__group
+      .expense_approval_new__form__item
+        = radio_button_tag :all, '', true, id: 'all', 'v-model' => 'status'
+        = label_tag :all, t('page.expense_approval_new.status_type.all')
+        = radio_button_tag :selected, 'selected', false, id: 'selected', 'v-model' => 'status'
+        = label_tag :selected, t('page.expense_approval_new.status_type.selected')
+      .expense_approval_new__form__item
+        = label_tag :notes, t('activerecord.attributes.expense_approval.notes')
+        = text_area_tag :notes, nil, 'v-model' => 'notes'
+  = button_tag 'v-on:click.prevent' => 'cancel', class: 'expense_approval_new__form__cancel_btn' do
+    = fa_icon 'remove', text: t('helpers.cancel')
+  = button_tag 'v-on:click.prevent' => 'submit', class: 'expense_approval_new__form__submit_btn' do
+    = fa_icon 'check', text: t('helpers.submit.create')

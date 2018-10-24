@@ -23,6 +23,8 @@ ja:
       project_file: プロジェクトファイル
       project_file_group: プロジェクトファイルグループ
       approval: 稟議
+      expense: 経費
+      expense_approval: 承認申請
     attributes:
       employee: &employee
         name: 名前
@@ -113,6 +115,38 @@ ja:
         file: 添付ファイル
         category: 種別
       approval_user:
+        name: 承認者
+        status: ステータス
+        comment: コメント
+      expense:
+        use_date: 利用日
+        notes: 概要
+        amount: 金額
+        depatture_location: 出発
+        arrival_location: 到着
+        quantity: 数量
+        payment_type: 支払種別
+        file: 領収書(jpg,jpeg,png,gifのみ)
+        file_exists: 有り
+        file_not_exists: 無し
+        default_id: 費目
+        content: 内容
+        print: 印刷
+        unapplied: 未申請
+        replacement: 本人立替
+      expense_approval:
+        id: 申請番号
+        notes: 備考
+        name: 件名
+        reimbursement_start_date: 精算開始日
+        reimbursement_last_date: 精算最終日
+        reimbursement_count: 精算件数
+        reimbursement_amount: 精算金額
+        status: ステータス
+        created_user_name: 作成者
+        updated_at: 更新日
+        created_at: 作成日
+      expense_approval_user:
         name: 承認者
         status: ステータス
         comment: コメント
@@ -245,6 +279,7 @@ ja:
       wrong_status: 取り消しした稟議は変更できません
       default_allower_is_nill: 上長が設定されていません。管理者に連絡してください。
       default_allower_is_empty: 承認者を選択してください。
+      expense_approval_is_empty: 申請を選択してください。
     template:
       body: 次の項目を確認してください
       header:
@@ -367,6 +402,10 @@ ja:
       confirm: '本当に再割り当てをしてよろしいですか？'
       success: '承認者を再割り当てしました'
       fail: '承認者を再割り当てできませんでした'
+    reapproval:
+      confirm: '本当に再申請をしてよろしいですか？'
+      success: '承認者を再申請しました'
+      fail: '承認者を再申請できませんでした'
   enumerize:
     defaults:
       contract_type:
@@ -407,6 +446,10 @@ ja:
       consumables:            消耗品
       other_purchasing:       その他購買
       other:                  その他
+    payment_type:
+      person_rebuilding:      本人立替
+      invoice:                請求書
+      corporate_card:         法人カード
   page:
     home:
       title: ホーム
@@ -516,6 +559,68 @@ ja:
     approval_edit:
       title: 稟議編集
       uploaded_file: 保存済ファイル
+    expense_new:
+      title: 経費新規作成
+      wait: 処理中...
+    expense_list:
+      title: 経費一覧
+      span: 期間
+      new: 経費新規作成
+      receipt: 領
+      replacement: 本人立替
+      reimbursement_amount: 精算金額
+      unapplove: 未申請
+      application: 承認申請
+      reapproval: 再申請
+      invalid_approval: 申請を取り消す
+      add_expense: 経費追加
+    expense_edit:
+      title: 経費編集
+      uploaded_file: 保存済ファイル
+      wait: 処理中...
+      __delete: 削除
+    expense_approval_new:
+      status_type:
+        all: 全て
+        selected: 選択された経費
+      title: 経費申請新規作成
+      wait: 処理中...
+    expense_approval_list:
+      title: 経費申請一覧
+      search_form_placeholder: '件名,作成者で検索できます'
+      fill_date_form: 作成日検索
+      search: 検索
+      status_type:
+        all: 全て
+        pending: 承認待ち
+        permission: 承認済み
+        disconfirm: 差し戻し
+        invalid: 取り消し
+    expense_approval_show:
+      title: 経費申請情報
+      note_no_contents: なし
+      file_no_contents: なし
+      user_no_contents: 承認者が存在しません
+      history: 承認履歴
+      invalid: 承認申請の取り消し
+      permission: 承認
+      disconfirm: 差し戻し
+      reassignment: 再割り当て
+      action: アクション
+      expense_list: 経費精算一覧へ
+      comment_placeholder: コメントを入力してください
+      wait: 処理中...
+    expense_csv:
+      approval_date: 申請日時
+      approval_user: 申請者
+      date: 日付
+      category_name: 費目名
+      receipt: 領収書
+      title: 経費出力
+      use_date: 利用日検索
+      search: 検索
+      download: CSV
+      csvname: 経費データ_
     admin:
       users:
         title: ユーザ管理
@@ -540,6 +645,32 @@ ja:
     subtotal: 小計
     tax: 消費税
     expenses: 経費（交通費）
+    expense:
+      use_date: 利用日
+      notes: 概要
+      amount: 金額
+      default_id: 費目
+      content: 内容
+      print: 印刷
+      day: 曜日
+      Sun: 日
+      Mon: 月
+      Tue: 火
+      Wed: 水
+      Thu: 木
+      Fri: 金
+      Sat: 土
+      name: 件名
+      status: ステータス
+      approvel_user_name: 最後承認者
+      updated_at: 最後承認日
+      created_at: 申請日
+      reimbursement_amount: 精算金額
+      replacement: 本人立替
+      employee_name: 社員名
+      comment: ■ コメント
+      expense: ■ 経費精算
+      receipt: 領収書貼付欄
     total: 合計
     bill:
       title: 請求書
@@ -582,5 +713,28 @@ ja:
         message:  "%{user}さんの承認申請「%{name}」が差し戻しされました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
+    expense_approval:
+      mail:
+        message2: "以下のリンクをクリックして,内容を確認ください."
+        message3: "【 件 名 】%{name}"
+        message4: "【 作成者 】%{user}"
+        message5: "【精算期間】%{min} ~ %{max}"
+        message6: "【精算件数】%{expenses_number}件"
+        message7: "【精算金額】%{total_amount}円"
+        message8: "【 備 考 】\n%{notes}"
+        message9: "【申請日時】%{date}"        
+        company:  "nebill by 株式会社Cuon"
+      assignment:
+        subject:  "【経費申請】%{user}さんより,承認申請「%{name}」が申請されました."
+        message:  "%{user}さんより,承認申請「%{name}」が申請されました."
+      update:
+        subject:  "【経費申請】承認申請「%{name}」が更新されました."
+        message:  "承認申請「%{name}」が更新されました."
+      permission:  
+        subject:  "【経費申請】%{user}さんの承認申請「%{name}」が承認済みになりました."
+        message:  "%{user}さんの承認申請「%{name}」が承認済みになりました."
+      disconfirm:
+        subject:  "【経費申請】%{user}さんの承認申請「%{name}」が差し戻しされました."
+        message:  "%{user}さんの承認申請「%{name}」が差し戻しされました."
   chatwork:
     annotate_to: "[To:%{id}] %{name}さん"

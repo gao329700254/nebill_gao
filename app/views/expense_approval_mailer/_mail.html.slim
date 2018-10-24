@@ -1,0 +1,28 @@
+p
+  = I18n.t("mail.expense_approval.mail.message2")
+p
+  = link_to expense_approval_show_url(expense_approval_id: @expense_approval.id).to_s, expense_approval_show_url(expense_approval_id: @expense_approval.id)
+p
+p
+  = I18n.t("mail.expense_approval.mail.message3", name: @expense_approval.name)
+p
+  = I18n.t("mail.expense_approval.mail.message4", user: @expense_approval.created_user.name)
+p
+p
+  = I18n.t("mail.expense_approval.mail.message5", min: @expense_approval.expense.min_by(&:use_date).use_date,
+  max: @expense_approval.expense.max_by(&:use_date).use_date)
+p
+  = I18n.t("mail.expense_approval.mail.message6", expenses_number: @expense_approval.expenses_number)
+p
+  = I18n.t("mail.expense_approval.mail.message7", total_amount: @expense_approval.total_amount)
+p
+p
+  = I18n.t("mail.expense_approval.mail.message8", notes: @expense_approval.notes)
+p
+p
+  = I18n.t("mail.expense_approval.mail.message9", date: @expense_approval.created_at)
+hr
+|---
+p
+  = I18n.t("mail.expense_approval.mail.company")
+hr
