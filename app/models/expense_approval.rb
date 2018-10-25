@@ -26,7 +26,7 @@ class ExpenseApproval < ActiveRecord::Base
 
   belongs_to :created_user, class_name: "User"
 
-  enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, invalid: 40 }, default: :pending
+  enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, invalid: 40, unapplied: 50 }, default: :pending
 
   scope :where_created_at, -> (created_at) { where(created_at: Date.strptime(created_at).beginning_of_day..Date.strptime(created_at).end_of_day) }
   scope :appr_id, -> { maximum(:id) || 0 }

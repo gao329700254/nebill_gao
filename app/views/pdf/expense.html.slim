@@ -1,4 +1,5 @@
 #expense_pdf.expense_pdf
+  input.no_print type="button" value="このページを印刷する" onclick="window.print();"
   .expense_pdf__header
     - @today = Time.zone.today.strftime("%Y/%m/%d")
     .expense_pdf__header--today = @today
