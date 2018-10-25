@@ -38,5 +38,6 @@ module Nebill
     config.annotations.register_extensions('scss')   { |annotation| %r{//\s*(#{annotation}):?\s*(.*?)$} }
     config.annotations.register_extensions('slim')   { |annotation|  %r{/\s*(#{annotation}):?\s*(.*?)$} }
     config.annotations.register_extensions('coffee') { |annotation|    /#\s*(#{annotation}):?\s*(.*?)$/ }
+    config.assets.precompile += %w( pdf/expense.css )
   end
 end
