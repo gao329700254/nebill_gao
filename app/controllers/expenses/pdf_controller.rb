@@ -2,9 +2,7 @@ class Expenses::PdfController < ApplicationController
   before_action :set_expense, only: [:download]
 
   def download
-    render pdf:      pdf_file_name,
-           template: "pdf/expense.html.slim",
-           encoding: 'UTF-8'
+    render  "pdf/expense.html.slim", layout: false
   end
 
 private

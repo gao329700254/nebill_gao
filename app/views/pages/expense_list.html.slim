@@ -22,7 +22,7 @@ input#header__reapproval_confirm_message type='hidden' value=I18n.t('action.reap
           ]
             = "{{expense_approval}}"
       .expense_list__function__date__btn
-        = link_to expense_download_path + "?id={{selectedApproval}}", type: 'button', class: 'expense_list__function__date__btn--print' do
+        = link_to expense_download_path + "?id={{selectedApproval}}", target: '_brank', type: 'button', class: 'expense_list__function__date__btn--print' do
           = fa_icon 'print', text: t('activerecord.attributes.expense.print')
       .expense_list__function__date__text  v-if='total'
         = ExpenseApproval.human_attribute_name(:status)
