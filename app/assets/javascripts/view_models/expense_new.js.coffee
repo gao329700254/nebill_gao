@@ -11,7 +11,11 @@ $ ->
         is_quntity: ''
         standard_amount: ''
         is_receipt: ''
+      selected: ''
     methods:
+      selectedName: ->
+        if @selected
+          @defaule_expense_items.is_routing = true
       onFileChange: (e) ->
         files = e.target.files
         @createImage files[0]
@@ -36,3 +40,5 @@ $ ->
             @image = ''
           .fail (response) =>
             @defaule_expense_items = ''
+    compiled: ->
+      @selectedName()

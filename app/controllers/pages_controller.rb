@@ -127,6 +127,7 @@ private
 
   def create_expense
     @expense = Expense.new
+    @expense.use_date = Time.zone.today
     @default_expense_items = DefaultExpenseItem.all
     @file = @expense.file.new
   end

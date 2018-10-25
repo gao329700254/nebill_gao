@@ -22,7 +22,8 @@ class Api::ApprovalsController < Api::ApiController
       end
     else
       flash[:error] = I18n.t("errors.messages.default_allower_is_empty")
-      redirect_to approval_new_path
+      @approval = Approval.new(approval_param)
+      render template: "pages/approval_new"
     end
 
   rescue ActiveRecord::RecordInvalid
