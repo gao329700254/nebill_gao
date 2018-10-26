@@ -19,7 +19,7 @@
               = fields_for @default_expense_items do |u|
                 = u.collection_select(:name, @default_expense_items, :id, :display_name,
                                       { include_blank: true, selected: @expense.default_id },
-                                      prompt: "", 'v-model': 'selected', 'v-on:change' => 'onItemChange',
+                                      prompt: "", 'v-model': 'selected', 'v-on:change' => 'onItemChange($event.target.value)',
                                       class: 'expense_edit__form__item--default')
         .expense_new__form__container v-if="defaule_expense_items.is_routing"
           .expense_new__form__container__group

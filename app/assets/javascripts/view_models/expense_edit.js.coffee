@@ -25,12 +25,11 @@ $ ->
         reader.readAsDataURL file
       onItemChange: (e) ->
         try
-          search = e.target.value
           $.ajax
             url: '/api/expenses/input_item.json'
             type: 'POST'
             data: {
-              defaule_expense_items: search
+              defaule_expense_items: e
             }
           .done (response) =>
             @defaule_expense_items = response

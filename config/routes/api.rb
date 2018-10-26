@@ -43,7 +43,11 @@ Rails.application.routes.draw do
     scope path: 'files/:files_id' do
       get 'approval_file_download', to: 'files#approval_file_download'
     end
-    resources :expenses, only: [:show, :create, :update, :destroy, :index]
+    resources :expenses, only: [:show, :create, :update, :destroy, :index], shallow: true do
+      collection do
+        get 'set_default_items', to: "expenses#set_default_items"
+      end
+    end
     scope path: 'expenses' do
       post "input_item", to: "expenses#input_item"
       post "load_item", to: "expenses#load_item"
@@ -52,6 +56,7 @@ Rails.application.routes.draw do
       post "invalid_approval", to: "expenses#invalid_approval"
       post "create_expense_approval", to: "expenses#create_expense_approval"
       post "search_for_csv", to: "expenses#search_for_csv"
+      post "expense_history", to: "expenses#expense_history"
     end
     scope path: 'files/:files_id' do
       get 'expense_file_download', to: 'files#expense_file_download'
