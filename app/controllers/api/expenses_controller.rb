@@ -17,6 +17,7 @@ class Api::ExpensesController < Api::ApiController
 
   def create
     @expense = Expense.new(expense_param)
+    # set_session
     @expense.transaction do
       @expense.default_id = params[:default_expense_item][:name]
       @expense.created_user_id = @current_user.id
@@ -25,12 +26,15 @@ class Api::ExpensesController < Api::ApiController
       file_param.present? && file_create
     end
     action_model_flash_success_message(@expense, :create)
-    redirect_to expense_list_path
+    redirection_path
 
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "#{I18n.t('action.create.fail', model: I18n.t("activerecord.models.#{@expense.class.name.underscore}"))}"\
                               " \n #{@expense.errors.full_messages.join('<br>')}"
-    redirect_to expense_new_path
+    # redirect_to expense_new_path
+    set_redirection_data
+
+    render template: "pages/expense_new"
   end
 
   def update
@@ -193,6 +197,22 @@ private
       new_file=@expense.file.build(file: new_file, original_filename: new_file.original_filename)
       new_file.save!
     end
+  end
+
+  def redirection_path
+    if params[:button] == 'repeat'
+      @expense.use_date = Time.zone.today
+      redirect_to expense_new_path
+    else
+      redirect_to expense_list_path
+    end
+  end
+
+  def set_redirection_data
+    @expense = Expense.new(expense_param)
+    @expense.default_id = params[:default_expense_item][:name]
+    @default_expense_items = DefaultExpenseItem.all
+    @file = @expense.file.new
   end
 end
 # rubocop:enable Metrics/ClassLength

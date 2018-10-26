@@ -18,7 +18,9 @@
               = f.label :use_date, Expense.human_attribute_name(:default_id)
               = fields_for @default_expense_items do |u|
                 = u.collection_select(:name, @default_expense_items, :id, :display_name,
-                                      { include_blank: true }, prompt: "", 'v-on:change' => 'onItemChange', class: 'expense_edit__form__item--default')
+                                      { include_blank: true, selected: @expense.default_id },
+                                      prompt: "", 'v-model': 'selected', 'v-on:change' => 'onItemChange',
+                                      class: 'expense_edit__form__item--default')
         .expense_new__form__container v-if="defaule_expense_items.is_routing"
           .expense_new__form__container__group
             .expense_new__form__item
@@ -41,7 +43,7 @@
           .expense_new__form__container__group
             .expense_new__form__item
               = f.label :payment_type, Expense.human_attribute_name(:payment_type)
-              = f.select :payment_type, options_for_select(Expense.payment_type.options)
+              = f.select :payment_type, Expense.payment_type.options
         .expense_new__form__item
           = f.label :notes, Expense.human_attribute_name(:notes)
           = f.text_area :notes, class: 'expense_new__form__item__area'
@@ -50,6 +52,8 @@
           = fa_icon 'remove', text: t('helpers.cancel')
         = button_tag 'submit', class: 'expense_new__form__btn--submit' , value: "submit", data: { disable_with: t('page.expense_new.wait') } do
           = fa_icon 'check', text: t('helpers.submit.create')
+        = button_tag 'submit', class: 'expense_new__form__btn--repeat', value: "repeat", data: { display_with: t('page.expense_new.wait') } do
+          = fa_icon 'check', text: t('helpers.submit.repeat')
       .expense_new__form__container__group v-if='defaule_expense_items.is_receipt'
         .expense_new__form__item
           = f.fields_for :file do |q|
