@@ -164,6 +164,7 @@ private
     @current_user_approval.update!(status: 30, comment: approval_user_param[:comment])
     @approval.update!(status: 30)
     ApprovalMailer.disconfirm_approval(user: @approval.created_user, approval: @approval).deliver_now
+    Chatwork::Approval.new(approval: @approval, to_user: @approval.created_user).notify_disconfirm
     action_model_flash_success_message(@approval, :disconfirm)
     redirect_to approval_list_path
   end
@@ -205,6 +206,7 @@ private
     if @approval.update!(status: 10)
       @approval.users.each do |user|
         ApprovalMailer.update_approval(user: user, approval: @approval).deliver_now
+        Chatwork::Approval.new(approval: @approval, to_user: @approval.created_user).notify_edit
       end
       action_model_flash_success_message(@approval, :update)
     end
