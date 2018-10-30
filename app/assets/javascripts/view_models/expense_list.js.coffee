@@ -87,7 +87,7 @@ $ ->
       Reapproval: ->
         if(confirm($('#header__reapproval_confirm_message').val()))
           $.ajax
-            url: '/api/expenses/approval_reapproval.json'
+            url: '/api/expenses/reapproval.json'
             type: 'POST'
             data:
               selectedApproval: @selectedApproval || 0
