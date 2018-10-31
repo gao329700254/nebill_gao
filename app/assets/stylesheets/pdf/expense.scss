@@ -3,6 +3,8 @@
   $bluesky: #e3ecf0;
   $black:   #000000;
   $gray:    #c0c0c0;
+  $white:   #ffffff;
+  $light-blue-color: #5970f3;
   /****************************************************************************/
   padding: 3rem;
   line-height: 1.2rem;
@@ -128,6 +130,28 @@
           &--comment {
             border: solid .5px $black;
             padding: 0 0 0 4px;
+          }
+
+          &--content::after {
+            clear: both;
+          }
+
+          &--location {
+            float: left;
+            width: 7rem;
+          }
+
+          &--is_receipt {
+            display: block;
+            float: right;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: $light-blue-color;
+            padding: 6px;
+            text-align: center;
+            text-decoration: none;
+            line-height: 12px;
+            color: $white;
           }
         }
       }

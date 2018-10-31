@@ -102,9 +102,15 @@ $ ->
               selectedApproval: @selectedApproval || 0
           .done (response) =>
             location.reload(true)
+      LoadExpenseList: ->
+        $.ajax '/api/expenses.json'
+        .done (response) =>
+          @expense_approval.approval_list = response.expense_approval.approval_list
     compiled: ->
-      $.ajax '/api/expenses.json'
-      .done (response) =>
-        @expense_approval.approval_list = response.expense_approval.approval_list
+      @LoadExpenseList()
       @loadChoiceExpenseApproval()
       gon.selectedApproval = false
+    events:
+      loadExpenseList: ->
+        @LoadExpenseList()
+        @loadChoiceExpenseApproval()

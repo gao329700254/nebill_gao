@@ -200,9 +200,12 @@ private
   end
 
   def redirection_path
+    #  Hack リファクタする
     if params[:button] == 'repeat'
-      @expense.use_date = Time.zone.today
-      redirect_to expense_new_path
+      @expense = Expense.new(use_date: params[:expense][:use_date])
+      @default_expense_items = DefaultExpenseItem.all
+      @file = @expense.file.new
+      render template: "pages/expense_new"
     else
       redirect_to expense_list_path
     end
