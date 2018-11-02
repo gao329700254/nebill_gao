@@ -34,4 +34,5 @@ class ApprovalUser < ActiveRecord::Base
 
   scope :id_in, -> (ids) { where(user_id: ids) if ids.present? }
   scope :with_permission, -> { where(status: 20) }
+  scope :with_disconfirm, -> { where(status: 30) }
 end
