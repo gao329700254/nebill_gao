@@ -130,6 +130,14 @@ private
     @expense.use_date = Time.zone.today
     @default_expense_items = DefaultExpenseItem.all
     @file = @expense.file.new
+    if params[:expense_id]
+      @exp = Expense.find(params[:expense_id])
+      @expense.use_date = @exp.use_date
+      @expense.amount = @exp.amount
+      @expense.depatture_location = @exp.depatture_location
+      @expense.arrival_location = @exp.arrival_location
+      @expense.default_id = @exp.default_id
+    end
   end
 
   def create_expense_approval

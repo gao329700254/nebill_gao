@@ -128,6 +128,33 @@ class Api::ExpensesController < Api::ApiController
     render 'search_for_csv', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
+  def expense_history
+    @st = params[:station]
+    @no = params[:note]
+    @id = params[:default_id]
+
+    @expenses = if @st.present? && @no.present?
+                  Expense.where(created_user_id: @current_user.id)
+                         .where('depatture_location = ? OR arrival_location = ?', @st, @st)
+                         .where('notes LIKE ?', "%#{@no}%").includes(:default, :file)
+                elsif @st.present?
+                  Expense.where(created_user_id: @current_user.id)
+                         .where('depatture_location = ? OR arrival_location = ?', @st, @st).includes(:default, :file)
+                elsif @no.present?
+                  Expense.where(created_user_id: @current_user.id)
+                         .where('notes LIKE ?', "%#{@no}%").includes(:default, :file)
+                else
+                  Expense.where(created_user_id: @current_user.id).includes(:default, :file)
+                end
+
+    render 'load', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
+  def set_default_items
+    @default_expense_items = DefaultExpenseItem.select(:name, :display_name).all
+    render json: @default_expense_items, status: :ok
+  end
+
 private
 
   def expense_param

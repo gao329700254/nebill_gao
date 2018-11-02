@@ -1,0 +1,28 @@
+script type='text/x-template' id='expense_history'
+  .expense_history
+    .expense_history__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .expense_history__outer__inner v-on:click.stop=""
+        .expense_history__outer__inner__body
+          .expense_history__search
+            .expense_history__search__item
+              .expense_history__search__item__field
+                = label_tag :id, Expense.human_attribute_name(:default_id)
+                select [
+                       name='default_id'
+                       id='default_id'
+                       v-model='id'
+                      ]
+                  option v-for="defaultId in defaultIds" value="{{defaultId.name}}" {{defaultId.display_name}}
+              .expense_history__search__item__field
+                = label_tag :station, t('page.expense_list.station')
+                = text_field_tag :station, nil, 'v-model' => "station"
+              .expense_history__search__item__field
+                = label_tag :note, Expense.human_attribute_name(:notes)
+                = text_field_tag :note, nil, 'v-model' => "note"
+              .expense_history__search__item__btn
+                = button_tag 'v-on:click' => 'searchHistory', class: 'expense_history__search__item__btn--search' do
+                  = fa_icon 'search', text: t('page.expense_list.search')
+          == render 'components/expense_history__form'

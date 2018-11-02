@@ -101,6 +101,7 @@
 #                                     PUT    /api/approvals/:id(.:format)                            api/approvals#update
 #                                     DELETE /api/approvals/:id(.:format)                            api/approvals#destroy
 #          api_approval_file_download GET    /api/files/:files_id/approval_file_download(.:format)   api/files#approval_file_download
+#      set_default_items_api_expenses GET    /api/expenses/set_default_items(.:format)               api/expenses#set_default_items
 #                        api_expenses GET    /api/expenses(.:format)                                 api/expenses#index
 #                                     POST   /api/expenses(.:format)                                 api/expenses#create
 #                         api_expense GET    /api/expenses/:id(.:format)                             api/expenses#show
@@ -114,6 +115,7 @@
 #                api_invalid_approval POST   /api/expenses/invalid_approval(.:format)                api/expenses#invalid_approval
 #         api_create_expense_approval POST   /api/expenses/create_expense_approval(.:format)         api/expenses#create_expense_approval
 #                  api_search_for_csv POST   /api/expenses/search_for_csv(.:format)                  api/expenses#search_for_csv
+#                 api_expense_history POST   /api/expenses/expense_history(.:format)                 api/expenses#expense_history
 #           api_expense_file_download GET    /api/files/:files_id/expense_file_download(.:format)    api/files#expense_file_download
 # api_expense_approvals_search_result POST   /api/expense_approvals/search_result(.:format)          api/expense_approvals#search_result
 #               api_expense_approvals GET    /api/expense_approvals(.:format)                        api/expense_approvals#index

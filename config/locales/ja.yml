@@ -575,6 +575,10 @@ ja:
       reapproval: 再申請
       invalid_approval: 申請を取り消す
       add_expense: 経費追加
+      show_history: 履歴から読み込み
+      station: 駅名
+      search: 検索
+      read: 読み込み
     expense_edit:
       title: 経費編集
       uploaded_file: 保存済ファイル

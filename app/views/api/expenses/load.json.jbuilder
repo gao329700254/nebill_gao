@@ -41,4 +41,5 @@ json.ability do
   json.add_expense                    eappr_is_present && ex_create      # 経費追加
   json.destroy                        !eappr_is_present || renewal       # 経費削除
   json.invalid_approval               eappr_is_present && renewal        # 申請取り消し
+  json.show_history                   !eappr_is_present                  # 経費履歴
 end

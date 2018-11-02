@@ -35,6 +35,7 @@ $ ->
         else
           window.location = "/expense/new?selectedApproval=#{@selectedApproval}"
       showExpenseApprovalNew: -> @$broadcast('showExpenseApprovalNewEvent')
+      showExpenseHistory: -> @$broadcast('showExpenseHistoryEvent')
       checkAll: ->
         @isCheckAll = !@isCheckAll
         @ids = []
