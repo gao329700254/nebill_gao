@@ -12,6 +12,7 @@ $ ->
         standard_amount: ''
         is_receipt: ''
       selected: ''
+      fix_amount: ''
     methods:
       selectedName: ->
         if @selected
@@ -36,6 +37,9 @@ $ ->
             }
           .done (response) =>
             @defaule_expense_items = response
+            if @fix_amount
+              @defaule_expense_items.standard_amount = @fix_amount
+              @fix_amount = 0
             @image = ''
           .fail (response) =>
             @defaule_expense_items = ''

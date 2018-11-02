@@ -48,6 +48,7 @@
           = f.label :notes, Expense.human_attribute_name(:notes)
           = f.text_area :notes, class: 'expense_new__form__item__area'
         = f.hidden_field :expense_approval_id, value: params[:selectedApproval]
+        = hidden_field_tag :fix_amount, @expense.amount, 'v-model' => 'fix_amount'
         = button_tag type: 'button', onclick: "history.back()", class: 'expense_new__form__btn--cancel' do
           = fa_icon 'remove', text: t('helpers.cancel')
         = button_tag 'submit', class: 'expense_new__form__btn--submit' , value: "submit", data: { disable_with: t('page.expense_new.wait') } do
