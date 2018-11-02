@@ -1,0 +1,12 @@
+[To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
+[info]
+  [title]
+    <%= expense_approval.created_user.name %>さんから「<%= expense_approval.name %>」が経費申請されました.
+  [/title]
+  [info]
+    <%= expense_approval.notes %>
+
+    以下のリンクをクリックして,内容を確認ください.
+    <%=  Rails.application.routes.url_helpers.approval_show_url(expense_approval, ActionMailer::Base.default_url_options) %>
+  [/info]
+[/info]

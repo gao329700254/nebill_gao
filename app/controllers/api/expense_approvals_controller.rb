@@ -56,6 +56,7 @@ class Api::ExpenseApprovalsController < Api::ApiController
     if @expense_approval.update!(status: 10)
       @expense_approval.users.each do |user|
         ExpenseApprovalMailer.update_expense_approval(user: user, expense_approval: @expense_approval).deliver_now
+        Chatwork::ExpenseApproval.new(approval: @expense_approval, to_user: @expense_approval.created_user).notify_edit
       end
       action_model_flash_success_message(@expense_approval, :update)
     end
@@ -105,6 +106,7 @@ private
     if @expense_approval_users.any? { |expense_approval_user| expense_approval_user.status == 20 }
       @expense_approval.update!(status: 20)
       ExpenseApprovalMailer.permission_expense_approval(user: @expense_approval.created_user, expense_approval: @expense_approval).deliver_now
+      Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval.created_user).notify_permited
     elsif @expense_approval_users.none? { |expense_approval_user| expense_approval_user.status == 30 }
       @expense_approval.update!(status: 10)
     end
@@ -117,6 +119,7 @@ private
     @current_user_approval.update!(status: 30, comment: params[:expense_approval_user][:comment])
     @expense_approval.update!(status: 30)
     ExpenseApprovalMailer.disconfirm_expense_approval(user: @expense_approval.created_user, expense_approval: @expense_approval).deliver_now
+    Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval.created_user).notify_disconfirm
     action_model_flash_success_message(@expense_approval, :disconfirm)
     redirect_to expense_approval_show_path(params[:id])
   end

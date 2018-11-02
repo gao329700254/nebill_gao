@@ -23,4 +23,7 @@ class ExpenseApprovalUser < ActiveRecord::Base
   belongs_to :expense_approval
 
   enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, reassignment: 40 }, default: :pending
+
+  scope :with_permission, -> { where(status: 20) }
+  scope :with_disconfirm, -> { where(status: 30) }
 end

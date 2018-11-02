@@ -85,14 +85,15 @@ $ ->
         finally
           destroy.prop('disabled', false)
       Reapproval: ->
+        console.log(@selectedApproval)
         if(confirm($('#header__reapproval_confirm_message').val()))
           $.ajax
             url: '/api/expenses/reapproval.json'
             type: 'POST'
             data:
-              selectedApproval: @selectedApproval || 0
+              selectedApproval: @selectedApproval
           .done (response) =>
-            location.reload(true)
+            @loadChoiceExpenseApproval()
       InvalidApproval: ->
         if(confirm($('#header__invalid_confirm_message').val()))
           $.ajax

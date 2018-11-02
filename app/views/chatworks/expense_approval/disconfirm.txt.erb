@@ -1,0 +1,14 @@
+[To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
+[info]
+  [title]
+    申請「<%= expense_approval.name %>」が差し戻しされました。
+  [/title]
+  [info]
+    <% expense_approval.expense_approval_user.with_disconfirm.each do |approval_user| %>
+      <%= approval_user.user.name %> ： <%= approval_user.comment %>
+    <% end %>
+
+    以下のリンクをクリックして,内容を確認ください.
+    <%=  Rails.application.routes.url_helpers.approval_show_url(expense_approval, ActionMailer::Base.default_url_options) %>
+  [/info]
+[/info]

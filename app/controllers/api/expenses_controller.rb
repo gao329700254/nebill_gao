@@ -95,6 +95,7 @@ class Api::ExpensesController < Api::ApiController
       @expense_approval.update!(status: 10)
       @expense_approval.users.each do |user|
         ExpenseApprovalMailer.update_expense_approval(user: user, expense_approval: @expense_approval).deliver_now
+        Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval.created_user).notify_edit
       end
     end
     render_action_model_flash_success_message(@expense_approval, :update)
@@ -106,9 +107,6 @@ class Api::ExpensesController < Api::ApiController
     @expense_approval = ExpenseApproval.find(params[:selectedApproval])
     @expense_approval.transaction do
       @expense_approval.update!(status: 40)
-      @expense_approval.users.each do |user|
-        ExpenseApprovalMailer.update_expense_approval(user: user, expense_approval: @expense_approval).deliver_now
-      end
     end
     render_action_model_flash_success_message(@expense_approval, :invalid)
   rescue
@@ -159,6 +157,7 @@ private
     )
     @expense_approval_user.save!
     ExpenseApprovalMailer.assignment_user(user: @expense_approval_user.user, expense_approval: @expense_approval).deliver_now
+    Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval_user.user).notify_assigned
   end
 
   def file_param
