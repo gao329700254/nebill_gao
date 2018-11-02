@@ -30,14 +30,18 @@
         th.expense_pdf__tbl__head__row__item--amount    = t('pdf.expense.amount')
         th.expense_pdf__tbl__head__row__item--notes     = t('pdf.expense.notes')
     tbody.expense_pdf__tbl__body
-      - @expense_approval.expense. each do |expense|
+      - @expense_approval.expense.order("use_date").each do |expense|
         tr.expense_pdf__tbl__body__row
           td.expense_pdf__tbl__body__row__item--use_date  = expense.use_date
           td.expense_pdf__tbl__body__row__item--day       = t("pdf.expense.#{expense.use_date.strftime('%a')}")
           td.expense_pdf__tbl__body__row__item--default   = expense.default.name
           td.expense_pdf__tbl__body__row__item--content
             - if expense.arrival_location.present?
-              = expense.depatture_location + ' ~ ' + expense.arrival_location
+              .expense_pdf__tbl__body__row__item--location
+                = expense.depatture_location + ' ~ ' + expense.arrival_location
+            - if expense.default.is_receipt
+              .expense_pdf__tbl__body__row__item--is_receipt
+                = t('page.expense_list.receipt')
           td.expense_pdf__tbl__body__row__item--amount    = "¥#{expense.amount}"
           td.expense_pdf__tbl__body__row__item--notes     = expense.notes
   .expense_pdf__body
