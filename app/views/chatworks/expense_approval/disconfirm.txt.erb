@@ -1,7 +1,7 @@
 [To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
 [info]
   [title]
-    申請「<%= expense_approval.name %>」が差し戻しされました。
+    経費申請「<%= expense_approval.name %>」が差し戻しされました。
   [/title]
   [info]
     <% expense_approval.expense_approval_user.with_disconfirm.each do |approval_user| %>
