@@ -6,8 +6,8 @@ json.list do
     json.extract! expense, :id
     json.use_date                 expense.use_date
     json.default_id               expense.default.name
-    if expense.default.is_routing || expense.default.is_routing
-      json.content               "#{expense.depatture_location} ~ #{expense.arrival_location}"
+    if expense.default.is_routing
+      json.content                expense.depatture_location + (expense.is_round_trip ? ' ↔︎ ' : ' → ') + expense.arrival_location
     end
     json.file                     expense.file.first
     json.is_receipt               expense.default.is_receipt

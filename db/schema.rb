@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181018043025) do
+ActiveRecord::Schema.define(version: 20181102062451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,10 +149,11 @@ ActiveRecord::Schema.define(version: 20181018043025) do
     t.integer  "quantity"
     t.string   "notes"
     t.integer  "payment_type"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "created_user_id"
     t.integer  "expense_approval_id"
+    t.boolean  "is_round_trip",       default: false
   end
 
   create_table "members", force: :cascade do |t|

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181018043025
+# Schema version: 20181102062451
 #
 # Table name: expenses
 #
@@ -16,6 +16,7 @@
 #  updated_at          :datetime         not null
 #  created_user_id     :integer
 #  expense_approval_id :integer
+#  is_round_trip       :boolean          default(FALSE)
 #
 # Foreign Keys
 #
@@ -47,6 +48,7 @@ class Expense < ActiveRecord::Base
   scope :gteq_start_on, -> (start_on) { where(Expense.arel_table[:use_date].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Expense.arel_table[:use_date].lteq(end_on)) }
 
+  # rubocop:disable Metrics/AbcSize
   def self.to_csv(headers)
     CSV.generate(headers: headers, write_headers: true, force_quotes: true) do |csv|
       all.find_each do |exp|
@@ -59,6 +61,11 @@ class Expense < ActiveRecord::Base
                 exp.default.name,
                 exp.amount,
                 exp.depatture_location,
+                if exp.default.is_routing
+                  exp.is_round_trip ? ' ↔︎ ' : ' → '
+                else
+                  ' '
+                end,
                 exp.arrival_location,
                 receipt(exp),
                 exp.notes,
@@ -66,6 +73,7 @@ class Expense < ActiveRecord::Base
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def self.receipt(exp)
     if exp.default.is_receipt

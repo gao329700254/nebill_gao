@@ -1,4 +1,6 @@
-#{$all-button-inputs},
+$all-button-inputs: all_button_inputs;
+
+.#{$all-button-inputs},
 button,
 a[type=button] {
   @include appearance(none);

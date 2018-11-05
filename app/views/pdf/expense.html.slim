@@ -38,7 +38,7 @@
           td.expense_pdf__tbl__body__row__item--content
             - if expense.arrival_location.present?
               .expense_pdf__tbl__body__row__item--location
-                = expense.depatture_location + ' ~ ' + expense.arrival_location
+                = expense.depatture_location + (expense.is_round_trip ? ' ↔︎ ' : ' → ') + expense.arrival_location
             - if expense.default.is_receipt
               .expense_pdf__tbl__body__row__item--is_receipt
                 = t('page.expense_list.receipt')
