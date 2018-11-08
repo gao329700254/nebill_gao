@@ -1,0 +1,12 @@
+.fb_date_output {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  background-color: $white-bg-color;
+  padding: $base-spacing;
+  color: $white-ft-color;
+
+  &__button {
+    @include btn--primary;
+  }
+}

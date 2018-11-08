@@ -15,4 +15,8 @@ class Admin::PagesController < ApplicationController
   def redirect_user
     can?(:manage, User) || redirect_to(root_path)
   end
+
+  def fb_date_output
+    can?(:manage, PayeeAccount) || redirect_to(root_path)
+  end
 end

@@ -11,7 +11,7 @@ class Ability
     when 'general', 'superior'
       defaultcan user
     when 'admin', 'backoffice'
-      admincan
+      admincan user
     end
   end
 
@@ -46,11 +46,12 @@ private
     can :expense_file_download, File
   end
 
-  def admincan
+  def admincan(user)
     can :manage, :all
     can :allread, Approval
     can :allread, ExpenseApproval
     cannot :reapproval, ExpenseApproval, status: [10, 20, 40] # 差し戻しの場合、再申請できる
+    user.id != 3 && cannot(:manage, PayeeAccount) # 全銀データ出力をいじりたいときはこの行をコメントにする
   end
 
   def approval_ability

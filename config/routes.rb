@@ -33,6 +33,8 @@
 #                      project_groups GET    /project_groups(.:format)                               pages#project_groups
 #                            partners GET    /partners(.:format)                                     pages#partners
 #                         admin_users GET    /admin/users(.:format)                                  admin/pages#users
+#                admin_fb_date_output GET    /admin/fb_date_output(.:format)                         admin/pages#fb_date_output
+#               admin_fb_download_csv POST   /admin/fb_download_csv(.:format)                        admin/fb#fb_download_csv
 #                     admin_user_show GET    /admin/users/:user_id/show(.:format)                    admin/pages#user_show
 #                   letter_opener_web        /letter_opener                                          LetterOpenerWeb::Engine
 #                         api_clients GET    /api/clients(.:format)                                  api/clients#index
@@ -200,6 +202,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get 'users', to: 'pages#users'
+    get 'fb_date_output', to: 'pages#fb_date_output'
+    post 'fb_download_csv', to: 'fb#fb_download_csv', as: 'fb_download_csv'
     scope path: 'users/:user_id' do
       get 'show', to: 'pages#user_show', as: 'user_show'
     end
