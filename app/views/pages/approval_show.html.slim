@@ -95,7 +95,7 @@
               = t('page.approval_show.action')
               .approval_show__detail__update__action
                 = fields_for @current_user_approval do |a|
-                  = a.text_field :comment, placeholder: t('page.approval_show.comment_placeholder'),
+                  = a.text_area :comment, placeholder: t('page.approval_show.comment_placeholder'),
                                            class: 'approval_show__detail__update__action__text', value: ""
                 = button_tag 'permission', class: 'approval_show__detail__update__action__btn--permission', value: "permission" do
                   = fa_icon 'check', text: t('page.approval_show.permission')

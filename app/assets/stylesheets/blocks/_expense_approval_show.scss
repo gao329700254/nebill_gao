@@ -59,11 +59,17 @@
       &__item {
 
         &--approval_user_name {
-          @include span-columns(3);
+          @include span-columns(1.5);
         }
 
         &--approval_user_status {
+          @include span-columns(1.5);
+        }
+
+        &--approval_user_comment {
           @include span-columns(3);
+          white-space: pre;
+          word-break: break-word;
         }
       }
     }
@@ -94,6 +100,7 @@
 
         &__text {
           flex: 1;
+          height: 5rem;
         }
 
         &__btn {
@@ -103,6 +110,7 @@
             border: solid 2px $active-action-color;
             background-color: $active-action-color;
             color: $white;
+            height: 2.5rem;
 
             &:hover,
             &:focus {
@@ -116,6 +124,7 @@
             border: solid 2px $black;
             background-color: $disconfirm_back;
             color: $black;
+            height: 2.5rem;
 
             &:hover,
             &:focus {
