@@ -20,15 +20,20 @@
                 = u.collection_select(:name, @default_expense_items, :id, :display_name,
                                       { include_blank: true, selected: @default.id },
                                       prompt: "", 'v-on:change' => 'onItemChange($event.target.value)', class: 'expense_edit__form__item--default')
-        .expense_edit__form__container v-if="defaule_expense_items.is_routing"
-          .expense_edit__form__container__group
-            .expense_edit__form__item
+        .expense_new__form__container v-if="defaule_expense_items.is_routing"
+          .expense_new__form__container__group3
+            .expense_new__form__item
               = f.label :depatture_location, Expense.human_attribute_name(:depatture_location)
-              = f.text_field :depatture_location, class: 'expense_edit__form__item__area'
-          .expense_edit__form__container__group
-            .expense_edit__form__item
+              = f.text_field :depatture_location, class: 'expense_new__form__item__area'
+          .expense_new__form__container__group2
+            .expense_new__form__item
+              br
+              = f.check_box :is_round_trip, class: 'expense_new__form__item__check_box', 'v-model' => "checked", 'v-on:change' => 'onArrowChange(checked)'
+              = f.label :is_round_trip, "{{arrow}}", class: 'all_button_inputs expense_new__form__btn--arrow'
+          .expense_new__form__container__group3
+            .expense_new__form__item
               = f.label :arrival_location, Expense.human_attribute_name(:arrival_location)
-              = f.text_field :arrival_location, class: 'expense_edit__form__item__area'
+              = f.text_field :arrival_location, class: 'expense_new__form__item__area'
         .expense_edit__form__container
           .expense_edit__form__container__group
             .expense_edit__form__item

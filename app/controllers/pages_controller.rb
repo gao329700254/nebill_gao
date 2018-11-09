@@ -123,6 +123,7 @@ private
     @file = @expense.file.new if @expense.file.blank?
     gon.expense_id = params[:expense_id]
     gon.amount = @expense.amount
+    gon.is_round_trip = @expense.is_round_trip
   end
 
   def create_expense
