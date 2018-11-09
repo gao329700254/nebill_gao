@@ -167,6 +167,7 @@ private
       :notes,
       :payment_type,
       :expense_approval_id,
+      :is_round_trip,
     )
   end
 

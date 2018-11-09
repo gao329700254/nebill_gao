@@ -25,6 +25,7 @@ class Expenses::CsvController < ApplicationController
       t('page.expense_csv.category_name'),
       t('activerecord.attributes.expense.amount'),
       t('activerecord.attributes.expense.depatture_location'),
+      '',
       t('activerecord.attributes.expense.arrival_location'),
       t('page.expense_csv.receipt'),
       t('activerecord.attributes.expense_approval.notes'),

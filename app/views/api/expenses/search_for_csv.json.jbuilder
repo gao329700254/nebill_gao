@@ -10,6 +10,12 @@ json.array!(@expenses) do |expense|
   json.created_user_name        expense.expense_approval.created_user.name
   json.default_allower          expense.expense_approval.expense_approval_user.last.user.name
   json.depatture_location       expense.depatture_location
+  round_trip  = if expense.default.is_routing
+                  expense.is_round_trip ? ' ↔︎ ' : ' → '
+                else
+                  ' '
+                end
+  json.round_trip               round_trip
   json.arrival_location         expense.arrival_location
   json.payment_type             expense.payment_type_text
   if expense.default.is_receipt

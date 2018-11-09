@@ -15,6 +15,14 @@
       &__group {
         @include span-columns(6);
       }
+
+      &__group2 {
+        @include span-columns(1.5);
+      }
+
+      &__group3 {
+        @include span-columns(5.25);
+      }
     }
 
     &__item {
@@ -29,6 +37,10 @@
         border-bottom: $base-border;
         padding-top: $base-spacing;
         padding-bottom: $base-spacing;
+      }
+
+      &__check_box {
+        display: none;
       }
     }
 
@@ -51,6 +63,14 @@
       &--submit {
         @include btn--primary;
         width: 130px;
+      }
+
+      &--arrow {
+        @include btn--primary;
+
+        display: block;
+        margin: auto;
+        text-align: center;
       }
     }
 

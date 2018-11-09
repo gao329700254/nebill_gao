@@ -13,6 +13,8 @@ $ ->
         is_receipt: ''
       selected: ''
       fix_amount: ''
+      arrow: '→'
+      checked: false
     methods:
       selectedName: ->
         if @selected
@@ -43,5 +45,16 @@ $ ->
             @image = ''
           .fail (response) =>
             @defaule_expense_items = ''
+      onArrowChange: (e) ->
+        if @defaule_expense_items.standard_amount　> 0
+          if e
+            @arrow = '↔️'
+            @defaule_expense_items.standard_amount *= 2
+          else
+            @arrow = '→'
+            @defaule_expense_items.standard_amount /= 2
+        else
+          @checked = !@checked
+          @defaule_expense_items.standard_amount = 0
     compiled: ->
       @selectedName()
