@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181102062451) do
+ActiveRecord::Schema.define(version: 20181107015035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -183,6 +183,17 @@ ActiveRecord::Schema.define(version: 20181102062451) do
   end
 
   add_index "partners", ["cd"], name: "index_partners_on_cd", using: :btree
+
+  create_table "payee_accounts", force: :cascade do |t|
+    t.integer "employee_id",             null: false
+    t.integer "bank_code"
+    t.integer "filial_code"
+    t.integer "inv_type"
+    t.string  "inv_number",  limit: 15
+    t.string  "employee",    limit: 200
+    t.string  "bank_name"
+    t.string  "filial_name"
+  end
 
   create_table "project_file_groups", force: :cascade do |t|
     t.integer  "project_id", null: false

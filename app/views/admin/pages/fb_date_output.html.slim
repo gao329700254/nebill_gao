@@ -1,0 +1,9 @@
+
+- provide(:title, t('page.admin.fb_date_output.title'))
+
+#fb_date_output.fb_date_output
+
+  = form_tag admin_fb_download_csv_path(format: :csv), multipart: true
+    = file_field_tag :file, accept: 'text/csv'
+    = button_tag class: 'fb_date_output__button'
+      = fa_icon 'upload', text: t('helpers.submit.download')

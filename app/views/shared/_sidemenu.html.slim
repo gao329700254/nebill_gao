@@ -51,3 +51,8 @@ nav.sidemenu
         li.sidemenu__item
           = fa_icon 'user 2x', class: 'sidemenu__item__icon'
           span.sidemenu__item__page_title = t('page.admin.users.title')
+    - if can? :manage, PayeeAccount
+      = link_to admin_fb_date_output_path
+        li.sidemenu__item
+          = fa_icon 'university 2x', class: 'sidemenu__item__icon'
+          span.sidemenu__item__page_title = t('page.admin.fb_date_output.title')
