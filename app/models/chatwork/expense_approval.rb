@@ -18,12 +18,16 @@ module Chatwork
     end
 
     def notify_edit
-      return false unless user_enable?
+      return false unless users_enable?
       send_message(render('expense_approval/edit'))
     end
 
     def user_enable?
       @to_user&.chatwork_id.present?
+    end
+
+    def users_enable?
+      @to_user&.all? { |u| u&.chatwork_id.present? }
     end
   end
 end
