@@ -95,8 +95,8 @@ class Api::ExpensesController < Api::ApiController
       @expense_approval.update!(status: 10)
       @expense_approval.users.each do |user|
         ExpenseApprovalMailer.update_expense_approval(user: user, expense_approval: @expense_approval).deliver_now
-        Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval.created_user).notify_edit
       end
+      Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval.users).notify_edit
     end
     render_action_model_flash_success_message(@expense_approval, :update)
   rescue

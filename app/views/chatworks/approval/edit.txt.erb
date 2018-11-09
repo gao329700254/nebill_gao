@@ -1,4 +1,7 @@
-[To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
+<% to_user.each do |user| %>
+  [To:<%= user.chatwork_id %>] <%= user.chatwork_name %>さん
+  
+<% end %>
 [info]
   [title]
     <%= approval.created_user.name %>さんから申請「<%= approval.name %>」が修正されました.

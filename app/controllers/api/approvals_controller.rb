@@ -206,8 +206,8 @@ private
     if @approval.update!(status: 10)
       @approval.users.each do |user|
         ApprovalMailer.update_approval(user: user, approval: @approval).deliver_now
-        Chatwork::Approval.new(approval: @approval, to_user: @approval.created_user).notify_edit
       end
+      Chatwork::Approval.new(approval: @approval, to_user: @approval.users).notify_edit
       action_model_flash_success_message(@approval, :update)
     end
 
