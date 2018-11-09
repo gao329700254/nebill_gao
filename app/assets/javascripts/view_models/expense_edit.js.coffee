@@ -11,6 +11,8 @@ $ ->
         is_quntity: ''
         standard_amount: ''
         is_receipt: ''
+      arrow: '→'
+      checked: false
 
     methods:
       onFileChange: (e) ->
@@ -33,6 +35,17 @@ $ ->
             }
           .done (response) =>
             @defaule_expense_items = response
+      onArrowChange: (e) ->
+        if @defaule_expense_items.standard_amount　> 0
+          if e
+            @arrow = '↔️'
+            @defaule_expense_items.standard_amount *= 2
+          else
+            @arrow = '→'
+            @defaule_expense_items.standard_amount /= 2
+        else
+          @checked = !@checked
+          @defaule_expense_items.standard_amount = 0
       loadDefaultExpenseItem: (e) ->
         $.ajax
           url: '/api/expenses/load_item.json'
@@ -43,5 +56,11 @@ $ ->
         .done (response) =>
           @defaule_expense_items = response
           @defaule_expense_items.standard_amount = gon.amount
+      checkRoundTrip: ->
+        if gon.is_round_trip
+          @arrow = '↔️'
+        else
+          @arrow = '→'
     ready: ->
       @loadDefaultExpenseItem()
+      @checkRoundTrip()
