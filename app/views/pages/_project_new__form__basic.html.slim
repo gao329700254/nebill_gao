@@ -32,7 +32,7 @@
       .project_new__form__container__group
         .project_new__form__item
           = label_tag :status, t('activerecord.attributes.project.status')
-          = select_tag :status, options_for_select(Project.status.options.reject { |s| s.include?("finished") }), 'v-model' => 'project.status'
+          = select_tag :status, options_for_select(Project.status.options), 'v-model' => 'project.status'
     .project_new__form__container
       .project_new__form__container__group
         .project_new__form__item
