@@ -3,6 +3,7 @@ json.array!(@expenses) do |expense|
   json.use_date                 expense.use_date
   json.default_id               expense.default.name
   json.amount                   expense.amount
+  json.project                  Expense.project_name(expense)
   json.notes                    expense.notes
   json.status                   expense.expense_approval.status_text
   json.expense_approval_id      expense.expense_approval_id

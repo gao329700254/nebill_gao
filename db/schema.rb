@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181107015035) do
+ActiveRecord::Schema.define(version: 20181113090720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 20181107015035) do
     t.integer  "created_user_id"
     t.integer  "expense_approval_id"
     t.boolean  "is_round_trip",       default: false
+    t.integer  "project_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -295,6 +296,7 @@ ActiveRecord::Schema.define(version: 20181107015035) do
   add_foreign_key "expense_files", "expenses", on_delete: :nullify
   add_foreign_key "expenses", "default_expense_items", column: "default_id", on_delete: :nullify
   add_foreign_key "expenses", "expense_approvals", on_delete: :nullify
+  add_foreign_key "expenses", "projects", on_delete: :nullify
   add_foreign_key "expenses", "users", column: "created_user_id", on_delete: :nullify
   add_foreign_key "members", "bills", on_delete: :cascade
   add_foreign_key "members", "employees", on_delete: :cascade

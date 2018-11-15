@@ -50,6 +50,7 @@ input#header__reapproval_confirm_message type='hidden' value=I18n.t('action.reap
         th.expense_list__tbl__item--content       = Expense.human_attribute_name(:content)
         th.expense_list__tbl__item--is_receipt    = ''
         th.expense_list__tbl__item--amount        = Expense.human_attribute_name(:amount)
+        th.expense_list__tbl__item--project        = Expense.human_attribute_name(:project_id)
         th.expense_list__tbl__item--notes         = Expense.human_attribute_name(:notes)
     tbody.expense_list__tbl__body
       tr.expense_list__tbl__body__row [
@@ -67,6 +68,7 @@ input#header__reapproval_confirm_message type='hidden' value=I18n.t('action.reap
             'v-on:click' => 'showExpenseFile(expense.file.file)', 'v-if' => 'expense.file != null'do
             = t('page.expense_list.receipt')
         td.expense_list__tbl__item--amount          v-numeric='expense.amount' v-on:click="linkToShow(expense.id, expense.update_flug)"
+        td.expense_list__tbl__item--project         v-text='expense.project' v-on:click="linkToShow(expense.id, expense.update_flug)"
         td.expense_list__tbl__item--notes           v-text='expense.notes' v-on:click="linkToShow(expense.id, expense.update_flug)"
   = button_tag 'v-on:click' => 'showExpenseNew', 'v-if' => 'ability.show_expense_new', class: 'expense_list__btn--new_expense' do
     = fa_icon 'check', text: t('page.expense_list.new')

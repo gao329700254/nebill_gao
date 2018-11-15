@@ -118,6 +118,7 @@
 #         api_create_expense_approval POST   /api/expenses/create_expense_approval(.:format)         api/expenses#create_expense_approval
 #                  api_search_for_csv POST   /api/expenses/search_for_csv(.:format)                  api/expenses#search_for_csv
 #                 api_expense_history POST   /api/expenses/expense_history(.:format)                 api/expenses#expense_history
+#                     api_set_project POST   /api/expenses/set_project(.:format)                     api/expenses#set_project
 #           api_expense_file_download GET    /api/files/:files_id/expense_file_download(.:format)    api/files#expense_file_download
 # api_expense_approvals_search_result POST   /api/expense_approvals/search_result(.:format)          api/expense_approvals#search_result
 #               api_expense_approvals GET    /api/expense_approvals(.:format)                        api/expense_approvals#index

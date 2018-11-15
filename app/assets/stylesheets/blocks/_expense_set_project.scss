@@ -1,0 +1,164 @@
+.expense_set_project {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+
+  &__outer {
+    @include modal__outer;
+    padding-top: 5em;
+
+    &__inner {
+      @include modal__outer__inner--extra-large;
+
+      &__title {
+        @include modal__outer__inner__title;
+      }
+
+      &__body {
+        @include modal__outer__inner__body;
+      }
+    }
+  }
+
+  &__form {
+    @include outer-container;
+    &__container {
+      @include row;
+      &__group {
+        @include span-columns(6);
+      }
+    }
+
+    &__item,
+    %expense_history__form__item {
+      margin-bottom: $small-spacing;
+
+    }
+
+    &__add_btn {
+      @include btn--primary;
+    }
+  }
+
+  &__search {
+    margin-bottom: $base-spacing;
+
+    &__radio {
+      margin-bottom: $base-spacing;
+    }
+
+    &__field {
+      margin-right: 2%;
+    }
+
+    &__date {
+      @include display(flex);
+      margin-bottom: $base-spacing;
+
+      &__start {
+        @include span-columns(3);
+      }
+
+      &__end {
+        @include span-columns(3);
+      }
+
+      &__btn {
+        @include span-columns(1);
+
+        &--search {
+          @include btn--primary;
+          margin-top: $base-spacing;
+        }
+
+        &--read {
+          @include btn--primary;
+          margin: $base-spacing 0 0 3%;
+        }
+      }
+    }
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+
+      &__row {
+        @include list_tbl__body__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
+
+        &--finished {
+          border-bottom: $bold-border;
+          background-color: $light-grey;
+        }
+      }
+    }
+
+    &__item,
+    %expense_set_project__tbl__item {
+      @include list_tbl__item;
+
+      &--radio {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(.5);
+      }
+
+      &--status {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(3);
+        text-align: center;
+      }
+
+      &--cd {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--project_name {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(4);
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      &--orderer_company {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(4);
+      }
+
+      &--start_on {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--end_on {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--contract_on {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--amount {
+        @extend %expense_set_project__tbl__item;
+        @include span-columns(2);
+        padding-right: 4rem;
+        text-align: right;
+      }
+    }
+  }
+}

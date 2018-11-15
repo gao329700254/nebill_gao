@@ -1,0 +1,35 @@
+= form_tag nil, class: 'expense_set_project__form'
+  .expense_set_project__form__container
+    table.expense_set_project__tbl
+        thead.expense_set_project__tbl__head
+          tr.expense_set_project__tbl__head__row
+            th.expense_set_project__tbl__item--radio
+            th.expense_set_project__tbl__item--status          = t('activerecord.attributes.project.status')
+            th.expense_set_project__tbl__item--cd              = t('activerecord.attributes.project.cd')
+            th.expense_set_project__tbl__item--project_name    = t('activerecord.attributes.project.name')
+            th.expense_set_project__tbl__item--orderer_company = t('activerecord.attributes.project.orderer_company_name')
+            th.expense_set_project__tbl__item--start_on        = t('activerecord.attributes.project.start_on')
+            th.expense_set_project__tbl__item--end_on          = t('activerecord.attributes.project.end_on')
+            th.expense_set_project__tbl__item--contract_on     = t('activerecord.attributes.project.contract_on')
+        tbody.expense_set_project__tbl__body
+          tr.expense_set_project__tbl__body__row [
+            v-bind:class = "project.status === '#{t('enumerize.defaults.status.finished')}'
+                          || project.status === '#{t('enumerize.defaults.status.unprocessed')}'
+                            ? 'expense_set_project__tbl__body__row--finished'
+                            : 'expense_set_project__tbl__body__row'"
+            v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted' | statusBy finishedStatus"
+            id         = "project-{{project.id}}"
+            v-on:click = "changeRadio(project.id)"
+            track-by   = "id"
+          ]
+            td.expense_set_project__tbl__item--radio           = radio_button_tag :check, false, false, class: 'check' \
+                                                                 , 'v-model' => 'ids', 'v-bind:value' => 'project.id'
+            td.expense_set_project__tbl__item--status          v-text='project.is_regular_contract + project.status'
+            td.expense_set_project__tbl__item--cd              v-text='project.cd'
+            td.expense_set_project__tbl__item--project_name    v-text='project.name'
+            td.expense_set_project__tbl__item--orderer_company v-text='project.orderer_company_name'
+            td.expense_set_project__tbl__item--start_on        v-text='project.start_on'
+            td.expense_set_project__tbl__item--end_on          v-text='project.end_on'
+            td.expense_set_project__tbl__item--contract_on     v-text='project.contract_on'
+  = button_tag 'v-on:click.prevent' => 'setProject', class: 'expense_set_project__search__date__btn--read' do
+    = fa_icon 'check', text: t('page.expense_list.read')

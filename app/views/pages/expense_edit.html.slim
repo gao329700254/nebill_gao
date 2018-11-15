@@ -2,6 +2,8 @@
 
 - provide(:title, t('page.expense_edit.title'))
 
+== render 'components/expense_set_project'
+
 #expense_edit.expense_edit
 
   = form_for [:api, @expense], class: 'expense_edit__form' do |f|
@@ -48,6 +50,21 @@
             .expense_edit__form__item
               = f.label :payment_type, Expense.human_attribute_name(:payment_type)
               = f.select :payment_type, Expense.payment_type.options
+        .expense_edit__form__container
+          .expense_edit__form__container__group
+            .expense_edit__form__item
+              .expense_edit__form__fill
+                .expense_edit__form__fill--select
+                  = f.label :payment_type, Expense.human_attribute_name(:project_id)
+                  select name='expense[project_id]' id='project_id' v-model='selected_project'
+                    option [
+                      v-for = "project in project_list"
+                      v-bind:value = "project.id"
+                    ]
+                      = "{{project.name}}"
+                .expense_edit__form__fill--btn
+                  = button_tag type: 'button', 'v-on:click' => 'setProjectModal', class: 'expense_edit__form__fill--btn--set_project' do
+                    = fa_icon 'search'
         .expense_edit__form__item
           = f.label :notes, Expense.human_attribute_name(:notes)
           = f.text_area :notes, class: 'expense_edit__form__item__area'
@@ -74,3 +91,7 @@
                 img.expense_edit__form__img :src='image'
               div v-else='!image'
                 = image_tag q.object.file.to_s, class: 'expense_edit__form__img'
+  component [
+    :is        = "'expenseSetProject'"
+    keep-alive = true
+  ]

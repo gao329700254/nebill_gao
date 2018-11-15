@@ -76,10 +76,11 @@
           }
 
           &--default,
-          &--use_date {
+          &--use_date,
+          &--project {
             border: solid .5px $black;
             background-color: $bluesky;
-            width: 15%;
+            width: 10%;
           }
 
           &--name,
@@ -127,7 +128,8 @@
           &--content,
           &--default,
           &--notes,
-          &--comment {
+          &--comment,
+          &--project {
             border: solid .5px $black;
             padding: 0 0 0 4px;
           }
