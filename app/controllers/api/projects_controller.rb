@@ -53,11 +53,8 @@ class Api::ProjectsController < Api::ApiController
   end
 
   def select_status
-    @select_status = if @project.bills.pluck(:deposit_on).any?
-                       Project.status.options
-                     else
-                       Project.status.options.reject { |s| s.include?("finished") }
-                     end
+    @select_status = Project.status.options
+
 
     render json: @select_status, status: :ok
   end

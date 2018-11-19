@@ -10,7 +10,7 @@ script type='text/x-template' id='project_detail'
         .project_detail__form__container__group
           == render 'components/project_detail__form__billing'
       = button_tag 'v-on:click.prevent' => 'editMode = true' ,
-                   'v-if' => '!editMode && project.status != "finished"', class: 'project_detail__form__btn--edit' do
+                   'v-if' => '!editMode', class: 'project_detail__form__btn--edit' do
         = fa_icon 'edit', text: t('helpers.edit')
       = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'project_detail__form__btn--cancel', type: 'button' do
         = fa_icon 'remove', text: t('helpers.cancel')
