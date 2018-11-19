@@ -58,6 +58,7 @@ private
     Dir.glob("#{target_files_path}/*.*").each do |i|
       target_files.push(File.basename(i))
     end
+    Zip.unicode_names = true
     Zip::File.open(output_zip_path, Zip::File::CREATE) do |zipfile|
       target_files.each_with_index do |file|
         zipfile.add(file, "#{target_files_path}/#{file}")
