@@ -28,6 +28,7 @@ class ApprovalUser < ActiveRecord::Base
   belongs_to :approval
   belongs_to :user
 
+  validates :user_id, presence: true
   validates :comment  , length: { maximum: 200 }
 
   enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, reassignment: 40 }, default: :pending

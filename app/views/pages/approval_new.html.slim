@@ -4,6 +4,7 @@
 #approval_new.approval_new
 
   = form_for [:api, @approval], class: 'approval_new__form' do |f|
+    = f.hidden_field :created_user_id
     .approval_new__form__container
       .approval_new__form__container__group
         .approval_new__form__item

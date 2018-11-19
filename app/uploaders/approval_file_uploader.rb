@@ -56,4 +56,10 @@ class ApprovalFileUploader < CarrierWave::Uploader::Base
     @name ||= Digest::MD5.hexdigest(File.dirname(current_path))
     "#{@name}.#{file.extension}"
   end
+
+  process :set_metadata
+
+  def set_metadata
+    model.original_filename = File.basename(current_path)
+  end
 end

@@ -98,13 +98,6 @@
     &__update {
       margin-bottom: $small-spacing;
 
-      &__btn {
-        &--invalid,
-        &--edit {
-          @include btn--default;
-        }
-      }
-
       &__action {
         @include display(flex);
         margin-bottom: $small-spacing;
@@ -142,6 +135,11 @@
               background-color: $light-grey;
               color: $white;
             }
+          }
+
+          &--invalid,
+          &--edit {
+            @include btn--default;
           }
         }
       }

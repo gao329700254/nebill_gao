@@ -62,6 +62,7 @@ class PagesController < ApplicationController
 
   def approval_edit
     redirect_to approval_list_path unless @approval.status == 30 && (@approval.created_user_id == @current_user.id || can?(:allread, Approval))
+    @approval.status = 10
   end
 
   def expense_new
@@ -114,6 +115,7 @@ private
 
   def create_approval
     @approval = Approval.new
+    @approval.created_user_id = @current_user.id
   end
 
   def set_expense

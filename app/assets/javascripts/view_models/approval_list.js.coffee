@@ -32,7 +32,7 @@ $ ->
           search = $('.approval_list__search__date__btn--search')
           search.prop('disabled', true)
           $.ajax
-            url: '/api/approvals/search_result.json'
+            url: '/api/approvals_search/index.json'
             type: 'POST'
             data: {
               created_at: @created_at
