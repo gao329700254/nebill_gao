@@ -16,6 +16,7 @@ json.list do
     @reimbursement_amount += expense.amount
     expense.payment_type == 10 && @person_rebuilding += expense.amount
     json.update_flug              can? :update, expense
+    json.project                  Expense.project_name(expense)
   end
 end
 

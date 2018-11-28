@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181107015035
+# Schema version: 20181113090720
 #
 # Table name: expenses
 #
@@ -17,11 +17,13 @@
 #  created_user_id     :integer
 #  expense_approval_id :integer
 #  is_round_trip       :boolean          default(FALSE)
+#  project_id          :integer
 #
 # Foreign Keys
 #
 #  fk_rails_5ae686df24  (expense_approval_id => expense_approvals.id)
 #  fk_rails_e2984c1aec  (created_user_id => users.id)
+#  fk_rails_f097e0a9ca  (project_id => projects.id)
 #  fk_rails_fe4b1121aa  (default_id => default_expense_items.id)
 #
 
@@ -32,6 +34,7 @@ class Expense < ActiveRecord::Base
   belongs_to :expense_approval
   belongs_to :created_user, class_name: "User"
   belongs_to :default, class_name: 'DefaultExpenseItem', foreign_key: 'default_id'
+  belongs_to :project
 
   accepts_nested_attributes_for :file, allow_destroy: true
 
@@ -60,6 +63,7 @@ class Expense < ActiveRecord::Base
                 exp.use_date,
                 exp.default.name,
                 exp.amount,
+                project_name(exp),
                 exp.depatture_location,
                 if exp.default.is_routing
                   exp.is_round_trip ? ' ↔︎ ' : ' → '
@@ -80,6 +84,14 @@ class Expense < ActiveRecord::Base
       Expense.human_attribute_name(:file_exists)
     else
       Expense.human_attribute_name(:file_not_exists)
+    end
+  end
+
+  def self.project_name(exp)
+    if exp.project_id
+      "#{exp.project.cd} #{exp.project.name}"
+    else
+      ""
     end
   end
 end

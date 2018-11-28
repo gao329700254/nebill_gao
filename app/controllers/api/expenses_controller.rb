@@ -7,10 +7,10 @@ class Api::ExpensesController < Api::ApiController
 
   def load_list
     if params[:selectedApproval] == '0'
-      @expenses = Expense.where(expense_approval_id: nil, created_user_id: @current_user.id).includes(:default, :file)
+      @expenses = Expense.where(expense_approval_id: nil, created_user_id: @current_user.id).includes(:default, :file, :project)
     else
       @eappr = ExpenseApproval.find(params[:selectedApproval])
-      @expenses = @eappr.expense.includes(:default, :file)
+      @expenses = @eappr.expense.includes(:default, :file, :project)
     end
     render 'load', formats: 'json', handlers: 'jbuilder', status: :ok
   end
@@ -117,13 +117,13 @@ class Api::ExpensesController < Api::ApiController
     @st = params[:start]
     @end = params[:end]
     @expenses = if @st.present? && @end.present?
-                  Expense.approval_id_not_nil.between(@st, @end).includes([:default, { expense_approval: [:created_user, :expense_approval_user] }])
+                  Expense.approval_id_not_nil.between(@st, @end).includes([:default, :project, { expense_approval: [:created_user, :expense_approval_user] }])
                 elsif @st.present?
-                  Expense.approval_id_not_nil.gteq_start_on(@st).includes([:default, { expense_approval: [:created_user, :expense_approval_user] }])
+                  Expense.approval_id_not_nil.gteq_start_on(@st).includes([:default, :project, { expense_approval: [:created_user, :expense_approval_user] }])
                 elsif @end.present?
-                  Expense.approval_id_not_nil.lteq_end_on(@end).includes([:default, { expense_approval: [:created_user, :expense_approval_user] }])
+                  Expense.approval_id_not_nil.lteq_end_on(@end).includes([:default, :project, { expense_approval: [:created_user, :expense_approval_user] }])
                 else
-                  Expense.approval_id_not_nil.includes([:default, { expense_approval: [:created_user, :expense_approval_user] }])
+                  Expense.approval_id_not_nil.includes([:default, :project, { expense_approval: [:created_user, :expense_approval_user] }])
                 end
     render 'search_for_csv', formats: 'json', handlers: 'jbuilder', status: :ok
   end
@@ -155,6 +155,11 @@ class Api::ExpensesController < Api::ApiController
     render json: @default_expense_items, status: :ok
   end
 
+  def set_project
+    @project = Project.find(params[:project_id])
+    render 'set_project', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
 private
 
   def expense_param
@@ -168,6 +173,7 @@ private
       :payment_type,
       :expense_approval_id,
       :is_round_trip,
+      :project_id,
     )
   end
 

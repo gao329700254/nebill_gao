@@ -124,6 +124,7 @@ private
     gon.expense_id = params[:expense_id]
     gon.amount = @expense.amount
     gon.is_round_trip = @expense.is_round_trip
+    gon.project = @expense.project_id
   end
 
   def create_expense

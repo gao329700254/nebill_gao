@@ -29,6 +29,7 @@
         th.expense_csv__tbl__item         = t('page.expense_csv.date')
         th.expense_csv__tbl__item         = t('page.expense_csv.category_name')
         th.expense_csv__tbl__item         = t('activerecord.attributes.expense.amount')
+        th.expense_csv__tbl__item         = t('activerecord.attributes.expense.project_id')
         th.expense_csv__tbl__item         = t('activerecord.attributes.expense.depatture_location')
         th.expense_csv__tbl__item
         th.expense_csv__tbl__item         = t('activerecord.attributes.expense.arrival_location')
@@ -49,6 +50,7 @@
         td.expense_csv__tbl__item        v-text='expense.use_date'
         td.expense_csv__tbl__item        v-text='expense.default_id'
         td.expense_csv__tbl__item        v-text='expense.amount'
+        td.expense_csv__tbl__item        v-text='expense.project'
         td.expense_csv__tbl__item        v-text='expense.depatture_location'
         td.expense_csv__tbl__item        v-text='expense.round_trip'
         td.expense_csv__tbl__item        v-text='expense.arrival_location'

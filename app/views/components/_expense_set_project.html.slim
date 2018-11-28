@@ -1,0 +1,38 @@
+
+== render 'components/project_new'
+
+script type='text/x-template' id='expense_set_project'
+  .expense_set_project
+    .expense_set_project__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .expense_set_project__outer__inner v-on:click.stop=""
+        .expense_set_project__outer__inner__body
+          .expense_set_project__search
+            .expense_set_project__search__field
+              = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+                                  placeholder: t('page.expense_set_project.search_form_placeholder'), lazy: true, class: 'expense_set_project__search'
+            .expense_set_project__search__date
+              .expense_set_project__search__date__start
+                = label_tag :start, t('page.expense_set_project.start')
+                = date_field_tag :start, nil, 'v-model' => "start"
+              .expense_set_project__search__date__end
+                = label_tag :start, t('page.expense_set_project.end')
+                = date_field_tag :end, nil, 'v-model' => "end"
+              .expense_set_project__search__date__btn
+                = button_tag 'v-on:click.prevent' => 'search', class: 'expense_set_project__search__date__btn--search' do
+                  = fa_icon 'fa-search', text: t('page.expense_set_project.search')
+            .expense_set_project__search__radio
+              = check_box_tag :contractedSt, true, false, id: 'contractedSt', 'v-model' => 'contractStatus'
+              = label_tag :contractedSt, t('page.expense_set_project.contract_type.contracted')
+              = check_box_tag :uncontractedSt, false, false, id: 'uncontractedSt', 'v-model' => 'contractStatus'
+              = label_tag :uncontractedSt, t('page.expense_set_project.contract_type.uncontracted')
+              = check_box_tag :progress, true, false, id: 'progress', 'v-model' => 'progressProject'
+              = label_tag :progress, t('page.expense_set_project.progress')
+              = check_box_tag :finished, true, false, id: 'finished', 'v-model' => 'finishedStatus'
+              = label_tag :finished, t('page.expense_set_project.finished')
+              = check_box_tag :unprocessed, true, false, id: 'unprocessed', 'v-model' => 'unprocessedProject'
+              = label_tag :unprocessed, t('activerecord.attributes.project.unprocessed')
+          == render 'components/expense_set_project__form'
+

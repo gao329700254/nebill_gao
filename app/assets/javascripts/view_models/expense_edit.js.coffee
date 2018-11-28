@@ -13,8 +13,10 @@ $ ->
         is_receipt: ''
       arrow: '→'
       checked: false
-
+      selected_project: ''
+      project_list: []
     methods:
+      setProjectModal: -> @$broadcast('showExpenseNewEvent')
       onFileChange: (e) ->
         files = e.target.files
         @createImage files[0]
@@ -61,6 +63,22 @@ $ ->
           @arrow = '↔️'
         else
           @arrow = '→'
+      
+      setProject: (e) ->
+        try
+          $.ajax
+            url: '/api/expenses/set_project.json'
+            type: 'POST'
+            data: {
+              project_id: e
+            }
+          .done (response) =>
+            @project_list.push(response)
+            @selected_project = response.id
     ready: ->
       @loadDefaultExpenseItem()
       @checkRoundTrip()
+      if gon.project
+        @setProject(gon.project)
+    events:
+      loadProject: (projectId) -> @setProject(projectId)

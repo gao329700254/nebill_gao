@@ -126,6 +126,7 @@ ja:
         arrival_location: 到着
         quantity: 数量
         payment_type: 支払種別
+        project_id: プロジェクト
         file: 領収書(jpg,jpeg,png,gifのみ)
         file_exists: 有り
         file_not_exists: 無し
@@ -628,6 +629,18 @@ ja:
       search: 検索
       download: CSV
       csvname: 経費データ_
+    expense_set_project:
+      search_form_placeholder: 'ID,名前,受注先会社名で検索できます'
+      start: 開始日
+      end: 終了日
+      search: 検索
+      contract_type:
+        all:          "すべて"
+        contracted:   "契約済"
+        uncontracted: "未契約"
+      progress: 現在進行中
+      finished: 終了
+      read: 読み込み
     admin:
       users:
         title: ユーザ管理
@@ -680,6 +693,7 @@ ja:
       comment: ■ コメント
       expense: ■ 経費精算
       receipt: 領収書貼付欄
+      project: プロジェクト
     total: 合計
     bill:
       title: 請求書

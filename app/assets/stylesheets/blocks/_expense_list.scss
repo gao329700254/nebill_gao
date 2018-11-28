@@ -110,7 +110,7 @@
 
       &--use_date {
         @extend %project_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(1);
       }
 
       &--default_id {
@@ -130,6 +130,11 @@
       &--amount {
         @extend %project_list__tbl__item;
         @include span-columns(1);
+      }
+
+      &--project {
+        @extend %project_list__tbl__item;
+        @include span-columns(2);
       }
 
       &--notes {

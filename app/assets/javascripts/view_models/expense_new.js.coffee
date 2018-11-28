@@ -15,7 +15,10 @@ $ ->
       fix_amount: ''
       arrow: '→'
       checked: false
+      selected_project: ''
+      project_list: []
     methods:
+      setProjectModal: -> @$broadcast('showExpenseNewEvent')
       selectedName: ->
         if @selected
           @onItemChange(@selected)
@@ -56,5 +59,18 @@ $ ->
         else
           @checked = !@checked
           @defaule_expense_items.standard_amount = 0
+      setProject: (e) ->
+        try
+          $.ajax
+            url: '/api/expenses/set_project.json'
+            type: 'POST'
+            data: {
+              project_id: e
+            }
+          .done (response) =>
+            @project_list.push(response)
+            @selected_project = response.id
     compiled: ->
       @selectedName()
+    events:
+      loadProject: (projectId) -> @setProject(projectId)

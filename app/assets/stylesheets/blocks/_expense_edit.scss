@@ -47,6 +47,22 @@
       }
     }
 
+    &__fill {
+      @include display(flex);
+
+      &--select {
+        @include flex(1);
+      }
+
+      &--btn {
+        &--set_project {
+          @include btn--default;
+          margin-top: $base-spacing;
+          height: 2.5rem;
+        }
+      }
+    }
+
     &__btn {
       &--file_delete,
       &--file_new {
