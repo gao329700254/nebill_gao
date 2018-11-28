@@ -238,7 +238,7 @@ private
       @expense = Expense.new(use_date: params[:expense][:use_date])
       @default_expense_items = DefaultExpenseItem.all
       @file = @expense.file.new
-      render template: "pages/expense_new"
+      redirect_to expense_new_path
     else
       redirect_to expense_list_path
     end
