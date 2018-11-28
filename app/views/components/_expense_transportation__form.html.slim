@@ -1,0 +1,24 @@
+= form_tag nil, class: 'expense_transportation__form'
+  .expense_transportation__form__container
+    table.expense_transportation__tbl
+      thead.expense_transportation__tbl__head
+        tr.expense_transportation__tbl__head__row
+          th.expense_transportation__tbl__item--check
+          th.expense_transportation__tbl__item--amount        = Expense.human_attribute_name(:amount)
+          th.expense_transportation__tbl__item--transportation       = t('page.expense_transportation.transportation')
+      tbody.expense_transportation__tbl__body
+        tr.expense_transportation__tbl__body__row [
+          v-for      = "transportation in list"
+          id         = "transportation-{{transportation.id}}"
+          v-on:click = "changeRadio(transportation.id)"
+          track-by   = "id"
+        ]
+          td.expense_transportation__tbl__item--check           = radio_button_tag :check, false, false, class: 'expense_transportation__tbl__item--check', \
+                                                                                   'v-model' => 'id_tr', 'v-bind:value' => 'transportation.id'
+          td.expense_transportation__tbl__item--amount          v-text='transportation.amount'
+          td.expense_transportation__tbl__item--transportation  v-text='transportation.departure + "→" + transportation.arrival'
+    = hidden_field_tag :amount, nil, 'v-bind:value' => 'dep'
+  = button_tag 'v-on:click.prevent' => 'cancel', class: 'expense_transportation__cancel_btn' do
+    = fa_icon 'remove', text: t('helpers.cancel')
+  = button_tag 'v-on:click.prevent' => 'add_value', class: 'expense_transportation__add_btn' do
+    = fa_icon 'check', text: t('page.expense_transportation.select')

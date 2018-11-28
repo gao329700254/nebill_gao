@@ -1,0 +1,104 @@
+.expense_transportation {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+
+  &__outer {
+    @include modal__outer;
+    padding-top: 5em;
+
+    &__inner {
+      @include modal__outer__inner;
+
+      &__title {
+        @include modal__outer__inner__title;
+      }
+
+      &__body {
+        @include modal__outer__inner__body;
+      }
+    }
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+
+      &__row {
+        @include list_tbl__body__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
+      }
+    }
+
+    &__item,
+    %expense_transportation__tbl__item {
+      margin-bottom: $small-spacing;
+
+      &--check {
+        @extend %expense_transportation__tbl__item;
+        @include span-columns(1);
+        margin: .5rem;
+      }
+
+      &--amount {
+        @extend %expense_transportation__tbl__item;
+        @include span-columns(1);
+      }
+
+      &--transportation {
+        @extend %expense_transportation__tbl__item;
+        @include span-columns(4);
+      }
+    }
+  }
+
+  &__add_btn {
+    @include btn--primary;
+  }
+
+  &__cancel_btn {
+    @include btn--primary;
+    margin-right: 1%;
+  }
+
+  &__search {
+    margin-bottom: $base-spacing;
+
+    &__item {
+      @include display(flex);
+      margin-bottom: $base-spacing;
+
+      &__field1 {
+        margin-right: 2%;
+        margin-left: 13%;
+        width: 24%;
+      }
+
+      &__field2 {
+        margin-left: 2%;
+        width: 24%;
+      }
+
+      &__check_box {
+        display: none;
+      }
+
+      &__btn {
+        @include btn--primary;
+        margin: $base-spacing 0 0 3%;
+      }
+    }
+  }
+}

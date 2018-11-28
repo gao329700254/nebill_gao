@@ -22,6 +22,7 @@ class Api::ExpensesController < Api::ApiController
       @expense.default_id = params[:default_expense_item][:name]
       @expense.created_user_id = @current_user.id
       @expense.save!
+      save_expense_trasportation
       update_total_expense(expense: @expense)
       file_param.present? && file_create
     end
@@ -160,6 +161,20 @@ class Api::ExpensesController < Api::ApiController
     render 'set_project', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
+  def expense_transportation
+    @dep = params[:departure]
+    @arr = params[:arrival]
+
+    @expense_transportation = if @dep.present? && @arr.present?
+                                ExpenseTransportation.where(departure: @dep).where(arrival: @arr)
+                              elsif @dep.present?
+                                ExpenseTransportation.where(departure: @dep)
+                              elsif @arr.present?
+                                ExpenseTransportation.where(arrival: @arr)
+                              end
+    render json: @expense_transportation, status: :ok
+  end
+
 private
 
   def expense_param
@@ -249,6 +264,19 @@ private
     @expense.default_id = params[:default_expense_item][:name]
     @default_expense_items = DefaultExpenseItem.all
     @file = @expense.file.new
+  end
+
+  def save_expense_trasportation
+    @amount = if params[:expense][:is_round_trip]
+                Integer(params[:expense][:amount])/2
+              else
+                params[:expense][:amount]
+              end
+    @expense_transportation = ExpenseTransportation.new
+    @expense_transportation[:amount] = @amount
+    @expense_transportation[:departure] = params[:expense][:depatture_location]
+    @expense_transportation[:arrival] = params[:expense][:arrival_location]
+    @expense_transportation.save! if @expense_transportation.valid?(:amount)
   end
 end
 # rubocop:enable Metrics/ClassLength

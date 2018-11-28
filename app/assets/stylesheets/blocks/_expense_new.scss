@@ -17,11 +17,15 @@
       }
 
       &__group2 {
-        @include span-columns(1.5);
+        @include span-columns(1.25);
       }
 
       &__group3 {
-        @include span-columns(5.25);
+        @include span-columns(5);
+      }
+
+      &__group4 {
+        @include span-columns(.75);
       }
     }
 
@@ -81,10 +85,12 @@
         width: 130px;
       }
 
-      &--arrow {
+      &--arrow,
+      &--search {
         @include btn--primary;
         display: block;
         margin: auto;
+        padding: .6em 1em;
         text-align: center;
       }
     }

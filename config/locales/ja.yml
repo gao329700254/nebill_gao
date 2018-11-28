@@ -641,6 +641,9 @@ ja:
       progress: 現在進行中
       finished: 終了
       read: 読み込み
+    expense_transportation:
+      transportation: 経路
+      select: 選択
     admin:
       users:
         title: ユーザ管理
