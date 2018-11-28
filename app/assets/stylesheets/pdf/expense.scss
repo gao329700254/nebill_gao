@@ -76,7 +76,12 @@
           }
 
           &--default,
-          &--use_date,
+          &--use_date{
+            border: solid .5px $black;
+            background-color: $bluesky;
+            width: 10%;
+          }
+
           &--project {
             border: solid .5px $black;
             background-color: $bluesky;

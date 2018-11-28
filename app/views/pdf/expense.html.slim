@@ -44,7 +44,7 @@
               .expense_pdf__tbl__body__row__item--is_receipt
                 = t('page.expense_list.receipt')
           td.expense_pdf__tbl__body__row__item--amount    = "¥#{expense.amount}"
-          td.expense_pdf__tbl__body__row__item--project   = expense.project_name
+          td.expense_pdf__tbl__body__row__item--project   = Expense.project_name(expense)
           td.expense_pdf__tbl__body__row__item--notes     = expense.notes
   .expense_pdf__body
     .expense_pdf__body__title = t('pdf.expense.comment')
