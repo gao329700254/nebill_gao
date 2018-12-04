@@ -99,8 +99,8 @@
         margin-bottom: $small-spacing;
 
         &__text {
-          flex: 1;
           height: 5rem;
+          flex: 1;
         }
 
         &__btn {
@@ -109,8 +109,8 @@
           &--permission {
             border: solid 2px $active-action-color;
             background-color: $active-action-color;
-            color: $white;
             height: 2.5rem;
+            color: $white;
 
             &:hover,
             &:focus {
@@ -123,8 +123,8 @@
             $disconfirm_back: #c9c9c9;
             border: solid 2px $black;
             background-color: $disconfirm_back;
-            color: $black;
             height: 2.5rem;
+            color: $black;
 
             &:hover,
             &:focus {

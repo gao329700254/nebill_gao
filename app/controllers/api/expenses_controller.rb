@@ -19,23 +19,20 @@ class Api::ExpensesController < Api::ApiController
     @expense = Expense.new(expense_param)
     # set_session
     @expense.transaction do
-      @expense.default_id = params[:default_expense_item][:name]
+      @expense.default_id = params[:expense][:default_id]
       @expense.created_user_id = @current_user.id
       @expense.save!
       save_expense_trasportation
       update_total_expense(expense: @expense)
       file_param.present? && file_create
     end
-    action_model_flash_success_message(@expense, :create)
-    redirection_path
+    render_action_model_success_message(@expense, :create)
 
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "#{I18n.t('action.create.fail', model: I18n.t("activerecord.models.#{@expense.class.name.underscore}"))}"\
                               " \n #{@expense.errors.full_messages.join('<br>')}"
-    # redirect_to expense_new_path
-    set_redirection_data
 
-    render template: "pages/expense_new"
+    render_action_model_fail_message(@expense, :create)
   end
 
   def update
@@ -62,6 +59,11 @@ class Api::ExpensesController < Api::ApiController
 
   def load_item
     @list = Expense.find(params[:expense_id]).default
+    render json: @list, status: :ok
+  end
+
+  def load_expense
+    @list = Expense.find(params[:expense_id])
     render json: @list, status: :ok
   end
 
@@ -152,7 +154,7 @@ class Api::ExpensesController < Api::ApiController
   end
 
   def set_default_items
-    @default_expense_items = DefaultExpenseItem.select(:name, :display_name).all
+    @default_expense_items = DefaultExpenseItem.select(:id, :name, :display_name).all
     render json: @default_expense_items, status: :ok
   end
 
@@ -224,7 +226,7 @@ private
   end
 
   def file_create
-    file = file_param[:file_attributes].first.second[:file]
+    file = file_param[:file_attributes][:file]
     file=@expense.file.build(file: file, original_filename: file.original_filename)
     file.save!
   end
@@ -245,25 +247,6 @@ private
       new_file=@expense.file.build(file: new_file, original_filename: new_file.original_filename)
       new_file.save!
     end
-  end
-
-  def redirection_path
-    #  Hack リファクタする
-    if params[:button] == 'repeat'
-      @expense = Expense.new(use_date: params[:expense][:use_date])
-      @default_expense_items = DefaultExpenseItem.all
-      @file = @expense.file.new
-      redirect_to expense_new_path
-    else
-      redirect_to expense_list_path
-    end
-  end
-
-  def set_redirection_data
-    @expense = Expense.new(expense_param)
-    @expense.default_id = params[:default_expense_item][:name]
-    @default_expense_items = DefaultExpenseItem.all
-    @file = @expense.file.new
   end
 
   def save_expense_trasportation

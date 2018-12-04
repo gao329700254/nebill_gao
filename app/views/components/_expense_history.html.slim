@@ -1,4 +1,4 @@
-script type='text/x-template' id='expense_history'
+script type='text/x-template' id='expense_history' name='expense_history'
   .expense_history
     .expense_history__outer [
       v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
@@ -26,3 +26,9 @@ script type='text/x-template' id='expense_history'
                 = button_tag 'v-on:click' => 'searchHistory', class: 'expense_history__search__item__btn--search' do
                   = fa_icon 'search', text: t('page.expense_list.search')
           == render 'components/expense_history__form'
+
+  component [
+    :is        = "'expenseNew'"
+    :ids       = "ids"
+    keep-alive = true
+  ]
