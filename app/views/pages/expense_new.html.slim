@@ -3,6 +3,7 @@
 - provide(:title, t('page.expense_new.title'))
 
 == render 'components/expense_set_project'
+== render 'components/expense_transportation'
 
 #expense_new.expense_new
 
@@ -27,7 +28,7 @@
           .expense_new__form__container__group3
             .expense_new__form__item
               = f.label :depatture_location, Expense.human_attribute_name(:depatture_location)
-              = f.text_field :depatture_location, class: 'expense_new__form__item__area'
+              = f.text_field :depatture_location, class: 'expense_new__form__item__area', 'v-model' => "departure"
           .expense_new__form__container__group2
             .expense_new__form__item
               br
@@ -36,7 +37,12 @@
           .expense_new__form__container__group3
             .expense_new__form__item
               = f.label :arrival_location, Expense.human_attribute_name(:arrival_location)
-              = f.text_field :arrival_location, class: 'expense_new__form__item__area'
+              = f.text_field :arrival_location, class: 'expense_new__form__item__area', 'v-model' => "arrival"
+          .expense_new__form__container__group4
+            .expense_new__form__item
+              br
+              = button_tag type: 'button', 'v-on:click' => 'showExpenseTransportation', class: 'expense_new__form__btn--search' do
+                = fa_icon 'search'
         .expense_new__form__container
           .expense_new__form__container__group
             .expense_new__form__item
@@ -85,7 +91,15 @@
               = q.file_field :file, accept: 'image/jpg,image/jpeg,image/png,image/gif', class: 'form-control', 'v-on:change' => 'onFileChange'
             div v-if="image"
               img.expense_new__form__img :src='image'
+
   component [
     :is        = "'expenseSetProject'"
+    keep-alive = true
+  ]
+
+  component [
+    :is        = "'expenseTransportation'"
+    :departure = "departure"
+    :arrival   = "arrival"
     keep-alive = true
   ]

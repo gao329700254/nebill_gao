@@ -1,0 +1,24 @@
+script type='text/x-template' id='expense_transportation'
+  .expense_transportation
+    .expense_transportation__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .expense_transportation__outer__inner v-on:click.stop=""
+        .expense_transportation__outer__inner__body
+          .expense_transportation__search
+            .expense_transportation__search__item
+              .expense_transportation__search__item__field1
+                = label_tag :departure, Expense.human_attribute_name(:depatture_location)
+                = text_field_tag :departure, nil, 'v-model' => "departure"
+              .expense_transportation__search__item__check
+                br
+                = check_box_tag :is_round_trip, true, false, class: 'expense_transportation__search__item__check_box'
+                = label_tag :is_round_trip, "{{arrow}}", class: 'all_button_inputs expense_new__form__btn--arrow'
+              .expense_transportation__search__item__field2
+                = label_tag :arrival, Expense.human_attribute_name(:arrival_location)
+                = text_field_tag :arrival, nil, 'v-model' => "arrival"
+              .expense_transportation__search__item__btn
+                = button_tag 'v-on:click' => 'searchTransportation', class: 'expense_transportation__search__item__btn--search' do
+                  = fa_icon 'search', text: t('page.expense_list.search')
+          == render 'components/expense_transportation__form'

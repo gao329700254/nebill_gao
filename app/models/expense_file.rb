@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181113090720
+# Schema version: 20181127095607
 #
 # Table name: expense_files
 #

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       post "search_for_csv", to: "expenses#search_for_csv"
       post "expense_history", to: "expenses#expense_history"
       post "set_project", to: "expenses#set_project"
+      post "expense_transportation", to: "expenses#expense_transportation"
     end
     scope path: 'files/:files_id' do
       get 'expense_file_download', to: 'files#expense_file_download'

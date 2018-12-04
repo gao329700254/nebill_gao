@@ -17,6 +17,13 @@ $ ->
       checked: false
       selected_project: ''
       project_list: []
+      departure: ''
+      arrival: ''
+      return:
+        departure: ''
+        arrival: ''
+        defaule_expense_items:
+          standard_amount: ''
     methods:
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
       selectedName: ->
@@ -70,6 +77,7 @@ $ ->
           .done (response) =>
             @project_list.push(response)
             @selected_project = response.id
+      showExpenseTransportation: -> @$broadcast('showExpenseTransportationEvent')
     compiled: ->
       @selectedName()
     events:
