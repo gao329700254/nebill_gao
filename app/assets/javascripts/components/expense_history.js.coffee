@@ -42,11 +42,8 @@ $ ->
             @list = response.list
         finally
           search.prop('disabled', false)
-      showExpenseModalNew: ->
-        if @ids
-          window.location = "/expense/new?expense_id=#{@ids}"
-        else
-          window.location = '/expense/new'
+      showExpenseNew: (val) -> @$broadcast('showExpenseNewEvent', '')
+      changeRadio: (expenseId) -> @ids = expenseId
     compiled: ->
       @loadHistory()
       @loadDefaultIds()

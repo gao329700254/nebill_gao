@@ -17,7 +17,6 @@
                                                                                    'v-model' => 'id_tr', 'v-bind:value' => 'transportation.id'
           td.expense_transportation__tbl__item--amount          v-text='transportation.amount'
           td.expense_transportation__tbl__item--transportation  v-text='transportation.departure + "→" + transportation.arrival'
-    = hidden_field_tag :amount, nil, 'v-bind:value' => 'dep'
   = button_tag 'v-on:click.prevent' => 'cancel', class: 'expense_transportation__cancel_btn' do
     = fa_icon 'remove', text: t('helpers.cancel')
   = button_tag 'v-on:click.prevent' => 'add_value', class: 'expense_transportation__add_btn' do

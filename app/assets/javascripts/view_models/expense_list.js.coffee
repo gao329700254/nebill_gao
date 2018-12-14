@@ -29,13 +29,9 @@ $ ->
       linkToShow: (expenseId, updateFlug) ->
         if updateFlug
           window.location = "/expense/#{expenseId}/edit"
-      showExpenseNew: ->
-        if @selectedApproval == '0'
-          window.location = '/expense/new'
-        else
-          window.location = "/expense/new?selectedApproval=#{@selectedApproval}"
       showExpenseApprovalNew: -> @$broadcast('showExpenseApprovalNewEvent')
       showExpenseHistory: -> @$broadcast('showExpenseHistoryEvent')
+      showExpenseNew: (val) -> @$broadcast('showExpenseNewEvent', val)
       checkAll: ->
         @isCheckAll = !@isCheckAll
         @ids = []

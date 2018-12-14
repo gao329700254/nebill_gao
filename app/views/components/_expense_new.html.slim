@@ -1,0 +1,21 @@
+script type='text/x-template' id='expense_new'
+  .expense_new
+    .expense_new__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .expense_new__outer__inner v-on:click.stop=""
+        .expense_new__outer__inner__body
+          == render 'components/expense_new__form'
+
+  component [
+    :is        = "'expenseSetProject'"
+    keep-alive = true
+  ]
+
+  component [
+    :is        = "'expenseTransportation'"
+    :departure = "expense.depatture_location"
+    :arrival   = "expense.arrival_location"
+    keep-alive = true
+  ]

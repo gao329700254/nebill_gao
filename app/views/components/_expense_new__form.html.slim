@@ -1,0 +1,84 @@
+= form_tag nil, class: 'expense_new__form'
+  .expense_new__form__container
+    .expense_new__form__container__group
+      .expense_new__form__container
+        .expense_new__form__container__group
+          .expense_new__form__item
+            = label_tag :use_date, Expense.human_attribute_name(:use_date)
+            = date_field_tag :use_date, nil, 'v-model': 'expense.use_date'
+      .expense_new__form__container
+        .expense_new__form__container__group
+          .expense_new__form__item
+            = label_tag :name, Expense.human_attribute_name(:default_id)
+            select [
+                     v-model='expense.default_id'
+                     v-on:change ='onItemChange'
+                    ]
+              option v-for="defaultId in defaultIds" value="{{defaultId.id}}" {{defaultId.display_name}}
+      .expense_new__form__container v-if="defaule_expense_items.is_routing"
+        .expense_new__form__container__group3
+          .expense_new__form__item
+            = label_tag :depatture_location, Expense.human_attribute_name(:depatture_location)
+            = text_field_tag :depatture_location, nil, class: 'expense_new__form__item__area', 'v-model' => 'expense.depatture_location'
+        .expense_new__form__container__group2
+          .expense_new__form__item
+            br
+            = check_box_tag :is_round_trip, false, false, class: 'expense_new__form__item__check_box', \
+                            'v-model' => "checked", 'v-on:change' => 'onArrowChange(checked)'
+            = label_tag :is_round_trip, "{{arrow}}", class: 'all_button_inputs expense_new__form__btn--arrow'
+        .expense_new__form__container__group3
+          .expense_new__form__item
+            = label_tag :arrival_location, Expense.human_attribute_name(:arrival_location)
+            = text_field_tag :arrival_location, nil, class: 'expense_new__form__item__area', 'v-model' => 'expense.arrival_location'
+        .expense_new__form__container__group4
+            .expense_new__form__item
+              br
+              = button_tag type: 'button', 'v-on:click' => 'showExpenseTransportation', class: 'expense_new__form__btn--search' do
+                = fa_icon 'search'
+      .expense_new__form__container
+        .expense_new__form__container__group
+          .expense_new__form__item
+            = label_tag :amount, Expense.human_attribute_name(:amount)
+            = number_field_tag :amount, nil, 'v-model': 'defaule_expense_items.standard_amount'
+        .expense_new__form__container__group v-if='defaule_expense_items.is_quntity'
+          .expense_new__form__item
+            = label_tag :quantity, Expense.human_attribute_name(:quantity)
+            = number_field_tag :quantity, nil
+      .expense_new__form__container
+        .expense_new__form__container__group
+          .expense_new__form__item
+            = label_tag :payment_type, Expense.human_attribute_name(:payment_type)
+            = select_tag :payment_type, options_for_select(Expense.payment_type.options), 'v-model' => 'expense.payment_type'
+      .expense_new__form__container
+        .expense_new__form__container__group
+          .expense_new__form__item
+            .expense_new__form__fill
+              .expense_new__form__fill--select
+                = label_tag :payment_type, Expense.human_attribute_name(:project_id)
+                select name='expense[project_id]' id='project_id' v-model='selected_project'
+                  option [
+                    v-for = "project in project_list"
+                    v-bind:value = "project.id"
+                  ]
+                    = "{{project.name}}"
+              .expense_new__form__fill--btn
+                = button_tag type: 'button', 'v-on:click' => 'setProjectModal', class: 'expense_new__form__fill--btn--set_project' do
+                  = fa_icon 'search'
+
+      .expense_new__form__item
+        = label_tag :notes, Expense.human_attribute_name(:notes)
+        = text_area_tag :notes, nil, class: 'expense_new__form__item__area', 'v-model' => 'expense.notes'
+      = button_tag 'v-on:click.prevent' => 'cancel', class: 'expense_new__form__btn--cancel' do
+        = fa_icon 'remove', text: t('helpers.cancel')
+      = button_tag 'v-on:click.prevent' => 'submit(1)', class: 'expense_new__form__btn--submit', data: { disable_with: t('page.expense_new.wait') } do
+        = fa_icon 'check', text: t('helpers.submit.create')
+      = button_tag 'v-on:click.prevent' => 'submit(0)', class: 'expense_new__form__btn--repeat', data: { display_with: t('page.expense_new.wait') } do
+        = fa_icon 'check', text: t('helpers.submit.repeat')
+    .expense_new__form__container__group v-if='defaule_expense_items.is_receipt'
+      .expense_new__form__item
+        = fields_for :file_attributes do |q|
+          = q.label :file, Expense.human_attribute_name(:file)
+          .expense_new__form__item__file
+            = q.file_field :file, accept: 'image/jpg,image/jpeg,image/png,image/gif', class: 'form-control', 'v-on:change' => 'onFileChange'
+          div v-if="image"
+            img.expense_new__form__img :src='image'

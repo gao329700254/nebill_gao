@@ -9,11 +9,13 @@
           th.expense_list__tbl__item--content       = Expense.human_attribute_name(:content)
           th.expense_list__tbl__item--is_receipt    = ''
           th.expense_list__tbl__item--amount        = Expense.human_attribute_name(:amount)
+          th.expense_list__tbl__item--project        = Expense.human_attribute_name(:project_id)
           th.expense_list__tbl__item--notes         = Expense.human_attribute_name(:notes)
       tbody.expense_list__tbl__body
         tr.expense_list__tbl__body__row [
           v-for      = "expense in list | selectBy id selectSchema"
           id         = "expense-{{expense.id}}"
+          v-on:click = "changeRadio(expense.id)"
           track-by   = "id"
         ]
           td.expense_list__tbl__item--check          = radio_button_tag :check, false, false, class: 'check', 'v-model' => 'ids', 'v-bind:value' => 'expense.id'
@@ -22,9 +24,10 @@
           td.expense_list__tbl__item--content         v-text='expense.content'
           td.expense_list__tbl__item--is_receipt
             = button_tag class: 'expense_list__function__date__btn--receipt', \
-              'v-on:click' => 'showExpenseFile(expense.file.file)', 'v-if' => 'expense.file != null' do
+              'type' => 'button', 'v-on:click' => '', 'v-if' => 'expense.file != null' do
               = t('page.expense_list.receipt')
           td.expense_list__tbl__item--amount          v-numeric='expense.amount'
+          td.expense_list__tbl__item--project         v-text='expense.project'
           td.expense_list__tbl__item--notes           v-text='expense.notes'
-  = button_tag 'v-on:click.prevent' => 'showExpenseModalNew', class: 'expense_history__form__add_btn' do
+  = button_tag 'v-on:click.prevent' => "showExpenseNew('')", class: 'expense_history__form__add_btn' do
     = fa_icon 'check', text: t('page.expense_list.read')

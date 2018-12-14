@@ -27,8 +27,8 @@ $ ->
       add_value: ->
         for i in @list
           if i.id == @id_tr
-            @.$parent.departure = i.departure
-            @.$parent.arrival = i.arrival
+            @.$parent.expense.depatture_location = i.departure
+            @.$parent.expense.arrival_location = i.arrival
             @.$parent.defaule_expense_items.standard_amount = i.amount
         @modalHide()
     events:
