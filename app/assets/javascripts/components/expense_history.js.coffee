@@ -2,7 +2,6 @@ $ ->
   Vue.component 'expenseHistory',
     template: '#expense_history'
     mixins: [Vue.modules.modal]
-    props: ['def']
     data: ->
       selectSchema:
         default_id: 'eq'
@@ -45,7 +44,8 @@ $ ->
       showExpenseNew: (val) -> @$broadcast('showExpenseNewEvent', '')
       changeRadio: (expenseId) -> @ids = expenseId
     compiled: ->
-      @loadHistory()
       @loadDefaultIds()
     events:
-      showExpenseHistoryEvent: -> @modalShow()
+      showExpenseHistoryEvent: ->
+        @loadHistory()
+        @modalShow()

@@ -50,7 +50,7 @@ $ ->
           form.append('expense[arrival_location]', @expense.arrival_location)
           form.append('expense[amount]', @defaule_expense_items.standard_amount)
           form.append('expense[payment_type]', @expense.payment_type)
-          form.append('expense[project_id]', @expense.project_id) if @expense.project_id
+          form.append('expense[project_id]', @selected_project) if @selected_project
           form.append('expense[notes]', @expense.notes)
           form.append('fix_amount', @fix_amount)
           $.ajax

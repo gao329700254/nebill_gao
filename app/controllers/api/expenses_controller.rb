@@ -134,20 +134,23 @@ class Api::ExpensesController < Api::ApiController
   def expense_history
     @st = params[:station]
     @no = params[:note]
-    @id = params[:default_id]
 
     @expenses = if @st.present? && @no.present?
                   Expense.where(created_user_id: @current_user.id)
                          .where('depatture_location = ? OR arrival_location = ?', @st, @st)
-                         .where('notes LIKE ?', "%#{@no}%").includes(:default, :file)
+                         .where('notes LIKE ?', "%#{@no}%")
+                         .order(:created_at).includes(:default, :file)
                 elsif @st.present?
                   Expense.where(created_user_id: @current_user.id)
-                         .where('depatture_location = ? OR arrival_location = ?', @st, @st).includes(:default, :file)
+                         .where('depatture_location = ? OR arrival_location = ?', @st, @st)
+                         .order(:created_at).includes(:default, :file)
                 elsif @no.present?
                   Expense.where(created_user_id: @current_user.id)
-                         .where('notes LIKE ?', "%#{@no}%").includes(:default, :file)
+                         .where('notes LIKE ?', "%#{@no}%")
+                         .order(:created_at).includes(:default, :file)
                 else
-                  Expense.where(created_user_id: @current_user.id).includes(:default, :file)
+                  Expense.where(created_user_id: @current_user.id)
+                         .order(:created_at).includes(:default, :file)
                 end
 
     render 'load', formats: 'json', handlers: 'jbuilder', status: :ok
