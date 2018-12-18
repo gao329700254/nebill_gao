@@ -1,13 +1,24 @@
 Rails.application.routes.draw do
   namespace :api, format: :json do
-    resources :clients, only: [:index, :create, :show, :update]
+    resources :clients, only: [:index, :create, :show, :update], shallow: true do
+      collection do
+        get 'statuses', to: "clients#statuses"
+        post 'set_approval_user', to: "clients#set_approval_user"
+      end
+    end
+    scope path: 'files/:files_id' do
+      get 'client_file_download', to: 'files#client_file_download'
+    end
+    scope path: 'clients/:client_id' do
+      post "update_approval", to: "clients#update_approval"
+      post "invalid_client", to: "clients#invalid_client"
+    end
     resources :users, only: [:index, :create, :show, :update, :destroy], shallow: true do
       collection do
         get 'roles', to: "users#roles"
       end
     end
     resources :partners, only: [:index, :create, :update]
-    post "projects/create_with_client", to: "projects#create_with_client"
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
       collection do
         get ':id/select_status', to: "projects#select_status"

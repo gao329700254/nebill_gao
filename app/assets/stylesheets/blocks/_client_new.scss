@@ -36,6 +36,11 @@
         @extend %client_new__form__item;
         width: 10em;
       }
+
+      &--file {
+        margin-bottom: $base-spacing;
+        width: 10em;
+      }
     }
 
     &__submit_btn,

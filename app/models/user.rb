@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181127095607
+# Schema version: 20190108060032
 #
 # Table name: users
 #
@@ -24,7 +24,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_21f6e031b2  (default_allower => users.id)
+#  fk_rails_f76f7dd8cc  (default_allower => users.id)
 #
 
 class User < ActiveRecord::Base

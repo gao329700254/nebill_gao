@@ -10,11 +10,14 @@ $ ->
       searchKeywords: ''
       status: ''
       created_at: ''
+      category: ''
     watch:
       searchKeywords: (newSearchKeywords) ->
         localStorage.searchKeywords = newSearchKeywords
       status: (newStatus) ->
         localStorage.status = newStatus
+      category: (newCategory) ->
+        localStorage.category = newCategory
       created_at: (newCreated_at) ->
         localStorage.created_at = newCreated_at
     methods:
@@ -23,6 +26,8 @@ $ ->
           @searchKeywords = localStorage.searchKeywords
         if localStorage.status
           @status = localStorage.status
+        if localStorage.category
+          @category = localStorage.category
         if localStorage.created_at
           @created_at = localStorage.created_at
       linkToShow: (approvalId) -> window.location = "/approvals/#{approvalId}/show"

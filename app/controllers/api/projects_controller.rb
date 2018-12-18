@@ -17,21 +17,6 @@ class Api::ProjectsController < Api::ApiController
     render_action_model_fail_message(@project, :create)
   end
 
-  def create_with_client
-    @project = Project.new(project_param)
-    @client = Client.new(client_param)
-
-    if @project.valid? && @client.valid?
-      @project.save!
-      @client.save!
-      render_action_model_success_message(@project, :create)
-    elsif @project.invalid?
-      render_action_model_fail_message(@project, :create)
-    elsif @client.invalid?
-      render_action_model_fail_message(@client, :create)
-    end
-  end
-
   def show
     @project = if params[:bill_id]
                  Bill.find_by(id: params[:bill_id]).project
@@ -163,16 +148,5 @@ private
     )
   end
   # rubocop:enable Metrics/MethodLength
-
-  def client_param
-    params.require(:client).permit(
-      :company_name,
-      :department_name,
-      :address,
-      :zip_code,
-      :phone_number,
-      :memo,
-    )
-  end
 end
 # rubocop:enable Metrics/ClassLength

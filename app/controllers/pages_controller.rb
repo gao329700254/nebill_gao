@@ -100,6 +100,8 @@ private
 
   def set_client
     @client = Client.find(params[:client_id])
+    @approval = Approval.find_by(approved_id: params[:client_id])
+    @current_user_approval = ApprovalUser.find_by(approval_id: @approval.id, user_id: @current_user.id)
   end
 
   def set_approval

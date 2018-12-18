@@ -1,0 +1,10 @@
+script type='text/x-template' id='client_file'
+  .client_file
+    .client_file__outer [
+      v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
+      v-on:click   = "modalHide"
+    ]
+      .client_file__outer__inner v-on:click.stop=""
+        .client_file__outer__inner__body
+          .client_file__outer__inner__body__preview
+              img v-bind:src='url' class='client_file__outer__inner__body__preview__file'

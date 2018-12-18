@@ -2,14 +2,17 @@
 
 - provide(:title, t('page.client_show.title'))
 
+= render 'components/client_file'
+
 #client_show.client_show
   = hidden_field_tag :client_id, @client.id, 'v-model' => 'clientId'
+  = hidden_field_tag :approval_id, @approval.id, 'v-model' => 'approvalId'
 
   .client_show__last_updated_at
     = t('page.client_show.last_updated_at')
     span v-text='client.updated_at'
     span v-text='client.whodunnit' v-if='client.whodunnit'
-  = form_tag nil, class: 'client_show__form'
+  .client_show__form
     .client_show__form__container
       .client_show__form__container__group
         .client_show__form__item
@@ -33,9 +36,89 @@
         .client_show__form__item
           = label_tag :memo, t('activerecord.attributes.client.memo')
           = text_field_tag :memo, nil, 'v-model' => 'client.memo', ':disabled' => '!editMode'
-    = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'client_show__form__btn--edit' do
-      = fa_icon 'edit', text: t('helpers.edit')
-    = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'client_show__form__btn--cancel' do
-      = fa_icon 'remove', text: t('helpers.cancel')
-    = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'client_show__form__btn--submit' do
-      = fa_icon 'pencil-square', text: t('helpers.submit.update')
+        .client_show__form__item
+          - if (can?(:allread, Approval) && @approval.status != 40) || (@approval.status.in?([10, 30]) && @approval.created_user_id == @current_user.id)
+            = form_tag api_invalid_client_path(approval_id: @approval.id), method: :post, class: 'client_show__form__item__form' do
+              = button_tag 'invalid', data: { confirm: I18n.t("action.invalid.confirm") },
+                                                     class: 'client_show__form__update__action__btn--invalid', value: 'invalid' do
+                = fa_icon 'trash', text: t('page.approval_show.invalid')
+            = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'client_show__form__btn--edit' do
+              = fa_icon 'edit', text: t('helpers.edit')
+            = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'client_show__form__btn--cancel' do
+              = fa_icon 'remove', text: t('helpers.cancel')
+            = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'client_show__form__btn--submit' do
+              = fa_icon 'pencil-square', text: t('helpers.submit.update')
+      .client_show__form__container__group
+        = hidden_field_tag :file_url, '', 'v-model' => 'url'
+        = hidden_field_tag :approval_status, @approval.status, 'v-model' => 'approval_status'
+        .client_show__form__item
+          = label_tag :memo, t('activerecord.attributes.client.status')
+          = text_field_tag :memo, nil, 'v-model' => 'client.status', ':disabled' => true
+        .client_show__form__file
+          = label_tag :nda, t('page.client_show.nda_file')
+          .client_show__form__file__contents v-if='client.nda'
+            = hidden_field_tag :nda_file, '{{client.nda.file_type}}', 'v-model' => 'client.nda.file_type'
+            a v-bind:href="'/api/files/' + client.nda.id + '/client_file_download'" v-text="client.nda.original_filename|truncate"
+            = button_tag type: 'button', 'v-on:click' => "showClientFile(client.nda.file.url)", class: 'approval_show__detail__btn--preview',
+                                         'v-if' => 'client.nda.original_filename|match' do
+              = fa_icon 'image', text: t('page.client_show.preview')
+          .client_show__form__file__contents v-if='!client.nda'
+              = t('page.client_show.file_no_contents')
+          .client_show__form__file__contents v-if="editMode && approval_status == 'disconfirm' && client.status_num == 'approval_pending'"
+            = hidden_field_tag :nda_id, '{{client.nda.id}}', 'v-model' => 'nda_id'
+            = file_field_tag :files, 'v-on:change' => 'ndaInputChange'
+            = check_box_tag :nda_legal_check, true, false, 'v-model' => 'nda_legal_check'
+            = label_tag :nda_legal_check, t('page.client_new.legal_check')
+        .client_show__form__file
+          = label_tag :basic_contract, t('page.client_show.basic_contract')
+          .client_show__form__file__contents v-if='client.basic_c'
+            = hidden_field_tag :basic_contract_file, '{{client.basic_c.file_type}}', 'v-model' => 'client.basic_c.file_type'
+            a v-bind:href="'/api/files/' + client.basic_c.id + '/client_file_download'" v-text="client.basic_c.original_filename|truncate"
+            = button_tag type: 'button', 'v-on:click' => "showClientFile(client.basic_c.file.url)", 'v-if' => 'client.basic_c.original_filename|match',
+                                         class: 'approval_show__detail__btn--preview' do
+              = fa_icon 'image', text: t('page.client_show.preview')
+          .client_show__form__file__contents v-if='!client.basic_c'
+            = t('page.client_show.file_no_contents')
+          .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' && client.status_num == 'approval_pending')"
+            = hidden_field_tag :basic_contract_id, '{{client.basic_c.id}}', 'v-model' => 'basic_contract_id'
+            = file_field_tag :files, 'v-on:change' => 'basicContractInputChange'
+            = check_box_tag :basic_contract_legal_check, true, false, 'v-model' => 'basic_contract_legal_check'
+            = label_tag :basic_contract_legal_check, t('page.client_new.legal_check')
+          .client_show__form__file__contents v-if="editMode && (approval_status == 'permission' && client.status_num == 'waiting_for_basic_contract')"
+            = hidden_field_tag :basic_contract_id, '{{client.basic_c.id}}', 'v-model' => 'basic_contract_id'
+            = file_field_tag :files, 'v-on:change' => 'basicContractInputChange'
+            = check_box_tag :basic_contract_legal_check, true, false, 'v-model' => 'basic_contract_legal_check'
+            = label_tag :basic_contract_legal_check, t('page.client_new.legal_check')
+        .client_show__form__approval_user_list
+          table.client_show__form__approval_user_list__tbl
+            thead.client_show__form__approval_user_list__tbl__head
+              tr.client_show__form__approval_user_list__tbl__head__row
+                th.client_show__form__approval_user_list__item--approval_user_name = ApprovalUser.human_attribute_name(:name)
+                th.client_show__form__approval_user_list__item--approval_user_status = ApprovalUser.human_attribute_name(:status)
+                th.client_show__form__approval_user_list__item--approval_user_comment = ApprovalUser.human_attribute_name(:comment)
+            tbody.client_show__form__approval_user_list__tbl__body
+              tr.client_show__form__approval_user_list__tbl__body__row
+                td.client_show__form__approval_user_list__item--approval_user_name    v-text="approval_user.name"
+                td.client_show__form__approval_user_list__item--approval_user_status  v-text="approval_user.status"
+                td.client_show__form__approval_user_list__item--approval_user_comment v-text="approval_user.comment"
+          - if @approval.status != 40 && @approval.status != 20 && @current_user_approval.present?
+            = form_tag api_update_approval_path(approval_id: @approval.id), method: :post, class: 'approval_show__reassignment__form' do
+              .client_show__form__update
+                = t('page.approval_show.action')
+                .client_show__form__update__action
+                  = text_area_tag :comment, '', class: 'client_show__form__update__action__text',
+                                    placeholder: t('page.client_show.comment_placeholder')
+                  = button_tag 'permission', data: { disable_with: t('page.client_show.wait') } ,
+                                              class: 'client_show__form__update__action__btn--permission',
+                                              value: 'permission' do
+                    = fa_icon 'check', text: t('page.client_show.permission')
+                  = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
+                                              class: 'client_show__form__update__action__btn--disconfirm',
+                                              value: 'disconfirm' do
+                    = fa_icon 'remove', text: t('page.client_show.disconfirm')
+
+  component [
+    :is        = "'clientFile'"
+    :url       = "url"
+    keep-alive = true
+  ]

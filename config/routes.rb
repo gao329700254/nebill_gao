@@ -37,11 +37,16 @@
 #               admin_fb_download_csv POST   /admin/fb_download_csv(.:format)                         admin/fb#fb_download_csv
 #                     admin_user_show GET    /admin/users/:user_id/show(.:format)                     admin/pages#user_show
 #                   letter_opener_web        /letter_opener                                           LetterOpenerWeb::Engine
+#                statuses_api_clients GET    /api/clients/statuses(.:format)                          api/clients#statuses
+#       set_approval_user_api_clients POST   /api/clients/set_approval_user(.:format)                 api/clients#set_approval_user
 #                         api_clients GET    /api/clients(.:format)                                   api/clients#index
 #                                     POST   /api/clients(.:format)                                   api/clients#create
 #                          api_client GET    /api/clients/:id(.:format)                               api/clients#show
 #                                     PATCH  /api/clients/:id(.:format)                               api/clients#update
 #                                     PUT    /api/clients/:id(.:format)                               api/clients#update
+#            api_client_file_download GET    /api/files/:files_id/client_file_download(.:format)      api/files#client_file_download
+#                 api_update_approval POST   /api/clients/:client_id/update_approval(.:format)        api/clients#update_approval
+#                  api_invalid_client POST   /api/clients/:client_id/invalid_client(.:format)         api/clients#invalid_client
 #                     roles_api_users GET    /api/users/roles(.:format)                               api/users#roles
 #                           api_users GET    /api/users(.:format)                                     api/users#index
 #                                     POST   /api/users(.:format)                                     api/users#create
@@ -53,7 +58,6 @@
 #                                     POST   /api/partners(.:format)                                  api/partners#create
 #                         api_partner PATCH  /api/partners/:id(.:format)                              api/partners#update
 #                                     PUT    /api/partners/:id(.:format)                              api/partners#update
-#     api_projects_create_with_client POST   /api/projects/create_with_client(.:format)               api/projects#create_with_client
 #                                     GET    /api/projects/:id/select_status(.:format)                api/projects#select_status
 #                                     GET    /api/projects/:id/last_updated_at(.:format)              api/projects#last_updated_at
 #                                     GET    /api/projects/bill/:bill_id(.:format)                    api/projects#show

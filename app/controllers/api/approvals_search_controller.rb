@@ -1,6 +1,6 @@
 class Api::ApprovalsSearchController < Api::ApiController
   def index
-    @approvals = search_approval
+    @approvals = search_approval.only_approval
     render template: 'api/approvals/index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
@@ -14,7 +14,7 @@ private
               .includes([:created_user, [users: :employee], :approval_users])
               .references(:approval_users)
     elsif can?(:allread, Approval)
-      Approval.all.includes([:created_user, [users: :employee], :approval_users])
+      Approval.includes([:created_user, [users: :employee], :approval_users])
     else
       Approval.related_approval(current_user.id)
               .includes([:created_user, [users: :employee], :approval_users])

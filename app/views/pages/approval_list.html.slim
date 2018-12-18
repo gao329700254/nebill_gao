@@ -17,8 +17,8 @@
         = button_tag 'v-on:click' => 'showApprovalNew', class: 'approval_list__search__date__btn--new_approval' do
           = fa_icon 'check', text: t('page.approval_new.title')
     .approval_list__search__radio
-      = radio_button_tag :all, '', false, id: 'all', 'v-model' => 'status'
-      = label_tag :all, t('page.approval_list.status_type.all')
+      = radio_button_tag :all_status, '', false, id: 'all_status', 'v-model' => 'status'
+      = label_tag :all_status, t('page.approval_list.status_type.all')
       = radio_button_tag :pending, t('page.approval_list.status_type.pending'), false, id: 'pending', 'v-model' => 'status'
       = label_tag :pending, t('page.approval_list.status_type.pending')
       = radio_button_tag :permission, t('page.approval_list.status_type.permission'), false, id: 'permission', 'v-model' => 'status'
@@ -27,6 +27,20 @@
       = label_tag :disconfirm, t('page.approval_list.status_type.disconfirm')
       = radio_button_tag :invalid, t('page.approval_list.status_type.invalid'), false, id: 'invalid', 'v-model' => 'status'
       = label_tag :invalid, t('page.approval_list.status_type.invalid')
+    .approval_list__search__radio
+      = radio_button_tag :all_category, '', false, id: 'all_category', 'v-model' => 'category'
+      = label_tag :all_category, t('page.approval_list.category_type.all')
+      = radio_button_tag :contract_relationship, t('page.approval_list.category_type.contract_relationship'), false, id: 'contract_relationship',\
+      'v-model' => 'category'
+      = label_tag :contract_relationship, t('page.approval_list.category_type.contract_relationship')
+      = radio_button_tag :new_client, t('page.approval_list.category_type.new_client'), false, id: 'new_client', 'v-model' => 'category'
+      = label_tag :new_client, t('page.approval_list.category_type.new_client')
+      = radio_button_tag :consumables, t('page.approval_list.category_type.consumables'), false, id: 'consumables', 'v-model' => 'category'
+      = label_tag :consumables, t('page.approval_list.category_type.consumables')
+      = radio_button_tag :other_purchasing, t('page.approval_list.category_type.other_purchasing'), false, id: 'other_purchasing', 'v-model' => 'category'
+      = label_tag :other_purchasing, t('page.approval_list.category_type.other_purchasing')
+      = radio_button_tag :other, t('page.approval_list.category_type.other'), false, id: 'other', 'v-model' => 'category'
+      = label_tag :other, t('page.approval_list.category_type.other')
   table.approval_list__tbl
     thead.approval_list__tbl__head
       tr.approval_list__tbl__head__row
@@ -41,7 +55,7 @@
                        || approval.status === '#{t('enumerize.status.invalid')}'
                          ? 'approval_list__tbl__body__row--repudiation'
                          : 'approval_list__tbl__body__row'"
-        v-for = "approval in list | selectBy searchKeywords selectSchema | filterBy status in 'status' |orderBy sortKey -1"
+        v-for = "approval in list | selectBy searchKeywords selectSchema | filterBy status in 'status' | filterByCategory category | orderBy sortKey -1"
         id         = "approval-{{approval.id}}"
         v-on:click = "linkToShow(approval.id)"
         track-by   = "id"

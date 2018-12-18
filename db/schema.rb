@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181127095607) do
+ActiveRecord::Schema.define(version: 20190108060032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,12 +69,13 @@ ActiveRecord::Schema.define(version: 20181127095607) do
   add_index "bills", ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
 
   create_table "client_files", force: :cascade do |t|
-    t.integer  "client_id",         null: false
-    t.string   "file",              null: false
-    t.string   "original_filename", null: false
-    t.integer  "type"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "client_id",                         null: false
+    t.string   "file",                              null: false
+    t.string   "original_filename",                 null: false
+    t.integer  "file_type"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.boolean  "legal_check",       default: false
   end
 
   create_table "clients", force: :cascade do |t|
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20181127095607) do
     t.text     "memo"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "status"
   end
 
   create_table "default_expense_items", force: :cascade do |t|

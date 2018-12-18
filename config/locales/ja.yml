@@ -56,6 +56,13 @@ ja:
         phone_number:    電話番号
         personnels:      担当者情報
         memo:            メモ
+        files:           ファイル
+        nda:             NDA
+        basic_contract:  基本契約書(任意)
+        status:          ステータス
+        approval_name:   "%{comany} 取引先新規作成用稟議"
+      files:
+        legal_check:     リーガルチェック
       project:
         group: グループ
         cd: ID
@@ -282,6 +289,7 @@ ja:
       default_allower_is_empty: 承認者を選択してください。
       expense_approval_is_empty: 申請を選択してください。
       unselected: を選択してください。
+      presence_check_box: は必ずチェックしてください
     template:
       body: 次の項目を確認してください
       header:
@@ -454,18 +462,38 @@ ja:
       person_rebuilding:      本人立替
       invoice:                請求書
       corporate_card:         法人カード
+    client:
+      status:
+        approval_pending:           承認待ち
+        waiting_for_basic_contract: 基本契約書添付待ち
+        published:                  有効
   page:
     home:
       title: ホーム
       description: シンプルで高機能なプロジェクト管理システム
     client_new:
       title: 取引先新規作成
+      legal_check: リーガルチェック
     client_list:
       title: 取引先一覧
       search_form_placeholder: 'ID,会社名,部署名,電話番号で検索できます'
     client_show:
       title: 取引先情報
       last_updated_at: '最終更新日時: '
+      nda_file: NDAファイル
+      file_no_contents: なし
+      basic_contract: 基本契約書
+      preview: プレビュー
+      user_no_contents: 承認者が存在しません
+      history: 承認履歴
+      invalid: 承認申請の取り消し
+      permission: 承認
+      disconfirm: 差し戻し
+      reassignment: 再割り当て
+      action: アクション
+      edit: 編集
+      comment_placeholder: コメントを入力してください
+      wait: 処理中...
     project_new:
       title: プロジェクト新規作成
       orderer: 受注先会社情報
@@ -542,6 +570,13 @@ ja:
         permission: 承認済み
         disconfirm: 差し戻し
         invalid: 取り消し
+      category_type:
+        all: 全て
+        contract_relationship: 契約関係
+        new_client: 新規取引先
+        consumables: 消耗品
+        other_purchasing: その他購買
+        other: その他
     approval_show:
       title: 稟議情報
       note_no_contents: なし
