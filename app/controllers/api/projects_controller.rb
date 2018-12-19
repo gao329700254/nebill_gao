@@ -54,7 +54,6 @@ class Api::ProjectsController < Api::ApiController
 
   def select_status
     @select_status = Project.status.options
-
     render json: @select_status, status: :ok
   end
 

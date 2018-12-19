@@ -26,6 +26,8 @@ private
     can :manage, ProjectFile
     can :manage, Member
     can :manage, Bill
+    can :manage, ApprovalsSearch
+    can :manage, ProjectCd
 
     approval_ability
     expense_abilty user

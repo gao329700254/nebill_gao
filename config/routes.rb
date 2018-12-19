@@ -1,134 +1,139 @@
 # == Route Map
 #
-#                              Prefix Verb   URI Pattern                                             Controller#Action
-#                            teaspoon        /teaspoon                                               Teaspoon::Engine
-#                                root GET    /                                                       pages#home
-#                                home GET    /home(.:format)                                         pages#home
-#                                     GET    /auth/:provider/callback(.:format)                      user_sessions#create
-#                                     POST   /auth/:provider/callback(.:format)                      user_sessions#create
-#                              logout DELETE /logout(.:format)                                       user_sessions#destroy
-#                         client_list GET    /clients/list(.:format)                                 pages#client_list
-#                         client_show GET    /clients/:client_id/show(.:format)                      pages#client_show
-#                        project_list GET    /projects/list(.:format)                                pages#project_list
-#                        project_show GET    /projects/:project_id/show(.:format)                    pages#project_show
-#                        approval_new GET    /approvals/new(.:format)                                pages#approval_new
-#                       approval_list GET    /approvals/list(.:format)                               pages#approval_list
-#                       approval_show GET    /approvals/:approval_id/show(.:format)                  pages#approval_show
-#                       approval_edit GET    /approvals/:approval_id/edit(.:format)                  pages#approval_edit
-#                         expense_new GET    /expense/new(.:format)                                  pages#expense_new
-#                        expense_list GET    /expense/list(.:format)                                 pages#expense_list
-#                    expense_download GET    /expense/pdf(.:format)                                  expenses/pdf#download
-#                         expense_csv GET    /expense/csv(.:format)                                  pages#expense_csv
-#                expense_download_csv POST   /expense/tocsv(.:format)                                expenses/csv#download_csv
-#                        expense_edit GET    /expense/:expense_id/edit(.:format)                     pages#expense_edit
-#                expense_download_pdf GET    /expense/:expense_id/pdf(.:format)                      expenses/pdf#download
-#                expense_approval_new GET    /expense/approval/new(.:format)                         pages#expense_approval_new
-#               expense_approval_list GET    /expense/approval/list(.:format)                        pages#expense_approval_list
-#               expense_approval_show GET    /expense/approval/:expense_approval_id/show(.:format)   pages#expense_approval_show
-#               expense_approval_edit GET    /expense/approval/:expense_approval_id/edit(.:format)   pages#expense_approval_edit
-#                           bill_list GET    /bills/list(.:format)                                   pages#bill_list
-#                           bill_show GET    /bills/:bill_id/show(.:format)                          pages#bill_show
-#                       bill_download GET    /bills/:bill_id/xlsx(.:format)                          bills/xlsx#download
-#                   bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                           bills/pdf#download
-#                      project_groups GET    /project_groups(.:format)                               pages#project_groups
-#                            partners GET    /partners(.:format)                                     pages#partners
-#                         admin_users GET    /admin/users(.:format)                                  admin/pages#users
-#                admin_fb_date_output GET    /admin/fb_date_output(.:format)                         admin/pages#fb_date_output
-#               admin_fb_download_csv POST   /admin/fb_download_csv(.:format)                        admin/fb#fb_download_csv
-#                     admin_user_show GET    /admin/users/:user_id/show(.:format)                    admin/pages#user_show
-#                   letter_opener_web        /letter_opener                                          LetterOpenerWeb::Engine
-#                         api_clients GET    /api/clients(.:format)                                  api/clients#index
-#                                     POST   /api/clients(.:format)                                  api/clients#create
-#                          api_client GET    /api/clients/:id(.:format)                              api/clients#show
-#                                     PATCH  /api/clients/:id(.:format)                              api/clients#update
-#                                     PUT    /api/clients/:id(.:format)                              api/clients#update
-#                     roles_api_users GET    /api/users/roles(.:format)                              api/users#roles
-#                           api_users GET    /api/users(.:format)                                    api/users#index
-#                                     POST   /api/users(.:format)                                    api/users#create
-#                            api_user GET    /api/users/:id(.:format)                                api/users#show
-#                                     PATCH  /api/users/:id(.:format)                                api/users#update
-#                                     PUT    /api/users/:id(.:format)                                api/users#update
-#                                     DELETE /api/users/:id(.:format)                                api/users#destroy
-#                        api_partners GET    /api/partners(.:format)                                 api/partners#index
-#                                     POST   /api/partners(.:format)                                 api/partners#create
-#                         api_partner PATCH  /api/partners/:id(.:format)                             api/partners#update
-#                                     PUT    /api/partners/:id(.:format)                             api/partners#update
-#     api_projects_create_with_client POST   /api/projects/create_with_client(.:format)              api/projects#create_with_client
-#                                     GET    /api/projects/:id/select_status(.:format)               api/projects#select_status
-#                                     GET    /api/projects/:id/last_updated_at(.:format)             api/projects#last_updated_at
-#                                     GET    /api/projects/bill/:bill_id(.:format)                   api/projects#show
-#                   api_project_users GET    /api/projects/:project_id/users(.:format)               api/users#index
-#                   api_bill_partners GET    /api/bills/:bill_id/partners(.:format)                  api/partners#index
-#                      api_bill_users GET    /api/bills/:bill_id/users(.:format)                     api/users#index
-#                   api_project_bills GET    /api/projects/:project_id/bills(.:format)               api/bills#index
-#                                     POST   /api/projects/:project_id/bills(.:format)               api/bills#create
-#                            api_bill GET    /api/bills/:id(.:format)                                api/bills#show
-#                                     PATCH  /api/bills/:id(.:format)                                api/bills#update
-#                                     PUT    /api/bills/:id(.:format)                                api/bills#update
-#                                     DELETE /api/bills/:id(.:format)                                api/bills#destroy
-#                api_project_partners GET    /api/projects/:project_id/partners(.:format)            api/partners#index
-#           api_project_project_files GET    /api/projects/:project_id/project_files(.:format)       api/project_files#index
-#                                     POST   /api/projects/:project_id/project_files(.:format)       api/project_files#create
-#                    api_project_file GET    /api/project_files/:id(.:format)                        api/project_files#show
-#                                     PATCH  /api/project_files/:id(.:format)                        api/project_files#update
-#                                     PUT    /api/project_files/:id(.:format)                        api/project_files#update
-#                                     DELETE /api/project_files/:id(.:format)                        api/project_files#destroy
-#     api_project_project_file_groups GET    /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#index
-#                                     POST   /api/projects/:project_id/project_file_groups(.:format) api/project_file_groups#create
-#     bill_default_values_api_project GET    /api/projects/:id/bill_default_values(.:format)         api/projects#bill_default_values
-#             project_cd_api_projects GET    /api/projects/cd/:project_type(.:format)                api/project_cds#cd
-#                        api_projects GET    /api/projects(.:format)                                 api/projects#index
-#                                     POST   /api/projects(.:format)                                 api/projects#create
-#                         api_project GET    /api/projects/:id(.:format)                             api/projects#show
-#                                     PATCH  /api/projects/:id(.:format)                             api/projects#update
-#                                     PUT    /api/projects/:id(.:format)                             api/projects#update
-#                                     DELETE /api/projects/:id(.:format)                             api/projects#destroy
-#                    api_user_members POST   /api/user_members/:bill_id/:user_id(.:format)           api/user_members#create
-#             api_delete_user_members DELETE /api/user_members/:bill_id/:user_id(.:format)           api/user_members#destroy
-#                 api_partner_members POST   /api/partner_members/:bill_id/:partner_id(.:format)     api/partner_members#create
-#          api_delete_partner_members DELETE /api/partner_members/:bill_id/:partner_id(.:format)     api/partner_members#destroy
-#          api_update_partner_members PATCH  /api/partner_members/:bill_id/:partner_id(.:format)     api/partner_members#update
-#                  api_project_groups GET    /api/project_groups(.:format)                           api/project_groups#index
-#                                     POST   /api/project_groups(.:format)                           api/project_groups#create
-#                   api_project_group PATCH  /api/project_groups/:id(.:format)                       api/project_groups#update
-#                                     PUT    /api/project_groups/:id(.:format)                       api/project_groups#update
-#                           api_bills GET    /api/bills(.:format)                                    api/bills#index
-#          api_projects_search_result POST   /api/projects/search_result(.:format)                   api/projects#search_result
-#             api_bills_search_result POST   /api/bills/search_result(.:format)                      api/bills#search_result
-#         api_approvals_search_result POST   /api/approvals/search_result(.:format)                  api/approvals#search_result
-#                       api_approvals GET    /api/approvals(.:format)                                api/approvals#index
-#                                     POST   /api/approvals(.:format)                                api/approvals#create
-#                        api_approval GET    /api/approvals/:id(.:format)                            api/approvals#show
-#                                     PATCH  /api/approvals/:id(.:format)                            api/approvals#update
-#                                     PUT    /api/approvals/:id(.:format)                            api/approvals#update
-#                                     DELETE /api/approvals/:id(.:format)                            api/approvals#destroy
-#          api_approval_file_download GET    /api/files/:files_id/approval_file_download(.:format)   api/files#approval_file_download
-#      set_default_items_api_expenses GET    /api/expenses/set_default_items(.:format)               api/expenses#set_default_items
-#                        api_expenses GET    /api/expenses(.:format)                                 api/expenses#index
-#                                     POST   /api/expenses(.:format)                                 api/expenses#create
-#                         api_expense GET    /api/expenses/:id(.:format)                             api/expenses#show
-#                                     PATCH  /api/expenses/:id(.:format)                             api/expenses#update
-#                                     PUT    /api/expenses/:id(.:format)                             api/expenses#update
-#                                     DELETE /api/expenses/:id(.:format)                             api/expenses#destroy
-#                      api_input_item POST   /api/expenses/input_item(.:format)                      api/expenses#input_item
-#                       api_load_item POST   /api/expenses/load_item(.:format)                       api/expenses#load_item
-#                       api_load_list POST   /api/expenses/load_list(.:format)                       api/expenses#load_list
-#                      api_reapproval POST   /api/expenses/reapproval(.:format)                      api/expenses#reapproval
-#                api_invalid_approval POST   /api/expenses/invalid_approval(.:format)                api/expenses#invalid_approval
-#         api_create_expense_approval POST   /api/expenses/create_expense_approval(.:format)         api/expenses#create_expense_approval
-#                  api_search_for_csv POST   /api/expenses/search_for_csv(.:format)                  api/expenses#search_for_csv
-#                 api_expense_history POST   /api/expenses/expense_history(.:format)                 api/expenses#expense_history
-#                     api_set_project POST   /api/expenses/set_project(.:format)                     api/expenses#set_project
-#          api_expense_transportation POST   /api/expenses/expense_transportation(.:format)          api/expenses#expense_transportation
-#                    api_load_expense POST   /api/expenses/load_expense(.:format)                    api/expenses#load_expense
-#           api_expense_file_download GET    /api/files/:files_id/expense_file_download(.:format)    api/files#expense_file_download
-# api_expense_approvals_search_result POST   /api/expense_approvals/search_result(.:format)          api/expense_approvals#search_result
-#               api_expense_approvals GET    /api/expense_approvals(.:format)                        api/expense_approvals#index
-#                                     POST   /api/expense_approvals(.:format)                        api/expense_approvals#create
-#                api_expense_approval GET    /api/expense_approvals/:id(.:format)                    api/expense_approvals#show
-#                                     PATCH  /api/expense_approvals/:id(.:format)                    api/expense_approvals#update
-#                                     PUT    /api/expense_approvals/:id(.:format)                    api/expense_approvals#update
-#                                     DELETE /api/expense_approvals/:id(.:format)                    api/expense_approvals#destroy
+#                              Prefix Verb   URI Pattern                                              Controller#Action
+#                            teaspoon        /teaspoon                                                Teaspoon::Engine
+#                                root GET    /                                                        pages#home
+#                                home GET    /home(.:format)                                          pages#home
+#                                     GET    /auth/:provider/callback(.:format)                       user_sessions#create
+#                                     POST   /auth/:provider/callback(.:format)                       user_sessions#create
+#                              logout DELETE /logout(.:format)                                        user_sessions#destroy
+#                         client_list GET    /clients/list(.:format)                                  pages#client_list
+#                         client_show GET    /clients/:client_id/show(.:format)                       pages#client_show
+#                        project_list GET    /projects/list(.:format)                                 pages#project_list
+#                        project_show GET    /projects/:project_id/show(.:format)                     pages#project_show
+#                        approval_new GET    /approvals/new(.:format)                                 pages#approval_new
+#                       approval_list GET    /approvals/list(.:format)                                pages#approval_list
+#                       approval_show GET    /approvals/:approval_id/show(.:format)                   pages#approval_show
+#                       approval_edit GET    /approvals/:approval_id/edit(.:format)                   pages#approval_edit
+#                         expense_new GET    /expense/new(.:format)                                   pages#expense_new
+#                        expense_list GET    /expense/list(.:format)                                  pages#expense_list
+#                    expense_download GET    /expense/pdf(.:format)                                   expenses/pdf#download
+#                         expense_csv GET    /expense/csv(.:format)                                   pages#expense_csv
+#                expense_download_csv POST   /expense/tocsv(.:format)                                 expenses/csv#download_csv
+#                        expense_edit GET    /expense/:expense_id/edit(.:format)                      pages#expense_edit
+#                expense_download_pdf GET    /expense/:expense_id/pdf(.:format)                       expenses/pdf#download
+#                expense_approval_new GET    /expense/approval/new(.:format)                          pages#expense_approval_new
+#               expense_approval_list GET    /expense/approval/list(.:format)                         pages#expense_approval_list
+#               expense_approval_show GET    /expense/approval/:expense_approval_id/show(.:format)    pages#expense_approval_show
+#               expense_approval_edit GET    /expense/approval/:expense_approval_id/edit(.:format)    pages#expense_approval_edit
+#                           bill_list GET    /bills/list(.:format)                                    pages#bill_list
+#                           bill_show GET    /bills/:bill_id/show(.:format)                           pages#bill_show
+#                       bill_download GET    /bills/:bill_id/xlsx(.:format)                           bills/xlsx#download
+#                   bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                            bills/pdf#download
+#                      project_groups GET    /project_groups(.:format)                                pages#project_groups
+#                            partners GET    /partners(.:format)                                      pages#partners
+#                         admin_users GET    /admin/users(.:format)                                   admin/pages#users
+#                admin_fb_date_output GET    /admin/fb_date_output(.:format)                          admin/pages#fb_date_output
+#               admin_fb_download_csv POST   /admin/fb_download_csv(.:format)                         admin/fb#fb_download_csv
+#                     admin_user_show GET    /admin/users/:user_id/show(.:format)                     admin/pages#user_show
+#                   letter_opener_web        /letter_opener                                           LetterOpenerWeb::Engine
+#                         api_clients GET    /api/clients(.:format)                                   api/clients#index
+#                                     POST   /api/clients(.:format)                                   api/clients#create
+#                          api_client GET    /api/clients/:id(.:format)                               api/clients#show
+#                                     PATCH  /api/clients/:id(.:format)                               api/clients#update
+#                                     PUT    /api/clients/:id(.:format)                               api/clients#update
+#                     roles_api_users GET    /api/users/roles(.:format)                               api/users#roles
+#                           api_users GET    /api/users(.:format)                                     api/users#index
+#                                     POST   /api/users(.:format)                                     api/users#create
+#                            api_user GET    /api/users/:id(.:format)                                 api/users#show
+#                                     PATCH  /api/users/:id(.:format)                                 api/users#update
+#                                     PUT    /api/users/:id(.:format)                                 api/users#update
+#                                     DELETE /api/users/:id(.:format)                                 api/users#destroy
+#                        api_partners GET    /api/partners(.:format)                                  api/partners#index
+#                                     POST   /api/partners(.:format)                                  api/partners#create
+#                         api_partner PATCH  /api/partners/:id(.:format)                              api/partners#update
+#                                     PUT    /api/partners/:id(.:format)                              api/partners#update
+#     api_projects_create_with_client POST   /api/projects/create_with_client(.:format)               api/projects#create_with_client
+#                                     GET    /api/projects/:id/select_status(.:format)                api/projects#select_status
+#                                     GET    /api/projects/:id/last_updated_at(.:format)              api/projects#last_updated_at
+#                                     GET    /api/projects/bill/:bill_id(.:format)                    api/projects#show
+#                   api_project_users GET    /api/projects/:project_id/users(.:format)                api/users#index
+#                   api_bill_partners GET    /api/bills/:bill_id/partners(.:format)                   api/partners#index
+#                      api_bill_users GET    /api/bills/:bill_id/users(.:format)                      api/users#index
+#                   api_project_bills GET    /api/projects/:project_id/bills(.:format)                api/bills#index
+#                                     POST   /api/projects/:project_id/bills(.:format)                api/bills#create
+#                            api_bill GET    /api/bills/:id(.:format)                                 api/bills#show
+#                                     PATCH  /api/bills/:id(.:format)                                 api/bills#update
+#                                     PUT    /api/bills/:id(.:format)                                 api/bills#update
+#                                     DELETE /api/bills/:id(.:format)                                 api/bills#destroy
+#                api_project_partners GET    /api/projects/:project_id/partners(.:format)             api/partners#index
+#           api_project_project_files GET    /api/projects/:project_id/project_files(.:format)        api/project_files#index
+#                                     POST   /api/projects/:project_id/project_files(.:format)        api/project_files#create
+#                    api_project_file GET    /api/project_files/:id(.:format)                         api/project_files#show
+#                                     PATCH  /api/project_files/:id(.:format)                         api/project_files#update
+#                                     PUT    /api/project_files/:id(.:format)                         api/project_files#update
+#                                     DELETE /api/project_files/:id(.:format)                         api/project_files#destroy
+#     api_project_project_file_groups GET    /api/projects/:project_id/project_file_groups(.:format)  api/project_file_groups#index
+#                                     POST   /api/projects/:project_id/project_file_groups(.:format)  api/project_file_groups#create
+#     bill_default_values_api_project GET    /api/projects/:id/bill_default_values(.:format)          api/projects#bill_default_values
+#             project_cd_api_projects GET    /api/projects/cd/:project_type(.:format)                 api/project_cds#cd
+#                        api_projects GET    /api/projects(.:format)                                  api/projects#index
+#                                     POST   /api/projects(.:format)                                  api/projects#create
+#                         api_project GET    /api/projects/:id(.:format)                              api/projects#show
+#                                     PATCH  /api/projects/:id(.:format)                              api/projects#update
+#                                     PUT    /api/projects/:id(.:format)                              api/projects#update
+#                                     DELETE /api/projects/:id(.:format)                              api/projects#destroy
+#                    api_user_members POST   /api/user_members/:bill_id/:user_id(.:format)            api/user_members#create
+#             api_delete_user_members DELETE /api/user_members/:bill_id/:user_id(.:format)            api/user_members#destroy
+#                 api_partner_members POST   /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#create
+#          api_delete_partner_members DELETE /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#destroy
+#          api_update_partner_members PATCH  /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#update
+#                  api_project_groups GET    /api/project_groups(.:format)                            api/project_groups#index
+#                                     POST   /api/project_groups(.:format)                            api/project_groups#create
+#                   api_project_group PATCH  /api/project_groups/:id(.:format)                        api/project_groups#update
+#                                     PUT    /api/project_groups/:id(.:format)                        api/project_groups#update
+#                           api_bills GET    /api/bills(.:format)                                     api/bills#index
+#          api_projects_search_result POST   /api/projects/search_result(.:format)                    api/projects#search_result
+#             api_bills_search_result POST   /api/bills/search_result(.:format)                       api/bills#search_result
+#          api_approvals_search_index POST   /api/approvals_search/index(.:format)                    api/approvals_search#index
+#                api_approval_invalid POST   /api/approvals/:approval_id/invalid(.:format)            api/approvals#invalid
+#         api_approval_approval_users POST   /api/approvals/:approval_id/approval_users(.:format)     api/approval_users#create
+#          api_approval_approval_user PATCH  /api/approvals/:approval_id/approval_users/:id(.:format) api/approval_users#update
+#                                     PUT    /api/approvals/:approval_id/approval_users/:id(.:format) api/approval_users#update
+#           api_approval_search_index POST   /api/approvals/:approval_id/search/index(.:format)       api/approvals_search#index
+#                       api_approvals GET    /api/approvals(.:format)                                 api/approvals#index
+#                                     POST   /api/approvals(.:format)                                 api/approvals#create
+#                        api_approval GET    /api/approvals/:id(.:format)                             api/approvals#show
+#                                     PATCH  /api/approvals/:id(.:format)                             api/approvals#update
+#                                     PUT    /api/approvals/:id(.:format)                             api/approvals#update
+#                                     DELETE /api/approvals/:id(.:format)                             api/approvals#destroy
+#          api_approval_file_download GET    /api/files/:files_id/approval_file_download(.:format)    api/files#approval_file_download
+#      set_default_items_api_expenses GET    /api/expenses/set_default_items(.:format)                api/expenses#set_default_items
+#                        api_expenses GET    /api/expenses(.:format)                                  api/expenses#index
+#                                     POST   /api/expenses(.:format)                                  api/expenses#create
+#                         api_expense GET    /api/expenses/:id(.:format)                              api/expenses#show
+#                                     PATCH  /api/expenses/:id(.:format)                              api/expenses#update
+#                                     PUT    /api/expenses/:id(.:format)                              api/expenses#update
+#                                     DELETE /api/expenses/:id(.:format)                              api/expenses#destroy
+#                      api_input_item POST   /api/expenses/input_item(.:format)                       api/expenses#input_item
+#                       api_load_item POST   /api/expenses/load_item(.:format)                        api/expenses#load_item
+#                       api_load_list POST   /api/expenses/load_list(.:format)                        api/expenses#load_list
+#                      api_reapproval POST   /api/expenses/reapproval(.:format)                       api/expenses#reapproval
+#                api_invalid_approval POST   /api/expenses/invalid_approval(.:format)                 api/expenses#invalid_approval
+#         api_create_expense_approval POST   /api/expenses/create_expense_approval(.:format)          api/expenses#create_expense_approval
+#                  api_search_for_csv POST   /api/expenses/search_for_csv(.:format)                   api/expenses#search_for_csv
+#                 api_expense_history POST   /api/expenses/expense_history(.:format)                  api/expenses#expense_history
+#                     api_set_project POST   /api/expenses/set_project(.:format)                      api/expenses#set_project
+#          api_expense_transportation POST   /api/expenses/expense_transportation(.:format)           api/expenses#expense_transportation
+#                    api_load_expense POST   /api/expenses/load_expense(.:format)                     api/expenses#load_expense
+#           api_expense_file_download GET    /api/files/:files_id/expense_file_download(.:format)     api/files#expense_file_download
+# api_expense_approvals_search_result POST   /api/expense_approvals/search_result(.:format)           api/expense_approvals#search_result
+#               api_expense_approvals GET    /api/expense_approvals(.:format)                         api/expense_approvals#index
+#                                     POST   /api/expense_approvals(.:format)                         api/expense_approvals#create
+#                api_expense_approval GET    /api/expense_approvals/:id(.:format)                     api/expense_approvals#show
+#                                     PATCH  /api/expense_approvals/:id(.:format)                     api/expense_approvals#update
+#                                     PUT    /api/expense_approvals/:id(.:format)                     api/expense_approvals#update
+#                                     DELETE /api/expense_approvals/:id(.:format)                     api/expense_approvals#destroy
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index

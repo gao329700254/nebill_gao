@@ -35,5 +35,12 @@ class Approval < ActiveRecord::Base
   enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, invalid: 40 }, default: :pending
   enumerize :category, in: { contract_relationship: 10, new_client: 20, consumables: 30, other_purchasing: 40, other: 50 }, default: :other
 
-  scope :where_created_at, -> (created_at) { where(created_at: Date.strptime(created_at).beginning_of_day..Date.strptime(created_at).end_of_day) }
+  scope :where_created_on, -> (created_on) { where(created_at: Date.strptime(created_on).beginning_of_day..Date.strptime(created_on).end_of_day) }
+  scope :related_approval, -> (id) { where('created_user_id = ? OR approval_users.user_id = ?', id, id) }
+
+  class << self
+    def related_approval_where_created_on(id, created_at)
+      related_approval(id).where_created_at(created_at)
+    end
+  end
 end

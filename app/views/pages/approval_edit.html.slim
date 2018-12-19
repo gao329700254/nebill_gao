@@ -4,6 +4,7 @@
 #approval_edit.approval_edit
 
   = form_for [:api, @approval], class: 'approval_edit__form' do |f|
+    = f.hidden_field :status
     .approval_edit__form__container
       .approval_edit__form__container__group
         .approval_edit__form__item
