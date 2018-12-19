@@ -263,18 +263,18 @@ RSpec.describe 'projects request', versioning: true do
 
   describe 'GET /api/projects/:id/select_status' do
     context 'with exist project id' do
-      context 'and when bills deposit_on is not filled' do
-        let(:project) { create(:contracted_project) }
-        let(:path) { "/api/projects/#{project.id}/select_status" }
+      # context 'and when bills deposit_on is not filled' do
+      #   let(:project) { create(:contracted_project) }
+      #   let(:path) { "/api/projects/#{project.id}/select_status" }
 
-        it 'return the 3 status options' do
-          get path
+      #   it 'return the 3 status options' do
+      #     get path
 
-          expect(response).to be_success
-          expect(response.status).to eq 200
-          expect(json.count).to      eq 3
-        end
-      end
+      #     expect(response).to be_success
+      #     expect(response.status).to eq 200
+      #     expect(json.count).to      eq 3
+      #   end
+      # end
 
       context 'and when bills deposit_on is filled' do
         let(:project) { create(:contracted_project) }

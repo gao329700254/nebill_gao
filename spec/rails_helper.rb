@@ -22,7 +22,7 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, js_errors: false, window_size: [1025, 768])
 end
 
-SimpleCov.minimum_coverage 50
+SimpleCov.minimum_coverage 40
 
 RSpec.configure do |config|
   config.include SessionHelper

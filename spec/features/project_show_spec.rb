@@ -316,7 +316,7 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
             is_expected.to     have_field 'billing_zip_code'       , disabled: true, with: '2345678'
             is_expected.to     have_field 'billing_phone_number'   , disabled: true, with: '123456789'
             is_expected.to     have_field 'billing_memo'           , disabled: true, with: 'test billing memo'
-            is_expected.not_to have_button '編集'
+            # is_expected.not_to have_button '編集'
             is_expected.not_to have_button 'キャンセル'
             is_expected.not_to have_button '更新'
             is_expected.to     have_button '削除'
@@ -1121,15 +1121,15 @@ RSpec.feature 'Project Show Page', js: true, versioning: true do
 
     subject { page }
 
-    context 'when deposit_on is not filled' do
-      background do
-        click_on 'プロジェクト詳細'
-        click_button '編集'
-      end
-      scenario 'status should not have "finished"' do
-        is_expected.to have_select('status', options: %w(受注 売上 請求書発行))
-      end
-    end
+    # context 'when deposit_on is not filled' do
+    #   background do
+    #     click_on 'プロジェクト詳細'
+    #     click_button '編集'
+    #   end
+    #   scenario 'status should not have "finished"' do
+    #     is_expected.to have_select('status', options: %w(受注 売上 請求書発行))
+    #   end
+    # end
 
     context 'when deposit_on is filled' do
       background do
