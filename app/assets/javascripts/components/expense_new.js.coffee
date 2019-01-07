@@ -21,6 +21,7 @@ $ ->
         use_date: new Date().toISOString().substr(0, 10)
         depatture_location: ''
         arrival_location: ''
+        notes: ''
       fix_amount: ''
       arrow: '→'
       checked: false
