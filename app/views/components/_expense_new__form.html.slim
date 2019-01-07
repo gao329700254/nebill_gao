@@ -56,6 +56,7 @@
               .expense_new__form__fill--select
                 = label_tag :payment_type, Expense.human_attribute_name(:project_id)
                 select name='expense[project_id]' id='project_id' v-model='selected_project'
+                  option value=""
                   option [
                     v-for = "project in project_list"
                     v-bind:value = "project.id"
