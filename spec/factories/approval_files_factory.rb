@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :approval_file do
-    approvals_id 1
+    approval
+    file    { fixture_file_upload Rails.root.join('spec/fixtures/sample.jpg'), 'image/jpg' }
+    original_filename { "#{Faker::Lorem.word}.jpg" }
   end
-
 end
