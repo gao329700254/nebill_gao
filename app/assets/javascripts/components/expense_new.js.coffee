@@ -46,9 +46,10 @@ $ ->
           form.append('expense[use_date]', @expense.use_date)
           form.append('expense[expense_approval_id]', @expense_approval_id)
           form.append('expense[default_id]', @expense.default_id)
-          form.append('expense[depatture_location]', @expense.depatture_location)
-          form.append('expense[is_round_trip]', @expense.is_round_trip)
-          form.append('expense[arrival_location]', @expense.arrival_location)
+          if @defaule_expense_items.is_routing
+            form.append('expense[depatture_location]', @expense.depatture_location)
+            form.append('expense[is_round_trip]', @checked)
+            form.append('expense[arrival_location]', @expense.arrival_location)
           form.append('expense[amount]', @defaule_expense_items.standard_amount)
           form.append('expense[payment_type]', @expense.payment_type)
           form.append('expense[project_id]', @selected_project) if @selected_project
