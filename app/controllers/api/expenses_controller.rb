@@ -70,6 +70,7 @@ class Api::ExpensesController < Api::ApiController
   def destroy
     @expense = Expense.find(params[:id])
     if @expense.destroy
+      update_total_expense(expense: @expense)
       render_action_model_flash_success_message(@expense, :destroy)
     else
       render_action_model_fail_message(@user, :destroy)
