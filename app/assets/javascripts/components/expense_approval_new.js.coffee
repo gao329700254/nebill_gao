@@ -43,6 +43,7 @@ $ ->
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
-          submit.prop('disabled', false)
     events:
-      showExpenseApprovalNewEvent: -> @modalShow()
+      showExpenseApprovalNewEvent: ->
+        @modalShow()
+        $('.expense_approval_new__form__submit_btn').prop('disabled', false)
