@@ -253,7 +253,7 @@ private
   end
 
   def save_expense_trasportation
-    @amount = if params[:expense][:is_round_trip]
+    @amount = if params[:expense][:is_round_trip] == 'true'
                 Integer(params[:expense][:amount])/2
               else
                 params[:expense][:amount]
