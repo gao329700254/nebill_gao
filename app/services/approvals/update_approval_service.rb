@@ -10,7 +10,7 @@ class Approvals::UpdateApprovalService < BaseService
     @approval ||= find_approval
     @approval.attributes = approval_params
     if @approval.valid?
-      @approval.save
+      @approval.save!
       update_notice
       return true
     end
