@@ -24,7 +24,7 @@ ja:
       project_file_group: プロジェクトファイルグループ
       approval: 稟議
       expense: 経費
-      expense_approval: 承認申請
+      expense_approval: 申請
     attributes:
       employee: &employee
         name: 名前
@@ -548,7 +548,7 @@ ja:
       file_no_contents: なし
       user_no_contents: 承認者が存在しません
       history: 承認履歴
-      invalid: 承認申請の取り消し
+      invalid: 申請の取り消し
       permission: 承認
       disconfirm: 差し戻し
       reassignment: 再割り当て
@@ -574,7 +574,7 @@ ja:
       replacement: 本人立替
       reimbursement_amount: 精算金額
       unapplove: 未申請
-      application: 承認申請
+      application: 申請
       reapproval: 再申請
       invalid_approval: 申請を取り消す
       add_expense: 経費追加
@@ -610,7 +610,7 @@ ja:
       file_no_contents: なし
       user_no_contents: 承認者が存在しません
       history: 承認履歴
-      invalid: 承認申請の取り消し
+      invalid: 申請の取り消し
       permission: 承認
       disconfirm: 差し戻し
       reassignment: 再割り当て
@@ -720,23 +720,23 @@ ja:
     from: nebill
     approval:
       assignment:
-        subject:  "【稟議】%{user}さんより,承認申請「%{name}」が申請されました."
-        message:  "%{user}さんより,承認申請「%{name}」が申請されました."
+        subject:  "【稟議】%{user}さんより,申請「%{name}」が申請されました."
+        message:  "%{user}さんより,「%{name}」が申請されました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
       update:
-        subject:  "【稟議】承認申請「%{name}」が更新されました."
-        message:  "承認申請「%{name}」が更新されました."
+        subject:  "【稟議】申請「%{name}」が更新されました."
+        message:  "申請「%{name}」が更新されました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
       permission:
-        subject:  "【稟議】%{user}さんの承認申請「%{name}」が承認済みになりました."
-        message:  "%{user}さんの承認申請「%{name}」が承認済みになりました."
+        subject:  "【稟議】%{user}さんの申請「%{name}」が承認済みになりました."
+        message:  "%{user}さんの申請「%{name}」が承認済みになりました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
       disconfirm:
-        subject:  "【稟議】%{user}さんの承認申請「%{name}」が差し戻しされました."
-        message:  "%{user}さんの承認申請「%{name}」が差し戻しされました."
+        subject:  "【稟議】%{user}さんの申請「%{name}」が差し戻しされました."
+        message:  "%{user}さんの申請「%{name}」が差し戻しされました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
     expense_approval:
@@ -751,16 +751,16 @@ ja:
         message9: "【申請日時】%{date}"        
         company:  "nebill by 株式会社Cuon"
       assignment:
-        subject:  "【経費申請】%{user}さんより,承認申請「%{name}」が申請されました."
-        message:  "%{user}さんより,承認申請「%{name}」が申請されました."
+        subject:  "【経費申請】%{user}さんより,申請「%{name}」が申請されました."
+        message:  "%{user}さんより,「%{name}」が申請されました."
       update:
-        subject:  "【経費申請】承認申請「%{name}」が更新されました."
-        message:  "承認申請「%{name}」が更新されました."
+        subject:  "【経費申請】申請「%{name}」が更新されました."
+        message:  "申請「%{name}」が更新されました."
       permission:  
-        subject:  "【経費申請】%{user}さんの承認申請「%{name}」が承認済みになりました."
-        message:  "%{user}さんの承認申請「%{name}」が承認済みになりました."
+        subject:  "【経費申請】%{user}さんの申請「%{name}」が承認済みになりました."
+        message:  "%{user}さんの申請「%{name}」が承認済みになりました."
       disconfirm:
-        subject:  "【経費申請】%{user}さんの承認申請「%{name}」が差し戻しされました."
-        message:  "%{user}さんの承認申請「%{name}」が差し戻しされました."
+        subject:  "【経費申請】%{user}さんの申請「%{name}」が差し戻しされました."
+        message:  "%{user}さんの申請「%{name}」が差し戻しされました."
   chatwork:
     annotate_to: "[To:%{id}] %{name}さん"
