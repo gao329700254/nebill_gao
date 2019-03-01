@@ -16,12 +16,6 @@ RSpec.describe Approvals::UpdateApprovalService do
     let!(:approvla_user) { create(:approval_user, approval: approval, user: user2) }
     let!(:approval_file) { create(:approval_file, approval: approval) }
 
-    before do
-      allow(ApprovalMailer).to receive_message_chain(:update_approval, :deliver_now).and_return(true)
-      chatwork_approval = instance_double(Chatwork::Approval, notify_edit: true)
-      allow(Chatwork::Approval).to receive(:new).and_return(chatwork_approval)
-    end
-
     subject { Approvals::UpdateApprovalService.new(approval_params: approval_params, update_params: update_params).execute }
 
     context 'when inputting correctly' do

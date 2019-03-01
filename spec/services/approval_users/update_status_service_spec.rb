@@ -10,13 +10,6 @@ RSpec.describe ApprovalUsers::UpdateStatusService do
     let(:approval) { create(:status_of_approval_is_disconfirm, created_user_id: user1.id) }
     let!(:approvla_user) { create(:approval_user, approval: approval, user: user2) }
 
-    before do
-      allow(ApprovalMailer).to receive_message_chain(:permission_approval, :deliver_now).and_return(true)
-      allow(ApprovalMailer).to receive_message_chain(:disconfirm_approval, :deliver_now).and_return(true)
-      allow(Chatwork::Approval).to receive_message_chain(:new, :notify_permited).and_return(true)
-      allow(Chatwork::Approval).to receive_message_chain(:new, :notify_disconfirm).and_return(true)
-    end
-
     subject { ApprovalUsers::UpdateStatusService.new(update_params: update_params, current_user: current_user).execute }
 
     context 'when inputting correctly(permission)' do

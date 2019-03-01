@@ -11,7 +11,6 @@ class Approvals::UpdateApprovalService < BaseService
     @approval.attributes = approval_params
     if @approval.valid?
       @approval.save!
-      update_notice
       return true
     end
     false
@@ -25,12 +24,5 @@ private
 
   def find_approval
     Approval.find(update_params[:id])
-  end
-
-  def update_notice
-    @approval.users.each do |user|
-      ApprovalMailer.update_approval(user: user, approval: @approval).deliver_now
-    end
-    Chatwork::Approval.new(approval: @approval, to_user: @approval.users).notify_edit
   end
 end

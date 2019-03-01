@@ -12,12 +12,6 @@ RSpec.describe Approvals::CreateApprovalService do
 
   describe '#execute' do
 
-    before do
-      allow(ApprovalMailer).to receive_message_chain(:assignment_user, :deliver_now).and_return(true)
-      chatwork_approval = instance_double(Chatwork::Approval, notify_assigned: true)
-      allow(Chatwork::Approval).to receive(:new).and_return(chatwork_approval)
-    end
-
     subject { Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params).execute }
 
     context 'when inputting correctly' do

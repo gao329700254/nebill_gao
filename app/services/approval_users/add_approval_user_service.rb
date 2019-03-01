@@ -1,4 +1,6 @@
 class ApprovalUsers::AddApprovalUserService < BaseService
+  attr_reader :approval
+
   def initialize(create_params:, current_user:)
     @create_params = create_params
     @current_user = current_user
@@ -14,7 +16,6 @@ class ApprovalUsers::AddApprovalUserService < BaseService
         @build_user.save!
         @set_user.nil? || @set_user&.update!(status: 40)
       end
-      create_notice
       return true
     end
     false
@@ -36,11 +37,6 @@ private
 
   def find_current_approval_user
     @approval.approval_users.includes(:user).find_by(user_id: current_user.id)
-  end
-
-  def create_notice
-    ApprovalMailer.assignment_user(user: @build_user.user, approval: @approval).deliver_now
-    Chatwork::Approval.new(approval: @approval, to_user: @build_user.user).notify_assigned
   end
 
   def create_valid?
