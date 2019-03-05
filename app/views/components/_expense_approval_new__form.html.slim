@@ -1,4 +1,5 @@
 = form_tag nil, class: 'expense_approval_new__form'
+  input type="hidden" value=@current_user.id v-model="created_user_id"
   .expense_approval_new__form__container
     .expense_approval_new__form__container__group
       .expense_approval_new__form__item
@@ -9,6 +10,15 @@
       .expense_approval_new__form__item
         = label_tag :notes, t('activerecord.attributes.expense_approval.notes')
         = text_area_tag :notes, nil, 'v-model' => 'notes'
+    .expense_approval_new__form__container__group
+      - if can? :allread, ExpenseApproval
+        .expense_approval_new__form__item__approval
+          = label_tag :approval_user, t('page.expense_approval_new.approval_user')
+          select [
+                   v-on:change ='onItemChange'
+                   v-model ='current_user'
+                 ]
+            option v-for="sUser in allUsers" value="{{sUser.id}}" {{sUser.name}}
   = button_tag 'v-on:click.prevent' => 'cancel', class: 'expense_approval_new__form__cancel_btn' do
     = fa_icon 'remove', text: t('helpers.cancel')
   = button_tag 'v-on:click.prevent' => 'submit', class: 'expense_approval_new__form__submit_btn' do

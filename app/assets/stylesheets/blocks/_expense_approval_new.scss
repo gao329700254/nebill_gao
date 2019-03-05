@@ -33,6 +33,10 @@
     %expense_approval_new__form__item {
       margin-bottom: $small-spacing;
 
+      &__approval {
+        margin-top: 1.95rem;
+      }
+
     }
 
     &__submit_btn,
