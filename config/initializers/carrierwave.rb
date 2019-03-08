@@ -1,7 +1,6 @@
 if ENV["FILE_STORAGE_TYPE"] == "fog"
   CarrierWave::SanitizedFile.sanitize_regexp = /[^[:word:]\.\-\+]/
   CarrierWave.configure do |config|
-    config.root = Rails.root.join('tmp')
     config.fog_provider = 'fog/aws'
     config.fog_credentials = {
       provider:                         'AWS',
