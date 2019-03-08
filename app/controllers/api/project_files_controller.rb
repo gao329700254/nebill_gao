@@ -11,7 +11,7 @@ class Api::ProjectFilesController < Api::ApiController
 
   def show
     file = @project_file.file
-    file.download!(file.url) if Rails.env.production?
+    file.download!(file.url) if ENV["FILE_STORAGE_TYPE"] == "fog"
     send_file file.path, filename: @project_file.original_filename
   end
 

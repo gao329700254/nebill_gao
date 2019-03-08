@@ -748,7 +748,7 @@ ja:
         message6: "【精算件数】%{expenses_number}件"
         message7: "【精算金額】%{total_amount}円"
         message8: "【 備 考 】\n%{notes}"
-        message9: "【申請日時】%{date}"        
+        message9: "【申請日時】%{date}"
         company:  "nebill by 株式会社Cuon"
       assignment:
         subject:  "【経費申請】%{user}さんより,申請「%{name}」が申請されました."
