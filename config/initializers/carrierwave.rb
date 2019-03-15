@@ -9,5 +9,6 @@ if ENV["FILE_STORAGE_TYPE"] == "fog"
       aws_secret_access_key:            Rails.application.secrets.s3_secret_access_key,
     }
     config.fog_directory = ENV["FILE_STORAGE_NAME"]
+    config.fog_public    = false
   end
 end
