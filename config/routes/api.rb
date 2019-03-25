@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post "invalid_client", to: "clients#invalid_client"
     end
     resources :users, only: [:index, :create, :show, :update, :destroy], shallow: true do
+      resources :send_password_setting_emails, only: [:create]
       collection do
         get 'roles', to: "users#roles"
       end

@@ -18,6 +18,7 @@ class PagesController < ApplicationController
       redirect_to project_list_path
       return
     end
+    @user_session = UserSession.new
     render layout: 'simple'
   end
 

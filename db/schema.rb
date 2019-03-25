@@ -272,17 +272,21 @@ ActiveRecord::Schema.define(version: 20190515142947) do
   create_table "users", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
-    t.string   "persistence_token",               null: false
-    t.integer  "login_count",        default: 0,  null: false
-    t.integer  "failed_login_count", default: 0,  null: false
+    t.string   "persistence_token",                  null: false
+    t.integer  "login_count",        default: 0,     null: false
+    t.integer  "failed_login_count", default: 0,     null: false
     t.datetime "current_login_at"
     t.datetime "last_login_at"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "role",               default: 10, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "role",               default: 10,    null: false
     t.integer  "default_allower"
     t.integer  "chatwork_id"
     t.string   "chatwork_name"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.boolean  "active",             default: false, null: false
+    t.string   "perishable_token"
   end
 
   add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, using: :btree

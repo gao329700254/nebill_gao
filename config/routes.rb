@@ -166,6 +166,9 @@ Rails.application.routes.draw do
   get 'home', to: 'pages#home'
   post 'hooks', to: "hooks#create"
 
+  resources :user_sessions
+  resources :password_settings
+
   get    '/auth/:provider/callback', to: 'user_sessions#create'
   post   '/auth/:provider/callback', to: 'user_sessions#create'
   delete '/logout'                 , to: 'user_sessions#destroy'

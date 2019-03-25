@@ -4,6 +4,7 @@ class Ability
   def initialize(user)
     can :home, Page
     can :manage, UserSession
+    can :manage, PasswordSetting
 
     return unless user.present?
 
