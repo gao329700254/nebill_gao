@@ -4,10 +4,13 @@ $ ->
     mixins: [Vue.modules.modal]
     props: ['ids', 'list']
     data: ->
-      notes:        ''
-      total_amount: 0
-      selected:     []
-      status:       ''
+      notes:           ''
+      total_amount:    0
+      selected:        []
+      status:          ''
+      created_user_id: ''
+      allUsers:        []
+      current_user:    ''
     methods:
       cancel: -> @modalHide()
       submit: ->
@@ -35,6 +38,7 @@ $ ->
               notes: @notes
               total_amount: @total_amount
               selected: @selected
+              created_user_id: @created_user_id
           .done (response) =>
             toastr.success('', response.message)
             @modalHide()
@@ -43,7 +47,17 @@ $ ->
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
+      loadAllUsers: ->
+        $.ajax '/api/users.json'
+          .done (response) =>
+            @allUsers
+            response.forEach (element) =>
+              @allUsers.push(element)
+        @current_user = @created_user_id
+      onItemChange: ->
+        @created_user_id = @current_user
     events:
       showExpenseApprovalNewEvent: ->
         @modalShow()
+        @loadAllUsers()
         $('.expense_approval_new__form__submit_btn').prop('disabled', false)

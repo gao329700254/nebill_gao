@@ -82,8 +82,8 @@ class Api::ExpensesController < Api::ApiController
     @expense_approval[:notes] = params[:notes]
     @expense_approval[:total_amount] = params[:total_amount]
     @expense_approval[:expenses_number] = params[:selected].count
-    @expense_approval[:name] = "#{ExpenseApproval.appr_id + 1}#{@current_user.name}経費精算申請" + params[:total_amount]
-    @expense_approval[:created_user_id] = @current_user.id
+    @expense_approval[:name] = "#{ExpenseApproval.appr_id + 1}#{User.find(params[:created_user_id]).name}経費精算申請" + params[:total_amount]
+    @expense_approval[:created_user_id] = params[:created_user_id]
     if @expense_approval.save!
       save_expense_group
       save_expense_approval_user

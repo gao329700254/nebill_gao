@@ -592,6 +592,7 @@ ja:
         all: 全て
         selected: 選択された経費
       title: 経費申請新規作成
+      approval_user: 申請者
       wait: 処理中...
     expense_approval_list:
       title: 経費申請一覧
