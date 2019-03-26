@@ -5,6 +5,7 @@ class Api::ApprovalsController < Api::ApiController
   def create
     @services ||= Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params)
     if @services.execute
+      create_notice
       create_execut_success
     else
       create_execut_fail
@@ -14,6 +15,7 @@ class Api::ApprovalsController < Api::ApiController
   def update
     @services ||= Approvals::UpdateApprovalService.new(approval_params: approval_params, update_params: update_params)
     if @services.execute
+      update_notice
       update_execut_success
     else
       update_execut_fail
@@ -90,5 +92,24 @@ private
     flash[:error] = "#{I18n.t('action.update.fail', model: I18n.t('activerecord.models.approval'))}"\
                               " \n #{@services.approval.errors.full_messages.join('<br>')}"
     redirect_to(:back)
+  end
+
+  def create_notice
+    approval = @services.approval
+    user = find_user
+    ApprovalMailer.assignment_user(user: user, approval: approval).deliver_now
+    Chatwork::Approval.new(approval: approval, to_user: user).notify_assigned
+  end
+
+  def update_notice
+    approval = @services.approval
+    approval.users.each do |user|
+      ApprovalMailer.update_approval(user: user, approval: approval).deliver_now
+    end
+    Chatwork::Approval.new(approval: approval, to_user: approval.users).notify_edit
+  end
+
+  def find_user
+    @services.approval.users.find { |u| u.id == params[:user_id].to_i }
   end
 end

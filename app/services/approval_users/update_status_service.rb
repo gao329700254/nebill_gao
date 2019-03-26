@@ -1,4 +1,6 @@
 class ApprovalUsers::UpdateStatusService < BaseService
+  attr_reader :approval
+
   def initialize(update_params:, current_user:)
     @update_params = update_params
     @current_user = current_user
@@ -12,7 +14,6 @@ class ApprovalUsers::UpdateStatusService < BaseService
         @approval.update!(status: update_params[:button])
         @set_user.update!(status: update_params[:button], comment: update_params[:comment])
       end
-      update_notice
       return true
     end
     false
@@ -30,15 +31,5 @@ private
 
   def find_current_approval_user
     @approval.approval_users.includes(:user).find_by(user_id: current_user.id)
-  end
-
-  def update_notice
-    if @set_user.status == 20
-      ApprovalMailer.permission_approval(user: @approval.created_user, approval: @approval).deliver_now
-      Chatwork::Approval.new(approval: @approval, to_user: @approval.created_user).notify_permited
-    elsif @set_user.status == 30
-      ApprovalMailer.disconfirm_approval(user: @approval.created_user, approval: @approval).deliver_now
-      Chatwork::Approval.new(approval: @approval, to_user: @approval.created_user).notify_disconfirm
-    end
   end
 end

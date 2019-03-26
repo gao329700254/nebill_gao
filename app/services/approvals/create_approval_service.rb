@@ -14,7 +14,6 @@ class Approvals::CreateApprovalService < BaseService
         @approval.save!
         @build_user.save!
       end
-      create_notice
       return true
     end
     false
@@ -32,10 +31,5 @@ private
 
   def build_approval_user
     approval.approval_users.build(user_id: create_params[:user_id])
-  end
-
-  def create_notice
-    ApprovalMailer.assignment_user(user: @build_user.user, approval: @approval).deliver_now
-    Chatwork::Approval.new(approval: @approval, to_user: @build_user.user).notify_assigned
   end
 end

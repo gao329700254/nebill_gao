@@ -10,12 +10,6 @@ RSpec.describe ApprovalUsers::AddApprovalUserService do
     let(:approval) { create(:status_of_approval_is_disconfirm, created_user_id: user1.id) }
     let!(:approvla_user) { create(:approval_user, approval: approval, user: user2) }
 
-    before do
-      allow(ApprovalMailer).to receive_message_chain(:assignment_user, :deliver_now).and_return(true)
-      chatwork_approval = instance_double(Chatwork::Approval, notify_assigned: true)
-      allow(Chatwork::Approval).to receive(:new).and_return(chatwork_approval)
-    end
-
     subject { ApprovalUsers::AddApprovalUserService.new(create_params: create_params, current_user: current_user).execute }
 
     context 'when inputting correctly' do
