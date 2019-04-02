@@ -11,7 +11,6 @@ class ApprovalUsers::UpdateStatusService < BaseService
     @set_user ||= find_current_approval_user
     if @set_user.valid? && @approval.valid?
       Approval.transaction do
-        @approval.update!(status: update_params[:button])
         @set_user.update!(status: update_params[:button], comment: update_params[:comment])
       end
       return true

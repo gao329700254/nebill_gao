@@ -10,7 +10,7 @@ module SessionConcern
       respond_to do |format|
         format.html do
           if current_user.present? && !(exception.action == :users && exception.subject == Page)
-            redirect_to project_list_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') }
+            redirect_to current_user.role.outer? ? approval_list_path : project_list_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') }
           else
             session[:request_url]=request.url
             redirect_to root_path, error: 'unauthorized', flash: { error: t('helpers.unauthorized') }

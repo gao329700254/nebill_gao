@@ -13,9 +13,10 @@
       .approval_list__search__date__btn
         = button_tag 'v-on:click.prevent' => 'search', class: 'approval_list__search__date__btn--search' do
           = fa_icon 'fa-search', text: t('page.approval_list.search')
-      .approval_list__search__date__btn
-        = button_tag 'v-on:click' => 'showApprovalNew', class: 'approval_list__search__date__btn--new_approval' do
-          = fa_icon 'check', text: t('page.approval_new.title')
+      - if can? :manage, Approval
+        .approval_list__search__date__btn
+          = button_tag 'v-on:click' => 'showApprovalNew', class: 'approval_list__search__date__btn--new_approval' do
+            = fa_icon 'check', text: t('page.approval_new.title')
     .approval_list__search__radio
       = radio_button_tag :all_status, '', false, id: 'all_status', 'v-model' => 'status'
       = label_tag :all_status, t('page.approval_list.status_type.all')
@@ -45,6 +46,7 @@
     thead.approval_list__tbl__head
       tr.approval_list__tbl__head__row
         th.approval_list__tbl__item--name              = Approval.human_attribute_name(:name)
+        th.approval_list__tbl__item--approvaler_type   = Approval.human_attribute_name(:approvaler_type)
         th.approval_list__tbl__item--category          = Approval.human_attribute_name(:category)
         th.approval_list__tbl__item--status            = Approval.human_attribute_name(:status)
         th.approval_list__tbl__item--created_user_name = Approval.human_attribute_name(:created_user_name)
@@ -61,6 +63,7 @@
         track-by   = "id"
       ]
         td.approval_list__tbl__item--name              v-text='approval.name'
+        td.approval_list__tbl__item--approvaler_type   v-text='approval.approvaler_type'
         td.approval_list__tbl__item--category          v-text='approval.category'
         td.approval_list__tbl__item--status            v-text='approval.status'
         td.approval_list__tbl__item--created_user_name v-text='approval.created_user_name'

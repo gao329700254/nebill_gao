@@ -161,6 +161,7 @@
 #
 
 Rails.application.routes.draw do
+  resources :approval_groups
   root 'pages#home'
 
   get 'home', to: 'pages#home'

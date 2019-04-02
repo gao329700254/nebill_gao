@@ -25,7 +25,7 @@
 
 class ApprovalUser < ActiveRecord::Base
   extend Enumerize
-  belongs_to :approval
+  belongs_to :approval, touch: true
   belongs_to :user
 
   validates :user_id, presence: true

@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   extend Enumerize
   acts_as :employee
   acts_as_authentic do |c|
-    c.merge_validates_length_of_password_field_options unless: -> { validation_context == :whencreate }
+    c.merge_validates_length_of_password_field_options if: -> { validation_context != :whencreate && password_changed? }
   end
 
   has_many :members, through: :employee, class_name: 'UserMember'
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
   has_many :expense_approval_users
   has_many :expense_approvals, through: :expense_approval_users
 
-  enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50 }, default: :general
+  enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50, outer: 60 }, default: :general, scope: true
 
   validates :name, presence: true, on: :update
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true

@@ -9,6 +9,8 @@ class Ability
     return unless user.present?
 
     case user.role
+    when 'outer'
+      outercan
     when 'general', 'superior'
       defaultcan user
     when 'admin', 'backoffice'
@@ -17,6 +19,15 @@ class Ability
   end
 
 private
+
+  def outercan
+    can :manage, Page
+    can :manage, ApprovalsSearch
+    can [:update, :read], Approval
+    can :read, ApprovalUser
+    can :read, ApprovalFile
+    cannot :allread, Approval
+  end
 
   def defaultcan(user)
     can :manage, Page

@@ -1,5 +1,4 @@
-.approval_list {
-
+.approval_groups {
   padding: $base-spacing;
 
   &__search {
@@ -32,6 +31,33 @@
   &__tbl {
     @include list_tbl;
 
+    &__item,
+    %approval_groups__tbl__item {
+      @include list_tbl__item;
+
+      &--name {
+        @extend %approval_groups__tbl__item;
+        @include span-columns(4);
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      &--users {
+        @extend %approval_groups__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--user {
+        @extend %approval_groups__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--created_at {
+        @extend %approval_groups__tbl__item;
+        @include span-columns(2);
+      }
+    }
+
     &__head {
       &__row {
         @include list_tbl__head__row;
@@ -53,45 +79,6 @@
           border-bottom: $bold-border;
           background-color: $light-grey;
         }
-      }
-    }
-
-    &__item,
-    %approval_list__tbl__item {
-      @include list_tbl__item;
-
-      &--name {
-        @extend %approval_list__tbl__item;
-        @include span-columns(4);
-        white-space: normal;
-        word-break: break-word;
-      }
-
-      &--approvaler_type {
-        @extend %approval_list__tbl__item;
-        @include span-columns(2);
-        white-space: normal;
-        word-break: break-word;
-      }
-
-      &--category {
-        @extend %approval_list__tbl__item;
-        @include span-columns(2);
-      }
-
-      &--status {
-        @extend %approval_list__tbl__item;
-        @include span-columns(2);
-      }
-
-      &--created_user_name {
-        @extend %approval_list__tbl__item;
-        @include span-columns(2);
-      }
-
-      &--created_at {
-        @extend %approval_list__tbl__item;
-        @include span-columns(2);
       }
     }
   }

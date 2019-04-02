@@ -22,7 +22,6 @@ ja:
       bill: 請求
       project_file: プロジェクトファイル
       project_file_group: プロジェクトファイルグループ
-      approval: 稟議
       expense: 経費
       expense_approval: 申請
     attributes:
@@ -119,18 +118,6 @@ ja:
         memo:           メモ
       project_file_group:
         name: 名前
-      approval:
-        name: 件名
-        project_id: プロジェクトID
-        status: ステータス
-        created_user_name: 作成者
-        approvel_user_name: 承認者
-        comment: コメント
-        updated_at: 更新日
-        created_at: 作成日
-        notes: 概要
-        file: 添付ファイル
-        category: 種別
       approval_user:
         name: 承認者
         status: ステータス
@@ -460,6 +447,7 @@ ja:
       superior: 上長
       backoffice: バックオフィス
       admin: 管理者
+      outer: 外部ユーザー
     status:
       pending:      承認待ち
       permission:   承認済み
@@ -481,6 +469,16 @@ ja:
         approval_pending:           承認待ち
         waiting_for_basic_contract: ファイル添付待ち
         published:                  有効
+  approval_groups:
+    show:
+      title: 稟議グループ
+    new:
+      title: 稟議グループ新規作成
+    index:
+      title: 稟議グループ一覧
+      search_form_placeholder: 'グループ名,承認者,作成者で検索できます'
+      search: 検索
+      fill_date_form: 作成日検索
   page:
     home:
       title: ホーム

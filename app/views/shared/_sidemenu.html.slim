@@ -1,48 +1,56 @@
 nav.sidemenu
   ul.sidemenu__list
-    li.sidemenu__item
-      = fa_icon 'list 2x', class: 'sidemenu__item__icon'
-      span.sidemenu__item__page_title = Project.model_name.human
-      ul.sidemenu__item__submenu__list
-        = link_to project_list_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.project_list.title')
-        = link_to project_groups_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.project_groups.title')
-        = link_to client_list_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.client_list.title')
-        /= link_to bill_list_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.bill_list.title')
-        = link_to partners_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.partners.title')
-    li.sidemenu__item
-      = fa_icon 'check-square 2x', class: 'sidemenu__item__icon'
-      span.sidemenu__item__page_title = Approval.model_name.human
-      ul.sidemenu__item__submenu__list
-        = link_to approval_list_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.approval_list.title')
-        = link_to approval_new_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.approval_new.title')
-    li.sidemenu__item
-      = fa_icon 'building 2x', class: 'sidemenu__item__icon'
-      span.sidemenu__item__page_title = Expense.model_name.human
-      ul.sidemenu__item__submenu__list
-        = link_to expense_list_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.expense_list.title')
-        = link_to expense_approval_list_path
-          li.sidemenu__item__submenu__item
-            span.sidemenu__item__submenu__item__page_title = t('page.expense_approval_list.title')
-        - if can? :allread, ExpenseApproval
-          = link_to expense_csv_path
+    - if can? :manage, Project
+      li.sidemenu__item
+        = fa_icon 'list 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = Project.model_name.human
+        ul.sidemenu__item__submenu__list
+          = link_to project_list_path
             li.sidemenu__item__submenu__item
-              span.sidemenu__item__submenu__item__page_title = t('page.expense_csv.title')
+              span.sidemenu__item__submenu__item__page_title = t('page.project_list.title')
+          = link_to project_groups_path
+            li.sidemenu__item__submenu__item
+              span.sidemenu__item__submenu__item__page_title = t('page.project_groups.title')
+          = link_to client_list_path
+            li.sidemenu__item__submenu__item
+              span.sidemenu__item__submenu__item__page_title = t('page.client_list.title')
+          /= link_to bill_list_path
+            li.sidemenu__item__submenu__item
+              span.sidemenu__item__submenu__item__page_title = t('page.bill_list.title')
+          = link_to partners_path
+            li.sidemenu__item__submenu__item
+              span.sidemenu__item__submenu__item__page_title = t('page.partners.title')
+    - if can? :read, Approval
+      li.sidemenu__item
+        = fa_icon 'check-square 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = Approval.model_name.human
+        ul.sidemenu__item__submenu__list
+          = link_to approval_list_path
+            li.sidemenu__item__submenu__item
+              span.sidemenu__item__submenu__item__page_title = t('page.approval_list.title')
+          - if can? :manage, Approval
+            = link_to approval_new_path
+              li.sidemenu__item__submenu__item
+                span.sidemenu__item__submenu__item__page_title = t('page.approval_new.title')
+          - if can? :manage, ApprovalGroup
+            = link_to approval_groups_path
+              li.sidemenu__item__submenu__item
+                span.sidemenu__item__submenu__item__page_title = t('approval_groups.index.title')
+    - if can? :manage, ExpenseApproval
+      li.sidemenu__item
+        = fa_icon 'building 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = Expense.model_name.human
+        ul.sidemenu__item__submenu__list
+          = link_to expense_list_path
+            li.sidemenu__item__submenu__item
+              span.sidemenu__item__submenu__item__page_title = t('page.expense_list.title')
+          = link_to expense_approval_list_path
+            li.sidemenu__item__submenu__item
+              span.sidemenu__item__submenu__item__page_title = t('page.expense_approval_list.title')
+          - if can? :allread, ExpenseApproval
+            = link_to expense_csv_path
+              li.sidemenu__item__submenu__item
+                span.sidemenu__item__submenu__item__page_title = t('page.expense_csv.title')
     = link_to agreement_list_path
       li.sidemenu__item
         = fa_icon 'pencil-square 2x', class: 'sidemenu__item__icon'

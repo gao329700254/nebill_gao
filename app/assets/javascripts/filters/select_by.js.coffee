@@ -11,7 +11,9 @@ Vue.filter 'selectBy', (list, value, schema) ->
           when 'eq'
             return val == query
           when 'like'
-            if val?
+            if Array.isArray(val)
+              return _.any val, (ar_val) -> ar_val['name'].match(query)
+            else if val?
               return val.match(query)
             else
               return false

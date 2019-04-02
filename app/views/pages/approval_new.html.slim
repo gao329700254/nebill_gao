@@ -16,7 +16,15 @@
           = f.select :category, options_for_select(Approval.category.options)
         .approval_new__form__item
           = f.label :user_id, ApprovalUser.human_attribute_name(:name)
-          = select_tag :user_id, options_from_collection_for_select(User.where.not(id: @current_user.id), :id, :name), include_blank: true
+          = f.collection_radio_buttons :approvaler_type, Approval.approvaler_type.options, :last, :first do |b|
+            = b.radio_button 'v-model': 'approvaler_button'
+            = b.label
+          = f.fields_for :approval_users do |ff|
+            = ff.select :user_id, options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name), \
+            { include_blank: true }, 'v-if': 'approvaler_button == "user"'
+          = f.fields_for :approval_approval_group do |ff|
+            = ff.select :approval_group_id, options_from_collection_for_select(ApprovalGroup.all, :id, :name), \
+            { include_blank: true },  'v-if': 'approvaler_button == "group"'
           = f.label :notes, Approval.human_attribute_name(:notes)
           = f.text_area :notes, maxlength: "2000", class: 'approval_new__form__item__area'
         = button_tag type: 'button', onclick: "history.back()", class: 'approval_new__form__btn--cancel' do

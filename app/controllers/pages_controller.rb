@@ -4,7 +4,6 @@ class PagesController < ApplicationController
   before_action :set_project              , only: [:project_show]
   before_action :set_bill                 , only: [:bill_show]
   before_action :set_client               , only: [:client_show]
-  before_action :set_approval             , only: [:approval_show, :approval_edit]
   before_action :create_approval          , only: [:approval_new]
   before_action :set_expense              , only: [:expense_edit]
   before_action :create_expense           , only: [:expense_new]
@@ -53,6 +52,8 @@ class PagesController < ApplicationController
   end
 
   def approval_show
+    @approval = Approval.find(params[:approval_id])
+    @approval_individual_group_switch = ApprovalIndividualGroupSwitch.new(@approval, current_user)
     unless @approval.created_user_id == @current_user.id || @current_user_approval.present? || can?(:allread, Approval)
       redirect_to approval_list_path
       return
@@ -63,6 +64,9 @@ class PagesController < ApplicationController
   end
 
   def approval_edit
+    @approval = Approval.find(params[:approval_id])
+    @approval_individual_group_switch = ApprovalIndividualGroupSwitch.new(@approval, current_user)
+
     redirect_to approval_list_path unless @approval.status == 30 && (@approval.created_user_id == @current_user.id || can?(:allread, Approval))
     @approval.status = 10
   end
@@ -109,19 +113,10 @@ private
     @current_user_approval = ApprovalUser.find_by(approval_id: @approval.id, user_id: @current_user.id)
   end
 
-  def set_approval
-    @approval = Approval.find(params[:approval_id])
-    @approval_users = @approval.approval_users.includes(:user)
-    @unable_user = @approval_users.pluck :user_id
-    @unable_user << @approval.created_user_id
-    @users = User.where.not(id: @unable_user)
-    @new_user = User.new
-    @current_user_approval = @approval_users.find_by(user_id: @current_user.id)
-    @approval_files = @approval.files
-  end
-
   def create_approval
     @approval = Approval.new
+    @approval.build_approval_approval_group
+    @approval.approval_users.build
     @approval.created_user_id = @current_user.id
   end
 
