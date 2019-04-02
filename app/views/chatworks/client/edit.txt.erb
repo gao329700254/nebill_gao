@@ -1,0 +1,15 @@
+<% to_user.each do |user| %>
+  [To:<%= user.chatwork_id %>] <%= user.chatwork_name %>さん
+  
+<% end %>
+[info]
+  [title]
+    <%= approval.created_user.name %>さんから取引先申請「<%= approval.name %>」が更新されました.
+  [/title]
+  [info]
+    <%= approval.notes %>
+
+    以下のリンクをクリックして,内容を確認ください.
+    <%=  Rails.application.routes.url_helpers.approval_show_url(approval, ActionMailer::Base.default_url_options) %>
+  [/info]
+[/info]

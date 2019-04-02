@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class Api::ClientsController < Api::ApiController
   before_action :set_client, only: [:show, :update]
   def index
@@ -12,6 +13,7 @@ class Api::ClientsController < Api::ApiController
       Client.transaction do
         @client.save!
       end
+      create_notice
       render_action_model_success_message(@client, :create)
     else
       render_action_model_fail_message(@client, :create)
@@ -30,9 +32,11 @@ class Api::ClientsController < Api::ApiController
     @client.attributes = client_param
     if params[:client][:files_attributes]
       @appr_params = { approval_id: params[:approval_id], button: 'pending', comment: '' }
-      ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find(6)).execute
+      @services ||= ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find(6))
+      @services.execute
       @client.status = 10
     end
+    update_notice
     @client.save!
 
     render_action_model_success_message(@client, :update)
@@ -46,8 +50,10 @@ class Api::ClientsController < Api::ApiController
   end
 
   def update_approval
-    if ApprovalUsers::UpdateStatusService.new(update_params: update_params, current_user: @current_user).execute
+    @services ||= ApprovalUsers::UpdateStatusService.new(update_params: update_params, current_user: @current_user)
+    if @services.execute
       update_status
+      update_approval_notice
       update_execut_success
     else
       execut_fail
@@ -113,4 +119,35 @@ private
     end
     @client.save
   end
+
+  def create_notice
+    approval = Approval.find_by(approved_type: 'Client', approved_id: @client.id)
+    user = approval.users.first
+    ClientMailer.assignment_user(user: user, approval: approval).deliver_now
+    Chatwork::Client.new(approval: approval, to_user: user).notify_assigned
+  end
+
+  def update_notice
+    approval = @services.approval
+    user = approval.users.first
+    ClientMailer.update_client_approval(user: user, approval: approval).deliver_now
+    Chatwork::Client.new(approval: approval, to_user: approval.users).notify_edit
+  end
+
+  def update_approval_notice
+    approval = @services.approval
+    if params[:button] == 'permission'
+      if @client.status == 20
+        ClientMailer.nda_permission_client_approval(user: approval.created_user, approval: approval).deliver_now
+        Chatwork::Client.new(approval: approval, to_user: approval.created_user).notify_nda_permited
+      elsif @client.status == 30
+        ClientMailer.permission_client_approval(user: approval.created_user, approval: approval).deliver_now
+        Chatwork::Client.new(approval: approval, to_user: approval.created_user).notify_permited
+      end
+    elsif params[:button] == 'disconfirm'
+      ClientMailer.disconfirm_client_approval(user: approval.created_user, approval: approval).deliver_now
+      Chatwork::Client.new(approval: approval, to_user: approval.created_user).notify_disconfirm
+    end
+  end
 end
+# rubocop:enable Metrics/ClassLength

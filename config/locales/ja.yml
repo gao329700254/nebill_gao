@@ -776,6 +776,35 @@ ja:
         message:  "%{user}さんの申請「%{name}」が差し戻しされました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
+    client:
+      assignment:
+        subject: "【取引先稟議】%{user}さんより,申請「%{name}」が申請されました."
+        message: "%{user}さんより,「%{name}」が申請されました."
+        message2: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      update:
+        subject: "【取引先稟議】申請「%{name}」が更新されました."
+        message: "申請「%{name}」が更新されました."
+        message2: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      nda_permission:
+        subject: "【取引先稟議】%{user}さんの申請「%{name}」が承認済みになりました."
+        message: "%{user}さんの申請「%{name}」が承認済みになりました."
+        message2: "現在、NDAのみの承認となっております."
+        message3: "基本契約書を添付の上、更新してください."
+        message4: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      permission:
+        subject: "【取引先稟議】%{user}さんの申請「%{name}」が承認済みになりました."
+        message: "%{user}さんの申請「%{name}」が承認済みになりました."
+        message2: "現在、取引先のステータスは有効です."
+        message3: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      disconfirm:
+        subject: "【取引先稟議】%{user}さんの申請「%{name}」が差し戻しされました."
+        message: "%{user}さんの申請「%{name}」が差し戻しされました."
+        message2: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
     expense_approval:
       mail:
         message2: "以下のリンクをクリックして,内容を確認ください."
