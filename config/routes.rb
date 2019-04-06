@@ -153,6 +153,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   get 'home', to: 'pages#home'
+  post 'hooks', to: "hooks#create"
 
   get    '/auth/:provider/callback', to: 'user_sessions#create'
   post   '/auth/:provider/callback', to: 'user_sessions#create'
