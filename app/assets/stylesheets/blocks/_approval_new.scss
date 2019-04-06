@@ -30,6 +30,30 @@
         border-bottom: $base-border;
         padding-top: $base-spacing;
         padding-bottom: $base-spacing;
+        &__drop_container {
+          padding-top: 20px;
+          &.over{
+            label{
+              background: #adadad;
+            }
+          }
+          label{
+            color: #666;
+            display: block;
+
+            padding: 2rem;
+            border: 1px dashed #adaaaa;
+            text-align: center;
+            &:hover{
+              background: #f1f1f1;
+            }
+            p.small{
+              color: #878787;
+              font-size: 1.4rem;
+              padding-top: 1rem;
+            }
+          }
+        }
       }
     }
 
