@@ -1,0 +1,32 @@
+script type='text/x-template' id='agreement_client_list'
+  .agreement_list
+    table.agreement_list__tbl
+      thead.agreement_list__tbl__head
+        tr.agreement_list__tbl__head__row
+          th.agreement_list__tbl__item--two         = t('activerecord.attributes.client.company_name')
+          th.agreement_list__tbl__item--two         = t('activerecord.attributes.client.department_name')
+          th.agreement_list__tbl__item--one         = t('activerecord.attributes.client.nda')
+          th.agreement_list__tbl__item--one         = fa_icon 'check-circle'
+          th.agreement_list__tbl__item--one         = t('page.client_show.basic_contract')
+          th.agreement_list__tbl__item--one         = fa_icon 'check-circle'
+          th.agreement_list__tbl__item--one         = t('page.agreement.list.created_by')
+          th.agreement_list__tbl__item--one         = t('page.agreement.list.created_at')
+        tbody.agreement_list__tbl__body
+          tr.agreement_list__tbl__body__row [
+            v-for = "client in list"
+            id         = "client-{{client.id}}"
+            v-on:click = "linkToShow(client.id)"
+            track-by   = "id"
+          ]
+            td.agreement_list__tbl__item--two      v-text='client.company_name'
+            td.agreement_list__tbl__item--two      v-text='client.department_name'
+            td.agreement_list__tbl__item--one      v-if="client.nda" =fa_icon 'check'
+            td.agreement_list__tbl__item--one      v-else="!client.nda" = ''
+            td.agreement_list__tbl__item--one      v-if="client.nda.legal_check" =fa_icon 'check'
+            td.agreement_list__tbl__item--one      v-else="!client.nda.legal_check"  = ''
+            td.agreement_list__tbl__item--one      v-if="client.basic_c" =fa_icon 'check'
+            td.agreement_list__tbl__item--one      v-else="!client.basic_c" = ''
+            td.agreement_list__tbl__item--one      v-if="client.basic_c.legal_check" =fa_icon 'check'
+            td.agreement_list__tbl__item--one      v-else="!client.basic_c.legal_check" = ''
+            td.agreement_list__tbl__item--one      v-text='client.whodunnit'
+            td.agreement_list__tbl__item--one      v-text='client.created_at'

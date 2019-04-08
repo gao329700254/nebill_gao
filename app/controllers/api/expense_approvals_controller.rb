@@ -112,7 +112,7 @@ private
     end
 
     action_model_flash_success_message(@expense_approval, :permission)
-    redirect_to expense_approval_list_path(params[:id])
+    redirect_to agreement_list_path('agreementExpenseApprovalList')
   end
 
   def disconfirm
@@ -121,7 +121,7 @@ private
     ExpenseApprovalMailer.disconfirm_expense_approval(user: @expense_approval.created_user, expense_approval: @expense_approval).deliver_now
     Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval.created_user).notify_disconfirm
     action_model_flash_success_message(@expense_approval, :disconfirm)
-    redirect_to expense_approval_show_path(params[:id])
+    redirect_to agreement_list_path('agreementExpenseApprovalList')
   end
 
   def current_user_approval_update

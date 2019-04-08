@@ -1,0 +1,109 @@
+.agreement_list {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  background-color: $white-bg-color;
+  padding: 0 $base-spacing;
+  color: $white-ft-color;
+
+  &__last_updated_at {
+    text-align: right;
+  }
+
+  &__menu_bar {
+    margin-bottom: $base-spacing;
+
+    &__list {
+      @include display(flex);
+      @include flex-direction(row);
+      @include flex-wrap(nowrap);
+      @include align-items(stretch);
+      @include justify-content(flex-start);
+    }
+
+    &__item,
+    %agreement_list__menu_bar__item {
+      @include padding($base-spacing $small-spacing);
+      padding-bottom: $small-spacing;
+      color: $white-ft-color;
+      list-style-type: none;
+
+      &--active {
+        @extend %agreement_list__menu_bar__item;
+        border-bottom: 2px solid $theme-color;
+        color: $theme-color;
+      }
+    }
+  }
+
+  &__content {
+    &--transition {
+      @include transition(all .2s ease-out);
+    }
+
+    &--enter,
+    &--leave {
+      opacity: 0;
+    }
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+
+      &__row {
+        @include list_tbl__head__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+        }
+
+        &--repudiation {
+          border-bottom: $bold-border;
+          background-color: $light-grey;
+        }
+      }
+    }
+
+    &__item,
+    %approval_list__tbl__item {
+      @include list_tbl__item;
+
+      &--five {
+        @extend %approval_list__tbl__item;
+        @include span-columns(5);
+        white-space: normal;
+        word-break: break-word;
+      }
+
+      &--two {
+        @extend %approval_list__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--three {
+        @extend %approval_list__tbl__item;
+        @include span-columns(3);
+      }
+
+      &--one {
+        @extend %approval_list__tbl__item;
+        @include span-columns(1);
+      }
+
+      &--onehalf {
+        @extend %approval_list__tbl__item;
+        @include span-columns(1.5);
+      }
+    }
+  }
+}

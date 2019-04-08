@@ -32,6 +32,7 @@
 #                   bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                            bills/pdf#download
 #                      project_groups GET    /project_groups(.:format)                                pages#project_groups
 #                            partners GET    /partners(.:format)                                      pages#partners
+#                      agreement_list GET    /agreements/list(.:format)                               pages#agreement_list
 #                         admin_users GET    /admin/users(.:format)                                   admin/pages#users
 #                admin_fb_date_output GET    /admin/fb_date_output(.:format)                          admin/pages#fb_date_output
 #               admin_fb_download_csv POST   /admin/fb_download_csv(.:format)                         admin/fb#fb_download_csv
@@ -138,6 +139,10 @@
 #                                     PATCH  /api/expense_approvals/:id(.:format)                     api/expense_approvals#update
 #                                     PUT    /api/expense_approvals/:id(.:format)                     api/expense_approvals#update
 #                                     DELETE /api/expense_approvals/:id(.:format)                     api/expense_approvals#destroy
+#                   api_approval_list GET    /api/agreements/approval_list(.:format)                  api/agreements#approval_list
+#                     api_client_list GET    /api/agreements/client_list(.:format)                    api/agreements#client_list
+#                    api_project_list GET    /api/agreements/project_list(.:format)                   api/agreements#project_list
+#           api_expense_approval_list GET    /api/agreements/expense_approval_list(.:format)          api/agreements#expense_approval_list
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index
@@ -212,6 +217,9 @@ Rails.application.routes.draw do
   end
   get 'project_groups', to: 'pages#project_groups'
   get 'partners'      , to: 'pages#partners'
+  scope path: 'agreements' do
+    get 'list', to: 'pages#agreement_list', as: 'agreement_list'
+  end
 
   namespace :admin do
     get 'users', to: 'pages#users'

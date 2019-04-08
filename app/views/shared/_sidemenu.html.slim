@@ -43,6 +43,11 @@ nav.sidemenu
           = link_to expense_csv_path
             li.sidemenu__item__submenu__item
               span.sidemenu__item__submenu__item__page_title = t('page.expense_csv.title')
+    = link_to agreement_list_path
+      li.sidemenu__item
+        = fa_icon 'pencil-square 2x', class: 'sidemenu__item__icon'
+        span.sidemenu__item__page_title = t('page.agreement.title')
+      ul.sidemenu__item__submenu__list
     - if can? :manage, User
       = link_to admin_users_path
         li.sidemenu__item

@@ -1,0 +1,30 @@
+script type='text/x-template' id='agreement_project_list'
+  .agreement_list
+    table.agreement_list__tbl
+      thead.agreement_list__tbl__head
+        tr.agreement_list__tbl__head__row
+          th.agreement_list__tbl__item--onehalf    = t('activerecord.attributes.project.name')
+          th.agreement_list__tbl__item--onehalf    = t('activerecord.attributes.project.orderer_company_name')
+          th.agreement_list__tbl__item--one        = t('activerecord.attributes.project.start_on')
+          th.agreement_list__tbl__item--one        = t('activerecord.attributes.project.end_on')
+          th.agreement_list__tbl__item--one        = t('activerecord.attributes.project.contract_on')
+          th.agreement_list__tbl__item--one        = t('activerecord.attributes.project.amount')
+          th.agreement_list__tbl__item--one        = t('activerecord.attributes.approval.category')
+          th.agreement_list__tbl__item--one        = t('page.agreement.list.created_by')
+          th.agreement_list__tbl__item--one        = t('page.agreement.list.created_at')
+      tbody.agreement_list__tbl__body
+        tr.agreement_list__tbl__body__row [
+          v-for      = "project in list"
+          id         = "project-{{project.id}}"
+          v-on:click = "linkToShow(project.id)"
+          track-by   = "id"
+        ]
+          td.agreement_list__tbl__item--onehalf    v-text='project.name'
+          td.agreement_list__tbl__item--onehalf    v-text='project.orderer_company_name'
+          td.agreement_list__tbl__item--one        v-text='project.start_on'
+          td.agreement_list__tbl__item--one        v-text='project.end_on'
+          td.agreement_list__tbl__item--one        v-text='project.contract_on'
+          td.agreement_list__tbl__item--one        v-numeric='project.amount'
+          td.agreement_list__tbl__item--one        v-text='project.is_regular_contract + project.status'
+          td.agreement_list__tbl__item--one        v-text='project.whodunnit'
+          td.agreement_list__tbl__item--one        v-text='project.created_at'

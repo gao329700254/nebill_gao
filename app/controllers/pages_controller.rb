@@ -11,6 +11,7 @@ class PagesController < ApplicationController
   before_action :create_expense_approval  , only: [:expense_approval_new]
   before_action :set_expense_approval     , only: [:expense_approval_show, :expense_approval_edit]
   before_action :set_expense_list         , only: [:expense_list]
+  before_action :set_agreement_list       , only: [:agreement_list]
 
   def home
     unless current_user.blank?
@@ -88,6 +89,9 @@ class PagesController < ApplicationController
   def expense_approval_show
   end
 
+  def agreement_list
+  end
+
 private
 
   def set_project
@@ -162,6 +166,10 @@ private
 
   def set_expense_list
     gon.selectedApproval = params[:selectedApproval] || 0
+  end
+
+  def set_agreement_list
+    @current_view = params[:format] || 'agreementApprovalList'
   end
 end
 # rubocop:enable Metrics/ClassLength

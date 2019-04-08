@@ -1,0 +1,24 @@
+script type='text/x-template' id='agreement_expense_approval_list'
+  .agreement_list__tbl__item
+    table.agreement_list__tbl
+      thead.agreement_list__tbl__head
+        tr.agreement_list__tbl__head__row
+          th.agreement_list__tbl__item--three      = ExpenseApproval.human_attribute_name(:name)
+          th.agreement_list__tbl__item--two        = ExpenseApproval.human_attribute_name(:created_user_name)
+          th.agreement_list__tbl__item--one        = ExpenseApproval.human_attribute_name(:reimbursement_start_date)
+          th.agreement_list__tbl__item--one        = ExpenseApproval.human_attribute_name(:reimbursement_last_date)
+          th.agreement_list__tbl__item--one        = ExpenseApproval.human_attribute_name(:reimbursement_count)
+          th.agreement_list__tbl__item--one        = ExpenseApproval.human_attribute_name(:reimbursement_amount)
+      tbody.agreement_list__tbl__body
+        tr.agreement_list__tbl__body__row [
+          v-for = "expense_approval in list"
+          id         = "expense_approval-{{expense_approval.id}}"
+          v-on:click = "linkToShow(expense_approval.id)"
+          track-by   = "id"
+        ]
+          td.agreement_list__tbl__item--three      v-text='expense_approval.name'
+          td.agreement_list__tbl__item--two        v-text='expense_approval.created_user_name'
+          td.agreement_list__tbl__item--one        v-text='expense_approval.reimbursement_start_date'
+          td.agreement_list__tbl__item--one        v-text='expense_approval.reimbursement_last_date'
+          td.agreement_list__tbl__item--one        v-text="expense_approval.reimbursement_count + '件'"
+          td.agreement_list__tbl__item--one        v-text="expense_approval.reimbursement_amount + '円'"

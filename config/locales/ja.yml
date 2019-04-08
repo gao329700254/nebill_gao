@@ -690,6 +690,16 @@ ja:
         last_updated_at: '最終更新日時: '
       fb_date_output:
         title: 全銀データ出力
+    agreement:
+      title: 承認ページ
+      component:
+        approval_list: 稟議
+        client_list: 取引先
+        project_list: プロジェクト
+        expense_approval_list: 経費
+      list:
+        created_by: 作成者
+        created_at: 作成日
   component:
     member_list:
       new_partner: パートナーを新規登録
