@@ -12,8 +12,8 @@
   table.expense_pdf__tbl
     thead.expense_pdf__tbl__head
       tr.expense_pdf__tbl__head__row
-        th.expense_pdf__tbl__head__row__item--total_amount = t('pdf.expense.reimbursement_amount')
-        td.expense_pdf__tbl__body__row__item--total_amount = number_to_currency(expenses.sum(:amount))
+        th.expense_pdf__tbl__head__row__item--total_amount = t('.reimbursement_amount_by_user')
+        td.expense_pdf__tbl__body__row__item--total_amount = number_to_currency(expense_approval.total_amount)
         th.expense_pdf__tbl__head__row__item--employee = t('pdf.expense.employee_name')
         td.expense_pdf__tbl__body__row__item--employee = expense_approval.created_user.name
   .expense_pdf__body
@@ -44,6 +44,15 @@
           td.expense_pdf__tbl__body__row__item--amount    = number_to_currency(expense.amount)
           td.expense_pdf__tbl__body__row__item--project   = Expense.project_name(expense)
           td.expense_pdf__tbl__body__row__item--notes     = expense.notes
+    tfoot.expense_pdf__tbl__foot
+      tr.expense_pdf__tbl__foot__row
+        th.expense_pdf__tbl__foot__row__item = t('.subtotal')
+        th.expense_pdf__tbl__foot__row__item
+        th.expense_pdf__tbl__foot__row__item
+        th.expense_pdf__tbl__foot__row__item
+        th.expense_pdf__tbl__foot__row__item--amount = number_to_currency(expenses.sum(:amount))
+        th.expense_pdf__tbl__foot__row__item
+        th.expense_pdf__tbl__foot__row__item
   .expense_pdf__body
     .expense_pdf__body__title = t('pdf.expense.comment')
   table.expense_pdf__tbl
@@ -53,13 +62,14 @@
   table.expense_pdf__tbl
     tbody.expense_pdf__tbl__body
       tr.expense_pdf__tbl__body__row
+        - approval_user = expense_approval.expense_approval_user.last
         td.expense_pdf__tbl__body__row__item  = t('pdf.expense.updated_at') + ' :'
-        td.expense_pdf__tbl__body__row__item  = expense_approval.expense_approval_user.last.updated_at
+        td.expense_pdf__tbl__body__row__item  = approval_user.updated_at if approval_user.status == 'permission'
         td.expense_pdf__tbl__body__row__item  = t('pdf.expense.created_at') + ' :'
         td.expense_pdf__tbl__body__row__item  = expense_approval.created_at
       tr.expense_pdf__tbl__body__row
         td.expense_pdf__tbl__body__row__item  = t('pdf.expense.approvel_user_name') + ' :'
-        td.expense_pdf__tbl__body__row__item  = expense_approval.expense_approval_user.last.user.name
+        td.expense_pdf__tbl__body__row__item  = approval_user.user.name
   table.expense_pdf__tbl
     tbody.expense_pdf__tbl__head
       tr.expense_pdf__tbl__head__row
