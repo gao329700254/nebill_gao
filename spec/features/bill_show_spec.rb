@@ -236,30 +236,6 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
     end
   end
 
-  describe 'download' do
-    context 'when click Excel button' do
-      let(:file_name) { ['請求書', bill.project.billing_company_name, bill.cd].compact.join("_") + '.xlsx' }
-
-      it 'should download an excel file' do
-        sleep 1
-        click_on 'Excel'
-        expect(page.response_headers['Content-Disposition']).to include(file_name)
-        expect(page.response_headers['Content-Type']).to eq('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-      end
-    end
-
-    context 'when click PDF button' do
-      let(:file_name) { ['請求書', bill.project.billing_company_name, bill.cd].compact.join("_") + '.pdf' }
-
-      it 'should download a PDF file' do
-        sleep 1
-        click_on 'PDF'
-        expect(page.response_headers['Content-Disposition']).to include(file_name)
-        expect(page.response_headers['Content-Type']).to eq('application/pdf')
-      end
-    end
-  end
-
   describe 'delete' do
     context 'when click delete button' do
       scenario 'and accept the confirm' do
@@ -819,31 +795,6 @@ RSpec.feature 'Bill Show Page', js: true, versioning: true do
   end
 
   describe 'Buttons' do
-    context 'when bills projects status is "finished"' do
-      given!(:project) { create(:contracted_project, status: 'finished') }
-      given!(:bill) { create(:bill, project: project) }
-
-      scenario 'bill_show page only have download buttons' do
-        expect(page).to                                           have_link 'Excel'
-        expect(page).to                                           have_link 'PDF'
-        expect('.bill_show__form__container__group').not_to       have_button '編集'
-        expect('.bill_show__form__container__group').not_to       have_button '削除'
-        expect('.bill_show__form__container__group').not_to       have_button 'キャンセル'
-        expect('.bill_show__form__container__group').not_to       have_button '更新'
-        expect('.bill_show__form__member_list__user').not_to      have_button '登録'
-        expect('.bill_show__form__member_list__user').not_to      have_field 'user'
-        expect('.bill_show__form__member_list__user').not_to      have_selector 'selected'
-        expect('.bill_show__form__member_list__partner').not_to   have_field 'partner'
-        expect('.bill_show__form__member_list__partner').not_to   have_field 'unit_price'
-        expect('.bill_show__form__member_list__partner').not_to   have_field 'working_rate'
-        expect('.bill_show__form__member_list__partner').not_to   have_field 'min_limit_time'
-        expect('.bill_show__form__member_list__partner').not_to   have_button 'max_limit_time'
-        expect('.bill_show__form__member_list__partner').not_to   have_button '登録'
-        expect('.bill_show__form__member_list__partner').not_to   have_button 'パートナー新規登録'
-        expect('.bill_show__form__member_list__partner').not_to   have_selector 'selected'
-      end
-    end
-
     context 'when bills deposit_on is filled' do
       background { click_button '編集' }
 
