@@ -20,8 +20,6 @@ $ ->
         projectType =
           if @project.contracted == false
             'uncontracted'
-          else if @project.is_using_ses == true
-            'ses'
           else
             @project.contract_type
         $.ajax "/api/projects/cd/#{projectType}.json"

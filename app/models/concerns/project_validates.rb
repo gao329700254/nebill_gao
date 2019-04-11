@@ -30,9 +30,9 @@ module ProjectValidates
     end
 
     with_options unless: :contracted? do |un_contracted|
-      un_contracted.validates :contract_on         , absence: true
-      un_contracted.validates :contract_type       , absence: true
-      un_contracted.validates :estimated_amount    , absence: true
+      un_contracted.validates :contract_on         , presence: true
+      un_contracted.validates :contract_type       , presence: true
+      un_contracted.validates :estimated_amount    , presence: true
       un_contracted.validates :is_using_ses        , absence: true
       un_contracted.validates :start_on            , absence: true
       un_contracted.validates :end_on              , absence: true

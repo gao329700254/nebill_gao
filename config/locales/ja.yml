@@ -424,6 +424,7 @@ ja:
         lump_sum:    請負開発
         consignment: 委託
         maintenance: 保守
+        ses:         SES
         other:       その他
       payment_type:
         bill_on_15th_and_payment_on_end_of_next_month:                15日締め翌月末払い

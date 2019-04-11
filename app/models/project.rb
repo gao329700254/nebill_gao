@@ -57,7 +57,7 @@ class Project < ActiveRecord::Base
   has_many :approvals, as: :approved
   has_paper_trail meta: { project_id: :id }
 
-  enumerize :contract_type, in: [:lump_sum, :consignment, :maintenance, :other]
+  enumerize :contract_type, in: [:lump_sum, :consignment, :maintenance, :ses, :other]
   enumerize :payment_type, in: %w(
     bill_on_15th_and_payment_on_end_of_next_month
     bill_on_20th_and_payment_on_end_of_next_month
