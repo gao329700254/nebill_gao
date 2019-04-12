@@ -12,6 +12,7 @@ namespace :db do
           members
           project_file_groups
           project_files
+          default_expense_items
         ).each { |table| populate(table) }
       end
     end
@@ -98,6 +99,33 @@ namespace :db do
         num.times do
           FactoryGirl.create(:project_file, project: project, group: project.file_groups.sample)
         end
+      end
+    end
+
+    def populate_default_expense_items
+      DefaultExpenseItem.destroy_all
+
+      [
+        {name: '交通費',                   standard_amount: nil,    is_routing: true,  is_receipt: false},
+        {name: '交通費[領]',               standard_amount: nil,    is_routing: true,  is_receipt: true},
+        {name: 'タクシー',                 standard_amount: nil,    is_routing: true,  is_receipt: true},
+        {name: '会議費・交際費以外の経費', standard_amount: nil,    is_routing: false, is_receipt: true},
+        {name: '出張手当',                 standard_amount: 5000,   is_routing: false, is_receipt: false},
+        {name: '宿泊手当',                 standard_amount: 10000,  is_routing: false, is_receipt: false},
+        {name: '交際費',                   standard_amount: 10000,  is_routing: false, is_receipt: true},
+        {name: '仮払い',                   standard_amount: 10000,  is_routing: false, is_receipt: false},
+        {name: '会議費',                   standard_amount: 10000,  is_routing: false, is_receipt: true}
+      ].each do |attrs|
+        FactoryGirl.create(
+          :default_expense_item,
+          name:            attrs[:name],
+          standard_amount: attrs[:standard_amount],
+          display_name:    attrs[:name],
+          is_routing:      attrs[:is_routing],
+          is_receipt:      attrs[:is_receipt],
+          is_quantity:     false,
+          note:            attrs[:name],
+        )
       end
     end
   end

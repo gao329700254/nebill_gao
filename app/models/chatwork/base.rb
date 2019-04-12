@@ -14,16 +14,30 @@ module Chatwork
       def api_prefix
         Pathname.new('/v2/rooms').join(ENV['CHATWORK_ROOM_ID'])
       end
+
+      def get(url, **params)
+        res = new.api_client.get(url, params)
+
+        Rails.logger.error("chatwork send message eroor! #{res.body}") unless res.success?
+
+        return false unless res.success?
+
+        JSON.parse(res.body) rescue  nil
+      end
+
+      def post(url, **params)
+        res = new.api_client.post(url, params)
+
+        Rails.logger.error("chatwork send message eroor! #{res.body}") unless res.success?
+
+        return false unless res.success?
+      end
     end
 
     def send_message(body)
       return false unless enable?
 
-      res = api_client.post("#{api_prefix}/messages", body: body)
-
-      Rails.logger.error("chatwork send message eroor! #{res.body}") unless res.success?
-
-      res.success?
+      post("#{api_prefix}/messages", body: body)
     end
 
     def render(path)

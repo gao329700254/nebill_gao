@@ -21,10 +21,16 @@ class Api::ExpensesController < Api::ApiController
     @expense.transaction do
       @expense.default_id = params[:expense][:default_id]
       @expense.created_user_id = @current_user.id
+
+      if file_param.present?
+        file = file_param[:file_attributes][:file]
+        @expense.file.build(file: file, original_filename: file.original_filename)
+      end
+
       @expense.save!
       save_expense_trasportation
       update_total_expense(expense: @expense)
-      file_param.present? && file_create
+
     end
     render_action_model_success_message(@expense, :create)
 

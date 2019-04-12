@@ -41,6 +41,7 @@ class Expense < ActiveRecord::Base
   validates :use_date   , presence: true
   validates :default_id   , presence: true
   validates :amount   , presence: true
+  validates :file, presence: true, if: -> { default && default.is_receipt }
 
   enumerize :payment_type, in: { person_rebuilding: 10, invoice: 20, corporate_card: 30 }, default: :person_rebuilding
 

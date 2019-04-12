@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   has_many :approval_users
   has_many :approvals, through: :approval_users
 
-  has_many :expenses
+  has_many :expenses, foreign_key: :created_user_id
   has_many :expense_approvals
 
   has_many :expense_approval_users

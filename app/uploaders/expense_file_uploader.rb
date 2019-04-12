@@ -22,6 +22,7 @@ class ExpenseFileUploader < CarrierWave::Uploader::Base
       )
     end
   end
+  process :set_metadata
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -55,5 +56,9 @@ class ExpenseFileUploader < CarrierWave::Uploader::Base
     return unless original_filename
     @name ||= Digest::MD5.hexdigest(File.dirname(current_path))
     "#{@name}.#{file.extension}"
+  end
+
+  def set_metadata
+    model.original_filename ||= original_filename
   end
 end
