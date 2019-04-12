@@ -1,3 +1,9 @@
+@media print {
+  .no_print {
+    display: none;
+  }
+}
+
 .expense_pdf {
   /*** variables **************************************************************/
   $bluesky: #e3ecf0;
@@ -10,12 +16,7 @@
   line-height: 1.2rem;
   font-family: sans-serif;
   font-size: .8rem;
-
-  @media print {
-    .no_print {
-      display: none;
-    }
-  }
+  page-break-after: always;
 
   &__header {
     &--today {
@@ -54,19 +55,19 @@
           &--amount {
             border: solid .5px $black;
             background-color: $bluesky;
-            width: 10%;
+            width: 15%;
           }
 
           &--content {
             border: solid .5px $black;
             background-color: $bluesky;
-            width: 30%;
+            width: 25%;
           }
 
           &--notes {
             border: solid .5px $black;
             background-color: $bluesky;
-            width: 25%;
+            width: 10%;
           }
 
           &--day {
@@ -79,13 +80,13 @@
           &--use_date {
             border: solid .5px $black;
             background-color: $bluesky;
-            width: 10%;
+            width: 15%;
           }
 
           &--project {
             border: solid .5px $black;
             background-color: $bluesky;
-            width: 10%;
+            width: 15%;
           }
 
           &--name,
@@ -163,5 +164,27 @@
         }
       }
     }
+
+    &__foot {
+      &__row {
+        height: 1.6rem;
+
+
+        &__item {
+          border: solid 1px;
+          border: solid .5px $black;
+          background-color: $bluesky;
+
+          &--amount {
+            padding: 0 4px 0 0;
+            text-align: right;
+            border: solid 1px;
+            background-color: $bluesky;
+          }
+        }
+
+      }
+    }
+
   }
 }

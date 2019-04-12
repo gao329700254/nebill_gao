@@ -691,7 +691,8 @@ ja:
       approvel_user_name: 最後承認者
       updated_at: 最後承認日
       created_at: 申請日
-      reimbursement_amount: 精算金額
+      reimbursement_amount_by_user: 個人合計精算金額
+      subtotal: 小計
       replacement: 本人立替
       employee_name: 社員名
       comment: ■ コメント
@@ -757,7 +758,7 @@ ja:
       update:
         subject:  "【経費申請】申請「%{name}」が更新されました."
         message:  "申請「%{name}」が更新されました."
-      permission:  
+      permission:
         subject:  "【経費申請】%{user}さんの申請「%{name}」が承認済みになりました."
         message:  "%{user}さんの申請「%{name}」が承認済みになりました."
       disconfirm:
