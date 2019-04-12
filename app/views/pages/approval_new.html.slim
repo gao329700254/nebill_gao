@@ -1,3 +1,4 @@
+= javascript_include_tag 'view_models/approval_new'
 
 - provide(:title, t('page.approval_new.title'))
 
@@ -24,11 +25,15 @@
           = fa_icon 'check', text: t('helpers.submit.create')
       .approval_new__form__container__group
         .approval_new__form__item
+          - @approval.files.build if @approval.files.blank?
           = f.label :files, Approval.human_attribute_name(:file)
           = f.nested_fields_for :files do |q|
             .approval_new__form__item__file
               = q.file_field :file, class: 'form-control'
               = q.remove_nested_fields_link 'Delete', class: 'btn btn-danger approval_new__form__btn--file_delete', role: 'button' do
                 = fa_icon 'remove', text: t('helpers.delete')
+              .approval_new__form__item__file__drop_container
+                label
+                  p ファイルをドロップするか、クリックで選択してください。
         = f.add_nested_fields_link :files, 'Add new', class: 'btn btn-primary approval_new__form__btn--file_new', role: 'button'
           = fa_icon 'plus', text: t('helpers.plus')
