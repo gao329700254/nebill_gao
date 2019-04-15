@@ -26,7 +26,7 @@ $ ->
           .done (response) =>
             @project.cd = response.cd
       loadClients: ->
-        $.ajax '/api/clients.json'
+        $.ajax '/api/clients/published_clients.json'
           .done (response) =>
             @clients = []
             response.forEach (element) =>

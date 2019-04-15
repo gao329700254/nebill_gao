@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :clients, only: [:index, :create, :show, :update], shallow: true do
       collection do
         get 'statuses', to: "clients#statuses"
+        get 'published_clients', to: "clients#published_clients"
         post 'set_approval_user', to: "clients#set_approval_user"
       end
     end

@@ -13,11 +13,11 @@ fieldset.project_new__form__billing
     .project_new__form__container__group_2
       .project_new__form__item
         = label_tag :billing_company_name, t('page.project_new.company_name')
-        = text_field_tag :billing_company_name, nil, 'v-model' => 'project.billing_company_name'
+        = text_field_tag :billing_company_name, nil, 'v-model' => 'project.billing_company_name', ':disabled' => true
     .project_new__form__container__group_2
       .project_new__form__item
         = label_tag :billing_department_name, t('page.project_new.department_name')
-        = text_field_tag :billing_department_name, nil, 'v-model' => 'project.billing_department_name'
+        = text_field_tag :billing_department_name, nil, 'v-model' => 'project.billing_department_name', ':disabled' => true
     .project_new__form__container__group_2
       .project_new__form__item
         = label_tag :billing_personnel_names, t('page.project_new.personnel_names')
@@ -26,16 +26,16 @@ fieldset.project_new__form__billing
     .project_new__form__container__group_2
       .project_new__form__item
         = label_tag :billing_zip_code, t('page.project_new.zip_code')
-        = text_field_tag :billing_zip_code, nil, 'v-model' => 'project.billing_zip_code'
+        = text_field_tag :billing_zip_code, nil, 'v-model' => 'project.billing_zip_code', ':disabled' => true
     .project_new__form__container__group_3
       .project_new__form__item
         = label_tag :billing_address, t('page.project_new.address')
-        = text_field_tag :billing_address, nil, 'v-model' => 'project.billing_address'
+        = text_field_tag :billing_address, nil, 'v-model' => 'project.billing_address', ':disabled' => true
   .project_new__form__container
     .project_new__form__container__group_2
       .project_new__form__item
         = label_tag :billing_phone_number, t('page.project_new.phone_number')
-        = text_area_tag :billing_phone_number, nil, 'v-model' => 'project.billing_phone_number'
+        = text_area_tag :billing_phone_number, nil, 'v-model' => 'project.billing_phone_number', ':disabled' => true
     .project_new__form__container__group_3
       .project_new__form__item
         = label_tag :billing_memo, t('page.project_new.memo')

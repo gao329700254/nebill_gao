@@ -3,15 +3,21 @@ fieldset.project_detail__form__orderer
     .project_detail__form__legend__title
       = fa_icon 'jpy', text: t('page.project_show.project_detail.orderer')
 
+  .project_new__form__item v-if="editMode"
+    .project_new__form__fill
+      select#orderer_client_id.project_new__form__fill--select v-model="ordererClientId"
+        option v-for="client in clients" value="{{client.id}}" {{client.cd + ' ' + client.company_name}}
+      = button_tag class: 'project_new__form__fill--btn', 'v-on:click.prevent' => 'fillOrderer' do
+        = fa_icon 'arrow-down'
   .project_detail__form__container
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :orderer_company_name, t('page.project_show.project_detail.company_name')
-        = text_field_tag :orderer_company_name, nil, 'v-model' => 'project.orderer_company_name', ':disabled' => '!editMode'
+        = text_field_tag :orderer_company_name, nil, 'v-model' => 'project.orderer_company_name', ':disabled' => true
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :orderer_department_name, t('page.project_show.project_detail.department_name')
-        = text_field_tag :orderer_department_name, nil, 'v-model' => 'project.orderer_department_name', ':disabled' => '!editMode'
+        = text_field_tag :orderer_department_name, nil, 'v-model' => 'project.orderer_department_name', ':disabled' => true
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :orderer_personnel_names, t('page.project_show.project_detail.personnel_names')
@@ -20,16 +26,16 @@ fieldset.project_detail__form__orderer
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :orderer_zip_code, t('page.project_show.project_detail.zip_code')
-        = text_field_tag :orderer_zip_code, nil, 'v-model' => 'project.orderer_zip_code', ':disabled' => '!editMode'
+        = text_field_tag :orderer_zip_code, nil, 'v-model' => 'project.orderer_zip_code', ':disabled' => true
     .project_detail__form__container__group_3
       .project_detail__form__item
         = label_tag :orderer_address, t('page.project_show.project_detail.address')
-        = text_field_tag :orderer_address, nil, 'v-model' => 'project.orderer_address', ':disabled' => '!editMode'
+        = text_field_tag :orderer_address, nil, 'v-model' => 'project.orderer_address', ':disabled' => true
   .project_detail__form__container
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :orderer_phone_number, t('page.project_show.project_detail.phone_number')
-        = text_area_tag :orderer_phone_number, nil, 'v-model' => 'project.orderer_phone_number', ':disabled' => '!editMode'
+        = text_area_tag :orderer_phone_number, nil, 'v-model' => 'project.orderer_phone_number', ':disabled' => true
     .project_detail__form__container__group_3
       .project_detail__form__item
         = label_tag :orderer_memo, t('page.project_detail.memo')

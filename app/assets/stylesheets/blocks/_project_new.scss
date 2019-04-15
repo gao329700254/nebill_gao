@@ -50,6 +50,18 @@
 
     &__item {
       margin-bottom: $small-spacing;
+
+      #{$all-text-inputs-disabled},
+      select:disabled,
+      textarea:disabled {
+        border-bottom: $base-border;
+        border-radius: 0;
+        border-top-color: $white-bg-color;
+        border-right-color: $white-bg-color;
+        border-left-color: $white-bg-color;
+        box-shadow: none;
+        background-color: $white-bg-color;
+      }
     }
 
     &__fill {

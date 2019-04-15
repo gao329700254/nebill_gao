@@ -39,6 +39,7 @@
 #                     admin_user_show GET    /admin/users/:user_id/show(.:format)                     admin/pages#user_show
 #                   letter_opener_web        /letter_opener                                           LetterOpenerWeb::Engine
 #                statuses_api_clients GET    /api/clients/statuses(.:format)                          api/clients#statuses
+#       published_clients_api_clients GET    /api/clients/published_clients(.:format)                 api/clients#published_clients
 #       set_approval_user_api_clients POST   /api/clients/set_approval_user(.:format)                 api/clients#set_approval_user
 #                         api_clients GET    /api/clients(.:format)                                   api/clients#index
 #                                     POST   /api/clients(.:format)                                   api/clients#create
