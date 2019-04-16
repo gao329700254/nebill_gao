@@ -35,8 +35,8 @@ class Api::ClientsController < Api::ApiController
       @services ||= ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find(6))
       @services.execute
       @client.status = 10
+      update_notice
     end
-    update_notice
     @client.save!
 
     render_action_model_success_message(@client, :update)
