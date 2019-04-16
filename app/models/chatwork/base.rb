@@ -30,14 +30,14 @@ module Chatwork
 
         Rails.logger.error("chatwork send message eroor! #{res.body}") unless res.success?
 
-        return false unless res.success?
+        res.success?
       end
     end
 
     def send_message(body)
       return false unless enable?
 
-      post("#{api_prefix}/messages", body: body)
+      self.class.post("#{api_prefix}/messages", body: body)
     end
 
     def render(path)
