@@ -22,7 +22,11 @@ module Chatwork
 
         return false unless res.success?
 
-        JSON.parse(res.body) rescue  nil
+        begin
+          JSON.parse(res.body)
+        rescue
+          nil
+        end
       end
 
       def post(url, **params)

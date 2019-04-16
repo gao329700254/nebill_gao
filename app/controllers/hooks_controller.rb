@@ -5,26 +5,22 @@ class HooksController < ApplicationController
   protect_from_forgery except: :create
 
   def create
-    if direct_chat_file_upload?
-      Chatwork::FileUploadService.new(params).execute
-    end
+    Chatwork::FileUploadService.new(params).execute if direct_chat_file_upload?
 
     head :ok
   # すべてのエラーを拾って 200を返す
   rescue => e
-    p e
-    puts e.backtrace
+    Rails.logger.error e
+    Rails.logger.error e.backtrace
     head :ok
   end
 
-  private
+private
 
   def check_signature
     digest = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'),  Base64.decode64(ENV['CHATWORK_WEB_HOOK_TOKEN']), request.body.read)
 
-    unless request.headers[:HTTP_X_CHATWORKWEBHOOKSIGNATURE] == Base64.strict_encode64(digest)
-      head :forbidden
-    end
+    head :forbidden unless request.headers[:HTTP_X_CHATWORKWEBHOOKSIGNATURE] == Base64.strict_encode64(digest)
   end
 
   def direct_chat_file_upload?

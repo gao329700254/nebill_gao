@@ -106,15 +106,15 @@ namespace :db do
       DefaultExpenseItem.destroy_all
 
       [
-        {name: '交通費',                   standard_amount: nil,    is_routing: true,  is_receipt: false},
-        {name: '交通費[領]',               standard_amount: nil,    is_routing: true,  is_receipt: true},
-        {name: 'タクシー',                 standard_amount: nil,    is_routing: true,  is_receipt: true},
-        {name: '会議費・交際費以外の経費', standard_amount: nil,    is_routing: false, is_receipt: true},
-        {name: '出張手当',                 standard_amount: 5000,   is_routing: false, is_receipt: false},
-        {name: '宿泊手当',                 standard_amount: 10000,  is_routing: false, is_receipt: false},
-        {name: '交際費',                   standard_amount: 10000,  is_routing: false, is_receipt: true},
-        {name: '仮払い',                   standard_amount: 10000,  is_routing: false, is_receipt: false},
-        {name: '会議費',                   standard_amount: 10000,  is_routing: false, is_receipt: true}
+        { name: '交通費',                   standard_amount: nil,    is_routing: true,  is_receipt: false },
+        { name: '交通費[領]',               standard_amount: nil,    is_routing: true,  is_receipt: true },
+        { name: 'タクシー',                 standard_amount: nil,    is_routing: true,  is_receipt: true },
+        { name: '会議費・交際費以外の経費', standard_amount: nil,    is_routing: false, is_receipt: true },
+        { name: '出張手当',                 standard_amount: 5000,   is_routing: false, is_receipt: false },
+        { name: '宿泊手当',                 standard_amount: 10_000,  is_routing: false, is_receipt: false },
+        { name: '交際費',                   standard_amount: 10_000,  is_routing: false, is_receipt: true },
+        { name: '仮払い',                   standard_amount: 10_000,  is_routing: false, is_receipt: false },
+        { name: '会議費',                   standard_amount: 10_000,  is_routing: false, is_receipt: true },
       ].each do |attrs|
         FactoryGirl.create(
           :default_expense_item,
