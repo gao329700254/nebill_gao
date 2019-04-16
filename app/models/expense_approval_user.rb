@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190108060032
+# Schema version: 20190416043726
 #
 # Table name: expense_approval_users
 #

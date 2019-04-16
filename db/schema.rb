@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190108060032) do
+ActiveRecord::Schema.define(version: 20190416043726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -176,11 +176,10 @@ ActiveRecord::Schema.define(version: 20190108060032) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.float    "working_rate"
-    t.integer  "bill_id",        null: false
+    t.integer  "project_id",     null: false
   end
 
-  add_index "members", ["bill_id"], name: "index_members_on_bill_id", using: :btree
-  add_index "members", ["employee_id", "bill_id"], name: "index_members_on_employee_id_and_bill_id", unique: true, using: :btree
+  add_index "members", ["project_id"], name: "index_members_on_project_id", using: :btree
   add_index "members", ["type"], name: "index_members_on_type", using: :btree
 
   create_table "partners", force: :cascade do |t|
@@ -308,8 +307,8 @@ ActiveRecord::Schema.define(version: 20190108060032) do
   add_foreign_key "expenses", "expense_approvals", on_delete: :nullify
   add_foreign_key "expenses", "projects", on_delete: :nullify
   add_foreign_key "expenses", "users", column: "created_user_id", on_delete: :nullify
-  add_foreign_key "members", "bills", on_delete: :cascade
   add_foreign_key "members", "employees", on_delete: :cascade
+  add_foreign_key "members", "projects", on_delete: :cascade
   add_foreign_key "project_file_groups", "projects", on_delete: :cascade
   add_foreign_key "project_files", "projects", on_delete: :cascade
   add_foreign_key "projects", "project_groups", column: "group_id", on_delete: :nullify

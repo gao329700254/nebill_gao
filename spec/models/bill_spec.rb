@@ -14,10 +14,8 @@ RSpec.describe Bill do
   it { is_expected.to respond_to(:memo) }
 
   it { is_expected.to belong_to(:project) }
-  it { is_expected.to have_many(:members).dependent(:destroy) }
   it { is_expected.to have_many(:user_members) }
   it { is_expected.to have_many(:partner_members) }
-  it { is_expected.to have_many(:employees).through(:members) }
   it { is_expected.to have_many(:users).through(:user_members) }
   it { is_expected.to have_many(:partners).through(:partner_members) }
 

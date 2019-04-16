@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190108060032
+# Schema version: 20190416043726
 #
 # Table name: bills
 #
@@ -29,10 +29,8 @@ class Bill < ActiveRecord::Base
   extend Enumerize
 
   belongs_to :project
-  has_many :members, dependent: :destroy
   has_many :user_members
   has_many :partner_members
-  has_many :employees, through: :members
   has_many :users, through: :user_members
   has_many :partners, through: :partner_members
   has_many :approvals, as: :approved

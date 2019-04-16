@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190108060032
+# Schema version: 20190416043726
 #
 # Table name: members
 #
@@ -12,18 +12,17 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  working_rate   :float
-#  bill_id        :integer          not null
+#  project_id     :integer          not null
 #
 # Indexes
 #
-#  index_members_on_bill_id                  (bill_id)
-#  index_members_on_employee_id_and_bill_id  (employee_id,bill_id) UNIQUE
-#  index_members_on_type                     (type)
+#  index_members_on_project_id  (project_id)
+#  index_members_on_type        (type)
 #
 # Foreign Keys
 #
 #  fk_rails_1e30d6a7f9  (employee_id => employees.id)
-#  fk_rails_a83d5bf563  (bill_id => bills.id)
+#  fk_rails_7054080f33  (project_id => projects.id)
 #
 
 class PartnerMember < Member
