@@ -171,20 +171,17 @@
 
 
         &__item {
-          border: solid 1px;
           border: solid .5px $black;
           background-color: $bluesky;
 
           &--amount {
-            padding: 0 4px 0 0;
-            text-align: right;
             border: solid 1px;
             background-color: $bluesky;
+            padding: 0 4px 0 0;
+            text-align: right;
           }
         }
-
       }
     }
-
   }
 }
