@@ -10,9 +10,14 @@ class Api::ProjectsController < Api::ApiController
 
   def create
     @project = Project.new(project_param)
-    @project.save!
-
-    render_action_model_success_message(@project, :create)
+    if @project.valid?
+      Project.transaction do
+        @project.save!
+      end
+      render_action_model_success_message(@project, :create)
+    else
+      render_action_model_fail_message(@project, :create)
+    end
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@project, :create)
   end
@@ -101,6 +106,11 @@ class Api::ProjectsController < Api::ApiController
     end
   end
 
+  def load_partner_user
+    @employee = Employee.all
+    render json: @employee, status: :ok
+  end
+
 private
 
   def set_project
@@ -131,6 +141,7 @@ private
       :amount,
       :payment_type,
       :estimated_amount,
+      :leader_id,
       :billing_company_name,
       :billing_department_name,
       :billing_address,
@@ -145,6 +156,17 @@ private
       :orderer_memo,
       billing_personnel_names: [],
       orderer_personnel_names: [],
+      members_attributes: [
+        :id,
+        :employee_id,
+        :type,
+        :unit_price,
+        :working_rate,
+        :min_limit_time,
+        :max_limit_time,
+        :project_id,
+        :_destroy,
+      ],
     )
   end
   # rubocop:enable Metrics/MethodLength

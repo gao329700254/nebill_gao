@@ -7,7 +7,7 @@
     padding-top: 5em;
 
     &__inner {
-      @include modal__outer__inner--large;
+      @include modal__outer__inner--extra-large;
 
       &__body {
         @include modal__outer__inner__body;
@@ -62,6 +62,58 @@
         box-shadow: none;
         background-color: $white-bg-color;
       }
+
+      &__partner {
+        @include list_tbl;
+
+        &__head {
+          @include list_tbl__head__row;
+          border-color: $white-bg-color;
+
+          &__title {
+            float: left;
+            margin-top: $small-spacing;
+            margin-bottom: $small-spacing;
+          }
+        }
+
+        &__list {
+          margin-bottom: $small-spacing;
+        }
+
+        &__item {
+          &--name {
+            @include span-columns(3);
+            &--non_edit {
+              display: table-cell;
+            }
+          }
+
+          &--unit_price {
+            @include span-columns(1.5);
+          }
+
+          &--working_rate {
+            @include span-columns(3);
+          }
+
+          &--min_limit_time {
+            @include span-columns(1.5);
+          }
+
+          &--max_limit_time {
+            @include span-columns(1.5);
+          }
+
+          &--member {
+            @include span-columns(8.5);
+          }
+
+          &--remove {
+            @include span-columns(1.5);
+          }
+        }
+      }
     }
 
     &__fill {
@@ -78,6 +130,11 @@
 
     &__copy_btn {
       @include btn--default;
+    }
+
+    &__plus_btn {
+      @include btn--default;
+      padding: .6em 1em;
     }
 
     &__submit_btn,

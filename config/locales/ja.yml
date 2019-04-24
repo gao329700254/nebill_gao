@@ -508,6 +508,9 @@ ja:
       zip_code: 郵便番号
       phone_number: 電話番号
       memo: メモ
+      leader: プロジェクトリーダー
+      partner: パートナー
+      member: メンバー
     project_list:
       title: プロジェクト一覧
       search_form_placeholder: 'ID,名前,受注先会社名で検索できます'

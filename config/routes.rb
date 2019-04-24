@@ -62,6 +62,7 @@
 #                                     PUT    /api/partners/:id(.:format)                              api/partners#update
 #                                     GET    /api/projects/:id/select_status(.:format)                api/projects#select_status
 #                                     GET    /api/projects/:id/last_updated_at(.:format)              api/projects#last_updated_at
+#      load_partner_user_api_projects GET    /api/projects/load_partner_user(.:format)                api/projects#load_partner_user
 #                                     GET    /api/projects/bill/:bill_id(.:format)                    api/projects#show
 #                   api_project_users GET    /api/projects/:project_id/users(.:format)                api/users#index
 #                   api_bill_partners GET    /api/bills/:bill_id/partners(.:format)                   api/partners#index

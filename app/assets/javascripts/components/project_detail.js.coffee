@@ -11,6 +11,7 @@ $ ->
       clients: []
       ordererClientId: undefined
       billingClientId: undefined
+      allUsers: []
     watch:
       projectId: ->
         @loadProject()
@@ -93,9 +94,14 @@ $ ->
             @project.billing_address          = response.address
             @project.billing_zip_code         = response.zip_code
             @project.billing_phone_number     = response.phone_number
+      loadAllUsers: ->
+        $.ajax '/api/users'
+          .done (response) =>
+            @allUsers = response
     created: ->
       @initializeProject()
       @loadClients()
+      @loadAllUsers()
     events:
       loadStatusEvent: ->
         @statusList()

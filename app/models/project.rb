@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190416043726
+# Schema version: 20190423040404
 #
 # Table name: projects
 #
@@ -36,6 +36,7 @@
 #  billing_phone_number    :string
 #  memo                    :text
 #  unprocessed             :boolean          default(FALSE)
+#  leader_id               :integer
 #
 # Indexes
 #
@@ -52,11 +53,13 @@ class Project < ActiveRecord::Base
 
   belongs_to :group, class_name: 'ProjectGroup'
   has_many :bills, dependent: :destroy
-  has_many :members, dependent: :destroy
+  has_many :members, class_name: 'Member', dependent: :destroy
   has_many :files, class_name: 'ProjectFile', dependent: :destroy
   has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy
   has_many :approvals, as: :approved
   has_paper_trail meta: { project_id: :id }
+
+  accepts_nested_attributes_for :members, allow_destroy: true
 
   enumerize :contract_type, in: [:lump_sum, :consignment, :maintenance, :ses, :other]
   enumerize :payment_type, in: %w(

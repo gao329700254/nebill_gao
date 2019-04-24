@@ -14,6 +14,11 @@ $ ->
         zip_code:         undefined
         phone_number:     undefined
         memo:             undefined
+      allUsers: []
+      partners: []
+      members: []
+      allPartners: []
+      allMembers: []
     methods:
       cancel: -> @modalHide()
       setProjectCd: ->
@@ -58,6 +63,18 @@ $ ->
         try
           submit = $('.project_new__form__submit_btn')
           submit.prop('disabled', true)
+          if @partners.length > 0 || @members.length > 0
+            @projectPostData.members_attributes = []
+          if @partners.length > 0
+            @partners.forEach (partner) =>
+              if partner.employee_id
+                partner.type = 'PartnerMember'
+                @projectPostData.members_attributes.push(partner)
+          if @members.length > 0
+            @members.forEach (member) =>
+              if member.employee_id
+                member.type = 'UserMember'
+                @projectPostData.members_attributes.push(member)
           $.ajax
             url: '/api/projects.json'
             type: 'POST'
@@ -67,14 +84,43 @@ $ ->
             @initializeProject()
             @modalHide()
             @$dispatch('loadSearchEvent')
+            @partners = []
+            @members = []
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
+      loadAllUsers: ->
+        $.ajax '/api/users'
+          .done (response) =>
+            @allUsers = response
+      loadPartnersUsers: ->
+        $.ajax '/api/projects/load_partner_user.json'
+          .done (response) =>
+            response.forEach (emp) =>
+              if emp.actable_type == 'Partner'
+                @allPartners.push(emp)
+              else if emp.actable_type == 'User'
+                @allMembers.push(emp)
+      addPartnerMemberForm: ->
+        @partners.push({
+          employee_id: '',
+          unit_price: '',
+          working_rate: '',
+          min_limit_time: '',
+          max_limit_time: '' })
+      addUserMemberForm: ->
+        @members.push({ employee_id: '' })
+      deletePartnerMemberForm: (index) ->
+        @partners.splice(index, 1)
+      deleteUserMemberForm: (index) ->
+        @members.splice(index, 1)
     created: ->
       @loadClients()
       @initializeProject()
       @setProjectCd()
+      @loadAllUsers()
+      @loadPartnersUsers()
     events:
       showProjectNewEvent: -> @modalShow()
