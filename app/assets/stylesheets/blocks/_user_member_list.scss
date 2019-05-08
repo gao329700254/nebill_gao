@@ -18,6 +18,22 @@
       %user_member_list__tbl__body__row {
         @include list_tbl__body__row;
         font-size: $base-font-size;
+
+        &--selected {
+          @include list_tbl__body__row;
+          background-color: $yellow;
+          font-size: $base-font-size;
+
+          #{$all-text-inputs-disabled},
+          select:disabled,
+          textarea:disabled {
+            border-bottom: $base-border;
+            border-radius: 0;
+            border-color: $yellow-bg-color;
+            box-shadow: none;
+            background-color: $yellow-bg-color;
+          }
+        }
       }
     }
 
@@ -34,6 +50,24 @@
         @extend %user_member_list__tbl__item;
         @include span-columns(8);
       }
+
+      &--member {
+        @include span-columns(8.5);
+      }
+
+      &--save {
+        @include span-columns(1.5);
+      }
+    }
+
+    &__btn {
+      @include btn--default;
+      margin-top: $small-spacing;
+    }
+
+    &__user_btn {
+      @include btn--default;
+      padding: .6em 1em;
     }
   }
 }

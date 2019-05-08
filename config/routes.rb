@@ -63,10 +63,9 @@
 #                                     GET    /api/projects/:id/select_status(.:format)                api/projects#select_status
 #                                     GET    /api/projects/:id/last_updated_at(.:format)              api/projects#last_updated_at
 #      load_partner_user_api_projects GET    /api/projects/load_partner_user(.:format)                api/projects#load_partner_user
+#                                     POST   /api/projects/:id/member_partner(.:format)               api/projects#member_partner
 #                                     GET    /api/projects/bill/:bill_id(.:format)                    api/projects#show
 #                   api_project_users GET    /api/projects/:project_id/users(.:format)                api/users#index
-#                   api_bill_partners GET    /api/bills/:bill_id/partners(.:format)                   api/partners#index
-#                      api_bill_users GET    /api/bills/:bill_id/users(.:format)                      api/users#index
 #                   api_project_bills GET    /api/projects/:project_id/bills(.:format)                api/bills#index
 #                                     POST   /api/projects/:project_id/bills(.:format)                api/bills#create
 #                            api_bill GET    /api/bills/:id(.:format)                                 api/bills#show
@@ -90,11 +89,11 @@
 #                                     PATCH  /api/projects/:id(.:format)                              api/projects#update
 #                                     PUT    /api/projects/:id(.:format)                              api/projects#update
 #                                     DELETE /api/projects/:id(.:format)                              api/projects#destroy
-#                    api_user_members POST   /api/user_members/:bill_id/:user_id(.:format)            api/user_members#create
-#             api_delete_user_members DELETE /api/user_members/:bill_id/:user_id(.:format)            api/user_members#destroy
-#                 api_partner_members POST   /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#create
-#          api_delete_partner_members DELETE /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#destroy
-#          api_update_partner_members PATCH  /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#update
+#                    api_user_members POST   /api/user_members/:project_id/:user_id(.:format)         api/user_members#create
+#             api_delete_user_members DELETE /api/user_members/:project_id/:user_id(.:format)         api/user_members#destroy
+#                 api_partner_members POST   /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#create
+#          api_delete_partner_members DELETE /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#destroy
+#          api_update_partner_members PATCH  /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#update
 #                  api_project_groups GET    /api/project_groups(.:format)                            api/project_groups#index
 #                                     POST   /api/project_groups(.:format)                            api/project_groups#create
 #                   api_project_group PATCH  /api/project_groups/:id(.:format)                        api/project_groups#update

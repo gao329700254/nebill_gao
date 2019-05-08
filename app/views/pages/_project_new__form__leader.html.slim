@@ -49,7 +49,7 @@ fieldset.project_new__form__basic
             select.project_new__form__item__add_user_member__list [
               v-model='members[index].employee_id'
             ]
-              option v-for="user in allMembers" value="{{user.actable_id}}" {{user.name}}
+              option v-for="user in allMembers" value="{{user.id}}" {{user.name}}
           .project_new__form__item__partner__item--remove
             = button_tag 'v-on:click.prevent' => 'deleteUserMemberForm(index)', class: 'project_new__form__plus_btn' do
               = fa_icon 'remove', text: t('helpers.delete')

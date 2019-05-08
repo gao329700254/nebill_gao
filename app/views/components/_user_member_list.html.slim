@@ -7,8 +7,25 @@ script type='text/x-template' id='user_member_list'
           th.user_member_list__tbl__item--email = t('activerecord.attributes.user.email')
       tbody.user_member_list__tbl__body
         tr.user_member_list__tbl__body__row [
-          v-for = "user in users | orderBy 'name'"
+          v-for        = "user in users | orderBy 'name'"
+          id           = "user-{{user.id}}"
+          track-by     = "id"
+          v-bind:class = "user.selected ? 'user_member_list__tbl__body__row--selected'
+                                        : 'user_member_list__tbl__body__row'"
         ]
+
+          td
+            input type="checkbox" name='selected' v-model='user.selected'
           td.user_member_list__tbl__item--name v-text='user.name'
           td.user_member_list__tbl__item--email v-text='user.email'
-
+  .user_member_list
+    .user_member_list__tbl__item--member
+      select [
+        v-model='selectedMemberId'
+      ]
+        option v-for="user in selectableUsers" value="{{user.id}}" {{user.name}}
+    .user_member_list__tbl__item--save
+      = button_tag 'v-on:click.prevent' => 'addUserMember', class: 'user_member_list__tbl__user_btn' do
+        = fa_icon 'check', text: t('helpers.submit.create')
+    = button_tag 'v-on:click' => 'deleteUserMember', 'v-if' => 'selectedUsers.length > 0', class: 'user_member_list__tbl__btn' do
+      = fa_icon 'trash', text: t('helpers.delete')

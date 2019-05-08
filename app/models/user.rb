@@ -59,8 +59,8 @@ class User < ActiveRecord::Base
     user
   end
 
-  def join!(bill)
-    bill.user_members.create!(employee_id: employee.id)
+  def join!(project)
+    project.user_members.create!(employee_id: employee.id)
   end
 
   def self.chatwork_members_options

@@ -9,6 +9,7 @@
     &__head {
       &__row {
         @include list_tbl__head__row;
+        padding-bottom: 15px;
       }
     }
 
@@ -54,12 +55,23 @@
       }
 
       &--email {
-        @include span-columns(6);
-        @include word-wrap;
+        @include span-columns(4);
       }
 
-      &--company_name {
-        @include span-columns(4);
+      &--unit_price {
+        @include span-columns(1);
+      }
+
+      &--working_rate {
+        @include span-columns(2);
+      }
+
+      &--min_limit_time {
+        @include span-columns(1);
+      }
+
+      &--max_limit_time {
+        @include span-columns(1);
       }
     }
   }
@@ -67,8 +79,21 @@
   &__btn {
     &--edit,
     &--cancel,
+    &--delete,
     &--submit {
       @include btn--default;
     }
+  }
+
+  &--new_partner {
+    @include btn--default;
+    display: block;
+    float: right;
+    margin-top: -4em;
+  }
+
+  &__partner_btn {
+    @include btn--default;
+    padding: .6em 1em;
   }
 }

@@ -25,15 +25,13 @@ Rails.application.routes.draw do
         get ':id/select_status', to: "projects#select_status"
         get ':id/last_updated_at', to: "projects#last_updated_at"
         get 'load_partner_user', to: "projects#load_partner_user"
+        post ':id/member_partner', to: "projects#member_partner"
       end
       collection do
         get 'bill/:bill_id', to: "projects#show"
       end
       resources :users, only: [:index]
-      resources :bills, only: [:index, :create, :show, :update, :destroy], shallow: true do
-        resources :partners, only: [:index]
-        resources :users, only: [:index]
-      end
+      resources :bills, only: [:index, :create, :show, :update, :destroy]
       resources :partners, only: [:index]
       resources :project_files, only: [:index, :show, :create, :update, :destroy]
       resources :project_file_groups, only: [:index, :create]
@@ -43,10 +41,10 @@ Rails.application.routes.draw do
       end
     end
     %w(user partner).each do |member_type|
-      post "#{member_type}_members/:bill_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"
-      delete "#{member_type}_members/:bill_id/:#{member_type}_id", to: "#{member_type}_members#destroy", as: "delete_#{member_type}_members"
+      post "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"
+      delete "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#destroy", as: "delete_#{member_type}_members"
     end
-    patch "partner_members/:bill_id/:partner_id", to: "partner_members#update", as: "update_partner_members"
+    patch "partner_members/:project_id/:partner_id", to: "partner_members#update", as: "update_partner_members"
     resources :project_groups, only: [:index, :create, :update]
     resources :bills, only: [:index]
     post "projects/search_result", to: "projects#search_result"

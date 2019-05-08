@@ -27,14 +27,4 @@ class Partner < ActiveRecord::Base
   validates :company_name, presence: true
 
   before_save { cd.upcase! }
-
-  def join!(bill, unit_price, working_rate, min_limit_time, max_limit_time)
-    bill.partner_members.create!(
-      employee_id:    employee.id,
-      unit_price:     unit_price,
-      working_rate:   working_rate,
-      min_limit_time: min_limit_time,
-      max_limit_time: max_limit_time,
-    )
-  end
 end

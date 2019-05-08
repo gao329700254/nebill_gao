@@ -1,11 +1,43 @@
+== render 'components/partner_new'
+
 script type='text/x-template' id='partner_member_list'
   .partner_member_list
+    = button_tag 'v-on:click.prevent' => 'showPartnerNew',
+      class: 'partner_member_list--new_partner' do
+        = fa_icon 'check', text: t('component.member_list.new_partner')
     ==render 'components/partner_member_list_tbl'
+    .project_new__form__item
+      .project_new__form__item__partner
+        .project_new__form__item__partner__item--name
+          select.project_new__form__item__add_user_member__list [
+            v-model='selectedPartnerId'
+          ]
+            option v-for="user in selectablePartners" value="{{user.id}}" {{user.name}}
+        .project_new__form__item__partner__item--unit_price
+          = text_field_tag :unit_price, nil, 'v-model' => 'member.unit_price', :placeholder => t('activerecord.attributes.partner_member.unit_price')
+        .project_new__form__item__partner__item--working_rate
+          = text_field_tag :working_rate, nil, 'v-model' => 'member.working_rate',
+                           :placeholder => t('activerecord.attributes.partner_member.working_rate')
+        .project_new__form__item__partner__item--min_limit_time
+          = text_field_tag :min_limit_time, nil, 'v-model' => 'member.min_limit_time',
+                           :placeholder => t('activerecord.attributes.partner_member.min_limit_time')
+        .project_new__form__item__partner__item--max_limit_time
+          = text_field_tag :max_limit_time, nil, 'v-model' => 'member.max_limit_time',
+                           :placeholder => t('activerecord.attributes.partner_member.max_limit_time')
+        .project_new__form__item__partner__item--remove
+          = button_tag 'v-on:click.prevent' => 'createPartner', class: 'partner_member_list__partner_btn' do
+            = fa_icon 'check', text: t('helpers.submit.create')
 
-    .partner_member_list__btn
-      = button_tag 'v-on:click' => 'editModeOn', 'v-if' => '!editMode && selectedPartners.length > 0', class: 'partner_member_list__btn--edit' do
-        = fa_icon 'edit', text: t('helpers.edit')
-      = button_tag 'v-on:click' => 'editModeOff', 'v-if' => 'editMode', class: 'partner_member_list__btn--cancel' do
-        = fa_icon 'remove', text: t('helpers.cancel')
-      = button_tag 'v-on:click' => 'editMember', 'v-if' => 'editMode', class: 'partner_member_list__btn--submit' do
-        = fa_icon 'pencil-square', text: t('helpers.submit.update')
+    = button_tag 'v-on:click' => 'editModeOn', 'v-if' => '!editMode && selectedPartners.length > 0', class: 'partner_member_list__btn--edit' do
+      = fa_icon 'edit', text: t('helpers.edit')
+    = button_tag 'v-on:click' => 'deletePartnerMember', 'v-if' => '!editMode && selectedPartners.length > 0', class: 'partner_member_list__btn--delete' do
+      = fa_icon 'trash', text: t('helpers.delete')
+    = button_tag 'v-on:click' => 'editModeOff', 'v-if' => 'editMode', class: 'partner_member_list__btn--cancel' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag 'v-on:click' => 'editMember', 'v-if' => 'editMode', class: 'partner_member_list__btn--submit' do
+      = fa_icon 'pencil-square', text: t('helpers.submit.update')
+
+    component [
+      :is        = "'partnerNew'"
+      keep-alive = true
+    ]

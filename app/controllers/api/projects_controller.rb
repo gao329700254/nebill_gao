@@ -111,6 +111,11 @@ class Api::ProjectsController < Api::ApiController
     render json: @employee, status: :ok
   end
 
+  def member_partner
+    @members = Member.where(project_id: params[:id], type: params[:type]).includes(:employee)
+    render 'user_member', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
 private
 
   def set_project

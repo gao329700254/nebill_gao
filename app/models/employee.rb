@@ -25,4 +25,8 @@ class Employee < ActiveRecord::Base
             presence: true,
             uniqueness: { case_sensitive: false },
             format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i }
+
+  def join!(project)
+    project.user_members.create!(employee_id: id)
+  end
 end

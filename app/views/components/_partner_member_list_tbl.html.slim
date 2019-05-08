@@ -2,8 +2,11 @@ table.partner_member_list__tbl
   thead.partner_member_list__tbl__head
     tr.partner_member_list__tbl__head__row
       th.partner_member_list__tbl__item--name           = t('activerecord.attributes.partner.name')
-      th.partner_member_list__tbl__item--email          = t('activerecord.attributes.partner.email')
-      th.partner_member_list__tbl__item--company_name   = t('activerecord.attributes.partner.company_name')
+      th.partner_member_list__tbl__item--email           = t('activerecord.attributes.partner.email')
+      th.partner_member_list__tbl__item--unit_price     = t('activerecord.attributes.partner_member.unit_price')
+      th.partner_member_list__tbl__item--working_rate   = t('activerecord.attributes.partner_member.working_rate')
+      th.partner_member_list__tbl__item--min_limit_time = t('activerecord.attributes.partner_member.min_limit_time')
+      th.partner_member_list__tbl__item--max_limit_time = t('activerecord.attributes.partner_member.max_limit_time')
   tbody.partner_member_list__tbl__body
     tr.partner_member_list__tbl__body__row [
       v-for = "partner in partners"
@@ -13,12 +16,17 @@ table.partner_member_list__tbl
       track-by     = "id"
     ]
       td.partner_member_list__tbl__item--name
-        div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
-          input type="checkbox" name="selected" v-model="partner.selected" v-if='!editMode && project.status != "finished"'
-        div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
+        div v-bind:class = "[partnerEditMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
+          input type="checkbox" name="selected" v-model="partner.selected" v-if='!editMode'
+        div v-bind:class = "[partnerEditMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
           = text_field_tag :name, nil, 'v-model' => 'partner.name', ':disabled' => 'true'
       td.partner_member_list__tbl__item--email
-        = text_field_tag :email, nil, 'v-model' => 'partner.email', ':disabled' => 'true'
-      td.partner_member_list__tbl__item--company_name
-        = text_field_tag :company_name, nil, 'v-model' => 'partner.company_name', ':disabled' => 'true'
-      = hidden_field_tag :id, nil, 'v-model' => 'partner.id'
+        = text_field_tag :unit_price, nil, 'v-model' => 'partner.email', ':disabled' => 'true'
+      td.partner_member_list__tbl__item--unit_price
+        = text_field_tag :unit_price, nil, 'v-model' => 'partner.unit_price', ':disabled' => 'true'
+      td.partner_member_list__tbl__item--working_rate
+        = text_field_tag :working_rate, nil, 'v-model' => 'partner.working_rate', ':disabled' => 'true'
+      td.partner_member_list__tbl__item--min_limit_time
+        = text_field_tag :min_limit_time, nil, 'v-model' => 'partner.min_limit_time', ':disabled' => 'true'
+      td.partner_member_list__tbl__item--max_limit_time
+        = text_field_tag :max_limit_time, nil, 'v-model' => 'partner.max_limit_time', ':disabled' => 'true'

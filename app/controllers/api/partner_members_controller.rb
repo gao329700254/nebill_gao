@@ -1,15 +1,12 @@
 class Api::PartnerMembersController < Api::ApiController
-  before_action :set_bill, only: [:create]
-  before_action :set_partner, only: [:create, :destroy, :update]
-  before_action :set_member,  only: [:update, :destroy]
+  before_action :set_member, only: [:update, :destroy]
 
   def create
-    @member = @partner.join!(
-      @bill, params[:member][:unit_price],
-      params[:member][:working_rate],
-      params[:member][:min_limit_time],
-      params[:member][:max_limit_time]
-    )
+    @member = Member.new(member_param)
+    @member.employee_id = params[:partner_id]
+    @member.project_id = params[:project_id]
+    @member.type = 'PartnerMember'
+    @member.save!
 
     render_action_model_success_message(@member, :create)
   rescue ActiveRecord::RecordInvalid => e
@@ -17,8 +14,13 @@ class Api::PartnerMembersController < Api::ApiController
   end
 
   def update
-    @member.attributes = bill_member_param
-    @member.save!
+    @member.attributes = member_param
+    @member.transaction do
+      @member.save!
+      @member.employee[:name] = params[:partner][:name]
+      @member.employee[:email] = params[:partner][:email]
+      @member.employee.save!
+    end
 
     render_action_model_success_message(@member, :update)
   rescue ActiveRecord::RecordInvalid
@@ -35,28 +37,16 @@ class Api::PartnerMembersController < Api::ApiController
 
 private
 
-  def set_bill
-    @bill = Bill.find(params[:bill_id])
-  end
-
-  def set_partner
-    @partner = Partner.find(params[:partner_id])
-  end
-
   def set_member
-    @member= @partner.members.find_by!(bill: params[:bill_id])
+    @member = Member.includes(:employee).find(params[:partner_id])
   end
 
-  def bill_member_param
-    params.require(:members).permit(
+  def member_param
+    params.require(:partner).permit(
       :unit_price,
       :working_rate,
       :min_limit_time,
       :max_limit_time,
-      partner_attributes: [
-        :id,
-        :name,
-      ],
     )
   end
 end

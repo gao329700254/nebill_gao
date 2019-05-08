@@ -5,21 +5,20 @@ $ ->
     data: ->
       partners: []
       selectedPartnerId: undefined
-      project:
-        status: undefined
-      partner:
-        id: ''
-        name: ''
-        email: ''
-        company_name: ''
+      member:
+        unit_price: ''
+        working_rate: ''
+        min_limit_time: ''
+        max_limit_time: ''
       editMode: false
-      partnerOriginal: undefined
       failurePartnerIds: []
+      allPartners: []
     computed:
       selectedPartners: -> _.filter @partners, (p) -> p.selected
-    watch:
-      editMode: (val) ->
-        @partners = $.extend(true, {}, @partnerOriginal) unless val
+      selectablePartners: ->
+        ids = _.pluck(@partners, 'employee_id')
+        _.reject @allPartners, (p) ->
+          _.includes(ids, p.id)
     methods:
       editModeOn: ->
         @editMode = true
@@ -34,15 +33,20 @@ $ ->
           elems = document.getElementById('partner-' + v.id).getElementsByTagName('input')
           for i in [0...elems.length]
             elems[i].disabled = true
-      loadProject: ->
-        $.ajax "/api/projects/#{@projectId}.json"
-          .done (response) =>
-            @project = response
       loadPartners: ->
-        $.ajax "/api/projects/#{@projectId}/partners"
+        $.ajax
+          url: "/api/projects/#{@projectId}/member_partner.json"
+          type: 'POST'
+          data: { type: 'PartnerMember' }
+        .done (response) =>
+          @partners = response
+      loadPartnersUsers: ->
+        @allPartners = []
+        $.ajax '/api/projects/load_partner_user.json'
           .done (response) =>
-            @partnerOriginal = response
-            @partners = $.extend(true, {}, @partnerOriginal)
+            response.forEach (emp) =>
+              if emp.actable_type == 'Partner'
+                @allPartners.push(emp)
       editMember: ->
         success_count = 0
         edit = $('.partner_member_list__btn--submit')
@@ -53,16 +57,12 @@ $ ->
           partners = _.filter @partners, (p) -> ids.includes(p.id)
         else
           partners = @selectedPartners
+          console.log (@selectedPartners)
         $.each partners, (i, partner) =>
           $.ajax
-            url: "/api/partners/#{partner.id}.json"
+            url: "/api/partner_members/#{@projectId}/#{partner.id}.json"
             type: 'PATCH'
-            data:
-              partner:
-                cd:           partner.cd
-                name:         partner.name
-                email:        partner.email
-                company_name: partner.company_name
+            data: { partner: partner }
           .done (response) =>
             success_count += 1
             toastr.success('', response.message)
@@ -82,9 +82,53 @@ $ ->
             edit.prop('disabled', false)
             if success_count == partners.length
               @editMode = false
-    events:
-      loadProjectEvent: ->
-        @loadProject()
-    compiled: ->
+      createPartner: ->
+        return unless @selectedPartnerId?
+        try
+          submit = $('.partner_member_list__partner_btn')
+          submit.prop('disabled', true)
+          $.ajax
+            url: "/api/partner_members/#{@projectId}/#{@selectedPartnerId}.json"
+            type: 'POST'
+            data: { partner: @member }
+          .done (response) =>
+            toastr.success('', response.message)
+            @selectedPartnerId = undefined
+            @member.unit_price = ''
+            @member.working_rate = ''
+            @member.min_limit_time = ''
+            @member.max_limit_time = ''
+            @loadPartners()
+            @loadPartnersUsers()
+          .fail (response) =>
+            json = response.responseJSON
+            toastr.error(json.errors.full_messages.join('<br>'), json.message)
+        finally
+          submit.prop('disabled', false)
+      deletePartnerMember: ->
+        try
+          destroy = $('.partner_member_list__btn--delete')
+          destroy.prop('disabled', true)
+          $.each @selectedPartners, (i, user) =>
+            $.ajax
+              url: "/api/partner_members/#{@projectId}/#{user.id}.json"
+              type: 'DELETE'
+            .done (response) =>
+              toastr.success('', response.message)
+              @loadPartners()
+            .fail (response) =>
+              json = response.responseJSON
+              if _.has(json, 'errors')
+                toastr.error(json.errors.full_messages.join('<br>'), json.message)
+              else
+                toastr.error('', json.message)
+          @loadPartnersUsers()
+        finally
+          destroy.prop('disabled', false)
+      showPartnerNew: -> @$broadcast('showPartnerNewEvent')
+    created: ->
       @loadPartners()
-      @loadProject()
+      @loadPartnersUsers()
+    events:
+      loadPartnersEvent: (partnerId) ->
+        @loadPartnersUsers()

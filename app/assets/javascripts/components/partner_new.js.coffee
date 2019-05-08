@@ -31,7 +31,7 @@ $ ->
             @partner.zip_code     = ''
             @partner.phone_number = ''
             @modalHide()
-            @$dispatch('loadAllPartnersEvent', response.id)
+            @$dispatch('loadPartnersEvent', response.id)
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
