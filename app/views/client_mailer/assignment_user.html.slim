@@ -8,7 +8,7 @@ html
     p
       = I18n.t("mail.client.assignment.message2")
     p
-      = link_to approval_show_url(approval_id: @approval.id).to_s, approval_show_url(approval_id: @approval.id)
+      = link_to client_show_url(client_id: @approval.approved_id).to_s, client_show_url(client_id: @approval.approved_id)
     hr
     |---
     p

@@ -10,10 +10,11 @@ class Api::ClientsController < Api::ApiController
   def create
     @client = Client.new(client_param)
     if @client.valid?
+      @client.status = params[:client][:files_attributes].length == 2 ? 10 : 20
       Client.transaction do
         @client.save!
       end
-      create_notice
+      create_notice if @client.status == 10
       render_action_model_success_message(@client, :create)
     else
       render_action_model_fail_message(@client, :create)
@@ -34,8 +35,8 @@ class Api::ClientsController < Api::ApiController
       @appr_params = { approval_id: params[:approval_id], button: 'pending', comment: '' }
       @services ||= ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find(6))
       @services.execute
-      @client.status = 10
-      update_notice
+      check_files if @client.status == 20
+      update_notice if @client.status == 10
     end
     @client.save!
 
@@ -118,10 +119,7 @@ private
 
   def update_status
     @client = Client.find(params[:client_id])
-    @client.files.each do |file|
-      @client.status = 20 if file.file_type == 10 && params[:button] == 'permission'
-      @client.status = 30 if file.file_type == 20 && params[:button] == 'permission'
-    end
+    @client.status = 30 if params[:button] == 'permission'
     @client.save
   end
 
@@ -153,6 +151,18 @@ private
       ClientMailer.disconfirm_client_approval(user: approval.created_user, approval: approval).deliver_now
       Chatwork::Client.new(approval: approval, to_user: approval.created_user).notify_disconfirm
     end
+  end
+
+  def check_files
+    db_file_type = @client.files.first.file_type
+    uploading_file_type = params[:client][:files_attributes].first.second[:file_type]
+    @client.status = if params[:client][:files_attributes].length == 2
+                       10
+                     elsif (db_file_type == 'nda' && uploading_file_type == '20') || (db_file_type == 'basic_contract' && uploading_file_type == '10')
+                       10
+                     else
+                       20
+                     end
   end
 end
 # rubocop:enable Metrics/ClassLength

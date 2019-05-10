@@ -58,7 +58,7 @@ ja:
         memo:            メモ
         files:           ファイル
         nda:             NDA
-        basic_contract:  基本契約書(任意)
+        basic_contract:  基本契約書
         status:          ステータス
         approval_name:   "%{comany} 取引先新規作成用稟議"
       files:
@@ -466,7 +466,7 @@ ja:
     client:
       status:
         approval_pending:           承認待ち
-        waiting_for_basic_contract: 基本契約書添付待ち
+        waiting_for_basic_contract: ファイル添付待ち
         published:                  有効
   page:
     home:

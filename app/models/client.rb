@@ -32,7 +32,7 @@ class Client < ActiveRecord::Base
   before_save :set_cd, unless: :cd?
   after_create :create_approval
 
-  enumerize :status, in: { approval_pending: 10, waiting_for_basic_contract: 20, published: 30 }, default: :approval_pending
+  enumerize :status, in: { approval_pending: 10, waiting_for_basic_contract: 20, published: 30 }
 
   def set_cd
     max_cd = Client.all.pluck(:cd).compact.map { |cd| cd.gsub(/[^\d]/, "").to_i if cd.start_with?("CD") }.compact.max if Client.all.present?

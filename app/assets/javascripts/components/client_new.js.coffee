@@ -26,7 +26,7 @@ $ ->
             form.append('client[files_attributes][0][file]', @nda)
             form.append('client[files_attributes][0][file_type]', '10')
             form.append('client[files_attributes][0][legal_check]', @nda_legal_check)
-          if @nda != '' && @basic_contract != ''
+          if @basic_contract != ''
             form.append('client[files_attributes][1][file]', @basic_contract)
             form.append('client[files_attributes][1][file_type]', '20')
             form.append('client[files_attributes][1][legal_check]', @basic_contract_legal_check)

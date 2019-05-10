@@ -63,8 +63,8 @@
                                          'v-if' => 'client.nda.original_filename|match' do
               = fa_icon 'image', text: t('page.client_show.preview')
           .client_show__form__file__contents v-if='!client.nda'
-              = t('page.client_show.file_no_contents')
-          .client_show__form__file__contents v-if="editMode && approval_status == 'disconfirm' && client.status_num == 'approval_pending'"
+            = t('page.client_show.file_no_contents')
+          .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' || client.status_num == 'waiting_for_basic_contract')"
             = hidden_field_tag :nda_id, '{{client.nda.id}}', 'v-model' => 'nda_id'
             = file_field_tag :files, 'v-on:change' => 'ndaInputChange'
             = check_box_tag :nda_legal_check, true, false, 'v-model' => 'nda_legal_check'
@@ -79,12 +79,7 @@
               = fa_icon 'image', text: t('page.client_show.preview')
           .client_show__form__file__contents v-if='!client.basic_c'
             = t('page.client_show.file_no_contents')
-          .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' && client.status_num == 'approval_pending')"
-            = hidden_field_tag :basic_contract_id, '{{client.basic_c.id}}', 'v-model' => 'basic_contract_id'
-            = file_field_tag :files, 'v-on:change' => 'basicContractInputChange'
-            = check_box_tag :basic_contract_legal_check, true, false, 'v-model' => 'basic_contract_legal_check'
-            = label_tag :basic_contract_legal_check, t('page.client_new.legal_check')
-          .client_show__form__file__contents v-if="editMode && (approval_status == 'permission' && client.status_num == 'waiting_for_basic_contract')"
+          .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' || client.status_num == 'waiting_for_basic_contract')"
             = hidden_field_tag :basic_contract_id, '{{client.basic_c.id}}', 'v-model' => 'basic_contract_id'
             = file_field_tag :files, 'v-on:change' => 'basicContractInputChange'
             = check_box_tag :basic_contract_legal_check, true, false, 'v-model' => 'basic_contract_legal_check'
@@ -101,7 +96,7 @@
                 td.client_show__form__approval_user_list__item--approval_user_name    v-text="approval_user.name"
                 td.client_show__form__approval_user_list__item--approval_user_status  v-text="approval_user.status"
                 td.client_show__form__approval_user_list__item--approval_user_comment v-text="approval_user.comment"
-          - if @approval.status != 40 && @approval.status != 20 && @current_user_approval.present?
+          - if @approval.status != 40 && @approval.status != 20 && @client.status == 10 && @current_user_approval.present?
             = form_tag api_update_approval_path(approval_id: @approval.id), method: :post, class: 'approval_show__reassignment__form' do
               .client_show__form__update
                 = t('page.approval_show.action')
