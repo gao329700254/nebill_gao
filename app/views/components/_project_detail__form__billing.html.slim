@@ -13,11 +13,11 @@ fieldset.project_detail__form__billing
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :billing_company_name, t('page.project_show.project_detail.company_name')
-        = text_field_tag :billing_company_name, nil, 'v-model' => 'project.billing_company_name', ':disabled' => true
+        = text_field_tag :billing_company_name, nil, 'v-model' => 'project.billing_company_name', ':disabled' => '!editMode'
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :billing_department_name, t('page.project_show.project_detail.department_name')
-        = text_field_tag :billing_department_name, nil, 'v-model' => 'project.billing_department_name', ':disabled' => true
+        = text_field_tag :billing_department_name, nil, 'v-model' => 'project.billing_department_name', ':disabled' => '!editMode'
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :billing_personnel_names, t('page.project_show.project_detail.personnel_names')
@@ -26,16 +26,16 @@ fieldset.project_detail__form__billing
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :billing_zip_code, t('page.project_show.project_detail.zip_code')
-        = text_field_tag :billing_zip_code, nil, 'v-model' => 'project.billing_zip_code', ':disabled' => true
+        = text_field_tag :billing_zip_code, nil, 'v-model' => 'project.billing_zip_code', ':disabled' => '!editMode'
     .project_detail__form__container__group_3
       .project_detail__form__item
         = label_tag :billing_address, t('page.project_show.project_detail.address')
-        = text_field_tag :billing_address, nil, 'v-model' => 'project.billing_address', ':disabled' => true
+        = text_field_tag :billing_address, nil, 'v-model' => 'project.billing_address', ':disabled' => '!editMode'
   .project_detail__form__container
     .project_detail__form__container__group_2
       .project_detail__form__item
         = label_tag :billing_phone_number, t('page.project_show.project_detail.phone_number')
-        = text_area_tag :billing_phone_number, nil, 'v-model' => 'project.billing_phone_number', ':disabled' => true
+        = text_area_tag :billing_phone_number, nil, 'v-model' => 'project.billing_phone_number', ':disabled' => '!editMode'
     .project_detail__form__container__group_3
       .project_detail__form__item
         = label_tag :billing_memo, t('page.project_detail.memo')

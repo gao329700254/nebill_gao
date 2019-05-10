@@ -11,7 +11,7 @@ json.memo            @client.memo
 json.created_at      @client.created_at
 json.updated_at      I18n.l(@client.updated_at.in_time_zone('Tokyo'))
 json.whodunnit       '（' + @user.name + '）' if @user
-if @client.files[0].file_type == 10
+if @client.files[0]&.file_type == 10
   json.nda             @client.files[0]
   json.basic_c         @client.files[1]
 else

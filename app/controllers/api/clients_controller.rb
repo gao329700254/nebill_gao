@@ -76,7 +76,7 @@ class Api::ClientsController < Api::ApiController
   end
 
   def published_clients
-    @clients = Client.where(status: 30)
+    @clients = Client.all
     render json: @clients, status: :ok
   end
 
