@@ -475,6 +475,7 @@ ja:
     client_new:
       title: 取引先新規作成
       legal_check: リーガルチェック
+      basic_contract_info: 基本契約書を締結しない場合はその理由をメモ欄に記入してください
     client_list:
       title: 取引先一覧
       search_form_placeholder: 'ID,会社名,部署名,電話番号で検索できます'

@@ -30,6 +30,8 @@
         = file_field_tag :files, 'v-on:change' => 'basicContractInputChange'
         = check_box_tag :basic_contract_legal_check, true, false, 'v-model' => 'basic_contract_legal_check'
         = label_tag :basic_contract_legal_check, t('page.client_new.legal_check')
+      .client_new__form__item--info
+        = t('page.client_new.basic_contract_info')
   = button_tag 'v-on:click.prevent' => 'cancel', class: 'client_new__form__cancel_btn' do
     = fa_icon 'remove', text: t('helpers.cancel')
   = button_tag 'v-on:click.prevent' => 'submit', class: 'client_new__form__submit_btn' do

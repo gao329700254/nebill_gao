@@ -10,7 +10,12 @@ class Api::ClientsController < Api::ApiController
   def create
     @client = Client.new(client_param)
     if @client.valid?
-      @client.status = params[:client][:files_attributes].length == 2 ? 10 : 20
+      if params[:client][:files_attributes].present?
+        @client.status = 20
+        params[:client][:files_attributes].each do |file|
+          @client.status = 10 if file.second[:file_type] == '10'
+        end
+      end
       Client.transaction do
         @client.save!
       end
@@ -158,7 +163,7 @@ private
     uploading_file_type = params[:client][:files_attributes].first.second[:file_type]
     @client.status = if params[:client][:files_attributes].length == 2
                        10
-                     elsif (db_file_type == 'nda' && uploading_file_type == '20') || (db_file_type == 'basic_contract' && uploading_file_type == '10')
+                     elsif db_file_type == 'nda' || uploading_file_type == '10'
                        10
                      else
                        20

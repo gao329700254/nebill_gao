@@ -41,6 +41,11 @@
         margin-bottom: $base-spacing;
         width: 10em;
       }
+
+      &--info {
+        font-size: .8em;
+        font-weight: bold;
+      }
     }
 
     &__submit_btn,
