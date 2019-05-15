@@ -11,29 +11,17 @@ module ProjectValidates
       contracted.validates :contract_on         , presence: true
       contracted.validates :contract_type       , presence: true
       contracted.validates :status              , presence: true
-      contracted.validates :start_on            , presence: true
       contracted.validates :end_on              , presence: true
-      contracted.validates :amount              , presence: true
+      contracted.validates :amount              , presence: true, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
       contracted.validates :payment_type        , presence: true
-      contracted.validates :billing_company_name   , presence: true
-      contracted.validates :billing_department_name, presence: true
-      contracted.validates :billing_personnel_names, presence: true
-      contracted.validates :billing_address        , presence: true
-      contracted.validates :billing_zip_code       , presence: true
-      contracted.validates :billing_phone_number   , presence: true
       contracted.validates :orderer_company_name   , presence: true
-      contracted.validates :orderer_department_name, presence: true
       contracted.validates :orderer_personnel_names, presence: true
-      contracted.validates :orderer_address        , presence: true
-      contracted.validates :orderer_zip_code       , presence: true
-      contracted.validates :orderer_phone_number   , presence: true
     end
 
     with_options unless: :contracted? do |un_contracted|
       un_contracted.validates :contract_on         , presence: true
       un_contracted.validates :contract_type       , presence: true
-      un_contracted.validates :estimated_amount    , presence: true
-      un_contracted.validates :is_using_ses        , absence: true
+      un_contracted.validates :estimated_amount    , presence: true, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
       un_contracted.validates :start_on            , absence: true
       un_contracted.validates :end_on              , absence: true
       un_contracted.validates :amount              , absence: true

@@ -53,6 +53,12 @@ fieldset.project_detail__form__basic
     .project_detail__form__container
       .project_detail__form__container__group
         .project_detail__form__item
+          = label_tag :status, t('activerecord.attributes.project.status')
+          select name="status" id="status" v-bind:disabled='!editMode' v-model="project.status"
+            option v-for="option in options" v-bind:value="option[1]" {{ option[0] }}
+    .project_detail__form__container
+      .project_detail__form__container__group
+        .project_detail__form__item
           = label_tag :start_on, t('activerecord.attributes.project.start_on')
           = date_field_tag :start_on, nil, 'v-model' => 'project.start_on', ':disabled' => '!editMode'
       .project_detail__form__container__group
