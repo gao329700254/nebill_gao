@@ -7,6 +7,8 @@ table.partner_member_list__tbl
       th.partner_member_list__tbl__item--working_rate   = t('activerecord.attributes.partner_member.working_rate')
       th.partner_member_list__tbl__item--min_limit_time = t('activerecord.attributes.partner_member.min_limit_time')
       th.partner_member_list__tbl__item--max_limit_time = t('activerecord.attributes.partner_member.max_limit_time')
+      th.partner_member_list__tbl__item--period         = t('activerecord.attributes.partner_member.working_period_start')
+      th.partner_member_list__tbl__item--period         = t('activerecord.attributes.partner_member.working_period_end')
   tbody.partner_member_list__tbl__body
     tr.partner_member_list__tbl__body__row [
       v-for = "partner in partners"
@@ -16,9 +18,9 @@ table.partner_member_list__tbl
       track-by     = "id"
     ]
       td.partner_member_list__tbl__item--name
-        div v-bind:class = "[partnerEditMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
+        div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
           input type="checkbox" name="selected" v-model="partner.selected" v-if='!editMode'
-        div v-bind:class = "[partnerEditMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
+        div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
           = text_field_tag :name, nil, 'v-model' => 'partner.name', ':disabled' => 'true'
       td.partner_member_list__tbl__item--email
         = text_field_tag :unit_price, nil, 'v-model' => 'partner.email', ':disabled' => 'true'
@@ -30,3 +32,7 @@ table.partner_member_list__tbl
         = text_field_tag :min_limit_time, nil, 'v-model' => 'partner.min_limit_time', ':disabled' => 'true'
       td.partner_member_list__tbl__item--max_limit_time
         = text_field_tag :max_limit_time, nil, 'v-model' => 'partner.max_limit_time', ':disabled' => 'true'
+      td.partner_member_list__tbl__item--period
+        = date_field_tag :max_limit_time, nil, 'v-model' => 'partner.working_period_start', ':disabled' => 'true'
+      td.partner_member_list__tbl__item--period
+        = date_field_tag :max_limit_time, nil, 'v-model' => 'partner.working_period_end', ':disabled' => 'true'

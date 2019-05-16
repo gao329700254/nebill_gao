@@ -47,6 +47,16 @@ ja:
         working_rate: 稼働時間
         max_limit_time: 上限
         min_limit_time: 下限
+        working_period_start: 稼働開始
+        working_period_end: 稼働終了
+      user_member:
+        working_period_start: 稼働開始
+        working_period_end: 稼働終了
+        man_month: 人月
+      member:
+        working_period_start: 稼働開始
+        working_period_end: 稼働終了
+        man_month: 人月
       client:
         cd: ID
         company_name:    会社名

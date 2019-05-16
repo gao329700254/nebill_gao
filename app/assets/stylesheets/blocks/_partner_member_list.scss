@@ -63,7 +63,7 @@
       }
 
       &--working_rate {
-        @include span-columns(2);
+        @include span-columns(1.5);
       }
 
       &--min_limit_time {
@@ -72,6 +72,10 @@
 
       &--max_limit_time {
         @include span-columns(1);
+      }
+
+      &--period {
+        @include span-columns(1.5);
       }
     }
   }
@@ -94,6 +98,5 @@
 
   &__partner_btn {
     @include btn--default;
-    padding: .6em 1em;
   }
 }

@@ -10,6 +10,8 @@ $ ->
         working_rate: ''
         min_limit_time: ''
         max_limit_time: ''
+        working_period_start: undefined
+        working_period_end: undefined
       editMode: false
       failurePartnerIds: []
       allPartners: []
@@ -98,8 +100,9 @@ $ ->
             @member.working_rate = ''
             @member.min_limit_time = ''
             @member.max_limit_time = ''
+            @member.working_period_start = undefined
+            @member.working_period_end = undefined
             @loadPartners()
-            @loadPartnersUsers()
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
@@ -122,7 +125,6 @@ $ ->
                 toastr.error(json.errors.full_messages.join('<br>'), json.message)
               else
                 toastr.error('', json.message)
-          @loadPartnersUsers()
         finally
           destroy.prop('disabled', false)
       showPartnerNew: -> @$broadcast('showPartnerNewEvent')

@@ -1,18 +1,21 @@
 # == Schema Information
-# Schema version: 20190423040404
+# Schema version: 20190515142947
 #
 # Table name: members
 #
-#  id             :integer          not null, primary key
-#  employee_id    :integer          not null
-#  type           :string           not null
-#  unit_price     :integer
-#  min_limit_time :integer
-#  max_limit_time :integer
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  working_rate   :float
-#  project_id     :integer          not null
+#  id                   :integer          not null, primary key
+#  employee_id          :integer          not null
+#  type                 :string           not null
+#  unit_price           :integer
+#  min_limit_time       :integer
+#  max_limit_time       :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  working_rate         :float
+#  project_id           :integer          not null
+#  working_period_start :date
+#  working_period_end   :date
+#  man_month            :integer
 #
 # Indexes
 #
@@ -29,4 +32,10 @@ class UserMember < Member
   has_one :user, through: :employee, source: :actable, source_type: User
 
   validates :unit_price, :working_rate, :min_limit_time, :max_limit_time, absence: true
+  validate :check_periods
+
+  def check_periods
+    return if working_period_end.nil? || working_period_start.nil?
+    errors.add(:working_period_end, I18n.t('errors.messages.greater_than', count: '稼働開始')) if working_period_end < working_period_start
+  end
 end

@@ -47,6 +47,8 @@ private
       :working_rate,
       :min_limit_time,
       :max_limit_time,
+      :working_period_start,
+      :working_period_end,
     )
   end
 end

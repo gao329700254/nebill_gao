@@ -94,6 +94,7 @@
 #                 api_partner_members POST   /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#create
 #          api_delete_partner_members DELETE /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#destroy
 #          api_update_partner_members PATCH  /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#update
+#             api_update_user_members PATCH  /api/user_members/:project_id/:user_id(.:format)         api/user_members#update
 #                  api_project_groups GET    /api/project_groups(.:format)                            api/project_groups#index
 #                                     POST   /api/project_groups(.:format)                            api/project_groups#create
 #                   api_project_group PATCH  /api/project_groups/:id(.:format)                        api/project_groups#update

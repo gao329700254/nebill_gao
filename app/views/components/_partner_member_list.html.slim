@@ -9,22 +9,31 @@ script type='text/x-template' id='partner_member_list'
     .project_new__form__item
       .project_new__form__item__partner
         .project_new__form__item__partner__item--name
+          = t('activerecord.attributes.partner.name')
           select.project_new__form__item__add_user_member__list [
             v-model='selectedPartnerId'
           ]
-            option v-for="user in selectablePartners" value="{{user.id}}" {{user.name}}
+            option v-for="user in allPartners" value="{{user.id}}" {{user.name}}
         .project_new__form__item__partner__item--unit_price
-          = text_field_tag :unit_price, nil, 'v-model' => 'member.unit_price', :placeholder => t('activerecord.attributes.partner_member.unit_price')
+          = t('activerecord.attributes.partner_member.unit_price')
+          = text_field_tag :unit_price, nil, 'v-model' => 'member.unit_price'
         .project_new__form__item__partner__item--working_rate
-          = text_field_tag :working_rate, nil, 'v-model' => 'member.working_rate',
-                           :placeholder => t('activerecord.attributes.partner_member.working_rate')
+          = t('activerecord.attributes.partner_member.working_rate')
+          = text_field_tag :working_rate, nil, 'v-model' => 'member.working_rate'
         .project_new__form__item__partner__item--min_limit_time
-          = text_field_tag :min_limit_time, nil, 'v-model' => 'member.min_limit_time',
-                           :placeholder => t('activerecord.attributes.partner_member.min_limit_time')
+          = t('activerecord.attributes.partner_member.min_limit_time')
+          = text_field_tag :min_limit_time, nil, 'v-model' => 'member.min_limit_time'
         .project_new__form__item__partner__item--max_limit_time
-          = text_field_tag :max_limit_time, nil, 'v-model' => 'member.max_limit_time',
-                           :placeholder => t('activerecord.attributes.partner_member.max_limit_time')
+          = t('activerecord.attributes.partner_member.max_limit_time')
+          = text_field_tag :max_limit_time, nil, 'v-model' => 'member.max_limit_time'
+        .project_new__form__item__partner__item--period
+          = t('activerecord.attributes.partner_member.working_period_start')
+          = date_field_tag :working_period_start, nil, 'v-model' => 'member.working_period_start'
+        .project_new__form__item__partner__item--period
+          = t('activerecord.attributes.partner_member.working_period_end')
+          = date_field_tag :working_period_end, nil, 'v-model' => 'member.working_period_end'
         .project_new__form__item__partner__item--remove
+          br
           = button_tag 'v-on:click.prevent' => 'createPartner', class: 'partner_member_list__partner_btn' do
             = fa_icon 'check', text: t('helpers.submit.create')
 

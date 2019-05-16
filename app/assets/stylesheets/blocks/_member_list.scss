@@ -4,11 +4,8 @@
 
   @include row;
 
+  &__partner,
   &__user {
-    @include span-columns(5);
-  }
-
-  &__partner {
-    @include span-columns(7);
+    padding-bottom: 2.5em;
   }
 }

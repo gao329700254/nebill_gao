@@ -83,30 +83,38 @@
 
         &__item {
           &--name {
-            @include span-columns(3);
+            @include span-columns(2.5);
             &--non_edit {
               display: table-cell;
             }
           }
 
           &--unit_price {
-            @include span-columns(1.5);
+            @include span-columns(1.2);
           }
 
           &--working_rate {
-            @include span-columns(3);
+            @include span-columns(2.2);
           }
 
           &--min_limit_time {
-            @include span-columns(1.5);
+            @include span-columns(1.2);
           }
 
           &--max_limit_time {
+            @include span-columns(1.2);
+          }
+
+          &--man_month {
             @include span-columns(1.5);
           }
 
+          &--period {
+            @include span-columns(1.8);
+          }
+
           &--member {
-            @include span-columns(8.5);
+            @include span-columns(5);
           }
 
           &--remove {
@@ -134,7 +142,6 @@
 
     &__plus_btn {
       @include btn--default;
-      padding: .6em 1em;
     }
 
     &__submit_btn,

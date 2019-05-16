@@ -170,6 +170,9 @@ private
         :min_limit_time,
         :max_limit_time,
         :project_id,
+        :working_period_start,
+        :working_period_end,
+        :man_month,
         :_destroy,
       ],
     )
