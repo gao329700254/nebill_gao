@@ -5,7 +5,7 @@ class Api::ProjectCdsController < Api::ApiController
 
   def cd
     @prefix = Time.zone.today.strftime("%y") + identifier(@project_type)
-    @cd = { cd: @prefix + format("%03d", Project.sequence(@prefix)) + (@project_type == 'uncontracted' ? 'B' : 'A') }
+    @cd = { cd: @prefix + format("%03d", Project.sequence(@prefix)) + (params[:project_contracted] == 'true' ? 'A' : 'B') }
 
     render json: @cd, status: :ok
   end
