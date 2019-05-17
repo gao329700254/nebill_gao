@@ -16,6 +16,18 @@ ActiveRecord::Schema.define(version: 20190515142947) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "approval_approval_groups", force: :cascade do |t|
+    t.integer  "approval_id"
+    t.integer  "approval_group_id"
+    t.integer  "status",            default: 10, null: false
+    t.string   "comment"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "approval_approval_groups", ["approval_group_id"], name: "index_approval_approval_groups_on_approval_group_id", using: :btree
+  add_index "approval_approval_groups", ["approval_id"], name: "index_approval_approval_groups_on_approval_id", using: :btree
+
   create_table "approval_files", force: :cascade do |t|
     t.integer  "approval_id",       null: false
     t.string   "file",              null: false
@@ -23,6 +35,26 @@ ActiveRecord::Schema.define(version: 20190515142947) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
+
+  create_table "approval_group_users", force: :cascade do |t|
+    t.integer  "approval_group_id", null: false
+    t.integer  "user_id",           null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "approval_group_users", ["approval_group_id"], name: "index_approval_group_users_on_approval_group_id", using: :btree
+  add_index "approval_group_users", ["user_id"], name: "index_approval_group_users_on_user_id", using: :btree
+
+  create_table "approval_groups", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "approval_groups", ["user_id"], name: "index_approval_groups_on_user_id", using: :btree
 
   create_table "approval_users", force: :cascade do |t|
     t.integer  "approval_id"
@@ -38,16 +70,17 @@ ActiveRecord::Schema.define(version: 20190515142947) do
   add_index "approval_users", ["user_id"], name: "index_approval_users_on_user_id", using: :btree
 
   create_table "approvals", force: :cascade do |t|
-    t.string   "name",            null: false
+    t.string   "name",                         null: false
     t.string   "project_id"
-    t.integer  "created_user_id", null: false
+    t.integer  "created_user_id",              null: false
     t.string   "notes"
     t.integer  "approved_id"
     t.string   "approved_type"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "status"
     t.integer  "category"
+    t.integer  "approvaler_type", default: 10, null: false
   end
 
   add_index "approvals", ["approved_type", "approved_id"], name: "index_approvals_on_approved_type_and_approved_id", using: :btree
@@ -272,17 +305,21 @@ ActiveRecord::Schema.define(version: 20190515142947) do
   create_table "users", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
-    t.string   "persistence_token",               null: false
-    t.integer  "login_count",        default: 0,  null: false
-    t.integer  "failed_login_count", default: 0,  null: false
+    t.string   "persistence_token",                  null: false
+    t.integer  "login_count",        default: 0,     null: false
+    t.integer  "failed_login_count", default: 0,     null: false
     t.datetime "current_login_at"
     t.datetime "last_login_at"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.integer  "role",               default: 10, null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "role",               default: 10,    null: false
     t.integer  "default_allower"
     t.integer  "chatwork_id"
     t.string   "chatwork_name"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.boolean  "active",             default: false, null: false
+    t.string   "perishable_token"
   end
 
   add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, using: :btree
@@ -300,6 +337,11 @@ ActiveRecord::Schema.define(version: 20190515142947) do
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
+  add_foreign_key "approval_approval_groups", "approval_groups", on_delete: :cascade
+  add_foreign_key "approval_approval_groups", "approvals", on_delete: :cascade
+  add_foreign_key "approval_group_users", "approval_groups", on_delete: :cascade
+  add_foreign_key "approval_group_users", "users", on_delete: :cascade
+  add_foreign_key "approval_groups", "users", on_delete: :nullify
   add_foreign_key "approval_users", "approvals", on_delete: :cascade
   add_foreign_key "approval_users", "users", on_delete: :cascade
   add_foreign_key "bills", "projects", on_delete: :cascade

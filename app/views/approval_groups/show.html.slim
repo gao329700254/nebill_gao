@@ -1,0 +1,43 @@
+= javascript_include_tag 'view_models/approval_groups_show'
+
+- provide(:title, t('.title'))
+
+#approval_groups_show.approval_groups_show
+  .approval_groups_show__last_updated_at
+    = t('page.admin.approval_groups_show.last_updated_at')
+    span v-text='approval_group.updated_at'
+  = form_for @approval_group, class: 'approval_groups_show__form' do |f|
+    = f.hidden_field :id, 'v-model': 'approval_group.id'
+    .approval_groups_show__form__container
+      .approval_groups_show__form__container__group
+        .approval_groups_show__form__item
+          = f.label :name
+          = f.text_field :name, 'v-model': 'approval_group.name', ':disabled': '!editMode'
+        .approval_groups_show__form__item
+          = f.label :description
+          = f.text_area :description, 'v-model': 'approval_group.description', ':disabled': '!editMode'
+        .approval_groups_show__form__item
+          = f.label :users
+          div v-for="(index, user) in approval_group.approval_group_users | filterBy !_destroy" track-by='$index'
+            = f.fields_for :approval_group_users,  ApprovalGroupUser.new, child_index: '{{ index }}' do |ff|
+              = ff.hidden_field :id, 'v-model': "user.id"
+              = ff.radio_button :_destroy, 0, 'v-model': "user._destroy", style: 'display: none'
+              = ff.radio_button :_destroy, 1, 'v-model': "user._destroy", style: 'display: none'
+              = ff.collection_select :user_id, User.all, :id, :name, { include_blank: true }, \
+              'v-model': "user.user_id", ':disabled': '!editMode'
+              button.approval_groups_show__form__btn--delete_elem type='button' v-if="editMode" @click="user._destroy = '1'"
+                i.fa.fa-remove
+                | 削除
+          button.approval_groups_show__form__btn--add type='button' v-if="editMode" @click='approval_group.approval_group_users.push({_destroy: false})'
+            i.fa.fa-plus
+            | 追加
+
+
+    = button_tag '@click.prevent': 'editMode = true' , 'v-if': '!editMode', class: 'approval_groups_show__form__btn--edit' do
+      = fa_icon 'edit', text: t('helpers.edit')
+    = button_tag '@click.prevent': 'editMode = false', 'v-if':  'editMode', class: 'approval_groups_show__form__btn--cancel' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag '@click.prevent': 'submit'          , 'v-if':  'editMode', class: 'approval_groups_show__form__btn--submit' do
+      = fa_icon 'pencil-square', text: t('helpers.submit.update')
+    = button_tag '@click.prevent': 'destroy'         , 'v-if': '!editMode', class: 'approval_groups_show__form__btn--delete' do
+      = fa_icon 'trash', text: t('helpers.delete')

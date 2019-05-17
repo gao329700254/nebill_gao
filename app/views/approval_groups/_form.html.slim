@@ -1,0 +1,27 @@
+= form_for @approval_group, class: 'approval_groups_show__form' do |f|
+  = f.hidden_field :id, 'v-model': 'approval_group.id'
+  .approval_groups_show__form__container
+    .approval_groups_show__form__container__group
+      .approval_groups_show__form__item
+        = f.label :name
+        = f.text_field :name, 'v-model': 'approval_group.name'
+      .approval_groups_show__form__item
+        = f.label :description
+        = f.text_area :description, 'v-model': 'approval_group.description'
+      .approval_groups_show__form__item
+        = f.label :users
+        div v-for="(index, user) in approval_group.approval_group_users | filterBy !_destroy" track-by='$index'
+          = f.fields_for :approval_group_users,  ApprovalGroupUser.new, child_index: '{{ index }}' do |ff|
+            = ff.hidden_field :id, 'v-model': "user.id"
+            = ff.radio_button :_destroy, 0, 'v-model': "user._destroy", style: 'display: none'
+            = ff.radio_button :_destroy, 1, 'v-model': "user._destroy", style: 'display: none'
+            = ff.collection_select :user_id, User.all, :id, :name, { include_blank: true }, 'v-model': "user.user_id"
+            button.approval_groups_show__form__btn--delete_elem type='button' @click="user._destroy = '1'"
+              i.fa.fa-remove
+              | 削除
+        button.approval_groups_show__form__btn--add type='button' @click='approval_group.approval_group_users.push({_destroy: false})'
+          i.fa.fa-plus
+          | 追加
+
+  = button_tag 'v-on:click.prevent': 'submit', class: 'approval_groups_show__form__btn--submit' do
+    = fa_icon 'pencil-square', text: t('helpers.submit.create')

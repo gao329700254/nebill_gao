@@ -67,6 +67,13 @@
         word-break: break-word;
       }
 
+      &--approvaler_type {
+        @extend %approval_list__tbl__item;
+        @include span-columns(2);
+        white-space: normal;
+        word-break: break-word;
+      }
+
       &--category {
         @extend %approval_list__tbl__item;
         @include span-columns(2);

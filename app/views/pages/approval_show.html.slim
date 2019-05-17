@@ -18,6 +18,10 @@
           .approval_show__detail__item__contents
             = @approval.name
         .approval_show__detail__item
+          = Approval.human_attribute_name(:approvaler_type)
+          .approval_show__detail__item__contents
+            = @approval.approvaler_type_text
+        .approval_show__detail__item
           = Approval.human_attribute_name(:category)
           .approval_show__detail__item__contents
             = @approval.category_text
@@ -53,8 +57,8 @@
       .approval_show__detail__container__group
         .approval_show__detail__file
           = Approval.human_attribute_name(:file)
-          - if !@approval_files.empty?
-            - @approval_files.each do |approval_file|
+          - if @approval_individual_group_switch.approval_files.present?
+            - @approval_individual_group_switch.approval_files.each do |approval_file|
               .approval_show__detail__file__contents
                 = link_to truncate(approval_file.original_filename, length: 40), api_approval_file_download_path(approval_file)
                 - if approval_file.original_filename.match(Regexp.union(['.pdf', '.png', '.jpg', '.jpeg', '.gif']))
@@ -66,7 +70,7 @@
         = hidden_field_tag :file_url, '', 'v-model' => 'url'
         .approval_show__detail__approval_user_list
           = t('page.approval_show.history')
-          - if !@approval_users.empty?
+          - if @approval_individual_group_switch.approval_users.present?
             table.approval_show__detail__approval_user_list__tbl
               thead.approval_show__detail__approval_user_list__tbl__head
                 tr.approval_show__detail__approval_user_list__tbl__head__row
@@ -74,38 +78,59 @@
                   th.approval_show__detail__approval_user_list__item--approval_user_status = ApprovalUser.human_attribute_name(:status)
                   th.approval_show__detail__approval_user_list__item--approval_user_comment = ApprovalUser.human_attribute_name(:comment)
               tbody.approval_show__detail__approval_user_list__tbl__body
-                - @approval_users.each do |approval_user|
+                - @approval_individual_group_switch.approval_users.each do |approval_user|
                   tr.approval_show__detail__approval_user_list__tbl__body__row
-                    td.approval_show__detail__approval_user_list__item--approval_user_name = approval_user.user.name
-                    td.approval_show__detail__approval_user_list__item--approval_user_status = approval_user.status_text
+                    td.approval_show__detail__approval_user_list__item--approval_user_name = approval_user.name
+                    td.approval_show__detail__approval_user_list__item--approval_user_status = approval_user.status
                     td.approval_show__detail__approval_user_list__item--approval_user_comment = approval_user.comment
           - else
             .approval_show__detail__file__contents
               = t('page.approval_show.user_no_contents')
-          - if (can?(:allread, Approval) && @approval.status != 40) || (@approval.status != 40 && @approval.status != 20 && @current_user_approval)
+          - if @approval.approvaler_type.user? && ((can?(:allread, Approval) && @approval.status != 40) || \
+            (@approval.status != 40 && @approval.status != 20 && @approval_individual_group_switch.current_user_approval))
             = form_tag api_approval_approval_users_path, class: 'approval_show__reassignment__form' do
               .approval_show__detail__update__add_approval_user
-                = collection_select(:user, :id, @users, :id, :name, { include_blank: true } ,
+                = collection_select(:user, :id, @approval_individual_group_switch.users, :id, :name, { include_blank: true } ,
                                     prompt: "" , class: "approval_show__detail__update__add_approval_user__list")
                 = button_to 'reassignment', data: { disable_with: t('page.approval_show.wait') },
                                                     class: 'approval_show__detail__update__add_approval_user__btn--reassignment' do
                   = fa_icon 'refresh', text: t('page.approval_show.reassignment')
-          - if @approval.status != 40 && @approval.status != 20 && @current_user_approval.present?
-            = form_tag api_approval_approval_user_path(id: @current_user_approval.id), method: :put, class: 'approval_show__reassignment__form' do
-              .approval_show__detail__update
-                = t('page.approval_show.action')
-                .approval_show__detail__update__action
-                  = text_area_tag :comment, '', class: 'approval_show__detail__update__action__text',
-                                    placeholder: t('page.approval_show.comment_placeholder')
-                  = button_tag 'permission', data: { disable_with: t('page.approval_show.wait') } ,
-                                              class: 'approval_show__detail__update__action__btn--permission',
-                                              value: 'permission' do
-                    = fa_icon 'check', text: t('page.approval_show.permission')
-                  = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
-                                              class: 'approval_show__detail__update__action__btn--disconfirm',
-                                              value: 'disconfirm' do
-                    = fa_icon 'remove', text: t('page.approval_show.disconfirm')
-
+          - if @approval.status != 40 && @approval.status != 20 && @approval_individual_group_switch.current_user_approval.present?
+            - if @approval.approvaler_type.user?
+              = form_tag api_approval_approval_user_path(id: @approval_individual_group_switch.current_user_approval.id), \
+              method: :put, class: 'approval_show__reassignment__form' do
+                .approval_show__detail__update
+                  = t('page.approval_show.action')
+                  .approval_show__detail__update__action
+                    = text_area_tag :comment, '', class: 'approval_show__detail__update__action__text',
+                                      placeholder: t('page.approval_show.comment_placeholder')
+                    = button_tag 'permission', data: { disable_with: t('page.approval_show.wait') } ,
+                                                class: 'approval_show__detail__update__action__btn--permission',
+                                                value: 'permission' do
+                      = fa_icon 'check', text: t('page.approval_show.permission')
+                    = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
+                                                class: 'approval_show__detail__update__action__btn--disconfirm',
+                                                value: 'disconfirm' do
+                      = fa_icon 'remove', text: t('page.approval_show.disconfirm')
+            - elsif @approval.approvaler_type.group?
+              = form_for [:api, @approval], html: { class: 'approval_show__reassignment__form' } do |f|
+                .approval_show__detail__update
+                  = t('page.approval_show.action')
+                  .approval_show__detail__update__action
+                    = f.fields_for :approval_users, @approval_individual_group_switch.current_user_approval do |ff|
+                      = ff.hidden_field :user_id
+                      = ff.text_area :comment, class: 'approval_show__detail__update__action__text',
+                                        placeholder: t('page.approval_show.comment_placeholder')
+                      = ff.button 'permission', data: { disable_with: t('page.approval_show.wait') } ,
+                                                  name: "#{ff.object_name}[status]",
+                                                  class: 'approval_show__detail__update__action__btn--permission',
+                                                  value: 'permission' do
+                        = fa_icon 'check', text: t('page.approval_show.permission')
+                      = ff.button 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
+                                                  name: "#{ff.object_name}[status]",
+                                                  class: 'approval_show__detail__update__action__btn--disconfirm',
+                                                  value: 'disconfirm' do
+                        = fa_icon 'remove', text: t('page.approval_show.disconfirm')
   component [
     :is        = "'approvalFile'"
     :url       = "url"

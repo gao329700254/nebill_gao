@@ -5,4 +5,13 @@
       .home__img_box__outer__inner
         p.home__img_box__description = t('page.home.description')
         h1.home__img_box__title Nebill
-        = button_tag t('helpers.login'), onclick: "location.href='/auth/google_oauth2'", class: 'home__img_box__login'
+        = form_for @user_session do |f|
+          = f.label :email
+          = f.text_field :email, class: 'home__text_field'
+
+          = f.label :password
+          = f.password_field :password, class: 'home__text_field'
+
+          = f.button t('helpers.login'), class: 'home__img_box__login'
+
+        = button_tag '', onclick: "location.href='/auth/google_oauth2'", class: 'home__img_box__google'

@@ -42,6 +42,19 @@ $ ->
             response.forEach (element) =>
               if element.id != parseInt(@userId)
                 @allUser.push(element)
+      send_password_setting_email: ->
+        $.ajax
+          url: "/api/users/#{@userId}/send_password_setting_emails.json"
+          type: 'POST'
+        .done (response) =>
+          toastr.success('', response.message)
+          @loadUser()
+          @editMode = false
+        .fail (response) =>
+          json = response.responseJSON
+          toastr.error(json.errors.full_messages.join('<br>'), json.message)
+        .always (response) =>
+          submit.prop('disabled', false)
       submit: ->
         try
           submit = $('.user_show__form__btn--submit')

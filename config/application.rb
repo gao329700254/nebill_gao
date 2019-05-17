@@ -30,6 +30,7 @@ module Nebill
     config.i18n.default_locale = :ja
     config.time_zone = 'Tokyo'
 
+    config.autoload_paths += %W(#{config.root}/lib)
     config.paths['config/routes.rb'].concat Dir[Rails.root.join('config/routes/**/*.rb')]
 
     # Do not swallow errors in after_commit/after_rollback callbacks.

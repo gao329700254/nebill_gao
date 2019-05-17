@@ -23,10 +23,10 @@
         .user_show__form__item
           = label_tag :default_allower, t('activerecord.attributes.user.default_allower')
           select [
-              name='default_allower'
-              id='default_allower'
-              v-model='user.default_allower'
-              :disabled='!editMode'
+              name = 'default_allower'
+              id = 'default_allower'
+              v-model = 'user.default_allower'
+              :disabled = '!editMode'
             ]
               option v-for="user in allUser" value="{{user.id}}" {{user.name}}
         .user_show__form__item
@@ -40,3 +40,5 @@
       = fa_icon 'pencil-square', text: t('helpers.submit.update')
     = button_tag 'v-on:click.prevent' => 'destroy'         , 'v-if' => '!editMode', class: 'project_detail__form__btn--delete' do
       = fa_icon 'trash', text: t('helpers.delete')
+    = button_tag 'v-on:click.prevent' => 'send_password_setting_email'         , 'v-if' => '!editMode', class: 'project_detail__form__btn--edit' do
+      = fa_icon 'key', text: t('page.admin.user_show.send_password_setting_email')

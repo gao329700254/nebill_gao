@@ -161,10 +161,14 @@
 #
 
 Rails.application.routes.draw do
+  resources :approval_groups
   root 'pages#home'
 
   get 'home', to: 'pages#home'
   post 'hooks', to: "hooks#create"
+
+  resources :user_sessions
+  resources :password_settings
 
   get    '/auth/:provider/callback', to: 'user_sessions#create'
   post   '/auth/:provider/callback', to: 'user_sessions#create'
