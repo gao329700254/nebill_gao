@@ -212,7 +212,7 @@ ActiveRecord::Schema.define(version: 20190515142947) do
     t.integer  "project_id",           null: false
     t.date     "working_period_start"
     t.date     "working_period_end"
-    t.integer  "man_month"
+    t.float    "man_month"
   end
 
   add_index "members", ["project_id"], name: "index_members_on_project_id", using: :btree
