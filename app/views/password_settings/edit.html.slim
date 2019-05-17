@@ -1,0 +1,16 @@
+#home.home
+  .home__img_box
+    = image_tag 'home.jpg', class: 'home__img_box__img'
+    .home__img_box__outer
+      .home__img_box__outer__inner
+        p.home__img_box__description = t('page.home.description')
+        h1.home__img_box__title Nebill
+        = form_for @password_setting do |f|
+
+          = f.label :password
+          = f.password_field :password, class: 'home__text_field'
+
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation, class: 'home__text_field'
+
+          = f.button t('helpers.submit.create'), class: 'home__img_box__login'

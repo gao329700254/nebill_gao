@@ -32,16 +32,23 @@
 #                   bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                            bills/pdf#download
 #                      project_groups GET    /project_groups(.:format)                                pages#project_groups
 #                            partners GET    /partners(.:format)                                      pages#partners
+#                      agreement_list GET    /agreements/list(.:format)                               pages#agreement_list
 #                         admin_users GET    /admin/users(.:format)                                   admin/pages#users
 #                admin_fb_date_output GET    /admin/fb_date_output(.:format)                          admin/pages#fb_date_output
 #               admin_fb_download_csv POST   /admin/fb_download_csv(.:format)                         admin/fb#fb_download_csv
 #                     admin_user_show GET    /admin/users/:user_id/show(.:format)                     admin/pages#user_show
 #                   letter_opener_web        /letter_opener                                           LetterOpenerWeb::Engine
+#                statuses_api_clients GET    /api/clients/statuses(.:format)                          api/clients#statuses
+#       published_clients_api_clients GET    /api/clients/published_clients(.:format)                 api/clients#published_clients
+#       set_approval_user_api_clients POST   /api/clients/set_approval_user(.:format)                 api/clients#set_approval_user
 #                         api_clients GET    /api/clients(.:format)                                   api/clients#index
 #                                     POST   /api/clients(.:format)                                   api/clients#create
 #                          api_client GET    /api/clients/:id(.:format)                               api/clients#show
 #                                     PATCH  /api/clients/:id(.:format)                               api/clients#update
 #                                     PUT    /api/clients/:id(.:format)                               api/clients#update
+#            api_client_file_download GET    /api/files/:files_id/client_file_download(.:format)      api/files#client_file_download
+#                 api_update_approval POST   /api/clients/:client_id/update_approval(.:format)        api/clients#update_approval
+#                  api_invalid_client POST   /api/clients/:client_id/invalid_client(.:format)         api/clients#invalid_client
 #                     roles_api_users GET    /api/users/roles(.:format)                               api/users#roles
 #                           api_users GET    /api/users(.:format)                                     api/users#index
 #                                     POST   /api/users(.:format)                                     api/users#create
@@ -53,13 +60,12 @@
 #                                     POST   /api/partners(.:format)                                  api/partners#create
 #                         api_partner PATCH  /api/partners/:id(.:format)                              api/partners#update
 #                                     PUT    /api/partners/:id(.:format)                              api/partners#update
-#     api_projects_create_with_client POST   /api/projects/create_with_client(.:format)               api/projects#create_with_client
 #                                     GET    /api/projects/:id/select_status(.:format)                api/projects#select_status
 #                                     GET    /api/projects/:id/last_updated_at(.:format)              api/projects#last_updated_at
+#      load_partner_user_api_projects GET    /api/projects/load_partner_user(.:format)                api/projects#load_partner_user
+#                                     POST   /api/projects/:id/member_partner(.:format)               api/projects#member_partner
 #                                     GET    /api/projects/bill/:bill_id(.:format)                    api/projects#show
 #                   api_project_users GET    /api/projects/:project_id/users(.:format)                api/users#index
-#                   api_bill_partners GET    /api/bills/:bill_id/partners(.:format)                   api/partners#index
-#                      api_bill_users GET    /api/bills/:bill_id/users(.:format)                      api/users#index
 #                   api_project_bills GET    /api/projects/:project_id/bills(.:format)                api/bills#index
 #                                     POST   /api/projects/:project_id/bills(.:format)                api/bills#create
 #                            api_bill GET    /api/bills/:id(.:format)                                 api/bills#show
@@ -83,11 +89,12 @@
 #                                     PATCH  /api/projects/:id(.:format)                              api/projects#update
 #                                     PUT    /api/projects/:id(.:format)                              api/projects#update
 #                                     DELETE /api/projects/:id(.:format)                              api/projects#destroy
-#                    api_user_members POST   /api/user_members/:bill_id/:user_id(.:format)            api/user_members#create
-#             api_delete_user_members DELETE /api/user_members/:bill_id/:user_id(.:format)            api/user_members#destroy
-#                 api_partner_members POST   /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#create
-#          api_delete_partner_members DELETE /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#destroy
-#          api_update_partner_members PATCH  /api/partner_members/:bill_id/:partner_id(.:format)      api/partner_members#update
+#                    api_user_members POST   /api/user_members/:project_id/:user_id(.:format)         api/user_members#create
+#             api_delete_user_members DELETE /api/user_members/:project_id/:user_id(.:format)         api/user_members#destroy
+#                 api_partner_members POST   /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#create
+#          api_delete_partner_members DELETE /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#destroy
+#          api_update_partner_members PATCH  /api/partner_members/:project_id/:partner_id(.:format)   api/partner_members#update
+#             api_update_user_members PATCH  /api/user_members/:project_id/:user_id(.:format)         api/user_members#update
 #                  api_project_groups GET    /api/project_groups(.:format)                            api/project_groups#index
 #                                     POST   /api/project_groups(.:format)                            api/project_groups#create
 #                   api_project_group PATCH  /api/project_groups/:id(.:format)                        api/project_groups#update
@@ -134,6 +141,10 @@
 #                                     PATCH  /api/expense_approvals/:id(.:format)                     api/expense_approvals#update
 #                                     PUT    /api/expense_approvals/:id(.:format)                     api/expense_approvals#update
 #                                     DELETE /api/expense_approvals/:id(.:format)                     api/expense_approvals#destroy
+#                   api_approval_list GET    /api/agreements/approval_list(.:format)                  api/agreements#approval_list
+#                     api_client_list GET    /api/agreements/client_list(.:format)                    api/agreements#client_list
+#                    api_project_list GET    /api/agreements/project_list(.:format)                   api/agreements#project_list
+#           api_expense_approval_list GET    /api/agreements/expense_approval_list(.:format)          api/agreements#expense_approval_list
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index
@@ -150,10 +161,14 @@
 #
 
 Rails.application.routes.draw do
+  resources :approval_groups
   root 'pages#home'
 
   get 'home', to: 'pages#home'
   post 'hooks', to: "hooks#create"
+
+  resources :user_sessions
+  resources :password_settings
 
   get    '/auth/:provider/callback', to: 'user_sessions#create'
   post   '/auth/:provider/callback', to: 'user_sessions#create'
@@ -208,6 +223,9 @@ Rails.application.routes.draw do
   end
   get 'project_groups', to: 'pages#project_groups'
   get 'partners'      , to: 'pages#partners'
+  scope path: 'agreements' do
+    get 'list', to: 'pages#agreement_list', as: 'agreement_list'
+  end
 
   namespace :admin do
     get 'users', to: 'pages#users'

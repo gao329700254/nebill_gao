@@ -22,7 +22,6 @@ ja:
       bill: 請求
       project_file: プロジェクトファイル
       project_file_group: プロジェクトファイルグループ
-      approval: 稟議
       expense: 経費
       expense_approval: 申請
     attributes:
@@ -47,6 +46,16 @@ ja:
         working_rate: 稼働時間
         max_limit_time: 上限
         min_limit_time: 下限
+        working_period_start: 稼働開始
+        working_period_end: 稼働終了
+      user_member:
+        working_period_start: 稼働開始
+        working_period_end: 稼働終了
+        man_month: 人月
+      member:
+        working_period_start: 稼働開始
+        working_period_end: 稼働終了
+        man_month: 人月
       client:
         cd: ID
         company_name:    会社名
@@ -56,6 +65,13 @@ ja:
         phone_number:    電話番号
         personnels:      担当者情報
         memo:            メモ
+        files:           ファイル
+        nda:             NDA
+        basic_contract:  基本契約書
+        status:          ステータス
+        approval_name:   "%{comany} 取引先新規作成用稟議"
+      files:
+        legal_check:     リーガルチェック
       project:
         group: グループ
         cd: ID
@@ -102,18 +118,6 @@ ja:
         memo:           メモ
       project_file_group:
         name: 名前
-      approval:
-        name: 件名
-        project_id: プロジェクトID
-        status: ステータス
-        created_user_name: 作成者
-        approvel_user_name: 承認者
-        comment: コメント
-        updated_at: 更新日
-        created_at: 作成日
-        notes: 概要
-        file: 添付ファイル
-        category: 種別
       approval_user:
         name: 承認者
         status: ステータス
@@ -282,6 +286,7 @@ ja:
       default_allower_is_empty: 承認者を選択してください。
       expense_approval_is_empty: 申請を選択してください。
       unselected: を選択してください。
+      presence_check_box: は必ずチェックしてください
     template:
       body: 次の項目を確認してください
       header:
@@ -410,12 +415,16 @@ ja:
       confirm: '本当に再申請をしてよろしいですか？'
       success: '承認者を再申請しました'
       fail: '承認者を再申請できませんでした'
+    send_email:
+      success: 'メールを送信しました'
+      fail: 'メールを送信できませんでした'
   enumerize:
     defaults:
       contract_type:
         lump_sum:    請負開発
         consignment: 委託
         maintenance: 保守
+        ses:         SES
         other:       その他
       payment_type:
         bill_on_15th_and_payment_on_end_of_next_month:                15日締め翌月末払い
@@ -438,6 +447,7 @@ ja:
       superior: 上長
       backoffice: バックオフィス
       admin: 管理者
+      outer: 外部ユーザー
     status:
       pending:      承認待ち
       permission:   承認済み
@@ -454,18 +464,49 @@ ja:
       person_rebuilding:      本人立替
       invoice:                請求書
       corporate_card:         法人カード
+    client:
+      status:
+        approval_pending:           承認待ち
+        waiting_for_basic_contract: ファイル添付待ち
+        published:                  有効
+  approval_groups:
+    show:
+      title: 稟議グループ
+    new:
+      title: 稟議グループ新規作成
+    index:
+      title: 稟議グループ一覧
+      search_form_placeholder: 'グループ名,承認者,作成者で検索できます'
+      search: 検索
+      fill_date_form: 作成日検索
   page:
     home:
       title: ホーム
       description: シンプルで高機能なプロジェクト管理システム
     client_new:
       title: 取引先新規作成
+      legal_check: リーガルチェック
+      basic_contract_info: 基本契約書を締結しない場合はその理由をメモ欄に記入してください
     client_list:
       title: 取引先一覧
       search_form_placeholder: 'ID,会社名,部署名,電話番号で検索できます'
     client_show:
       title: 取引先情報
       last_updated_at: '最終更新日時: '
+      nda_file: NDAファイル
+      file_no_contents: なし
+      basic_contract: 基本契約書
+      preview: プレビュー
+      user_no_contents: 承認者が存在しません
+      history: 承認履歴
+      invalid: 承認申請の取り消し
+      permission: 承認
+      disconfirm: 差し戻し
+      reassignment: 再割り当て
+      action: アクション
+      edit: 編集
+      comment_placeholder: コメントを入力してください
+      wait: 処理中...
     project_new:
       title: プロジェクト新規作成
       orderer: 受注先会社情報
@@ -479,6 +520,9 @@ ja:
       zip_code: 郵便番号
       phone_number: 電話番号
       memo: メモ
+      leader: プロジェクトリーダー
+      partner: パートナー
+      member: メンバー
     project_list:
       title: プロジェクト一覧
       search_form_placeholder: 'ID,名前,受注先会社名で検索できます'
@@ -542,6 +586,13 @@ ja:
         permission: 承認済み
         disconfirm: 差し戻し
         invalid: 取り消し
+      category_type:
+        all: 全て
+        contract_relationship: 契約関係
+        new_client: 新規取引先
+        consumables: 消耗品
+        other_purchasing: その他購買
+        other: その他
     approval_show:
       title: 稟議情報
       note_no_contents: なし
@@ -653,8 +704,19 @@ ja:
       user_show:
         title: ユーザ情報
         last_updated_at: '最終更新日時: '
+        send_password_setting_email: 'パスワード再設定メール送信'
       fb_date_output:
         title: 全銀データ出力
+    agreement:
+      title: 承認ページ
+      component:
+        approval_list: 稟議
+        client_list: 取引先
+        project_list: プロジェクト
+        expense_approval_list: 経費
+      list:
+        created_by: 作成者
+        created_at: 作成日
   component:
     member_list:
       new_partner: パートナーを新規登録
@@ -741,6 +803,35 @@ ja:
         message:  "%{user}さんの申請「%{name}」が差し戻しされました."
         massage2: "以下のリンクをクリックして,内容を確認ください."
         company:  "nebill by 株式会社Cuon"
+    client:
+      assignment:
+        subject: "【取引先稟議】%{user}さんより,申請「%{name}」が申請されました."
+        message: "%{user}さんより,「%{name}」が申請されました."
+        message2: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      update:
+        subject: "【取引先稟議】申請「%{name}」が更新されました."
+        message: "申請「%{name}」が更新されました."
+        message2: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      nda_permission:
+        subject: "【取引先稟議】%{user}さんの申請「%{name}」が承認済みになりました."
+        message: "%{user}さんの申請「%{name}」が承認済みになりました."
+        message2: "現在、NDAのみの承認となっております."
+        message3: "基本契約書を添付の上、更新してください."
+        message4: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      permission:
+        subject: "【取引先稟議】%{user}さんの申請「%{name}」が承認済みになりました."
+        message: "%{user}さんの申請「%{name}」が承認済みになりました."
+        message2: "現在、取引先のステータスは有効です."
+        message3: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
+      disconfirm:
+        subject: "【取引先稟議】%{user}さんの申請「%{name}」が差し戻しされました."
+        message: "%{user}さんの申請「%{name}」が差し戻しされました."
+        message2: "以下のリンクをクリックして,内容を確認ください."
+        company: "nebill by 株式会社Cuon"
     expense_approval:
       mail:
         message2: "以下のリンクをクリックして,内容を確認ください."

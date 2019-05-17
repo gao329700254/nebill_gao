@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      approval_group: 稟議グループ
+    attributes:
+      approval_group:
+        name: グループ名
+        users: 承認者
+        user: 作成者
+        description: 説明
+        created_at: 入力日
+        approval_group_users: 承認者
+    errors:
+      models:
+        approval_group:
+          attributes:
+            base:

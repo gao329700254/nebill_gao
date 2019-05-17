@@ -8,6 +8,10 @@ $ ->
       project: undefined
       projectOriginal: undefined
       options: []
+      clients: []
+      ordererClientId: undefined
+      billingClientId: undefined
+      allUsers: []
     watch:
       projectId: ->
         @loadProject()
@@ -68,8 +72,36 @@ $ ->
                 toastr.error('', json.message)
         finally
           destroy.prop('disabled', false)
+      loadClients: ->
+        $.ajax '/api/clients/published_clients.json'
+          .done (response) =>
+            @clients = []
+            response.forEach (element) =>
+              @clients.push(element)
+      fillOrderer: ->
+        $.ajax "/api/clients/#{@ordererClientId}.json"
+          .done (response) =>
+            @project.orderer_company_name     = response.company_name
+            @project.orderer_department_name  = response.department_name
+            @project.orderer_address          = response.address
+            @project.orderer_zip_code         = response.zip_code
+            @project.orderer_phone_number     = response.phone_number
+      fillBilling: ->
+        $.ajax "/api/clients/#{@billingClientId}.json"
+          .done (response) =>
+            @project.billing_company_name     = response.company_name
+            @project.billing_department_name  = response.department_name
+            @project.billing_address          = response.address
+            @project.billing_zip_code         = response.zip_code
+            @project.billing_phone_number     = response.phone_number
+      loadAllUsers: ->
+        $.ajax '/api/users'
+          .done (response) =>
+            @allUsers = response
     created: ->
       @initializeProject()
+      @loadClients()
+      @loadAllUsers()
     events:
       loadStatusEvent: ->
         @statusList()

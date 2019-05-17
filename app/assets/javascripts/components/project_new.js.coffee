@@ -14,27 +14,26 @@ $ ->
         zip_code:         undefined
         phone_number:     undefined
         memo:             undefined
+      allUsers: []
+      partners: []
+      members: []
+      allPartners: []
+      allMembers: []
     methods:
       cancel: -> @modalHide()
       setProjectCd: ->
-        projectType =
-          if @project.contracted == false
-            'uncontracted'
-          else if @project.is_using_ses == true
-            'ses'
-          else
-            @project.contract_type
-        $.ajax "/api/projects/cd/#{projectType}.json"
-          .done (response) =>
-            @project.cd = response.cd
+        projectContracted = @project.contracted
+        projectType = @project.contract_type
+        $.ajax
+          url: "/api/projects/cd/#{projectType}.json"
+          data:
+            project_contracted: projectContracted
+        .done (response) =>
+          @project.cd = response.cd
       loadClients: ->
-        $.ajax '/api/clients.json'
+        $.ajax '/api/clients/published_clients.json'
           .done (response) =>
-            @clients = [{
-              id: 0,
-              cd: '新規作成',
-              company_name: '',
-            }]
+            @clients = []
             response.forEach (element) =>
               @clients.push(element)
       fillOrderer: ->
@@ -60,48 +59,68 @@ $ ->
         @project.billing_address         = @project.orderer_address
         @project.billing_zip_code        = @project.orderer_zip_code
         @project.billing_phone_number    = @project.orderer_phone_number
-      copy_client: ->
-        @client.company_name    = @project.orderer_company_name
-        @client.department_name = @project.orderer_department_name
-        @client.address         = @project.orderer_address
-        @client.zip_code        = @project.orderer_zip_code
-        @client.phone_number    = @project.orderer_phone_number
       submit: ->
         try
           submit = $('.project_new__form__submit_btn')
           submit.prop('disabled', true)
-          if $('#orderer_client_id').val() == '0'
-            @copy_client()
-            $.ajax
-              url: '/api/projects/create_with_client.json'
-              type: 'POST'
-              data: { project: @projectPostData, client: @client }
-            .done (response) =>
-              toastr.success('', response.message)
-              @initializeProject()
-              @modalHide()
-              @$dispatch('loadSearchEvent')
-            .fail (response) =>
-              json = response.responseJSON
-              toastr.error(json.errors.full_messages.join('<br>'), json.message)
-          else
-            $.ajax
-              url: '/api/projects.json'
-              type: 'POST'
-              data: { project: @projectPostData }
-            .done (response) =>
-              toastr.success('', response.message)
-              @initializeProject()
-              @modalHide()
-              @$dispatch('loadSearchEvent')
-            .fail (response) =>
-              json = response.responseJSON
-              toastr.error(json.errors.full_messages.join('<br>'), json.message)
+          if @partners.length > 0 || @members.length > 0
+            @projectPostData.members_attributes = []
+          if @partners.length > 0
+            @partners.forEach (partner) =>
+              if partner.employee_id
+                partner.type = 'PartnerMember'
+                @projectPostData.members_attributes.push(partner)
+          if @members.length > 0
+            @members.forEach (member) =>
+              if member.employee_id
+                member.type = 'UserMember'
+                @projectPostData.members_attributes.push(member)
+          $.ajax
+            url: '/api/projects.json'
+            type: 'POST'
+            data: { project: @projectPostData }
+          .done (response) =>
+            toastr.success('', response.message)
+            @initializeProject()
+            @modalHide()
+            @$dispatch('loadSearchEvent')
+            @partners = []
+            @members = []
+          .fail (response) =>
+            json = response.responseJSON
+            toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
+      loadAllUsers: ->
+        $.ajax '/api/users'
+          .done (response) =>
+            @allUsers = response
+      loadPartnersUsers: ->
+        $.ajax '/api/projects/load_partner_user.json'
+          .done (response) =>
+            response.forEach (emp) =>
+              if emp.actable_type == 'Partner'
+                @allPartners.push(emp)
+              else if emp.actable_type == 'User'
+                @allMembers.push(emp)
+      addPartnerMemberForm: ->
+        @partners.push({
+          employee_id: '',
+          unit_price: '',
+          working_rate: '',
+          min_limit_time: '',
+          max_limit_time: '' })
+      addUserMemberForm: ->
+        @members.push({ employee_id: '' })
+      deletePartnerMemberForm: (index) ->
+        @partners.splice(index, 1)
+      deleteUserMemberForm: (index) ->
+        @members.splice(index, 1)
     created: ->
       @loadClients()
       @initializeProject()
       @setProjectCd()
+      @loadAllUsers()
+      @loadPartnersUsers()
     events:
       showProjectNewEvent: -> @modalShow()

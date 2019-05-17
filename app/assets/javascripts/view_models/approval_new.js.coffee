@@ -1,6 +1,8 @@
 $ ->
-  window.approvalShow = new Vue
+  window.approvalNew = new Vue
     el: '#approval_new'
+    data:
+      approvaler_button: 'user'
     ready: ->
       # nested_fields_forの中ではvueJSのeventbindingが使えないため、ここで無理やりイベントを発行するようにしています。
       $(@$el).on('dragleave', '.approval_new__form__item__file__drop_container', (e) =>

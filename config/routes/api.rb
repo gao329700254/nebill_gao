@@ -1,26 +1,40 @@
 Rails.application.routes.draw do
   namespace :api, format: :json do
+    resources :clients, only: [:index, :create, :show, :update], shallow: true do
+      collection do
+        get 'statuses', to: "clients#statuses"
+        get 'published_clients', to: "clients#published_clients"
+        post 'set_approval_user', to: "clients#set_approval_user"
+      end
+    end
+    scope path: 'files/:files_id' do
+      get 'client_file_download', to: 'files#client_file_download'
+    end
+    scope path: 'clients/:client_id' do
+      post "update_approval", to: "clients#update_approval"
+      post "invalid_client", to: "clients#invalid_client"
+    end
+    resources :approval_groups
     resources :clients, only: [:index, :create, :show, :update]
     resources :users, only: [:index, :create, :show, :update, :destroy], shallow: true do
+      resources :send_password_setting_emails, only: [:create]
       collection do
         get 'roles', to: "users#roles"
       end
     end
     resources :partners, only: [:index, :create, :update]
-    post "projects/create_with_client", to: "projects#create_with_client"
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
       collection do
         get ':id/select_status', to: "projects#select_status"
         get ':id/last_updated_at', to: "projects#last_updated_at"
+        get 'load_partner_user', to: "projects#load_partner_user"
+        post ':id/member_partner', to: "projects#member_partner"
       end
       collection do
         get 'bill/:bill_id', to: "projects#show"
       end
       resources :users, only: [:index]
-      resources :bills, only: [:index, :create, :show, :update, :destroy], shallow: true do
-        resources :partners, only: [:index]
-        resources :users, only: [:index]
-      end
+      resources :bills, only: [:index, :create, :show, :update, :destroy]
       resources :partners, only: [:index]
       resources :project_files, only: [:index, :show, :create, :update, :destroy]
       resources :project_file_groups, only: [:index, :create]
@@ -30,10 +44,11 @@ Rails.application.routes.draw do
       end
     end
     %w(user partner).each do |member_type|
-      post "#{member_type}_members/:bill_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"
-      delete "#{member_type}_members/:bill_id/:#{member_type}_id", to: "#{member_type}_members#destroy", as: "delete_#{member_type}_members"
+      post "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"
+      delete "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#destroy", as: "delete_#{member_type}_members"
     end
-    patch "partner_members/:bill_id/:partner_id", to: "partner_members#update", as: "update_partner_members"
+    patch "partner_members/:project_id/:partner_id", to: "partner_members#update", as: "update_partner_members"
+    patch "user_members/:project_id/:user_id", to: "user_members#update", as: "update_user_members"
     resources :project_groups, only: [:index, :create, :update]
     resources :bills, only: [:index]
     post "projects/search_result", to: "projects#search_result"
@@ -70,5 +85,11 @@ Rails.application.routes.draw do
     end
     post "expense_approvals/search_result", to: "expense_approvals#search_result"
     resources :expense_approvals, only: [:show, :create, :update, :destroy, :index]
+    scope path: 'agreements' do
+      get "approval_list", to: "agreements#approval_list"
+      get "client_list", to: "agreements#client_list"
+      get "project_list", to: "agreements#project_list"
+      get "expense_approval_list", to: "agreements#expense_approval_list"
+    end
   end
 end

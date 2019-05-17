@@ -1,0 +1,9 @@
+fieldset.project_new__form__basic
+  .project_new__form__container
+    .project_new__form__container__group
+      .project_new__form__item
+        = label_tag :leader, t('page.project_new.leader')
+        select.project_new__form__item__add_user_member__list [
+          v-model='project.leader_id'
+        ]
+          option v-for="user in allUsers" value="{{user.id}}" {{user.name}}

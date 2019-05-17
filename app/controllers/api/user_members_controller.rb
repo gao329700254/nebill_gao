@@ -1,18 +1,30 @@
 class Api::UserMembersController < Api::ApiController
-  before_action :set_bill, only: [:create]
-  before_action :set_user   , only: [:create, :destroy]
+  before_action :set_project, only: [:create]
+  before_action :set_member, only: [:update, :destroy]
 
   def create
-    @member = @user.join!(@bill)
+    @member = @user.join!(@project, params[:partner])
 
     render_action_model_success_message(@member, :create)
+  rescue ActiveRecord::RecordInvalid => e
+    render_action_model_fail_message(e.record, :create)
+  end
+
+  def update
+    @member.attributes = member_param
+    @member.transaction do
+      @member.save!
+      @member.employee[:name] = params[:member][:name]
+      @member.employee[:email] = params[:member][:email]
+      @member.employee.save!
+    end
+
+    render_action_model_success_message(@member, :update)
   rescue ActiveRecord::RecordInvalid
-    render_action_model_fail_message(@member, :create)
+    render_action_model_fail_message(@member, :update)
   end
 
   def destroy
-    @member = @user.members.find_by!(bill: params[:bill_id])
-
     if @member.destroy
       render_action_model_success_message(@member, :destroy)
     else
@@ -22,11 +34,20 @@ class Api::UserMembersController < Api::ApiController
 
 private
 
-  def set_bill
-    @bill = Bill.find(params[:bill_id])
+  def set_project
+    @project = Project.find(params[:project_id])
+    @user = Employee.find(params[:user_id])
   end
 
-  def set_user
-    @user = User.find(params[:user_id])
+  def set_member
+    @member = Member.find(params[:user_id])
+  end
+
+  def member_param
+    params.require(:member).permit(
+      :working_period_start,
+      :working_period_end,
+      :man_month,
+    )
   end
 end

@@ -15,6 +15,7 @@
         th.client_list__tbl__item--cd                   = t('activerecord.attributes.client.cd')
         th.client_list__tbl__item--company_name         = t('activerecord.attributes.client.company_name')
         th.client_list__tbl__item--department_name      = t('activerecord.attributes.client.department_name')
+        th.client_list__tbl__item--status               = t('activerecord.attributes.client.status')
         th.client_list__tbl__item--phone_number         = t('activerecord.attributes.client.phone_number')
     tbody.client_list__tbl__body
       tr.client_list__tbl__body__row [
@@ -26,6 +27,7 @@
         td.client_list__tbl__item--cd                   v-text='client.cd'
         td.client_list__tbl__item--company_name         v-text='client.company_name'
         td.client_list__tbl__item--department_name      v-text='client.department_name'
+        td.client_list__tbl__item--status               v-for="(id, val) in statuses" v-if="id==client.status" v-text="val"
         td.client_list__tbl__item--phone_number         v-text='client.phone_number'
 
   component [

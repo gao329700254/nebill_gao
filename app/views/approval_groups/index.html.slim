@@ -1,0 +1,38 @@
+= javascript_include_tag 'view_models/approval_groups'
+
+- provide(:title, t('.title'))
+
+#approval_groups.approval_groups
+  = search_field_tag :search, nil, 'v-model' => 'searchKeywords', \
+                     placeholder: t('.search_form_placeholder'), lazy: true, class: 'approval_groups__search'
+  .approval_groups__search
+    .approval_groups__search__date
+      .approval_groups__search__date__created_at
+        = label_tag :created_at, t('.fill_date_form')
+        = date_field_tag :created_at, nil, 'v-model' => "created_at"
+      .approval_groups__search__date__btn
+        = button_tag 'v-on:click.prevent' => 'search', class: 'approval_groups__search__date__btn--search' do
+          = fa_icon 'fa-search', text: t('.search')
+      .approval_groups__search__date__btn
+        = button_tag 'v-on:click' => 'showApprovalNew', class: 'approval_groups__search__date__btn--new_approval' do
+          = fa_icon 'check', text: t('approval_groups.new.title')
+  table.approval_groups__tbl
+    thead.approval_groups__tbl__head
+      tr.approval_groups__tbl__head__row
+        th.approval_groups__tbl__item--name       = ApprovalGroup.human_attribute_name(:name)
+        th.approval_groups__tbl__item--users      = ApprovalGroup.human_attribute_name(:users)
+        th.approval_groups__tbl__item--user       = ApprovalGroup.human_attribute_name(:user)
+        th.approval_groups__tbl__item--created_at = ApprovalGroup.human_attribute_name(:created_at)
+    tbody.approval_groups__tbl__body
+      tr.approval_groups__tbl__body__row [
+        v-for = "approval_group in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
+        id         = "approval-{{approval_group.id}}"
+        v-on:click = "linkToShow(approval_group.id)"
+        track-by   = "id"
+      ]
+        td.approval_groups__tbl__item--name       v-text='approval_group.name'
+        td.approval_groups__tbl__item--users
+          div[v-for='user in approval_group.users']
+            | {{ user.name }}
+        td.approval_groups__tbl__item--user       v-text='approval_group.user'
+        td.approval_groups__tbl__item--created_at v-text='approval_group.created_at'

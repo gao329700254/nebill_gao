@@ -14,26 +14,81 @@
     &__body {
       @include list_tbl__body;
 
-      &__row,
-      %user_member_list__tbl__body__row {
+      &__row {
         @include list_tbl__body__row;
         font-size: $base-font-size;
+
+        #{$all-text-inputs-disabled},
+        select:disabled,
+        textarea:disabled {
+          border-bottom: $base-border;
+          border-radius: 0;
+          border-color: $white-bg-color;
+          box-shadow: none;
+          background-color: $white-bg-color;
+        }
+
+        &--selected {
+          @include list_tbl__body__row;
+          background-color: $yellow;
+          font-size: $base-font-size;
+
+          #{$all-text-inputs-disabled},
+          select:disabled,
+          textarea:disabled {
+            border-bottom: $base-border;
+            border-radius: 0;
+            border-color: $yellow-bg-color;
+            box-shadow: none;
+            background-color: $yellow-bg-color;
+          }
+        }
       }
     }
 
-    &__item,
-    %user_member_list__tbl__item {
+    &__item {
       @include list_tbl__item;
 
       &--name {
-        @extend %user_member_list__tbl__item;
         @include span-columns(4);
+        &--non_edit {
+          display: table-cell;
+        }
       }
 
       &--email {
-        @extend %user_member_list__tbl__item;
-        @include span-columns(8);
+        @include span-columns(6);
       }
+
+      &--period {
+        @include span-columns(3);
+      }
+
+      &--man_month {
+        @include span-columns(2);
+      }
+
+      &--member {
+        @include span-columns(4);
+      }
+
+      &--save {
+        @include span-columns(1.5);
+      }
+    }
+
+    &__btn {
+      &--edit,
+      &--cancel,
+      &--delete,
+      &--submit {
+        @include btn--default;
+        margin-top: $small-spacing;
+      }
+    }
+
+    &__user_btn {
+      @include btn--default;
     }
   }
 }

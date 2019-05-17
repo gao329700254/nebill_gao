@@ -1,0 +1,11 @@
+= I18n.t("mail.client.nda_permission.message", user: @user.name, name: @approval.name)
+
+= I18n.t("mail.client.nda_permission.message2")
+= I18n.t("mail.client.nda_permission.message3")
+
+= I18n.t("mail.client.nda_permission.message4")
+= link_to client_show_url(client_id: @approval.approved_id).to_s, client_show_url(client_id: @approval.approved_id)
+
+|---
+
+= I18n.t("mail.client.nda_permission.company")

@@ -4,8 +4,11 @@ FactoryGirl.define do
     uid      { SecureRandom.hex }
     name     { Faker::Name.name }
     email    { Faker::Internet.safe_email }
+    sequence(:password) { |i| "password#{i}" }
+    sequence(:password_confirmation) { |i| "password#{i}" }
     persistence_token { Faker::Lorem.characters(10) }
     role     :general
+    active   true
 
     factory :admin_user do
       role :admin

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181127095607
+# Schema version: 20190515142947
 #
 # Table name: approval_users
 #
@@ -25,7 +25,7 @@
 
 class ApprovalUser < ActiveRecord::Base
   extend Enumerize
-  belongs_to :approval
+  belongs_to :approval, touch: true
   belongs_to :user
 
   validates :user_id, presence: true

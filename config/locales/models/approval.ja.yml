@@ -1,0 +1,28 @@
+ja:
+  enumerize:
+    approval:
+      approvaler_type:
+        user: ユーザー指定
+        group:  稟議グループ指定
+  activerecord:
+    models:
+      approval: 稟議
+    attributes:
+      approval:
+        name: 件名
+        project_id: プロジェクトID
+        status: ステータス
+        created_user_name: 作成者
+        approvel_user_name: 承認者
+        comment: コメント
+        updated_at: 更新日
+        created_at: 作成日
+        notes: 概要
+        file: 添付ファイル
+        category: 種別
+        approvaler_type: 稟議者指定
+    errors:
+      models:
+        approval:
+          attributes:
+            base:

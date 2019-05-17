@@ -41,4 +41,5 @@ json.array!(@projects) do |project|
   json.end_on                        project.end_on
   json.contract_on                   project.contract_on
   json.amount                        project.amount
+  json.created_at                    I18n.l(project.created_at.in_time_zone('Tokyo'))
 end

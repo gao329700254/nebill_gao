@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181127095607
+# Schema version: 20190515142947
 #
 # Table name: projects
 #
@@ -36,6 +36,7 @@
 #  billing_phone_number    :string
 #  memo                    :text
 #  unprocessed             :boolean          default(FALSE)
+#  leader_id               :integer
 #
 # Indexes
 #
@@ -52,12 +53,18 @@ class Project < ActiveRecord::Base
 
   belongs_to :group, class_name: 'ProjectGroup'
   has_many :bills, dependent: :destroy
+  has_many :members, class_name: 'Member', dependent: :destroy
   has_many :files, class_name: 'ProjectFile', dependent: :destroy
   has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy
   has_many :approvals, as: :approved
+  has_many :user_members
+  has_many :partner_members
+  has_many :users, through: :user_members
   has_paper_trail meta: { project_id: :id }
 
-  enumerize :contract_type, in: [:lump_sum, :consignment, :maintenance, :other]
+  accepts_nested_attributes_for :members, allow_destroy: true
+
+  enumerize :contract_type, in: [:lump_sum, :consignment, :maintenance, :ses, :other]
   enumerize :payment_type, in: %w(
     bill_on_15th_and_payment_on_end_of_next_month
     bill_on_20th_and_payment_on_end_of_next_month

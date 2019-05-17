@@ -10,15 +10,21 @@ $ ->
       list: undefined
       searchKeywords: undefined
       sortKey: 'id'
+      statuses: []
     methods:
       loadClients: ->
         $.ajax '/api/clients.json'
           .done (response) =>
             @list = response
+      loadStatuses: ->
+        $.ajax '/api/clients/statuses.json'
+          .done (response) =>
+            @statuses = response
       linkToShow: (clientId) -> window.location = "/clients/#{clientId}/show"
       showClientNew: -> @$broadcast('showClientNewEvent')
     compiled: ->
       @loadClients()
+      @loadStatuses()
     events:
       loadClientsEvent: ->
         @loadClients()

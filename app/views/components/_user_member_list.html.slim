@@ -5,10 +5,57 @@ script type='text/x-template' id='user_member_list'
         tr.user_member_list__tbl__head__row
           th.user_member_list__tbl__item--name  = t('activerecord.attributes.user.name')
           th.user_member_list__tbl__item--email = t('activerecord.attributes.user.email')
+          th.user_member_list__tbl__item--man_month = t('activerecord.attributes.user_member.man_month')
+          th.user_member_list__tbl__item--period = t('activerecord.attributes.user_member.working_period_start')
+          th.user_member_list__tbl__item--period = t('activerecord.attributes.user_member.working_period_end')
       tbody.user_member_list__tbl__body
         tr.user_member_list__tbl__body__row [
-          v-for = "user in users | orderBy 'name'"
+          v-for        = "user in users | orderBy 'name'"
+          id           = "user-{{user.id}}"
+          track-by     = "id"
+          v-bind:class = "user.selected ? 'user_member_list__tbl__body__row--selected'
+                                        : 'user_member_list__tbl__body__row'"
         ]
-          td.user_member_list__tbl__item--name v-text='user.name'
-          td.user_member_list__tbl__item--email v-text='user.email'
 
+          td.user_member_list__tbl__item--name
+            div v-bind:class = "[editMode ? '' : 'user_member_list__tbl__item--name--non_edit']"
+              input type="checkbox" name='selected' v-model='user.selected' v-if='!editMode'
+            div v-bind:class = "[editMode ? '' : 'user_member_list__tbl__item--name--non_edit']"
+              = text_field_tag :name, nil, 'v-model' => 'user.name', ':disabled' => 'true'
+            div v-bind:class = "[partnerEditMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
+          td.user_member_list__tbl__item--email
+            = text_field_tag :email, nil, 'v-model' => 'user.email', ':disabled' => 'true'
+          td.user_member_list__tbl__item--man_month
+            = text_field_tag :man_month, nil, 'v-model' => 'user.man_month', ':disabled' => 'true'
+          td.user_member_list__tbl__item--period
+            = date_field_tag :working_period_start, nil, 'v-model' => 'user.working_period_start', ':disabled' => 'true'
+          td.user_member_list__tbl__item--period
+            = date_field_tag :working_period_end, nil, 'v-model' => 'user.working_period_end', ':disabled' => 'true'
+  .user_member_list
+    .user_member_list__tbl__item--member
+      = t('activerecord.attributes.user.name')
+      select [
+        v-model='selectedMemberId'
+      ]
+        option v-for="user in allUsers" value="{{user.id}}" {{user.name}}
+    .user_member_list__tbl__item--man_month
+      = t('activerecord.attributes.user_member.man_month')
+      = text_field_tag :man_month, nil, 'v-model' => 'member.man_month'
+    .user_member_list__tbl__item--period
+      = t('activerecord.attributes.user_member.working_period_start')
+      = date_field_tag :working_period_start, nil, 'v-model' => 'member.working_period_start'
+    .user_member_list__tbl__item--period
+      = t('activerecord.attributes.user_member.working_period_end')
+      = date_field_tag :working_period_end, nil, 'v-model' => 'member.working_period_end'
+    .user_member_list__tbl__item--save
+      br
+      = button_tag 'v-on:click.prevent' => 'addUserMember', class: 'user_member_list__tbl__user_btn' do
+        = fa_icon 'check', text: t('helpers.submit.create')
+    = button_tag 'v-on:click' => 'editModeOn', 'v-if' => '!editMode && selectedUsers.length > 0', class: 'user_member_list__tbl__btn--edit' do
+      = fa_icon 'edit', text: t('helpers.edit')
+    = button_tag 'v-on:click' => 'deleteUserMember',  'v-if' => '!editMode && selectedUsers.length > 0', class: 'user_member_list__tbl__btn--delete ' do
+      = fa_icon 'trash', text: t('helpers.delete')
+    = button_tag 'v-on:click' => 'editModeOff', 'v-if' => 'editMode', class: 'user_member_list__tbl__btn--cancel' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag 'v-on:click' => 'editMember', 'v-if' => 'editMode', class: 'user_member_list__tbl__btn--submit' do
+      = fa_icon 'pencil-square', text: t('helpers.submit.update')

@@ -34,17 +34,22 @@
 
       &--cd {
         @extend %client_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(1.5);
       }
 
       &--company_name {
         @extend %client_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2.5);
       }
 
       &--department_name {
         @extend %client_list__tbl__item;
-        @include span-columns(3);
+        @include span-columns(2.5);
+      }
+
+      &--status {
+        @extend %client_list__tbl__item;
+        @include span-columns(1.5);
       }
 
       &--phone_number {

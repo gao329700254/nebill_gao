@@ -7,7 +7,7 @@
     padding-top: 5em;
 
     &__inner {
-      @include modal__outer__inner--large;
+      @include modal__outer__inner--extra-large;
 
       &__body {
         @include modal__outer__inner__body;
@@ -50,6 +50,78 @@
 
     &__item {
       margin-bottom: $small-spacing;
+
+      #{$all-text-inputs-disabled},
+      select:disabled,
+      textarea:disabled {
+        border-bottom: $base-border;
+        border-radius: 0;
+        border-top-color: $white-bg-color;
+        border-right-color: $white-bg-color;
+        border-left-color: $white-bg-color;
+        box-shadow: none;
+        background-color: $white-bg-color;
+      }
+
+      &__partner {
+        @include list_tbl;
+
+        &__head {
+          @include list_tbl__head__row;
+          border-color: $white-bg-color;
+
+          &__title {
+            float: left;
+            margin-top: $small-spacing;
+            margin-bottom: $small-spacing;
+          }
+        }
+
+        &__list {
+          margin-bottom: $small-spacing;
+        }
+
+        &__item {
+          &--name {
+            @include span-columns(2.5);
+            &--non_edit {
+              display: table-cell;
+            }
+          }
+
+          &--unit_price {
+            @include span-columns(1.2);
+          }
+
+          &--working_rate {
+            @include span-columns(2.2);
+          }
+
+          &--min_limit_time {
+            @include span-columns(1.2);
+          }
+
+          &--max_limit_time {
+            @include span-columns(1.2);
+          }
+
+          &--man_month {
+            @include span-columns(1.5);
+          }
+
+          &--period {
+            @include span-columns(1.8);
+          }
+
+          &--member {
+            @include span-columns(5);
+          }
+
+          &--remove {
+            @include span-columns(1.5);
+          }
+        }
+      }
     }
 
     &__fill {
@@ -65,6 +137,10 @@
     }
 
     &__copy_btn {
+      @include btn--default;
+    }
+
+    &__plus_btn {
       @include btn--default;
     }
 

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181127095607
+# Schema version: 20190515142947
 #
 # Table name: users
 #
@@ -17,6 +17,10 @@
 #  default_allower    :integer
 #  chatwork_id        :integer
 #  chatwork_name      :string
+#  crypted_password   :string
+#  password_salt      :string
+#  active             :boolean          default(FALSE), not null
+#  perishable_token   :string
 #
 # Indexes
 #
@@ -24,13 +28,15 @@
 #
 # Foreign Keys
 #
-#  fk_rails_21f6e031b2  (default_allower => users.id)
+#  fk_rails_f76f7dd8cc  (default_allower => users.id)
 #
 
 class User < ActiveRecord::Base
   extend Enumerize
   acts_as :employee
-  acts_as_authentic
+  acts_as_authentic do |c|
+    c.merge_validates_length_of_password_field_options if: -> { validation_context != :whencreate && password_changed? }
+  end
 
   has_many :members, through: :employee, class_name: 'UserMember'
 
@@ -43,12 +49,23 @@ class User < ActiveRecord::Base
   has_many :expense_approval_users
   has_many :expense_approvals, through: :expense_approval_users
 
-  enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50 }, default: :general
+  enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50, outer: 60 }, default: :general, scope: true
 
   validates :name, presence: true, on: :update
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
   validates :role, presence: true
   validates :default_allower, presence: true, on: :whencreate
+  before_validation :reset_perishable_token, on: :whencreate
+  after_save -> { UserMailer.password_setting(self).deliver_now }, if: -> { validation_context == :whencreate }
+
+  def send_password_setting_email
+    reset_perishable_token!
+    UserMailer.password_setting(self).deliver_now
+  end
+
+  def self.find_by_smart_case_login_field(login)
+    find_by(email: login)
+  end
 
   def self.register_by!(auth)
     user = User.find_by!(email: auth.info.email)
@@ -59,11 +76,16 @@ class User < ActiveRecord::Base
     user
   end
 
-  def join!(bill)
-    bill.user_members.create!(employee_id: employee.id)
+  def join!(project)
+    project.user_members.create!(employee_id: employee.id)
   end
 
   def self.chatwork_members_options
     Chatwork::Member.member_list.map { |m| m.values_at('name', 'account_id') }
+  end
+
+  def activate
+    self.active = true
+    save(context: :activate)
   end
 end

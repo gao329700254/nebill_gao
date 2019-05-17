@@ -4,6 +4,11 @@
 
   width: 100%;
 
+  &__text_field {
+    margin-bottom: 20px;
+    color: $black;
+  }
+
   &__img_box {
     position: relative;
 
@@ -41,6 +46,31 @@
 
     &__login {
       @include btn--primary;
+      margin-bottom: 20px;
+    }
+
+    &__google {
+      background: $google-login;
+      width: 191px;
+      height: 46px;
+    }
+
+    &__google:focus {
+      background: $google-login-focus;
+      width: 191px;
+      height: 46px;
+    }
+
+    &__google:disabled {
+      background: $google-login-disabled;
+      width: 191px;
+      height: 46px;
+    }
+
+    &__google:active {
+      background: $google-login-pressed;
+      width: 191px;
+      height: 46px;
     }
   }
 }

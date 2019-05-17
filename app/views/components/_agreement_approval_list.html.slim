@@ -1,0 +1,20 @@
+script type='text/x-template' id='agreement_approval_list'
+  .agreement_list
+    table.agreement_list__tbl
+      thead.agreement_list__tbl__head
+        tr.agreement_list__tbl__head__row
+          th.agreement_list__tbl__item--five       = Approval.human_attribute_name(:name)
+          th.agreement_list__tbl__item--two        = Approval.human_attribute_name(:category)
+          th.agreement_list__tbl__item--two        = Approval.human_attribute_name(:created_user_name)
+          th.agreement_list__tbl__item--two        = Approval.human_attribute_name(:created_at)
+      tbody.agreement_list__tbl__body
+        tr.agreement_list__tbl__body__row [
+          v-for = "approval in list"
+          id         = "approval-{{approval.id}}"
+          v-on:click = "linkToShow(approval.id)"
+          track-by   = "id"
+        ]
+          td.agreement_list__tbl__item--five       v-text='approval.name'
+          td.agreement_list__tbl__item--two        v-text='approval.category'
+          td.agreement_list__tbl__item--two        v-text='approval.created_user_name'
+          td.agreement_list__tbl__item--two        v-text='approval.created_at'

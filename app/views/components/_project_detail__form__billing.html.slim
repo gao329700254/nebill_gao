@@ -3,6 +3,12 @@ fieldset.project_detail__form__billing
     .project_detail__form__legend__title
       = fa_icon 'paper-plane-o', text: t('page.project_show.project_detail.billing')
 
+  .project_new__form__item v-if="editMode"
+    .project_new__form__fill
+      select#billing_client_id.project_new__form__fill--select v-model="billingClientId"
+        option v-for="client in clients" value="{{client.id}}" {{client.cd + ' ' + client.company_name}}
+      = button_tag class: 'project_new__form__fill--btn', 'v-on:click.prevent' => 'fillBilling' do
+        = fa_icon 'arrow-down'
   .project_detail__form__container
     .project_detail__form__container__group_2
       .project_detail__form__item

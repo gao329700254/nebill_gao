@@ -9,7 +9,6 @@ RSpec.describe Employee do
 
   it { expect(Employee).to be_actable }
   it { is_expected.to have_many(:members) }
-  it { is_expected.to have_many(:bills).through(:members) }
 
   it { is_expected.to validate_uniqueness_of(:provider).scoped_to(:uid).allow_nil }
   it { is_expected.to validate_presence_of(:email) }

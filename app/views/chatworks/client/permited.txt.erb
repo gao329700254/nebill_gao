@@ -1,0 +1,15 @@
+[To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
+[info]
+  [title]
+    取引先申請「<%= approval.name %>」が承認されました
+  [/title]
+  [info]
+    <% approval.approval_users.with_permission.each do |approval_user| %>
+      <%= approval_user.user.name %> ： <%= approval_user.comment %>
+    <% end %>
+
+  　現在、取引先のステータスは有効です.
+    以下のリンクをクリックして,内容を確認ください.
+    <%=  Rails.application.routes.url_helpers.approval_show_url(approval, ActionMailer::Base.default_url_options) %>
+  [/info]
+[/info]

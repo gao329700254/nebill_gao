@@ -1,0 +1,69 @@
+fieldset.project_new__form__basic
+  .project_new__form__container
+    .project_new__form__item
+      .project_new__form__item__partner
+        .project_new__form__item__partner__head
+          .project_new__form__item__partner__head__title
+            = t('page.project_new.member')
+        .project_new__form__item__partner__list [
+          v-for="(index, member) in members"
+        ]
+          .project_new__form__item__partner__item--member
+            .div v-if='index == 0' = t('activerecord.attributes.user.name')
+            select.project_new__form__item__add_user_member__list [
+              v-model='members[index].employee_id'
+            ]
+              option v-for="user in allMembers" value="{{user.id}}" {{user.name}}
+          .project_new__form__item__partner__item--man_month
+            .div v-if='index == 0' = t('activerecord.attributes.member.man_month')
+            = text_field_tag :man_month, nil, 'v-model' => 'members[index].man_month'
+          .project_new__form__item__partner__item--period
+            .div v-if='index == 0' = t('activerecord.attributes.member.working_period_start')
+            = date_field_tag :max_limit_time, nil, 'v-model' => 'members[index].working_period_start'
+          .project_new__form__item__partner__item--period
+            .div v-if='index == 0' = t('activerecord.attributes.member.working_period_end')
+            = date_field_tag :max_limit_time, nil, 'v-model' => 'members[index].working_period_end'
+          .project_new__form__item__partner__item--remove
+            br v-if='index == 0'
+            = button_tag 'v-on:click.prevent' => 'deleteUserMemberForm(index)', class: 'project_new__form__plus_btn' do
+              = fa_icon 'remove', text: t('helpers.delete')
+        = button_tag 'v-on:click.prevent' => 'addUserMemberForm', class: 'project_new__form__plus_btn' do
+          = fa_icon 'plus', text: t('helpers.plus')
+      .project_new__form__item__partner
+        .project_new__form__item__partner__head
+          .project_new__form__item__partner__head__title
+            = t('page.project_new.partner')
+        .project_new__form__item__partner__list [
+          v-for="(index, partner) in partners"
+          :key="index"
+        ]
+          .project_new__form__item__partner__item--name
+            .div v-if='index == 0' = t('activerecord.attributes.user.name')
+            select.project_new__form__item__add_user_member__list [
+              v-model='partners[index].employee_id'
+            ]
+              option v-for="user in allPartners" value="{{user.actable_id}}" {{user.name}}
+          .project_new__form__item__partner__item--unit_price
+            .div v-if='index == 0' = t('activerecord.attributes.partner_member.unit_price')
+            = text_field_tag :unit_price, nil, 'v-model' => 'partners[index].unit_price'
+          .project_new__form__item__partner__item--working_rate
+            .div v-if='index == 0' = t('activerecord.attributes.partner_member.working_rate')
+            = text_field_tag :working_rate, nil, 'v-model' => 'partners[index].working_rate'
+          .project_new__form__item__partner__item--min_limit_time
+            .div v-if='index == 0' = t('activerecord.attributes.partner_member.min_limit_time')
+            = text_field_tag :min_limit_time, nil, 'v-model' => 'partners[index].min_limit_time'
+          .project_new__form__item__partner__item--max_limit_time
+            .div v-if='index == 0' = t('activerecord.attributes.partner_member.max_limit_time')
+            = text_field_tag :max_limit_time, nil, 'v-model' => 'partners[index].max_limit_time'
+          .project_new__form__item__partner__item--period
+            .div v-if='index == 0' = t('activerecord.attributes.member.working_period_start')
+            = date_field_tag :max_limit_time, nil, 'v-model' => 'partners[index].working_period_start'
+          .project_new__form__item__partner__item--period
+            .div v-if='index == 0' = t('activerecord.attributes.member.working_period_end')
+            = date_field_tag :max_limit_time, nil, 'v-model' => 'partners[index].working_period_end'
+          .project_new__form__item__partner__item--remove
+            br v-if='index == 0'
+            = button_tag 'v-on:click.prevent' => 'deletePartnerMemberForm(index)', class: 'project_new__form__plus_btn' do
+              = fa_icon 'remove', text: t('helpers.delete')
+        = button_tag 'v-on:click.prevent' => 'addPartnerMemberForm', class: 'project_new__form__plus_btn' do
+          = fa_icon 'plus', text: t('helpers.plus')
