@@ -8,7 +8,6 @@ FactoryGirl.define do
     sequence(:password_confirmation) { |i| "password#{i}" }
     persistence_token { Faker::Lorem.characters(10) }
     role     :general
-    active   true
 
     factory :admin_user do
       role :admin

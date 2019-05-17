@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190515142947
+# Schema version: 20190517100430
 #
 # Table name: members
 #
@@ -15,7 +15,7 @@
 #  project_id           :integer          not null
 #  working_period_start :date
 #  working_period_end   :date
-#  man_month            :integer
+#  man_month            :float
 #
 # Indexes
 #

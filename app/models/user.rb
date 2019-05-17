@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190515142947
+# Schema version: 20190517100430
 #
 # Table name: users
 #
@@ -19,7 +19,6 @@
 #  chatwork_name      :string
 #  crypted_password   :string
 #  password_salt      :string
-#  active             :boolean          default(FALSE), not null
 #  perishable_token   :string
 #
 # Indexes
@@ -82,10 +81,5 @@ class User < ActiveRecord::Base
 
   def self.chatwork_members_options
     Chatwork::Member.member_list.map { |m| m.values_at('name', 'account_id') }
-  end
-
-  def activate
-    self.active = true
-    save(context: :activate)
   end
 end
