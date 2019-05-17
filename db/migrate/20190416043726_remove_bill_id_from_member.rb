@@ -3,7 +3,7 @@ class RemoveBillIdFromMember < ActiveRecord::Migration
     add_column :members, :project_id, :integer, null: true
     Member.all.each do |member|
       member.project_id = Bill.find(member.bill_id).project_id
-      member.save!
+      member.save! :validate => false
     end
     change_column :members, :project_id, :integer, null: false
     add_foreign_key :members, :projects, on_delete: :cascade
@@ -17,7 +17,7 @@ class RemoveBillIdFromMember < ActiveRecord::Migration
     add_column :members, :bill_id, :integer, null: true
     Member.all.each do |member|
       member.bill_id = Bill.find_by(project_id: member.project_id).id
-      member.save!
+      member.save! :validate => false
     end
     change_column :members, :bill_id, :integer, null: false
     add_foreign_key :members, :bills, on_delete: :cascade
