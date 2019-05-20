@@ -50,25 +50,6 @@
     }
 
     &__google {
-      background: $google-login;
-      width: 191px;
-      height: 46px;
-    }
-
-    &__google:focus {
-      background: $google-login-focus;
-      width: 191px;
-      height: 46px;
-    }
-
-    &__google:disabled {
-      background: $google-login-disabled;
-      width: 191px;
-      height: 46px;
-    }
-
-    &__google:active {
-      background: $google-login-pressed;
       width: 191px;
       height: 46px;
     }

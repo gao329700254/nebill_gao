@@ -14,4 +14,4 @@
 
           = f.button t('helpers.login'), class: 'home__img_box__login'
 
-        = button_tag '', onclick: "location.href='/auth/google_oauth2'", class: 'home__img_box__google'
+        = button_tag '', onclick: "location.href='/auth/google_oauth2'", class: 'home__img_box__google', data: { image: image_path('login/btn_google_signin_light_normal_web.png'), image_focus: image_path('login/btn_google_signin_light_focus_web.png'), image_disabled: image_path('login/btn_google_signin_light_disabled_web.png'), image_active: image_path('login/btn_google_signin_light_pressed_web.png') }
