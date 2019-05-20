@@ -102,8 +102,3 @@ $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $l
 $all-text-inputs-disabled:  assign-inputs($text-inputs-list, disabled);
 
 // scss-lint:enable all
-
-$google-login: image-url('/assets/login/btn_google_signin_light_normal_web.png') no-repeat;
-$google-login-focus: image-url('/assets/login/btn_google_signin_light_focus_web.png') no-repeat;
-$google-login-disabled: image-url('/assets/login/btn_google_signin_light_disabled_web.png') no-repeat;
-$google-login-pressed: image-url('/assets/login/btn_google_signin_light_pressed_web.png') no-repeat;
