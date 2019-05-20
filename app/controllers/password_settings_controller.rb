@@ -13,7 +13,7 @@ class PasswordSettingsController < ApplicationController
 
     @user.assign_attributes(password_setting_params)
 
-    if @user.activate
+    if @user.save
       redirect_to project_list_path
     else
       @password_setting = PasswordSetting.new(id: params[:id])

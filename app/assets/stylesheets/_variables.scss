@@ -103,7 +103,7 @@ $all-text-inputs-disabled:  assign-inputs($text-inputs-list, disabled);
 
 // scss-lint:enable all
 
-$google-login: asset-url('/assets/login/btn_google_signin_light_normal_web.png') no-repeat;
-$google-login-focus: asset-url('/assets/login/btn_google_signin_light_focus_web.png') no-repeat;
-$google-login-disabled: asset-url('/assets/login/btn_google_signin_light_disabled_web.png') no-repeat;
-$google-login-pressed: asset-url('/assets/login/btn_google_signin_light_pressed_web.png') no-repeat;
+$google-login: image-url('/assets/login/btn_google_signin_light_normal_web.png') no-repeat;
+$google-login-focus: image-url('/assets/login/btn_google_signin_light_focus_web.png') no-repeat;
+$google-login-disabled: image-url('/assets/login/btn_google_signin_light_disabled_web.png') no-repeat;
+$google-login-pressed: image-url('/assets/login/btn_google_signin_light_pressed_web.png') no-repeat;

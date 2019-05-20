@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190409072211
+# Schema version: 20190517100430
 #
 # Table name: approval_group_users
 #
