@@ -14,7 +14,7 @@ class PagesController < ApplicationController
 
   def home
     unless current_user.blank?
-      redirect_to project_list_path
+      redirect_to current_user.role.outer? ? approval_list_path : project_list_path
       return
     end
     @user_session = UserSession.new

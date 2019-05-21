@@ -14,7 +14,7 @@ class UserSessionsController < ApplicationController
     @session.save!
 
     if session[:request_url].blank?
-      redirect_to project_list_path, flash: { success: t('action.login.success') }
+      redirect_to @session.user.role.outer? ? approval_list_path : project_list_path, flash: { success: t('action.login.success') }
     else
       redirect_to session[:request_url], flash: { success: t('action.login.success') }
       session[:request_url] = nil

@@ -57,7 +57,7 @@ private
 
   def update_execut_success
     action_model_flash_success_message(Approval.new, params[:button])
-    redirect_to agreement_list_path('agreementApprovalList')
+    redirect_to agreement_list_path
   end
 
   def execut_fail
