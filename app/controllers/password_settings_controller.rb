@@ -1,7 +1,7 @@
 class PasswordSettingsController < ApplicationController
   def edit
     @user = User.find_using_perishable_token(params[:id], 1.week)
-    fails ActiveRecord::RecordNotFound unless @user
+    fail ActiveRecord::RecordNotFound unless @user
 
     @password_setting = PasswordSetting.new(id: params[:id])
     render layout: 'simple'
@@ -13,7 +13,7 @@ class PasswordSettingsController < ApplicationController
 
     @user.assign_attributes(password_setting_params)
 
-    if @user.save
+    if @user.save(context: :confirm)
       redirect_to project_list_path
     else
       @password_setting = PasswordSetting.new(id: params[:id])
