@@ -43,6 +43,9 @@ Rails.application.routes.draw do
         get "cd/:project_type", to: "project_cds#cd", as: "project_cd"
       end
     end
+    scope path: 'projects/:project_id' do
+      post "update_project_approval", to: "projects#update_project_approval"
+    end
     %w(user partner).each do |member_type|
       post "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#create", as: "#{member_type}_members"
       delete "#{member_type}_members/:project_id/:#{member_type}_id", to: "#{member_type}_members#destroy", as: "delete_#{member_type}_members"

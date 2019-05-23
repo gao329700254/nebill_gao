@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190517100430
+# Schema version: 20190521130747
 #
 # Table name: projects
 #
@@ -75,7 +75,7 @@ class Project < ActiveRecord::Base
     bill_on_end_of_month_and_payment_on_35th
     bill_on_end_of_month_and_payment_on_45th
   )
-  enumerize :status, in: [:receive_order, :turn_over, :publish_bill, :finished]
+  enumerize :status, in: [:receive_order, :unreceive_order, :turn_over, :publish_bill, :finished], default: :unreceive_order
 
   composed_of :billing,
               class_name: 'DestinationInformation',

@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    meta[content="text/html; charset=UTF-8"]
+  body
+    p
+      = I18n.t("mail.project.disconfirm.message", user: @user.name, name: @approval.name)
+    p
+      = I18n.t("mail.project.disconfirm.message2")
+    p
+      = link_to project_show_url(project_id: @approval.approved_id).to_s, project_show_url(project_id: @approval.approved_id)
+    hr
+    |---
+    p
+      = I18n.t("mail.project.disconfirm.company")
+    hr

@@ -4,6 +4,7 @@ $ ->
     mixins: [Vue.modules.projectHelper]
     props: ['projectId']
     data: ->
+      approvalId:undefined
       editMode: false
       project: undefined
       projectOriginal: undefined
@@ -12,6 +13,19 @@ $ ->
       ordererClientId: undefined
       billingClientId: undefined
       allUsers: []
+      url: undefined
+      file_id: ''
+      file: ''
+      approval_user: []
+      approval_status: undefined
+    filters:
+      truncate: (value) ->
+        if value.length > 40
+          value = value.substring(0, 37) + '...'
+        value
+      match: (value) ->
+        if value
+          value.match(/(.pdf|.png|.jpg|.jpeg|.gif)$/i)
     watch:
       projectId: ->
         @loadProject()
@@ -34,17 +48,27 @@ $ ->
         try
           submit = $('.project_detail__form__btn--submit')
           submit.prop('disabled', true)
-            
+          formData = new FormData()
+          Object.keys(@project).forEach (key) =>
+            formData.append("project[#{key}]", @project[key])
+          formData.append('approval_id', @approvalId)
+          formData.append('appr_comment', @approval_user.comment)
+          if @file
+            formData.append('file', @file)
           if(!$('[name=unprocessed]:checked').val() || confirm($('#header__unprocessed_confirm_message').val()))
             $.ajax
               url: "/api/projects/#{@projectId}.json"
               type: 'PATCH'
-              data:
-                project: @projectPostData
+              data: formData
+              cache: false
+              contentType: false
+              processData: false
             .done (response) =>
               toastr.success('', response.message)
               @loadProject()
+              @getApprovalUser()
               @editMode = false
+              location.reload(true)
               @$dispatch('updateProjectEvent')
             .fail (response) =>
               json = response.responseJSON
@@ -98,10 +122,29 @@ $ ->
         $.ajax '/api/users'
           .done (response) =>
             @allUsers = response
+      showProjectFile: (element) ->
+        @url = element
+        if element.includes('.pdf')
+          window.open(element)
+        else
+          @$broadcast('showProjectFileEvent')
+      fileInputChange: (e) ->
+        @file = e.target.files[0]
+      getApprovalUser: ->
+        if @approvalId
+          $.ajax
+            url: '/api/clients/set_approval_user.json'
+            type: 'POST'
+            data: {
+              approval_id: @approvalId
+            }
+          .done (response) =>
+            @approval_user = response
     created: ->
       @initializeProject()
       @loadClients()
       @loadAllUsers()
+    compiled: -> @getApprovalUser()
     events:
       loadStatusEvent: ->
         @statusList()

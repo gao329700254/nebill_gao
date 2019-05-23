@@ -101,6 +101,8 @@ private
 
   def set_project
     @project = Project.find(params[:project_id])
+    @approval = Approval.find_by(project_id: params[:project_id])
+    @current_user_approval = ApprovalUser.find_by(approval_id: @approval.id, user_id: @current_user.id) if @approval
   end
 
   def set_bill

@@ -38,7 +38,7 @@ Vue.modules.projectHelper = {
         init: false
         exist: { contracted: true, uncontracted: false }
       status:
-        init: 'receive_order'
+        init: 'unreceive_order'
         exist: { contracted: true, uncontracted: false }
       start_on:
         init: ''

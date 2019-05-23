@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190517100430
+# Schema version: 20190521130747
 #
 # Table name: project_files
 #
@@ -10,7 +10,7 @@
 #  updated_at        :datetime         not null
 #  file_group_id     :integer
 #  original_filename :string           not null
-#  type              :integer
+#  file_type         :integer
 #
 # Foreign Keys
 #
@@ -18,11 +18,14 @@
 #
 
 class ProjectFile < ActiveRecord::Base
+  extend Enumerize
   belongs_to :project
   belongs_to :group, class_name: 'ProjectFileGroup', foreign_key: :file_group_id
   has_paper_trail meta: { project_id: :project_id }
 
   mount_uploader :file, ProjectFileUploader
+
+  enumerize :file_type, in: { default: 10, purchase: 20 }, default: :default
 
   validates :file             , presence: true
   validates :original_filename, presence: true

@@ -1,31 +1,84 @@
+
+== render 'components/project_file'
+
 script type='text/x-template' id='project_detail'
   .project_detail
-    = form_tag nil, class: 'project_detail__form'
-      .project_detail__form__container
-        .project_detail__form__container__group
-          == render 'components/project_detail__form__basic'
-        .project_detail__form__container__group
-          .project_detail__form__basic
-            .project_detail__form__container
-              .project_detail__form__container__group
-                .project_detail__form__item
-                  = label_tag :leader, t('page.project_new.leader')
-                  select.project_detail__form__item__add_user_member__list [
-                    v-model='project.leader_id'
-                    :disabled="!editMode"
-                  ]
-                    option v-for="user in allUsers" value="{{user.id}}" {{user.name}}
-      .project_detail__form__container
-        .project_detail__form__container__group
-          == render 'components/project_detail__form__orderer'
-        .project_detail__form__container__group
-          == render 'components/project_detail__form__billing'
-      = button_tag 'v-on:click.prevent' => 'editMode = true' ,
-                   'v-if' => '!editMode', class: 'project_detail__form__btn--edit' do
-        = fa_icon 'edit', text: t('helpers.edit')
-      = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'project_detail__form__btn--cancel', type: 'button' do
-        = fa_icon 'remove', text: t('helpers.cancel')
-      = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'project_detail__form__btn--submit' do
-        = fa_icon 'pencil-square', text: t('helpers.submit.update')
-      = button_tag 'v-on:click.prevent' => 'destroy'         , 'v-if' => '!editMode', class: 'project_detail__form__btn--delete' do
-        = fa_icon 'trash', text: t('helpers.delete')
+    -if @approval.present?
+      = hidden_field_tag :approval_id, @approval.id, 'v-model' => 'approvalId'
+      = hidden_field_tag :approval_status, @approval.status, 'v-model' => 'approval_status'
+    .project_detail__form__container
+      .project_detail__form__container__group
+        == render 'components/project_detail__form__basic'
+      .project_detail__form__container__group
+        .project_detail__form__basic
+          .project_detail__form__container
+            .project_detail__form__container__group
+              .project_detail__form__item
+                = label_tag :leader, t('page.project_new.leader')
+                select.project_detail__form__item__add_user_member__list [
+                  v-model='project.leader_id'
+                  :disabled="!editMode"
+                ]
+                  option v-for="user in allUsers" value="{{user.id}}" {{user.name}}
+        .project_detail__form__basic v-if="project.contracted"
+          .project_detail__form__container
+            .project_detail__form__file
+              = label_tag :leader, t('page.file_list.purchase_order')
+            .project_detail__form__file__contents v-if='project.files'
+              = hidden_field_tag :file_url, '', 'v-model' => 'url'
+              = hidden_field_tag :file, '{{project.files.file_type}}', 'v-model' => 'project.files.file_type'
+              a v-bind:href="'/api/project_files/' + project.files.id" v-text="project.files.original_filename|truncate"
+              = button_tag type: 'button', 'v-on:click' => "showProjectFile(project.files.file.url)", class: 'approval_show__detail__btn--preview',
+                                           'v-if' => 'project.files.original_filename|match' do
+                = fa_icon 'image', text: t('page.client_show.preview')
+            .project_detail__form__file__contents v-if='!project.files'
+              = t('page.client_show.file_no_contents')
+            .project_detail__form__file__contents v-if="editMode && (approval_status == 'disconfirm' || !approvalId)"
+              = hidden_field_tag :file_id, '{{project.files.id}}', 'v-model' => 'file_id'
+              = file_field_tag :files, 'v-on:change' => 'fileInputChange'
+        -if @approval.present?
+          .project_detail__form__approval_user_list
+            table.project_detail__form__approval_user_list__tbl
+              thead.project_detail__form__approval_user_list__tbl__head
+                tr.project_detail__form__approval_user_list__tbl__head__row
+                  th.project_detail__form__approval_user_list__item--approval_user_name = ApprovalUser.human_attribute_name(:name)
+                  th.project_detail__form__approval_user_list__item--approval_user_status = ApprovalUser.human_attribute_name(:status)
+                  th.project_detail__form__approval_user_list__item--approval_user_comment = ApprovalUser.human_attribute_name(:comment)
+              tbody.project_detail__form__approval_user_list__tbl__body
+                tr.project_detail__form__approval_user_list__tbl__body__row
+                  td.project_detail__form__approval_user_list__item--approval_user_name    v-text="approval_user.name"
+                  td.project_detail__form__approval_user_list__item--approval_user_status  v-text="approval_user.status"
+                  td.project_detail__form__approval_user_list__item--approval_user_comment v-text="approval_user.comment"
+            - if @approval.status == 10 && @current_user_approval.present?
+              = form_tag api_update_project_approval_path(approval_id: @approval.id), method: :post, class: 'approval_show__reassignment__form' do
+                .project_detail__form__update
+                  = t('page.project_show.action')
+                  .project_detail__form__update__action
+                    = text_area_tag :comment, '', class: 'project_detail__form__update__action__text',
+                                                  placeholder: t('page.project_show.comment_placeholder')
+                    = button_tag 'permission', data: { disable_with: t('page.project_show.wait') },
+                                               class: 'project_detail__form__update__action__btn--permission', value: 'permission' do
+                      = fa_icon 'check', text: t('page.project_show.permission')
+                    = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
+                                               class: 'project_detail__form__update__action__btn--disconfirm', value: 'disconfirm' do
+                      = fa_icon 'remove', text: t('page.project_show.disconfirm')
+    .project_detail__form__container
+      .project_detail__form__container__group
+        == render 'components/project_detail__form__orderer'
+      .project_detail__form__container__group
+        == render 'components/project_detail__form__billing'
+    = button_tag 'v-on:click.prevent' => 'editMode = true' ,
+                 'v-if' => '!editMode', class: 'project_detail__form__btn--edit' do
+      = fa_icon 'edit', text: t('helpers.edit')
+    = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'project_detail__form__btn--cancel', type: 'button' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'project_detail__form__btn--submit' do
+      = fa_icon 'pencil-square', text: t('helpers.submit.update')
+    = button_tag 'v-on:click.prevent' => 'destroy'         , 'v-if' => '!editMode', class: 'project_detail__form__btn--delete' do
+      = fa_icon 'trash', text: t('helpers.delete')
+
+  component [
+    :is        = "'projectFile'"
+    :url       = "url"
+    keep-alive = true
+  ]

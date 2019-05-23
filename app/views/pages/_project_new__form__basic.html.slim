@@ -61,3 +61,9 @@
         .project_new__form__item
           = label_tag :payment_type, t('activerecord.attributes.project.payment_type')
           = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'project.payment_type'
+    .project_new__form__container
+      .project_new__form__container__group
+        .project_new__form__item
+          = label_tag :file, t('page.file_list.purchase_order')
+        .project_new__form__item
+          = file_field_tag :file, 'v-on:change' => 'projectFileChange'
