@@ -1,0 +1,79 @@
+image: cuon/nebill:1.1
+
+definitions:
+  steps:
+    build: &build
+      name: build
+      caches:
+        - bundler
+      services:
+        - postgres
+      script:
+        - bundle config --local build.nokogiri --use-system-libraries
+        - bundle check --path=vendor/bundle || bundle install -j4 --path=vendor/bundle
+        - bundle exec rake bower:install['--allow-root'] bower:clean['--allow-root']
+    test: &test
+      <<: *build
+      name: test
+      script:
+        - bundle check --path=vendor/bundle || bundle install -j4 --path=vendor/bundle
+        - RAILS_ENV='test' bundle exec rake db:schema:load
+        - bundle exec rspec --order rand
+        - RAILS_ENV=test bundle exec teaspoon
+    lint: &lint
+      <<: *build
+      name: lint
+      script:
+        - bundle check --path=vendor/bundle || bundle install -j4 --path=vendor/bundle
+        - bundle exec rubocop --format simple
+        - bundle exec rake coffeelint
+        - bundle exec rake slim_lint
+        - bundle exec rake scss_lint
+  caches:
+    bundler: vendor
+  services:
+    postgres:
+      image: postgres
+      variables:
+        POSTGRES_DB: 'nebill_test'
+        POSTGRES_USER: 'nebill'
+        POSTGRES_PASSWORD: 'nebill'
+
+pipelines:
+  default:
+    - step: *build
+    - parallel:
+      - step: *test
+      - step: *lint
+  branches:
+    develop:
+      - step: *build
+      - parallel:
+        - step: *test
+        - step: *lint
+      - step:
+          name: deploy
+          deployment: Staging
+          script:
+            - git archive HEAD --output=nebill.zip
+            - pipe: atlassian/aws-code-deploy:0.2.3
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'ap-northeast-1'
+                APPLICATION_NAME: 'nebill'
+                S3_BUCKET: 'nebill-development-deploy'
+                COMMAND: 'upload'
+                ZIP_FILE: 'nebill.zip'
+            - pipe: atlassian/aws-code-deploy:0.2.3
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: 'ap-northeast-1'
+                APPLICATION_NAME: 'nebill'
+                COMMAND: 'deploy'
+                ZIP_FILE: 'nebill.zip'
+                DEPLOYMENT_GROUP: 'development'
+                S3_BUCKET: 'nebill-development-deploy'
+                DEBUG: 'true'
+                WAIT: 'true'
