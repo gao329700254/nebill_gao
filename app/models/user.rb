@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   extend Enumerize
   acts_as :employee
   acts_as_authentic do |c|
-    c.merge_validates_length_of_password_field_options if: -> { validation_context != :create && password_changed? }
+    c.merge_validates_length_of_password_field_options if: -> { password_changed? }
   end
 
   has_many :members, through: :employee, class_name: 'UserMember'
@@ -53,8 +53,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true, on: :update
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
   validates :role, presence: true
-  validates :default_allower, presence: true, on: :create
-  before_validation :reset_perishable_token, if: -> { validation_context == :create }
+  validates :default_allower, presence: true, on: :whencreate
+  before_validation :reset_perishable_token, if: -> { validation_context.in? %i(create whencreate) }
   after_create -> { UserMailer.password_setting(self).deliver_now }
 
   def send_password_setting_email
