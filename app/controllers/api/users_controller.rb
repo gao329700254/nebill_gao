@@ -28,8 +28,7 @@ class Api::UsersController < Api::ApiController
   end
 
   def create
-    @user = User.new(user_param)
-    @user.save!(context: :whencreate)
+    @user = User.create!(user_param)
 
     render_action_model_success_message(@user, :create)
   rescue ActiveRecord::RecordInvalid
