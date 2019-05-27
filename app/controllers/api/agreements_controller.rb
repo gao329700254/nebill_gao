@@ -15,8 +15,9 @@ class Api::AgreementsController < Api::ApiController
   end
 
   def project_list
-    @projects = Project.all
-    render 'api/projects/index', formats: 'json', handlers: 'jbuilder', status: :ok
+    users = ApprovalUser.where(status: 10, user_id: @current_user.id)
+    @project = Project.includes(:approvals).where(approvals: { id: users.pluck(:approval_id) })
+    render 'api/projects/agreement_project', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def expense_approval_list

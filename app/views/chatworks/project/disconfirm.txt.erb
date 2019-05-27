@@ -1,7 +1,7 @@
 [To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
 [info]
   [title]
-    取引先申請「<%= approval.name %>」が差し戻しされました。
+    プロジェクト申請「<%= approval.name %>」が差し戻しされました。
   [/title]
   [info]
     <% approval.approval_users.with_disconfirm.each do |approval_user| %>
@@ -9,6 +9,6 @@
     <% end %>
 
     以下のリンクをクリックして,内容を確認ください.
-    <%=  Rails.application.routes.url_helpers.client_show_url(approval, ActionMailer::Base.default_url_options) %>
+    <%=  Rails.application.routes.url_helpers.project_show_url(approval, ActionMailer::Base.default_url_options) %>
   [/info]
 [/info]

@@ -1,0 +1,7 @@
+= I18n.t("mail.project.update.message", user: @user.name, name: @approval.name)
+= I18n.t("mail.project.update.message2")
+= link_to project_show_url(project_id: @approval.approved_id).to_s, project_show_url(project_id: @approval.approved_id)
+
+|---
+
+= I18n.t("mail.project.update.company")

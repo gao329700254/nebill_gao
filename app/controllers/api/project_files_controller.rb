@@ -3,7 +3,7 @@ class Api::ProjectFilesController < Api::ApiController
   before_action :set_project_file, only: [:show, :update, :destroy]
 
   def index
-    @project_files = @project.files
+    @project_files = @project.files.where(file_type: 10)
     respond_to do |format|
       format.json
     end

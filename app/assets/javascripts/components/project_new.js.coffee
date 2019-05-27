@@ -3,6 +3,7 @@ $ ->
     template: '#project_new'
     mixins: [Vue.modules.projectHelper, Vue.modules.modal]
     data: ->
+      file: ''
       clients: []
       project: undefined
       ordererClientId: undefined
@@ -63,6 +64,7 @@ $ ->
         try
           submit = $('.project_new__form__submit_btn')
           submit.prop('disabled', true)
+          formData = new FormData()
           if @partners.length > 0 || @members.length > 0
             @projectPostData.members_attributes = []
           if @partners.length > 0
@@ -75,10 +77,16 @@ $ ->
               if member.employee_id
                 member.type = 'UserMember'
                 @projectPostData.members_attributes.push(member)
+          formData.append('project', JSON.stringify(@projectPostData))
+          if @file
+            formData.append('file', @file)
           $.ajax
             url: '/api/projects.json'
             type: 'POST'
-            data: { project: @projectPostData }
+            data: formData
+            cache: false
+            contentType: false
+            processData: false
           .done (response) =>
             toastr.success('', response.message)
             @initializeProject()
@@ -116,6 +124,8 @@ $ ->
         @partners.splice(index, 1)
       deleteUserMemberForm: (index) ->
         @members.splice(index, 1)
+      projectFileChange: (e) ->
+        @file = e.target.files[0]
     created: ->
       @loadClients()
       @initializeProject()
