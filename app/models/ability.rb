@@ -21,10 +21,11 @@ class Ability
 private
 
   def outercan
-    can :manage, Page
+    can [:approval_list, :project_list, :expense_approval_list], Agreement
+    can [:approval_list, :approval_show, :agreement_list], Page
     can :manage, ApprovalsSearch
-    can [:update, :read], Approval
-    can :read, ApprovalUser
+    can [:update, :read, :invalid], Approval
+    can [:read, :update], ApprovalUser
     can :read, ApprovalFile
     cannot :allread, Approval
   end

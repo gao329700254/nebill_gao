@@ -32,7 +32,7 @@
         .approval_show__detail__item
           = Approval.human_attribute_name(:created_user_name)
           .approval_show__detail__item__contents
-            = @approval.created_user.name
+            = @approval.created_user&.name
         .approval_show__detail__item
           = Approval.human_attribute_name(:created_at)
           .approval_show__detail__item__contents
@@ -86,7 +86,7 @@
           - else
             .approval_show__detail__file__contents
               = t('page.approval_show.user_no_contents')
-          - if @approval.approvaler_type.user? && ((can?(:allread, Approval) && @approval.status != 40) || \
+          - if !@current_user.role.outer? && @approval.approvaler_type.user? && ((can?(:allread, Approval) && @approval.status != 40) || \
             (@approval.status != 40 && @approval.status != 20 && @approval_individual_group_switch.current_user_approval))
             = form_tag api_approval_approval_users_path, class: 'approval_show__reassignment__form' do
               .approval_show__detail__update__add_approval_user
