@@ -5,18 +5,18 @@ FactoryGirl.define do
     sequence(:cd) { |n| "#{rand(11..20)}D#{n.to_s.rjust(3, '0')}A" }
     name { Faker::App.name }
     contracted false
+    contract_on { Faker::Date.between(6.months.ago, 5.months.ago) }
+    contract_type :lump_sum
+    estimated_amount { rand(1..10) * (10 ** rand(1..3)) * 10_000 }
 
     factory :contracted_project do
       contracted true
       unprocessed false
-      contract_on { Faker::Date.between(6.months.ago, 5.months.ago) }
       status :receive_order
-      contract_type :lump_sum
-      estimated_amount { rand(10) * (10 ** rand(3)) * 10_000 }
       is_using_ses false
       start_on    { Faker::Date.between(5.months.ago , 3.months.ago) }
       end_on      { Faker::Date.between(2.months.ago , 1.month.ago) }
-      amount   { rand(10) * (10 ** rand(3)) * 10_000 }
+      amount   { rand(1..10) * (10 ** rand(1..3)) * 10_000 }
       payment_type :bill_on_15th_and_payment_on_end_of_next_month
       billing_company_name    { Faker::Company.name }
       billing_department_name { Faker::Commerce.department }
@@ -37,10 +37,7 @@ FactoryGirl.define do
     factory :uncontracted_project do
       contracted false
       unprocessed false
-      contract_on          nil
       status               nil
-      contract_type        nil
-      estimated_amount     nil
       is_using_ses         nil
       is_regular_contract  nil
       start_on             nil

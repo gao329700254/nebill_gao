@@ -24,7 +24,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq "#{year}D003A"
+          expect(json['cd']).to eq "#{year}D003B"
         end
       end
 
@@ -50,7 +50,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq "#{year}K002A"
+          expect(json['cd']).to eq "#{year}K002B"
         end
       end
 
@@ -63,7 +63,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq "#{year}M002A"
+          expect(json['cd']).to eq "#{year}M002B"
         end
       end
 
@@ -76,7 +76,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq "#{year}S003A"
+          expect(json['cd']).to eq "#{year}S003B"
         end
       end
 
@@ -89,7 +89,7 @@ RSpec.describe 'project_cds request' do
           expect(response).to be_success
           expect(response.status).to eq 200
 
-          expect(json['cd']).to eq "#{year}W001A"
+          expect(json['cd']).to eq "#{year}W001B"
         end
       end
     end
