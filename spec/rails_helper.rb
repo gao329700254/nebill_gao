@@ -16,6 +16,7 @@ require 'paper_trail/frameworks/rspec'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
+require "#{Rails.root}/app/models/user.rb"
 
 Capybara.javascript_driver = :poltergeist
 Capybara.register_driver :poltergeist do |app|
