@@ -18,6 +18,9 @@ class Api::ClientsController < Api::ApiController
       end
       Client.transaction do
         @client.save!
+        unless create_approval
+          render_action_model_fail_message(@client, :create)
+        end
       end
       create_notice if @client.status == 10
       render_action_model_success_message(@client, :create)
@@ -168,6 +171,19 @@ private
                      else
                        20
                      end
+  end
+
+  def create_approval
+    approval_params = {
+      name: Client.human_attribute_name(:approval_name, comany: @client.company_name),
+      created_user_id: current_user.id,
+      notes: @client.memo,
+      category: 20,
+      approved_id: @client.id,
+      approved_type: "Client",
+    }
+    create_params = { user_id: 6 }
+    Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params).execute
   end
 end
 # rubocop:enable Metrics/ClassLength

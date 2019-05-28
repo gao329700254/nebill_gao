@@ -47,10 +47,10 @@ namespace :db do
       Project.destroy_all
 
       (num - un_contracted_project_count).times do
-        FactoryGirl.create(:contracted_project, group: ProjectGroup.all.sample)
+        FactoryGirl.create(:contracted_project, group: ProjectGroup.all.sample, contract_type: :lump_sum, end_on: 1.week.ago)
       end
       un_contracted_project_count.times do
-        FactoryGirl.create(:uncontracted_project, group: ProjectGroup.all.sample)
+        FactoryGirl.create(:uncontracted_project, group: ProjectGroup.all.sample, contract_type: :lump_sum)
       end
     end
 
@@ -58,9 +58,7 @@ namespace :db do
       Bill.destroy_all
 
       Project.all.each do |project|
-        rand(3).times do |_|
-          FactoryGirl.create(:bill, project: project)
-        end
+        FactoryGirl.create(:bill, project: project)
       end
     end
 
@@ -74,12 +72,12 @@ namespace :db do
     def populate_members(num = 3)
       Member.destroy_all
 
-      Bill.all.each do |bill|
+      Project.all.each do |project|
         Employee.where(actable_type: :User).sample(num).each do |employee|
-          FactoryGirl.create(:user_member, employee: employee, bill: bill)
+          FactoryGirl.create(:user_member, employee: employee, project: project)
         end
         Employee.where(actable_type: :Partner).sample(num).each do |employee|
-          FactoryGirl.create(:partner_member, employee: employee, bill: bill)
+          FactoryGirl.create(:partner_member, employee: employee, project: project)
         end
       end
     end

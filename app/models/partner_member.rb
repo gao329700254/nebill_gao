@@ -30,6 +30,7 @@
 
 class PartnerMember < Member
   has_one :partner, through: :employee, source: :actable, source_type: Partner
+  belongs_to :project
 
   accepts_nested_attributes_for :partner
 
