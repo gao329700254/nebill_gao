@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'clients request' do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, id: 6) }
 
   before { login(user) }
 

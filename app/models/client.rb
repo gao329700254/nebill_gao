@@ -26,16 +26,14 @@ class Client < ActiveRecord::Base
 
   validates :cd, uniqueness: { case_sensitive: false }, if: :cd?
   validates :company_name, presence: true
-  validates :files, presence: true, on: :create
 
   before_save { cd.upcase! if cd.present? }
   before_save :set_cd, unless: :cd?
 
-  enumerize :status, in: { approval_pending: 10, waiting_for_basic_contract: 20, published: 30 }
+  enumerize :status, in: { approval_pending: 10, waiting: 20, published: 30 }, default: :waiting
 
   def set_cd
     max_cd = Client.all.pluck(:cd).compact.map { |cd| cd.gsub(/[^\d]/, "").to_i if cd.start_with?("CD") }.compact.max if Client.all.present?
     self.cd = max_cd ? "CD-" + (max_cd + 1).to_s : "CD-1"
   end
-
 end

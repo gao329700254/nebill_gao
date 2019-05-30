@@ -11,5 +11,20 @@ FactoryGirl.define do
     after(:build) do |client|
       client.files << build(:client_file, :nda, client: client)
     end
+
+    trait :published do
+      status  30
+      transient { user { create(:user) } }
+      after :create do |client, evaluator|
+        create(:approval, :user_approval, created_user: evaluator.user, approved: client)
+      end
+    end
+
+    trait :with_approval do
+      transient { user { create(:user) } }
+      after :create do |client, evaluator|
+        create(:approval, :user_approval, created_user: evaluator.user, approved: client)
+      end
+    end
   end
 end

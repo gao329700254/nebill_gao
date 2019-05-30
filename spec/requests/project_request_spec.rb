@@ -50,7 +50,7 @@ RSpec.describe 'projects request', versioning: true do
       expect(json[0]['orderer_zip_code']).to         eq project1.orderer_zip_code
       expect(json[0]['orderer_phone_number']).to     eq project1.orderer_phone_number
       expect(json[0]['orderer_memo']).to             eq project1.orderer_memo
-      expect(json[0]['created_at']).to               eq project1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+      expect(json[0]['created_at']).to               eq project1.created_at.strftime("%Y/%m/%d %H:%M:%S")
       expect(json[0]['updated_at']).to               eq project1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
     end
   end
@@ -207,7 +207,7 @@ RSpec.describe 'projects request', versioning: true do
       let(:path) { "/api/projects/#{project.id}" }
 
       it 'return the project' do
-        get path
+        get path, format: 'json'
 
         expect(response).to be_success
         expect(response.status).to eq 200
@@ -286,7 +286,7 @@ RSpec.describe 'projects request', versioning: true do
 
           expect(response).to be_success
           expect(response.status).to eq 200
-          expect(json.count).to      eq 4
+          expect(json.count).to      eq 5
         end
       end
     end
@@ -365,14 +365,14 @@ RSpec.describe 'projects request', versioning: true do
               payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
               billing_company_name:    'billing_company_name',
               billing_department_name: 'billing_department_name',
-              billing_personnel_names: ['billing_personnel_names'],
+              billing_personnel_names: 'billing_personnel_names',
               billing_address:         'billing_address',
               billing_zip_code:        'billing_zip_code',
               billing_phone_number:    'billing_phone_number',
               billing_memo:            'billing_memo',
               orderer_company_name:    'orderer_company_name',
               orderer_department_name: 'orderer_department_name',
-              orderer_personnel_names: ['orderer_personnel_names'],
+              orderer_personnel_names: 'orderer_personnel_names',
               orderer_address:         'orderer_address',
               orderer_zip_code:        'orderer_zip_code',
               orderer_phone_number:    'orderer_phone_number',
@@ -451,14 +451,14 @@ RSpec.describe 'projects request', versioning: true do
               payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
               billing_company_name:    'billing_company_name',
               billing_department_name: 'billing_department_name',
-              billing_personnel_names: ['billing_personnel_names'],
+              billing_personnel_names: 'billing_personnel_names',
               billing_address:         'billing_address',
               billing_zip_code:        'billing_zip_code',
               billing_phone_number:    'billing_phone_number',
               billing_memo:            'billing_memo',
               orderer_company_name:    'orderer_company_name',
               orderer_department_name: 'orderer_department_name',
-              orderer_personnel_names: ['orderer_personnel_names'],
+              orderer_personnel_names: 'orderer_personnel_names',
               orderer_address:         'orderer_address',
               orderer_zip_code:        'orderer_zip_code',
               orderer_phone_number:    'orderer_phone_number',
@@ -498,14 +498,14 @@ RSpec.describe 'projects request', versioning: true do
             unprocessed: true,
             billing_company_name:    'billing_company_name',
             billing_department_name: 'billing_department_name',
-            billing_personnel_names: ['billing_personnel_names'],
+            billing_personnel_names: 'billing_personnel_names',
             billing_address:         'billing_address',
             billing_zip_code:        'billing_zip_code',
             billing_phone_number:    'billing_phone_number',
             billing_memo:            'billing_memo',
             orderer_company_name:    'orderer_company_name',
             orderer_department_name: 'orderer_department_name',
-            orderer_personnel_names: ['orderer_personnel_names'],
+            orderer_personnel_names: 'orderer_personnel_names',
             orderer_address:         'orderer_address',
             orderer_zip_code:        'orderer_zip_code',
             orderer_phone_number:    'orderer_phone_number',
@@ -623,174 +623,4 @@ RSpec.describe 'projects request', versioning: true do
     end
   end
 
-  describe 'POST /api/projects/create_with_client' do
-    let(:path) { "/api/projects/create_with_client" }
-    let(:project_group) { create(:project_group) }
-
-    context 'with correct parameter' do
-      let(:params) do
-        {
-          project: {
-            group_id: project_group.id,
-            cd: '17D001A',
-            name: 'name',
-            memo: 'memo',
-            contracted: true,
-            unprocessed: false,
-            contract_on: '2015-01-01',
-            status: 'receive_order',
-            contract_type: 'lump_sum',
-            estimated_amount: 123,
-            is_using_ses: true,
-            is_regular_contract: true,
-            start_on: '2015-01-01',
-            end_on:   '2015-10-31',
-            amount: 123,
-            payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
-            billing_company_name:    'billing_company_name',
-            billing_department_name: 'billing_department_name',
-            billing_personnel_names: ['billing_personnel_names'],
-            billing_address:         'billing_address',
-            billing_zip_code:        'billing_zip_code',
-            billing_phone_number:    'billing_phone_number',
-            billing_memo:            'billing_memo',
-            orderer_company_name:    'orderer_company_name',
-            orderer_department_name: 'orderer_department_name',
-            orderer_personnel_names: ['orderer_personnel_names'],
-            orderer_address:         'orderer_address',
-            orderer_zip_code:        'orderer_zip_code',
-            orderer_phone_number:    'orderer_phone_number',
-            orderer_memo:            'orderer_memo',
-          },
-
-          client: {
-            company_name:     'orderer_company_name',
-            department_name:  'orderer_department_name',
-            address:          'orderer_address',
-            zip_code:         'orderer_zip_code',
-            phone_number:     'orderer_phone_number',
-          },
-        }
-      end
-
-      it 'create a project and client' do
-        expect do
-          post path, params
-        end.to change(Project, :count).by(1).and change(Client, :count).by(1)
-
-        project = Project.first
-        client = Client.first
-        expect(project.group_id).to eq project_group.id
-        expect(project.cd).to eq  '17D001A'
-        expect(project.name).to eq  'name'
-        expect(project.memo).to eq  'memo'
-        expect(project.contracted).to eq  true
-        expect(project.unprocessed).to eq  false
-        expect(project.contract_on.to_s).to eq  '2015-01-01'
-        expect(project.status).to eq  'receive_order'
-        expect(project.contract_type).to eq  'lump_sum'
-        expect(project.estimated_amount).to eq  123
-        expect(project.is_using_ses).to eq  true
-        expect(project.is_regular_contract).to eq  true
-        expect(project.start_on.to_s).to eq '2015-01-01'
-        expect(project.end_on.to_s).to eq   '2015-10-31'
-        expect(project.amount).to eq 123
-        expect(project.payment_type).to eq 'bill_on_15th_and_payment_on_end_of_next_month'
-        expect(project.billing_company_name).to eq     'billing_company_name'
-        expect(project.billing_department_name).to eq  'billing_department_name'
-        expect(project.billing_personnel_names).to eq  ['billing_personnel_names']
-        expect(project.billing_address).to eq          'billing_address'
-        expect(project.billing_zip_code).to eq         'billing_zip_code'
-        expect(project.billing_phone_number).to eq     'billing_phone_number'
-        expect(project.billing_memo).to eq             'billing_memo'
-        expect(project.orderer_company_name).to eq     'orderer_company_name'
-        expect(project.orderer_department_name).to eq  'orderer_department_name'
-        expect(project.orderer_personnel_names).to eq  ['orderer_personnel_names']
-        expect(project.orderer_address).to eq          'orderer_address'
-        expect(project.orderer_zip_code).to eq         'orderer_zip_code'
-        expect(project.orderer_phone_number).to eq     'orderer_phone_number'
-        expect(project.orderer_memo).to eq             'orderer_memo'
-        expect(client.company_name).to eq              'orderer_company_name'
-        expect(client.department_name).to eq           'orderer_department_name'
-        expect(client.address).to eq                   'orderer_address'
-        expect(client.zip_code).to eq                  'orderer_zip_code'
-        expect(client.phone_number).to eq              'orderer_phone_number'
-      end
-
-      it 'return success code and message' do
-        post path, params
-
-        expect(response).to be_success
-        expect(response.status).to eq 201
-
-        expect(json['id']).not_to eq nil
-        expect(json['message']).to eq 'プロジェクトを作成しました'
-      end
-    end
-
-    context 'with uncorrect parameter' do
-      context 'when client has uncorrect parameter' do
-        let(:params) do
-          {
-            project: {
-              group_id: project_group.id,
-              cd: '17D001A',
-              name: 'name',
-              memo: 'memo',
-              contracted: true,
-              unprocessed: false,
-              contract_on: '2015-01-01',
-              status: 'receive_order',
-              contract_type: 'lump_sum',
-              estimated_amount: 123,
-              is_using_ses: true,
-              is_regular_contract: true,
-              start_on: '2015-01-01',
-              end_on:   '2015-10-31',
-              amount: 123,
-              payment_type: 'bill_on_15th_and_payment_on_end_of_next_month',
-              billing_company_name:    'billing_company_name',
-              billing_department_name: 'billing_department_name',
-              billing_personnel_names: ['billing_personnel_names'],
-              billing_address:         'billing_address',
-              billing_zip_code:        'billing_zip_code',
-              billing_phone_number:    'billing_phone_number',
-              billing_memo:            'billing_memo',
-              orderer_company_name:    'orderer_company',
-              orderer_department_name: 'orderer_department_name',
-              orderer_personnel_names: ['orderer_personnel_names'],
-              orderer_address:         'orderer_address',
-              orderer_zip_code:        'orderer_zip_code',
-              orderer_phone_number:    'orderer_phone_number',
-              orderer_memo:            'orderer_memo',
-            },
-
-            client: {
-              company_name:     ' ',
-              department_name:  'orderer_department_name',
-              address:          'orderer_address',
-              zip_code:         'orderer_zip_code',
-              phone_number:     'orderer_phone_number',
-            },
-          }
-        end
-
-        it 'do not create a project and client' do
-          expect do
-            post path, params
-          end.not_to change(Project, :count)
-        end
-
-        it 'return 422 Unprocessable Entity code and message' do
-          post path, params
-
-          expect(response).not_to be_success
-          expect(response.status).to eq 422
-
-          expect(json['message']).to eq '取引先が作成できませんでした'
-          expect(json['errors']['full_messages']).to eq ['会社名を入力してください']
-        end
-      end
-    end
-  end
 end

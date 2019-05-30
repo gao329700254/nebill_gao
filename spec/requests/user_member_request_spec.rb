@@ -2,26 +2,35 @@ require 'rails_helper'
 
 RSpec.describe 'user members request' do
   let!(:user) { create(:user) }
+  let!(:project) { create(:contracted_project) }
   let!(:bill) { create(:bill) }
 
   before { login(user) }
 
-  describe 'POST /api/user_members/:bill_id/:user_id' do
-    let(:path) { "/api/user_members/#{bill.id}/#{user.id}" }
+  describe 'POST /api/user_members/:project_id/:user_id' do
+    let(:path) { "/api/user_members/#{project.id}/#{user.employee.id}" }
+
+    let(:params) do
+      {
+        partner: {
+          man_month: 1,
+        },
+      }
+    end
 
     it 'create a user member' do
       expect do
-        post path
+        post path, params
       end.to change(Member, :count).by(1)
 
-      expect(bill.users).to include user
+      expect(project.users).to include user
     end
   end
 
-  describe 'DELETE /api/user_members/:bill_id/:user_id' do
+  describe 'DELETE /api/user_members/:project_id/:user_id' do
     context 'with exist user' do
-      let!(:member) { create(:user_member, bill: bill) }
-      let(:path) { "/api/user_members/#{bill.id}/#{member.user.id}" }
+      let!(:member) { create(:user_member, project: project) }
+      let(:path) { "/api/user_members/#{project.id}/#{member.id}" }
 
       it 'delete the user_member and return success message' do
         expect do
@@ -52,7 +61,7 @@ RSpec.describe 'user members request' do
     end
 
     context 'with not exist member' do
-      let(:path) { "/api/user_members/#{bill.id}/#{user.id}" }
+      let(:path) { "/api/user_members/#{project.id}/#{user.id}" }
 
       it "return 404 Not Found code and message" do
         expect do
@@ -67,7 +76,7 @@ RSpec.describe 'user members request' do
     end
 
     context 'with not exist user_member' do
-      let(:path) { "/api/user_members/#{bill.id}/0" }
+      let(:path) { "/api/user_members/#{project.id}/0" }
 
       it 'return 404 Not Found code and message' do
         expect do

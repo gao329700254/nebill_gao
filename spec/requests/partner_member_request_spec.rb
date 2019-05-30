@@ -2,14 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'partner members request' do
   let!(:user) { create(:user) }
-  let!(:bill) { create(:bill) }
+  let!(:project) { create(:contracted_project) }
   let!(:partner) { create(:partner) }
 
   before { login(user) }
 
-  describe 'POST /api/partner_members/:bill_id/:partner_id' do
-    context 'with exist bill and partner' do
-      let(:path) { "/api/partner_members/#{bill.id}/#{partner.id}" }
+  describe 'POST /api/partner_members/:project_id/:partner_id' do
+    context 'with exist project and partner' do
+      let(:path) { "/api/partner_members/#{project.id}/#{partner.employee.id}" }
 
       let(:params) do
         {
@@ -27,41 +27,15 @@ RSpec.describe 'partner members request' do
           post path, params
         end.to change(Member, :count).by(1)
 
-        expect(bill.partners).to include partner
-      end
-    end
-
-    context 'with not exist bill' do
-      let(:path) { "/api/partner_members/0/#{partner.id}" }
-
-      it 'return 404 Not Found code and message' do
-        post path
-
-        expect(response).not_to be_success
-        expect(response.status).to eq 404
-
-        expect(json['message']).to eq 'リソースが見つかりませんでした'
-      end
-    end
-
-    context 'with not exist partner' do
-      let(:path) { "/api/partner_members/#{bill.id}/0" }
-
-      it 'return 404 Not Found code and message' do
-        post path
-
-        expect(response).not_to be_success
-        expect(response.status).to eq 404
-
-        expect(json['message']).to eq 'リソースが見つかりませんでした'
+        expect(project.partners).to include partner
       end
     end
   end
 
-  describe 'DELETE /api/partner_members/:bill_id/:partner_id' do
+  describe 'DELETE /api/partner_members/:project_id/:partner_id' do
     context 'with exist partner' do
-      let!(:member) { create(:partner_member, bill: bill) }
-      let(:path) { "/api/partner_members/#{bill.id}/#{member.partner.id}" }
+      let!(:member) { create(:partner_member, project: project) }
+      let(:path) { "/api/partner_members/#{project.id}/#{member.id}" }
 
       it 'delete a partner_member and return the success message' do
         expect do
@@ -77,7 +51,7 @@ RSpec.describe 'partner members request' do
 
     context 'with not exist project' do
       let!(:member) { create(:partner_member) }
-      let(:path) { "/api/partner_members/0/#{member.partner.id}" }
+      let(:path) { "/api/partner_members/0/0" }
 
       it 'return 404 Not Found code and message' do
         expect do
@@ -92,7 +66,7 @@ RSpec.describe 'partner members request' do
     end
 
     context 'with not exist member' do
-      let(:path) { "/api/partner_members/#{bill.id}/#{partner.id}" }
+      let(:path) { "/api/partner_members/#{project.id}/0" }
 
       it "return 404 Not Found code and message" do
         expect do
@@ -107,7 +81,7 @@ RSpec.describe 'partner members request' do
     end
 
     context 'with not exist partner' do
-      let(:path) { "/api/partner_members/#{bill.id}/0" }
+      let(:path) { "/api/partner_members/#{project.id}/0" }
 
       it 'return 404 Not Found code and message' do
         expect do
@@ -122,23 +96,21 @@ RSpec.describe 'partner members request' do
     end
   end
 
-  describe 'PATCH /api/partner_members/:bill_id/:partner_id' do
-    context 'with exist bill' do
-      let!(:member) { create(:partner_member, bill: bill) }
-      let(:path) { "/api/partner_members/#{bill.id}/#{member.partner.id}" }
+  describe 'PATCH /api/partner_members/:project_id/:partner_id' do
+    context 'with exist project' do
+      let!(:member) { create(:partner_member, project: project) }
+      let(:path) { "/api/partner_members/#{project.id}/#{member.id}" }
 
       context 'with correct parameter' do
         let(:params) do
           {
-            members: {
+            member: {
               unit_price: 1,
               working_rate: 2,
               min_limit_time: 3,
               max_limit_time: 4,
-              partner_attributes: {
-                id: member.partner.id,
-                name: 'name',
-              },
+              name: 'name',
+              email: 'alice@example.com',
             },
           }
         end
@@ -166,15 +138,12 @@ RSpec.describe 'partner members request' do
       context 'with uncorrect parameter' do
         let(:params) do
           {
-            members: {
+            member: {
               unit_price: 1,
               working_rate: 2,
               min_limit_time: 3,
               max_limit_time: 4,
-              partner_attributes: {
-                id: member.partner.id,
-                name: '  ',
-              },
+              email: 'alice@example.com',
             },
           }
         end
@@ -190,46 +159,6 @@ RSpec.describe 'partner members request' do
           expect(json['message']).to eq 'メンバーが更新できませんでした'
           expect(json['errors']['full_messages']).to eq ['名前を入力してください']
         end
-      end
-    end
-
-    context 'with not exist bill id' do
-      let!(:member) { create(:partner_member) }
-      let(:path)    { "/api/partner_members/0/#{member.partner.id}" }
-
-      it 'return 404 Not Found code and message' do
-        patch path
-
-        expect(response).not_to be_success
-        expect(response.status).to eq 404
-
-        expect(json['message']).to eq 'リソースが見つかりませんでした'
-      end
-    end
-
-    context 'with not exist member' do
-      let(:path) { "/api/partner_members/#{bill.id}/#{partner.id}" }
-
-      it 'return 404 Not Found code and message' do
-        patch path
-
-        expect(response).not_to be_success
-        expect(response.status).to eq 404
-
-        expect(json['message']).to eq 'リソースが見つかりませんでした'
-      end
-    end
-
-    context 'with not exist partner' do
-      let(:path) { "/api/partner_members/#{bill.id}/0" }
-
-      it 'return 404 Not Found code and message' do
-        patch path
-
-        expect(response).not_to be_success
-        expect(response.status).to eq 404
-
-        expect(json['message']).to eq 'リソースが見つかりませんでした'
       end
     end
   end

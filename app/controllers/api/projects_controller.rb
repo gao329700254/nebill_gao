@@ -10,7 +10,7 @@ class Api::ProjectsController < Api::ApiController
   end
 
   def create
-    params[:project] = JSON.parse(params[:project])
+    params[:project] = JSON.parse(params[:project]) if params[:project].class == String
     @project = Project.new(project_param)
     if @project.valid?
       Project.transaction do

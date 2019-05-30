@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.feature 'Client List Page', js: true do
-  given!(:user) { create(:user) }
-  given!(:client1) { create(:client, cd: 'CD-1', company_name: 'abc', department_name: 'ABC', phone_number: '03-1111-1111') }
-  given!(:client2) { create(:client, cd: 'CD-2', company_name: 'cde', department_name: 'CDE', phone_number: '03-2222-2222') }
-  given!(:client3) { create(:client, cd: 'CD-3', company_name: 'fgh', department_name: 'FGH', phone_number: '03-3333-3333') }
+  given!(:user) { create(:user, id: 6) }
+  given!(:client1) { create(:client, :published, cd: 'CD-1', company_name: 'abc', department_name: 'ABC', phone_number: '03-1111-1111', user: user) }
+  given!(:client2) { create(:client, :published, cd: 'CD-2', company_name: 'cde', department_name: 'CDE', phone_number: '03-2222-2222', user: user) }
+  given!(:client3) { create(:client, :published, cd: 'CD-3', company_name: 'fgh', department_name: 'FGH', phone_number: '03-3333-3333', user: user) }
 
   background { login user, with_capybara: true }
   background { visit client_list_path }
@@ -95,7 +95,6 @@ RSpec.feature 'Client List Page', js: true do
     subject { find('.client_new') }
 
     scenario 'show' do
-      is_expected.to have_field 'cd'
       is_expected.to have_field 'company_name'
       is_expected.to have_field 'department_name'
       is_expected.to have_field 'address'
@@ -107,7 +106,6 @@ RSpec.feature 'Client List Page', js: true do
     end
 
     scenario 'click submit button with correct values'do
-      fill_in :cd              , with: '0000001'
       fill_in :company_name    , with: 'test company'
       fill_in :department_name , with: 'test department'
       fill_in :address         , with: 'test address'
@@ -124,7 +122,6 @@ RSpec.feature 'Client List Page', js: true do
     end
 
     scenario 'click submit button with uncorrect values' do
-      fill_in :cd              , with: '00001'
       fill_in :company_name    , with: '  '
       fill_in :department_name , with: 'test department'
       fill_in :address         , with: 'test address'
@@ -137,7 +134,6 @@ RSpec.feature 'Client List Page', js: true do
         wait_for_ajax
       end.not_to change(Client, :count)
 
-      is_expected.to have_field 'cd'                , with: '00001'
       is_expected.to have_field 'company_name'      , with: '  '
       is_expected.to have_field 'department_name'   , with: 'test department'
       is_expected.to have_field 'address'           , with: 'test address'

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Client Show Page', js: true, versioning: true do
   given!(:user) { create(:user) }
   given!(:client) { create(:client) }
+  given!(:approval) { create(:approval, :user_approval, created_user: user, approved: client) }
 
   background { login user, with_capybara: true }
   background { visit client_show_path(client) }

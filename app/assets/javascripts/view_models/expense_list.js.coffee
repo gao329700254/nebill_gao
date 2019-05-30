@@ -82,7 +82,6 @@ $ ->
         finally
           destroy.prop('disabled', false)
       Reapproval: ->
-        console.log(@selectedApproval)
         if(confirm($('#header__reapproval_confirm_message').val()))
           $.ajax
             url: '/api/expenses/reapproval.json'

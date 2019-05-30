@@ -16,15 +16,4 @@ RSpec.describe Partner do
   it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:company_name) }
-
-  describe '#join!' do
-    let(:bill) { create(:bill) }
-    before do
-      partner.save!
-      partner.join!(bill, 1, 0.6, 1, 2)
-    end
-
-    its(:bills) { is_expected.to include bill }
-  end
-
 end
