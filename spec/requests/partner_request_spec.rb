@@ -27,16 +27,16 @@ RSpec.describe 'partner request' do
     end
   end
 
-  describe 'GET /api/bills/:bill_id/partners' do
-    context 'with exist bill id' do
-      let(:bill) { create(:bill) }
-      let!(:partner1) { create(:partner, :with_bill, bill: bill) }
-      let!(:partner2) { create(:partner, :with_bill, bill: bill) }
-      let!(:partner3) { create(:partner, :with_bill, bill: bill) }
-      let!(:partner4) { create(:partner, :with_bill) }
-      let(:path) { "/api/bills/#{bill.id}/partners" }
+  describe 'GET /api/projects/:project_id/partners' do
+    context 'with exist projects id' do
+      let(:project) { create(:project) }
+      let!(:partner1) { create(:partner, :with_project, project: project) }
+      let!(:partner2) { create(:partner, :with_project, project: project) }
+      let!(:partner3) { create(:partner, :with_project, project: project) }
+      let!(:partner4) { create(:partner, :with_project) }
+      let(:path) { "/api/projects/#{project.id}/partners" }
 
-      it 'return a list of bill_partners' do
+      it 'return a list of project_partners' do
         get path
 
         expect(response).to be_success
@@ -91,12 +91,10 @@ RSpec.describe 'partner request' do
   describe 'GET /api/projects/:project_id/partners' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
-      let(:bill) { create(:bill, project: project) }
-      let(:bill2) { create(:bill, project: project) }
-      let!(:partner1) { create(:partner, :with_bill, bill: bill) }
-      let!(:partner2) { create(:partner, :with_bill, bill: bill) }
-      let!(:partner3) { create(:partner, :with_bill, bill: bill) }
-      let!(:partner4) { create(:partner_member, bill: bill2, partner: partner3) }
+      let!(:partner1) { create(:partner, :with_project, project: project) }
+      let!(:partner2) { create(:partner, :with_project, project: project) }
+      let!(:partner3) { create(:partner, :with_project, project: project) }
+      let!(:partner4) { create(:partner_member, project: project, partner: partner3) }
       let(:path) { "/api/projects/#{project.id}/partners" }
 
       it 'return a list of partners' do

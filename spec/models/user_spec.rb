@@ -19,15 +19,4 @@ RSpec.describe User do
 
   it { is_expected.to validate_uniqueness_of(:provider).scoped_to(:uid).allow_nil }
   it { is_expected.to validate_presence_of(:role) }
-
-  describe '#join!' do
-    let(:bill) { create(:bill) }
-    before do
-      user.save!
-      user.join!(bill)
-    end
-
-    its(:bills) { is_expected.to include bill }
-  end
-
 end

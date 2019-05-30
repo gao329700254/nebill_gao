@@ -63,10 +63,9 @@ RSpec.describe 'user request' do
   describe 'GET /api/projects/:project_id/users' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
-      let(:bill) { create(:bill, project: project) }
-      let!(:user1) { create(:user, :with_bill, bill: bill) }
-      let!(:user2) { create(:user, :with_bill, bill: bill) }
-      let!(:user3) { create(:user, :with_bill, bill: bill) }
+      let!(:user1) { create(:user, :with_project, project: project) }
+      let!(:user2) { create(:user, :with_project, project: project) }
+      let!(:user3) { create(:user, :with_project, project: project) }
       let(:path) { "/api/projects/#{project.id}/users" }
 
       it 'return a list of users' do
@@ -115,15 +114,15 @@ RSpec.describe 'user request' do
     end
   end
 
-  describe 'GET /api/bills/:bill_id/users' do
+  describe 'GET /api/projects/:project_id/users' do
     context 'with exist project id' do
-      let(:bill) { create(:bill) }
-      let!(:user1) { create(:user, :with_bill, bill: bill) }
-      let!(:user2) { create(:user, :with_bill, bill: bill) }
-      let!(:user3) { create(:user, :with_bill, bill: bill) }
-      let(:path) { "/api/bills/#{bill.id}/users" }
+      let(:project) { create(:project) }
+      let!(:user1) { create(:user, :with_project, project: project) }
+      let!(:user2) { create(:user, :with_project, project: project) }
+      let!(:user3) { create(:user, :with_project, project: project) }
+      let(:path) { "/api/projects/#{project.id}/users" }
 
-      it 'return a list of bill_users' do
+      it 'return a list of project_users' do
         get path
 
         expect(response).to be_success
@@ -155,8 +154,8 @@ RSpec.describe 'user request' do
       end
     end
 
-    context 'with not exist bill id' do
-      let(:path) { '/api/bills/0/users' }
+    context 'with not exist project id' do
+      let(:path) { '/api/projects/0/users' }
 
       it 'return 404 Not Found code and message' do
         get path

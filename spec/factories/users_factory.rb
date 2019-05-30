@@ -19,10 +19,10 @@ FactoryGirl.define do
       name     nil
     end
 
-    trait :with_bill do
-      transient { bill { create(:bill) } }
+    trait :with_project do
+      transient { project { create(:project) } }
       after :create do |user, evaluator|
-        user.members.build(bill: evaluator.bill).save!
+        user.members.build(project: evaluator.project).save!
       end
     end
   end

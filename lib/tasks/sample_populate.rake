@@ -4,12 +4,12 @@ namespace :db do
     task populate: :environment do
       ActiveRecord::Base.transaction do
         %w(
-          clients
           project_groups
           projects
           bills
           partners
           members
+          clients
           project_file_groups
           project_files
           default_expense_items
@@ -30,11 +30,6 @@ namespace :db do
           send("populate_#{table}", num)
         end
       end
-    end
-
-    def populate_clients(num = 5)
-      Client.destroy_all
-      FactoryGirl.create_list(:client, num)
     end
 
     def populate_project_groups(num = 3)
@@ -69,7 +64,7 @@ namespace :db do
       end
     end
 
-    def populate_members(num = 3)
+    def populate_members(num = 2)
       Member.destroy_all
 
       Project.all.each do |project|
@@ -80,6 +75,11 @@ namespace :db do
           FactoryGirl.create(:partner_member, employee: employee, project: project)
         end
       end
+    end
+
+    def populate_clients(num = 5)
+      Client.destroy_all
+      FactoryGirl.create_list(:client, num, :published)
     end
 
     def populate_project_file_groups(num = 3)

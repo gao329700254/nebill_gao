@@ -1,8 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 class Api::ClientsController < Api::ApiController
-  before_action :set_client, only: [:show, :update]
   def index
-    @clients = Client.all.includes(:approvals).where.not(approvals: { status: 40 })
+    @clients = Client.all.includes(:approvals)
 
     render json: @clients, status: :ok
   end
@@ -10,11 +9,8 @@ class Api::ClientsController < Api::ApiController
   def create
     @client = Client.new(client_param)
     if @client.valid?
-      if params[:client][:files_attributes].present?
-        @client.status = 20
-        params[:client][:files_attributes].each do |file|
-          @client.status = 10 if file.second[:file_type] == '10'
-        end
+      params[:client][:files_attributes]&.each do |file|
+        @client.status = 10 if file.second[:file_type] == '10'
       end
       Client.transaction do
         @client.save!
@@ -32,22 +28,20 @@ class Api::ClientsController < Api::ApiController
   end
 
   def show
+    @client = Client.find(params[:id])
     latest_version = Version.where(item_type: 'Client', item_id: @client.id).order(:created_at).last
     @user = User.find(latest_version.whodunnit) if latest_version && latest_version.whodunnit
     render 'show', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def update
+    @client = Client.find(params[:id])
     @client.attributes = client_param
-    if params[:client][:files_attributes]
-      @appr_params = { approval_id: params[:approval_id], button: 'pending', comment: '' }
-      @services ||= ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find(6))
-      @services.execute
-      check_files if @client.status == 20
-      update_notice if @client.status == 10
+    Client.transaction do
+      @approval = Approval.find_by(approved_type: 'Client', approved_id: @client.id) || create_approval
+      file_update if params[:client][:files_attributes] && @approval.present?
+      @client.save!
     end
-    @client.save!
-
     render_action_model_success_message(@client, :update)
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@client, :update)
@@ -89,10 +83,6 @@ class Api::ClientsController < Api::ApiController
   end
 
 private
-
-  def set_client
-    @client = Client.find(params[:id])
-  end
 
   def client_param
     params.require(:client).permit(
@@ -183,7 +173,19 @@ private
       approved_type: "Client",
     }
     create_params = { user_id: 6 }
-    Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params).execute
+    if Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params).execute
+      Approval.find_by(approved_type: 'Client', approved_id: @client.id)
+    else
+      false
+    end
+  end
+
+  def file_update
+    @appr_params = { approval_id: @approval.id, button: 'pending', comment: '' }
+    @services = ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find(6))
+    @services.execute
+    check_files if @client.status == 20
+    update_notice if @client.status == 10
   end
 end
 # rubocop:enable Metrics/ClassLength

@@ -33,6 +33,8 @@ class Member < ActiveRecord::Base
 
   validate :check_periods
 
+  has_paper_trail meta: { project_id: :project_id }
+
   def check_periods
     return if working_period_end.nil? || working_period_start.nil?
     errors.add(:working_period_end, I18n.t('errors.messages.greater_than', count: '稼働開始')) if working_period_end < working_period_start

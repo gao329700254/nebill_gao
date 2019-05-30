@@ -59,12 +59,11 @@ $ ->
           partners = _.filter @partners, (p) -> ids.includes(p.id)
         else
           partners = @selectedPartners
-          console.log (@selectedPartners)
         $.each partners, (i, partner) =>
           $.ajax
             url: "/api/partner_members/#{@projectId}/#{partner.id}.json"
             type: 'PATCH'
-            data: { partner: partner }
+            data: { member: partner }
           .done (response) =>
             success_count += 1
             toastr.success('', response.message)
@@ -92,7 +91,7 @@ $ ->
           $.ajax
             url: "/api/partner_members/#{@projectId}/#{@selectedPartnerId}.json"
             type: 'POST'
-            data: { partner: @member }
+            data: { member: @member }
           .done (response) =>
             toastr.success('', response.message)
             @selectedPartnerId = undefined

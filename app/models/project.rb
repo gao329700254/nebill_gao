@@ -60,6 +60,7 @@ class Project < ActiveRecord::Base
   has_many :user_members
   has_many :partner_members
   has_many :users, through: :user_members
+  has_many :partners, through: :partner_members
   has_paper_trail meta: { project_id: :id }
 
   accepts_nested_attributes_for :members, allow_destroy: true

@@ -7,7 +7,7 @@ class Api::PartnersController < Api::ApiController
     @partners = if @bill
                   @bill.partners.order(:company_name, :id)
                 elsif @project
-                  Partner.where(id: @project.bills.map { |bill| bill.partners.pluck(:id) }.flatten.uniq)
+                  Partner.where(id: @project.partners.pluck(:id))
                 else
                   Partner.all
                 end

@@ -49,6 +49,9 @@ $ ->
           submit = $('.project_detail__form__btn--submit')
           submit.prop('disabled', true)
           formData = new FormData()
+          unless @project.contracted
+            @project = _.pick @project, (value, key) => key != 'amount' && key != 'payment_type'
+          @project = _.pick @project, (value, key) => key != 'group_id' && value != null
           Object.keys(@project).forEach (key) =>
             formData.append("project[#{key}]", @project[key])
           formData.append('approval_id', @approvalId)
@@ -64,11 +67,11 @@ $ ->
               contentType: false
               processData: false
             .done (response) =>
+
               toastr.success('', response.message)
               @loadProject()
               @getApprovalUser()
               @editMode = false
-              location.reload(true)
               @$dispatch('updateProjectEvent')
             .fail (response) =>
               json = response.responseJSON
