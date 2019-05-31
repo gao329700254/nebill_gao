@@ -80,9 +80,9 @@ Rails.application.configure do
   config.rack_dev_mark.enable = true
   config.rack_dev_mark.theme = [:title, Rack::DevMark::Theme::GithubForkRibbon.new(position: 'right-bottom', color: 'green')]
 
-  config.action_controller.asset_host = 'http://nebill-demo.herokuapp.com/'
+  config.action_controller.asset_host = 'http://staging.nebill.io/'
   config.action_mailer.asset_host = config.action_controller.asset_host
-  config.action_mailer.default_url_options = { host: 'nebill-demo.herokuapp.com', protocol: 'http' }
+  config.action_mailer.default_url_options = { host: 'staging.nebill.io', protocol: 'https' }
   config.action_mailer.delivery_method = :sendgrid_actionmailer
   config.action_mailer.sendgrid_actionmailer_settings = {
     api_key: ENV['SENDGRID_API_KEY'],
