@@ -24,6 +24,11 @@ build-test:
         - script:
             name: exec teaspoon
             code: RAILS_ENV=test bundle exec teaspoon
+    after-steps:
+      - cuon/chatwork-notifier:
+        token: $CHATWORK_TOKEN
+        room_id: 75144170
+        failure_only: true
 build-lint:
     steps:
         - script:
@@ -42,3 +47,8 @@ build-lint:
         - script:
             name: exec scsslint
             code: bundle exec rake scss_lint
+    after-steps:
+      - cuon/chatwork-notifier:
+        token: $CHATWORK_TOKEN
+        room_id: 75144170
+        failure_only: true
