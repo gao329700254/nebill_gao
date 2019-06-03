@@ -90,9 +90,10 @@ class Api::ExpensesController < Api::ApiController
     @expense_approval[:expenses_number] = params[:selected].count
     @expense_approval[:name] = "#{ExpenseApproval.appr_id + 1}#{User.find(params[:created_user_id]).name}経費精算申請" + params[:total_amount]
     @expense_approval[:created_user_id] = params[:created_user_id]
-    if @expense_approval.save!
-      save_expense_group
-      save_expense_approval_user
+    add_params
+
+    if @expense_approval.save
+      send_mail
       render_action_model_success_message(@expense_approval, :create)
     else
       render_action_model_fail_message(@expense_approval, :create)
@@ -204,19 +205,13 @@ private
     )
   end
 
-  def save_expense_group
-    @expenses = Expense.find(params[:selected])
-    @expenses.each do |expenses|
-      expenses.update!(expense_approval_id: @expense_approval.id)
-    end
+  def add_params
+    @expense_approval.expense = Expense.find(params[:selected])
+    @expense_approval.expense_approval_user.build[:user_id] = @current_user.default_allower
   end
 
-  def save_expense_approval_user
-    @expense_approval_user = @expense_approval.expense_approval_user.build(
-      expense_approval_id: @expense_approval.id,
-      user_id: @current_user.default_allower,
-    )
-    @expense_approval_user.save!
+  def send_mail
+    @expense_approval_user = @expense_approval.expense_approval_user.last
     ExpenseApprovalMailer.assignment_user(user: @expense_approval_user.user, expense_approval: @expense_approval).deliver_now
     Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval_user.user).notify_assigned
   end

@@ -42,6 +42,7 @@ $ ->
           .done (response) =>
             toastr.success('', response.message)
             @modalHide()
+            @ids = []
             @$dispatch('loadExpenseList')
           .fail (response) =>
             json = response.responseJSON
