@@ -38,16 +38,10 @@ $ ->
           .done (response) =>
             @defaule_expense_items = response
       onArrowChange: (e) ->
-        if @defaule_expense_items.standard_amount　> 0
-          if e
-            @arrow = '↔️'
-            @defaule_expense_items.standard_amount *= 2
-          else
-            @arrow = '→'
-            @defaule_expense_items.standard_amount /= 2
+        if e
+          @arrow = '↔️'
         else
-          @checked = !@checked
-          @defaule_expense_items.standard_amount = 0
+          @arrow = '→'
       loadDefaultExpenseItem: (e) ->
         $.ajax
           url: '/api/expenses/load_item.json'

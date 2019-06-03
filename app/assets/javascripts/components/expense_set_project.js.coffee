@@ -5,7 +5,7 @@ $ ->
     props: ['def']
     data: ->
       selectSchema:
-        cd: 'eq'
+        cd: 'like'
         name: 'like'
         orderer_company_name: 'like'
       list: undefined
