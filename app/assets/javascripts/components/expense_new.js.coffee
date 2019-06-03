@@ -135,16 +135,10 @@ $ ->
           .fail (response) =>
             @defaule_expense_items = ''
       onArrowChange: (e) ->
-        if @defaule_expense_items.standard_amount　> 0
-          if e
-            @arrow = '↔️'
-            @defaule_expense_items.standard_amount *= 2
-          else
-            @arrow = '→'
-            @defaule_expense_items.standard_amount /= 2
+        if e
+          @arrow = '↔️'
         else
-          @checked = !@checked
-          @defaule_expense_items.standard_amount = 0
+          @arrow = '→'
       setProject: (e) ->
         try
           $.ajax
