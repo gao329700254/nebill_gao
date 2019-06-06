@@ -57,8 +57,10 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # used by "pumactl" to query and control the server.
 #
 # state_path '/u/apps/lolcat/tmp/pids/puma.state'
-if Rails.env.produciton? ||  Rails.env.staging?
-  app_dir = '/var/nebill'
+
+app_dir = '/var/nebill'
+
+if Dir.exist?(app_dir)
 
   state_path "#{app_dir}/pids/puma.state"
   activate_control_app
@@ -67,6 +69,6 @@ if Rails.env.produciton? ||  Rails.env.staging?
   plugin :tmp_restart
 
   # Project config
-  bind "unix:///#{app_dir}/sockets/puma.sock"
+  bind "unix://#{app_dir}/sockets/puma.sock"
   pidfile "#{app_dir}/pids/puma.pid"
 end
