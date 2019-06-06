@@ -32,6 +32,7 @@ gem 'cancancan'
 gem 'nested_form_fields'
 gem 'sendgrid-actionmailer'
 gem 'gon'
+gem "puma", "~> 3.12"
 
 group :development do
   gem 'web-console', '~> 2.0'
@@ -49,7 +50,7 @@ group :development do
   gem 'letter_opener_web'
 end
 
-group :development, :test, :demo do
+group :development, :test do
   gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'rspec-its'
@@ -66,6 +67,6 @@ group :development, :test, :demo do
   gem 'dotenv-rails'
 end
 
-group :production, :demo do
+group :production, :staging do
   gem 'rails_12factor'
 end
