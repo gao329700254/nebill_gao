@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190521130747
+# Schema version: 20190607184247
 #
 # Table name: users
 #
@@ -20,6 +20,7 @@
 #  crypted_password   :string
 #  password_salt      :string
 #  perishable_token   :string
+#  is_chief           :boolean          default(FALSE)
 #
 # Indexes
 #
