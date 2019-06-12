@@ -83,7 +83,7 @@ pipelines:
         - step: *test
         - step: *lint
       - step:
-          deployment: Prodution
+          deployment: Production
           name: deploy
           script:
             - git archive HEAD --output=nebill.zip
