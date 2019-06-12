@@ -76,14 +76,12 @@ pipelines:
       - parallel:
         - step: *test
         - step: *lint
-      - step:
-        <<: *deploy
+      - step: *deploy
         deployment: Staging
     master:
       - step: *build
       - parallel:
         - step: *test
         - step: *lint
-      - step:
-        <<: *deploy
+      - step: *deploy
         deployment: Prodution
