@@ -170,7 +170,8 @@ private
       approved_id: @project.id,
       approved_type: "Project",
     }
-    create_params = { user_id: 6 }
+    approval_user = User.find_by(is_chief: true)
+    create_params = { user_id: approval_user.id }
     @services ||= Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params)
     return if @services.execute
     fail
@@ -234,7 +235,7 @@ private
 
   def update_approval
     appr_params = { approval_id: params[:approval_id], button: 'pending', comment: params[:appr_comment] }
-    @services ||= ApprovalUsers::UpdateStatusService.new(update_params: appr_params, current_user: User.find(20))
+    @services ||= ApprovalUsers::UpdateStatusService.new(update_params: appr_params, current_user: User.find_by(is_chief: true))
     @services.execute
     @services.approval.update(status: 'pending')
   end

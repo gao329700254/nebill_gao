@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Client List Page', js: true do
-  given!(:user) { create(:user, id: 6) }
+  given!(:user) { create(:user) }
   given!(:client1) { create(:client, :published, cd: 'CD-1', company_name: 'abc', department_name: 'ABC', phone_number: '03-1111-1111', user: user) }
   given!(:client2) { create(:client, :published, cd: 'CD-2', company_name: 'cde', department_name: 'CDE', phone_number: '03-2222-2222', user: user) }
   given!(:client3) { create(:client, :published, cd: 'CD-3', company_name: 'fgh', department_name: 'FGH', phone_number: '03-3333-3333', user: user) }
@@ -105,7 +105,7 @@ RSpec.feature 'Client List Page', js: true do
       is_expected.to have_button 'キャンセル'
     end
 
-    scenario 'click submit button with correct values'do
+    scenario 'click submit button with correct values' do
       fill_in :company_name    , with: 'test company'
       fill_in :department_name , with: 'test department'
       fill_in :address         , with: 'test address'
