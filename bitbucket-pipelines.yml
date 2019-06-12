@@ -29,6 +29,31 @@ definitions:
         - bundle exec rake coffeelint
         - bundle exec rake slim_lint
         - bundle exec rake scss_lint
+    deploy: &deploy
+      name: deploy
+      script:
+        - git archive HEAD --output=nebill.zip
+        - pipe: atlassian/aws-code-deploy:0.2.3
+          variables:
+            AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+            AWS_DEFAULT_REGION: 'ap-northeast-1'
+            APPLICATION_NAME: 'nebill'
+            S3_BUCKET: 'nebill-development-deploy'
+            COMMAND: 'upload'
+            ZIP_FILE: 'nebill.zip'
+        - pipe: atlassian/aws-code-deploy:0.2.3
+          variables:
+            AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+            AWS_DEFAULT_REGION: 'ap-northeast-1'
+            APPLICATION_NAME: 'nebill'
+            COMMAND: 'deploy'
+            ZIP_FILE: 'nebill.zip'
+            DEPLOYMENT_GROUP: $DEPLOYMENT_GROUP
+            S3_BUCKET: 'nebill-development-deploy'
+            DEBUG: 'true'
+            WAIT: 'true'
   caches:
     bundler: vendor
   services:
@@ -52,28 +77,13 @@ pipelines:
         - step: *test
         - step: *lint
       - step:
-          name: deploy
-          deployment: Staging
-          script:
-            - git archive HEAD --output=nebill.zip
-            - pipe: atlassian/aws-code-deploy:0.2.3
-              variables:
-                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-                AWS_DEFAULT_REGION: 'ap-northeast-1'
-                APPLICATION_NAME: 'nebill'
-                S3_BUCKET: 'nebill-development-deploy'
-                COMMAND: 'upload'
-                ZIP_FILE: 'nebill.zip'
-            - pipe: atlassian/aws-code-deploy:0.2.3
-              variables:
-                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-                AWS_DEFAULT_REGION: 'ap-northeast-1'
-                APPLICATION_NAME: 'nebill'
-                COMMAND: 'deploy'
-                ZIP_FILE: 'nebill.zip'
-                DEPLOYMENT_GROUP: 'development'
-                S3_BUCKET: 'nebill-development-deploy'
-                DEBUG: 'true'
-                WAIT: 'true'
+        <<: *deploy
+        deployment: Staging
+    master:
+      - step: *build
+      - parallel:
+        - step: *test
+        - step: *lint
+      - step:
+        <<: *deploy
+        deployment: Prodution
