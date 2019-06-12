@@ -66,7 +66,3 @@ group :development, :test do
   gem 'timecop'
   gem 'dotenv-rails'
 end
-
-group :production, :staging do
-  gem 'rails_12factor'
-end

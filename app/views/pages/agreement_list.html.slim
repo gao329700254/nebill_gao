@@ -14,7 +14,7 @@
       = link_to nil, 'v-on:click.prevent' => "viewShow('agreement_approval_list')"
         li :class = "currentView === 'agreementApprovalList' ? 'agreement_list__menu_bar__item--active' : 'agreement_list__menu_bar__item'"
           span.agreement_list__menu_bar__item__title = t('page.agreement.component.approval_list')
-      -if @current_user.id == 6
+      -if @current_user.is_chief
         = link_to nil, 'v-on:click.prevent' => "viewShow('agreement_client_list')"
           li :class = "currentView === 'agreementClientList' ? 'agreement_list__menu_bar__item--active' : 'agreement_list__menu_bar__item'"
             span.agreement_list__menu_bar__item__title = t('page.agreement.component.client_list')

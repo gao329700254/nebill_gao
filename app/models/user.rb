@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190521130747
+# Schema version: 20190607184247
 #
 # Table name: users
 #
@@ -20,6 +20,7 @@
 #  crypted_password   :string
 #  password_salt      :string
 #  perishable_token   :string
+#  is_chief           :boolean          default(FALSE)
 #
 # Indexes
 #
@@ -35,6 +36,7 @@ class User < ActiveRecord::Base
   acts_as :employee
   acts_as_authentic do |c|
     c.merge_validates_length_of_password_field_options if: -> { password_changed? }
+    c.disable_perishable_token_maintenance = true
   end
 
   has_many :members, through: :employee, class_name: 'UserMember'
@@ -54,8 +56,7 @@ class User < ActiveRecord::Base
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true
   validates :role, presence: true
   validates :default_allower, presence: true, on: :whencreate
-  before_validation :reset_perishable_token, if: -> { validation_context.in? %i(create whencreate) }
-  after_create -> { UserMailer.password_setting(self).deliver_now }
+  after_create :send_password_setting_email
 
   def send_password_setting_email
     reset_perishable_token!

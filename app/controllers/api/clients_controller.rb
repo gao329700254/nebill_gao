@@ -14,9 +14,7 @@ class Api::ClientsController < Api::ApiController
       end
       Client.transaction do
         @client.save!
-        unless create_approval
-          render_action_model_fail_message(@client, :create)
-        end
+        create_approval
       end
       create_notice if @client.status == 10
       render_action_model_success_message(@client, :create)
@@ -172,7 +170,8 @@ private
       approved_id: @client.id,
       approved_type: "Client",
     }
-    create_params = { user_id: 6 }
+    approval_user = User.find_by(is_chief: true)
+    create_params = { user_id: approval_user.id } if approval_user.present?
     if Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params).execute
       Approval.find_by(approved_type: 'Client', approved_id: @client.id)
     else
@@ -181,8 +180,11 @@ private
   end
 
   def file_update
+    @client.files.each do |file|
+      return false if file.legal_check == false
+    end
     @appr_params = { approval_id: @approval.id, button: 'pending', comment: '' }
-    @services = ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find(6))
+    @services = ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find_by(is_chief: true))
     @services.execute
     check_files if @client.status == 20
     update_notice if @client.status == 10
