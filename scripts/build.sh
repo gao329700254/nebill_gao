@@ -16,3 +16,4 @@ cd $INSTALL_DIR
 RAILS_ENV=$RAILS_ENV bundle install --without test development -j4 --deployment --path vendor/bundle
 RAILS_ENV=$RAILS_ENV bundle exec rake bower:install['--allow-root'] bower:clean['--allow-root']
 RAILS_ENV=$RAILS_ENV bundle exec rake assets:precompile
+RAILS_ENV=$RAILS_ENV bundle exec rake db:migrate
