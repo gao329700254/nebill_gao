@@ -54,7 +54,7 @@ class PagesController < ApplicationController
   def approval_show
     @approval = Approval.find(params[:approval_id])
     @approval_individual_group_switch = ApprovalIndividualGroupSwitch.new(@approval, current_user)
-    unless @approval.created_user_id == @current_user.id || @current_user_approval.present? || can?(:allread, Approval)
+    unless @approval.created_user_id == @current_user.id || @approval_individual_group_switch.current_user_approval.present? || can?(:allread, Approval)
       redirect_to approval_list_path
       return
     end
