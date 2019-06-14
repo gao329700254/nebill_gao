@@ -36,7 +36,7 @@ nav.sidemenu
             = link_to approval_groups_path
               li.sidemenu__item__submenu__item
                 span.sidemenu__item__submenu__item__page_title = t('approval_groups.index.title')
-    - if can? :manage, ExpenseApproval
+    - if can? :read, Expense
       li.sidemenu__item
         = fa_icon 'building 2x', class: 'sidemenu__item__icon'
         span.sidemenu__item__page_title = Expense.model_name.human
