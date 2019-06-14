@@ -1,7 +1,8 @@
 #!/bin/bash
 
 if [ "$RAILS_ENV" = "" ]; then
-  echo $$DEPLOYMENT_GROUP_NAME
+  RAILS_ENV=$DEPLOYMENT_GROUP_NAME
+
   if [ "$DEPLOYMENT_GROUP_NAME" == "development" ]; then
     RAILS_ENV="staging"
   fi
