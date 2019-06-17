@@ -95,7 +95,7 @@
                 = button_to 'reassignment', data: { disable_with: t('page.approval_show.wait') },
                                                     class: 'approval_show__detail__update__add_approval_user__btn--reassignment' do
                   = fa_icon 'refresh', text: t('page.approval_show.reassignment')
-          - if @approval.status != 40 && @approval.status != 20 && @approval_individual_group_switch.current_user_approval.present?
+          - if [20, 30, 40].exclude?(@approval.status) && @approval_individual_group_switch.current_user_approval.present?
             - if @approval.approvaler_type.user?
               = form_tag api_approval_approval_user_path(id: @approval_individual_group_switch.current_user_approval.id), \
               method: :put, class: 'approval_show__reassignment__form' do

@@ -50,15 +50,17 @@ class Approval < ActiveRecord::Base
   after_touch :check_and_update_group_status, if: -> { approvaler_type.group? }
 
   def check_and_update_user_status
-    return unless approval_users.all? { |i| i.status.permission? || i.status.reassignment? }
-
-    update(status: :permission)
+    Approval.no_touching do
+      return update(status: :permission) if approval_users.all? { |i| i.status.permission? || i.status.reassignment? }
+      return update(status: :disconfirm) if approval_users.any? { |i| i.status.disconfirm? }
+    end
   end
 
   def check_and_update_group_status
-    return unless approval_group.users.size == approval_users.size && approval_users.all? { |i| i.status.permission? }
-
-    update(status: :permission)
+    Approval.no_touching do
+      return update(status: :permission) if approval_group.users.size == approval_users.size && approval_users.all? { |i| i.status.permission? }
+      return update(status: :disconfirm) if approval_users.any? { |i| i.status.disconfirm? }
+    end
   end
 
   class << self
