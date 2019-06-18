@@ -15,6 +15,10 @@ class Api::ApprovalsController < Api::ApiController
   def update
     @approval = Approval.find(params[:id])
 
+    @approval.approval_users.each do |approval_user|
+      approval_user.status = :pending if approval_user.status == :disconfirm
+    end
+
     if @approval.update(approval_params)
       update_notice
       update_execut_success
