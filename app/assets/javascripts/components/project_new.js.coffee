@@ -1,7 +1,7 @@
 $ ->
   Vue.component 'projectNew',
     template: '#project_new'
-    mixins: [Vue.modules.projectHelper, Vue.modules.modal]
+    mixins: [Vue.modules.projectHelper, Vue.modules.modal, Vue.modules.numericHelper]
     data: ->
       file: ''
       clients: []

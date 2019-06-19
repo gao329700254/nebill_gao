@@ -114,4 +114,12 @@ class Project < ActiveRecord::Base
     @max_sequence = where('cd LIKE ?', "%#{prefix}%").pluck(:cd).map { |cd| cd.gsub(prefix, "").to_i }.max
     @sequence = @max_sequence ? @max_sequence + 1 : 1
   end
+
+  def amount=(value)
+    super(value.delete(',')) if value
+  end
+
+  def estimated_amount=(value)
+    super(value.delete(',')) if value
+  end
 end
