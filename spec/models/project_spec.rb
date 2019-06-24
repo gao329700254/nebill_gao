@@ -29,12 +29,8 @@ RSpec.describe Project do
   it { is_expected.to validate_presence_of(:cd) }
   it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }
   it { is_expected.to validate_presence_of(:name) }
-  it { is_expected.to validate_numericality_of(:amount).only_integer }
-  it { is_expected.to validate_numericality_of(:amount).is_greater_than_or_equal_to(0) }
-  it { is_expected.to validate_numericality_of(:amount).allow_nil }
-  it { is_expected.to validate_numericality_of(:estimated_amount).only_integer }
-  it { is_expected.to validate_numericality_of(:estimated_amount).is_greater_than_or_equal_to(0) }
-  it { is_expected.to validate_numericality_of(:estimated_amount).allow_nil }
+  it { is_expected.to validate_numericality_of(:amount) }
+  it { is_expected.to validate_numericality_of(:estimated_amount) }
 
   it { is_expected.to be_versioned }
 
@@ -48,7 +44,7 @@ RSpec.describe Project do
     it { is_expected.to validate_presence_of(:contract_on) }
     it { is_expected.to validate_presence_of(:status) }
     it { is_expected.to validate_presence_of(:end_on) }
-    it { is_expected.to validate_presence_of(:amount) }
+    it { is_expected.to validate_numericality_of(:amount) }
     it { is_expected.to validate_presence_of(:payment_type) }
     it { is_expected.to validate_presence_of(:orderer_company_name) }
     it { is_expected.to validate_presence_of(:orderer_personnel_names) }

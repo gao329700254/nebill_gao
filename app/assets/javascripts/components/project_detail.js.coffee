@@ -1,7 +1,7 @@
 $ ->
   Vue.component 'projectDetail',
     template: '#project_detail'
-    mixins: [Vue.modules.projectHelper]
+    mixins: [Vue.modules.projectHelper, Vue.modules.numericHelper]
     props: ['projectId']
     data: ->
       approvalId:undefined
@@ -38,6 +38,8 @@ $ ->
           .done (response) =>
             @projectOriginal = response
             @project = $.extend(true, {}, @projectOriginal)
+            @project.amount = @project.amount.toLocaleString('en')
+            @project.estimated_amount = @project.estimated_amount.toLocaleString('en')
           .fail (response) =>
             console.error response
       statusList: ->
