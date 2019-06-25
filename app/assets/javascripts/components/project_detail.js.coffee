@@ -31,15 +31,18 @@ $ ->
         @loadProject()
         @statusList()
       editMode: (val) ->
-        @project = $.extend(true, {}, @projectOriginal) unless val
+        unless val
+          @project = $.extend(true, {}, @projectOriginal)
+          @project.amount = parseInt(@project.amount).toLocaleString()
+          @project.estimated_amount = parseInt(@project.estimated_amount).toLocaleString()
     methods:
       loadProject: ->
         $.ajax "/api/projects/#{@projectId}.json"
           .done (response) =>
             @projectOriginal = response
             @project = $.extend(true, {}, @projectOriginal)
-            @project.amount = @project.amount.toLocaleString('en')
-            @project.estimated_amount = @project.estimated_amount.toLocaleString('en')
+            @project.amount = parseInt(@project.amount).toLocaleString()
+            @project.estimated_amount = parseInt(@project.estimated_amount).toLocaleString()
           .fail (response) =>
             console.error response
       statusList: ->
@@ -69,7 +72,6 @@ $ ->
               contentType: false
               processData: false
             .done (response) =>
-
               toastr.success('', response.message)
               @loadProject()
               @getApprovalUser()
