@@ -1,12 +1,12 @@
 class ClientFileUploader < CarrierWave::Uploader::Base
-  if Rails.env.production?
+  if ENV["FILE_STORAGE_TYPE"] == "fog"
     storage :fog
   else
     storage :file
   end
 
   def store_dir
-    if Rails.env.production?
+    if ENV["FILE_STORAGE_TYPE"] == "fog"
       File.join(
         model.class.to_s.underscore,
         mounted_as.to_s,
