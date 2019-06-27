@@ -18,5 +18,5 @@
 class ExpenseFile < ActiveRecord::Base
   belongs_to :expense
 
-  mount_uploader :file, ExpenseFileUploader
+  mount_uploader :file, BasicFileUploader
 end

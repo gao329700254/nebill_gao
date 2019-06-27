@@ -1,4 +1,4 @@
-class ClientFileUploader < CarrierWave::Uploader::Base
+class BasicFileUploader < CarrierWave::Uploader::Base
   if ENV["FILE_STORAGE_TYPE"] == "fog"
     storage :fog
   else

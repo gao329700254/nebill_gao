@@ -23,7 +23,7 @@ class ProjectFile < ActiveRecord::Base
   belongs_to :group, class_name: 'ProjectFileGroup', foreign_key: :file_group_id
   has_paper_trail meta: { project_id: :project_id }
 
-  mount_uploader :file, ProjectFileUploader
+  mount_uploader :file, BasicFileUploader
 
   enumerize :file_type, in: { default: 10, purchase: 20 }, default: :default
 

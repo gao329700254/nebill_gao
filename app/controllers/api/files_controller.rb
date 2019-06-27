@@ -11,7 +11,7 @@ class Api::FilesController < Api::ApiController
     file_download(ClientFile.find(params[:files_id]))
   end
 
-  private
+private
 
   def file_download(file_model)
     file = file_model.file
