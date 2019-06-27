@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
     user = User.find_by!(email: auth.info.email)
     user.provider = auth.provider
     user.uid      = auth.uid
-    user.name     = auth.info.name
+    user.name   ||= auth.info.name
     user.save!
     user
   end
