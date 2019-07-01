@@ -2,6 +2,9 @@
   .user_new__form__container
     .user_new__form__container__group
       .user_new__form__item
+        = label_tag :name, t('activerecord.attributes.user.name')
+        = text_field_tag :name, nil, 'v-model' => 'user.name'
+      .user_new__form__item
         = label_tag :email, t('activerecord.attributes.user.email')
         = text_field_tag :email, nil, 'v-model' => 'user.email'
       .user_new__form__item
