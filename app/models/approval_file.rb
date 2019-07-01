@@ -14,5 +14,5 @@
 class ApprovalFile < ActiveRecord::Base
   belongs_to :approval
 
-  mount_uploader :file, ApprovalFileUploader
+  mount_uploader :file, BasicFileUploader
 end
