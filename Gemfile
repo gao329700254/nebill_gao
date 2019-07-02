@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.3.1'
+ruby '2.4.5'
 
 gem 'rails', '4.2.11.1'
 gem 'therubyracer', platforms: :ruby
@@ -60,7 +60,8 @@ group :development, :test do
   gem 'poltergeist'
   gem 'launchy'
   gem 'database_rewinder'
-  gem 'shoulda'
+  gem 'shoulda-matchers'
+  gem 'teaspoon', github: 'jejacks0n/teaspoon'
   gem 'teaspoon-jasmine'
   gem 'simplecov', require: false
   gem 'timecop'
