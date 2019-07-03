@@ -9,6 +9,7 @@ $ ->
         phone_number:     'eq'
       list: undefined
       searchKeywords: undefined
+      is_valid: false
       sortKey: 'id'
       statuses: []
     methods:
