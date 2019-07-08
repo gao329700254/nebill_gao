@@ -55,7 +55,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-its'
   gem 'faker'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'capybara'
   gem 'poltergeist'
   gem 'launchy'

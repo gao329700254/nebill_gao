@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :project_file_group do
     project
     name { Faker::App.name }

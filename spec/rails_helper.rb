@@ -37,7 +37,7 @@ RSpec.configure do |config|
 
   config.include ActionDispatch::TestProcess
 
-  FactoryGirl::SyntaxRunner.class_eval do
+  FactoryBot::SyntaxRunner.class_eval do
     include ActionDispatch::TestProcess
   end
 end
