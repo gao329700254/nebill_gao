@@ -31,7 +31,7 @@
 #  fk_rails_f76f7dd8cc  (default_allower => users.id)
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   extend Enumerize
   acts_as :employee
   acts_as_authentic do |c|

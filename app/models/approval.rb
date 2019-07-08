@@ -21,7 +21,7 @@
 #  index_approvals_on_approved_type_and_approved_id  (approved_type,approved_id)
 #
 
-class Approval < ActiveRecord::Base
+class Approval < ApplicationRecord
   extend Enumerize
   has_many :approval_users
   has_many :users, through: :approval_users

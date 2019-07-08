@@ -14,7 +14,7 @@
 #  fk_rails_149964afbb  (project_id => projects.id)
 #
 
-class ProjectFileGroup < ActiveRecord::Base
+class ProjectFileGroup < ApplicationRecord
   belongs_to :project
   has_many :files, class_name: 'ProjectFile', foreign_key: :file_group_id
 

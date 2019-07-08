@@ -11,6 +11,6 @@
 #  updated_at :datetime         not null
 #
 
-class ExpenseTransportation < ActiveRecord::Base
+class ExpenseTransportation < ApplicationRecord
   validates :amount, uniqueness: { scope: [:departure, :arrival] }
 end

@@ -27,7 +27,7 @@
 #  fk_rails_fe4b1121aa  (default_id => default_expense_items.id)
 #
 
-class Expense < ActiveRecord::Base
+class Expense < ApplicationRecord
   extend Enumerize
   has_many :file, class_name: 'ExpenseFile', dependent: :destroy
 

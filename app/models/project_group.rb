@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class ProjectGroup < ActiveRecord::Base
+class ProjectGroup < ApplicationRecord
   has_many :projects, dependent: :nullify, foreign_key: :group_id
 
   validates :name, presence: true

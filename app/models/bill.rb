@@ -25,7 +25,7 @@
 #  fk_rails_9a464041fd  (project_id => projects.id)
 #
 
-class Bill < ActiveRecord::Base
+class Bill < ApplicationRecord
   extend Enumerize
 
   belongs_to :project

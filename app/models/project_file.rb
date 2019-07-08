@@ -17,7 +17,7 @@
 #  fk_rails_c26fbba4b3  (project_id => projects.id)
 #
 
-class ProjectFile < ActiveRecord::Base
+class ProjectFile < ApplicationRecord
   extend Enumerize
   belongs_to :project
   belongs_to :group, class_name: 'ProjectFileGroup', foreign_key: :file_group_id
