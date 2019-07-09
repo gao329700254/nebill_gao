@@ -38,8 +38,8 @@
       &--name {
         @extend %approval_groups__tbl__item;
         @include span-columns(4);
-        white-space: normal;
         word-break: break-word;
+        white-space: normal;
       }
 
       &--users {
