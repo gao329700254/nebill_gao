@@ -35,6 +35,7 @@ class User < ApplicationRecord
   extend Enumerize
   acts_as :employee
   acts_as_authentic do |c|
+    # FIXME: 警告がでるが変わりの手段がわからない
     c.merge_validates_length_of_password_field_options if: -> { password_changed? }
     c.disable_perishable_token_maintenance = true
   end

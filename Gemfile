@@ -14,8 +14,8 @@ gem 'active_record-acts_as'
 gem 'enumerize'
 gem 'authlogic'
 gem 'omniauth-google-oauth2', '~> 0.6'
-gem 'bourbon'
-gem 'neat'
+gem 'bourbon', '4.2.6'
+gem 'neat', '1.7.2'
 gem 'bower-rails'
 gem 'font-awesome-rails'
 gem 'highline'
@@ -66,4 +66,5 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'timecop'
   gem 'dotenv-rails'
+  gem 'rails-controller-testing'
 end

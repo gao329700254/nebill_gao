@@ -13,7 +13,7 @@ RSpec.describe 'projects request', versioning: true do
     let(:path) { "/api/projects/search_result" }
 
     it 'return a list of projects' do
-      post path, params
+      post path, params: params
 
       expect(response).to be_success
       expect(response.status).to eq 200
@@ -99,7 +99,7 @@ RSpec.describe 'projects request', versioning: true do
 
       it 'create a project' do
         expect do
-          post path, params
+          post path, params: params
         end.to change(Project, :count).by(1)
 
         project = Project.first
@@ -136,7 +136,7 @@ RSpec.describe 'projects request', versioning: true do
       end
 
       it 'return success code and message' do
-        post path, params
+        post path, params: params
 
         expect(response).to be_success
         expect(response.status).to eq 201
@@ -186,12 +186,12 @@ RSpec.describe 'projects request', versioning: true do
 
       it 'do not create a project' do
         expect do
-          post path, params
+          post path, params: params
         end.not_to change(Project, :count)
       end
 
       it 'return 422 Unprocessable Entity code and message' do
-        post path, params
+        post path, params: params
 
         expect(response).not_to be_success
         expect(response.status).to eq 422
@@ -207,7 +207,7 @@ RSpec.describe 'projects request', versioning: true do
       let(:path) { "/api/projects/#{project.id}" }
 
       it 'return the project' do
-        get path, format: 'json'
+        get path, params: { format: 'json' }
 
         expect(response).to be_success
         expect(response.status).to eq 200
@@ -383,7 +383,7 @@ RSpec.describe 'projects request', versioning: true do
 
         it 'update the project' do
           expect do
-            patch path, params
+            patch path, params: params
           end.to change { project.reload && project.updated_at }
 
           expect(project.group_id).to eq  project_group.id
@@ -419,7 +419,7 @@ RSpec.describe 'projects request', versioning: true do
         end
 
         it 'return success code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).to be_success
           expect(response.status).to eq 201
@@ -469,12 +469,12 @@ RSpec.describe 'projects request', versioning: true do
 
         it 'do not update the project' do
           expect do
-            patch path, params
+            patch path, params: params
           end.not_to change { project.reload && project.updated_at }
         end
 
         it 'return 422 Unprocessable Entity code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).not_to be_success
           expect(response.status).to eq 422
@@ -516,7 +516,7 @@ RSpec.describe 'projects request', versioning: true do
 
       it 'update the project' do
         expect do
-          patch path, params
+          patch path, params: params
         end.to change { project.reload && project.updated_at }
 
         expect(project.cd).to eq  '17D001A'
@@ -542,7 +542,7 @@ RSpec.describe 'projects request', versioning: true do
       end
 
       it 'return success code and message' do
-        patch path, params
+        patch path, params: params
 
         expect(response).to be_success
         expect(response.status).to eq 201

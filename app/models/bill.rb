@@ -37,7 +37,6 @@ class Bill < ApplicationRecord
 
   has_paper_trail meta: { project_id: :project_id, bill_id: :id }
 
-  validates :project      , presence: true
   validates :cd           , presence: true, uniqueness: { case_sensitive: false }
   validates :amount       , presence: true
   validates :delivery_on  , presence: true

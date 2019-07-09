@@ -30,7 +30,7 @@ RSpec.describe 'project groups request' do
 
       it 'create a project group' do
         expect do
-          post path, params
+          post path, params: params
         end.to change(ProjectGroup, :count).by(1)
 
         project_group = ProjectGroup.first
@@ -38,7 +38,7 @@ RSpec.describe 'project groups request' do
       end
 
       it 'return success code and message' do
-        post path, params
+        post path, params: params
 
         expect(response).to be_success
         expect(response.status).to eq 201
@@ -53,12 +53,12 @@ RSpec.describe 'project groups request' do
 
       it 'do not create a project group' do
         expect do
-          post path, params
+          post path, params: params
         end.not_to change(ProjectGroup, :count)
       end
 
       it 'return 422 Unprocessable Entity code and message' do
-        post path, params
+        post path, params: params
 
         expect(response).not_to be_success
         expect(response.status).to eq 422
@@ -78,14 +78,14 @@ RSpec.describe 'project groups request' do
 
         it 'update the project group' do
           expect do
-            patch path, params
+            patch path, params: params
           end.to change { project_group.reload && project_group.updated_at }
 
           expect(project_group.name).to eq 'name'
         end
 
         it 'return success code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).to be_success
           expect(response.status).to eq 201
@@ -100,12 +100,12 @@ RSpec.describe 'project groups request' do
 
         it 'do not update the project group' do
           expect do
-            patch path, params
+            patch path, params: params
           end.not_to change { project_group.reload && project_group.updated_at }
         end
 
         it 'return 422 Unprocessable Entity code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).not_to be_success
           expect(response.status).to eq 422
