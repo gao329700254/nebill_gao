@@ -22,6 +22,11 @@
         @include list_tbl__body__row;
         cursor: pointer;
 
+        &--invalid {
+          border-bottom: $bold-border;
+          background-color: $light-grey;
+        }
+
         &:hover {
           background-color: $theme-lighen-color;
         }
@@ -60,6 +65,14 @@
   }
 
   &__btn {
+    &__item {
+      @include span-columns(2);
+    }
+
+    &__blank {
+      @include span-columns(4);
+    }
+
     &--new_client {
       @include btn--primary;
     }

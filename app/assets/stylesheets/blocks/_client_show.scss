@@ -39,6 +39,11 @@
       }
     }
 
+    &__check {
+      margin-top: $base-spacing;
+      margin-bottom: $base-spacing;
+    }
+
     &__approval_user_list {
       margin-bottom: $small-spacing;
 

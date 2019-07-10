@@ -7,6 +7,11 @@ FactoryGirl.define do
     zip_code        { Faker::Address.zip_code }
     phone_number    { Faker::PhoneNumber.phone_number }
     memo            { Faker::Lorem.sentence }
+    is_valid        { true }
+
+    factory :invalid_client do
+      is_valid      { false }
+    end
 
     after(:build) do |client|
       client.files << build(:client_file, :nda, client: client)

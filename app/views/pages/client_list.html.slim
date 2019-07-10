@@ -7,8 +7,14 @@
 #client_list.client_list
   = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
                      placeholder: t('page.client_list.search_form_placeholder'), lazy: true, class: 'client_list__search'
-  = button_tag 'v-on:click' => 'showClientNew', class: 'client_list__btn--new_client' do
-    = fa_icon 'check', text: t('page.client_new.title')
+  .client_list__btn
+    .client_list__btn__item
+      = check_box_tag :is_valid, true, false, 'v-model' => 'is_valid'
+      = label_tag :is_valid, t('page.client_list.show_invalid_client')
+    .client_list__btn__blank
+    .client_list__btn__item
+      = button_tag 'v-on:click' => 'showClientNew', class: 'client_list__btn--new_client' do
+        = fa_icon 'check', text: t('page.client_new.title')
   table.client_list__tbl
     thead.client_list__tbl__head
       tr.client_list__tbl__head__row
@@ -19,10 +25,11 @@
         th.client_list__tbl__item--phone_number         = t('activerecord.attributes.client.phone_number')
     tbody.client_list__tbl__body
       tr.client_list__tbl__body__row [
-        v-for      = "client in list | selectBy searchKeywords selectSchema | orderBy sortKey"
-        id         = "client-{{client.id}}"
-        v-on:click = "linkToShow(client.id)"
-        track-by   = "id"
+        v-bind:class = "client.is_valid ? 'client_list__tbl__body__row' : 'client_list__tbl__body__row--invalid' "
+        v-for        = "client in list | selectBy searchKeywords selectSchema | filterBy !is_valid | orderBy sortKey"
+        id           = "client-{{client.id}}"
+        v-on:click   = "linkToShow(client.id)"
+        track-by     = "id"
       ]
         td.client_list__tbl__item--cd                   v-text='client.cd'
         td.client_list__tbl__item--company_name         v-text='client.company_name'

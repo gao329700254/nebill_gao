@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20181218054454
+# Schema version: 20190627015639
 #
 # Table name: clients
 #
@@ -14,6 +14,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  status          :integer
+#  is_valid        :boolean          default(TRUE)
 #
 
 class Client < ActiveRecord::Base

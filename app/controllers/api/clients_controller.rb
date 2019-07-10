@@ -91,6 +91,7 @@ private
       :zip_code,
       :phone_number,
       :memo,
+      :is_valid,
       files_attributes: [:id, :file, :file_type, :legal_check, :_destroy],
     )
   end
