@@ -6,18 +6,17 @@ RSpec.describe 'projects request', versioning: true do
   before { login(user) }
 
   describe 'GET /api/projects' do
-    let!(:project1) { create(:contracted_project, cd: '17D001A', is_regular_contract: true) }
-    let!(:project2) { create(:contracted_project, cd: '17D002A', status: :finished) }
-    let!(:project3) { create(:uncontracted_project, cd: '17D001B') }
-    let(:params)    { {} }
-    let(:path)      { "/api/projects/search_result" }
+    let!(:project1) { create(:contracted_project, cd: '17D001', is_regular_contract: true) }
+    let!(:project2) { create(:contracted_project, cd: '17D002', status: :finished) }
+    let(:params) { { today: Time.zone.now } }
+    let(:path) { "/api/projects/search_result" }
 
     it 'return a list of projects' do
       post path, params: params
 
       expect(response).to be_success
       expect(response.status).to eq 200
-      expect(json.count).to eq 3
+      expect(json.count).to eq 2
 
       expect(json[0]['id']).to                       eq project1.id
       expect(json[0]['group_id']).to                 eq project1.group_id
@@ -64,7 +63,7 @@ RSpec.describe 'projects request', versioning: true do
         {
           project: {
             group_id: project_group.id,
-            cd: '17D001A',
+            cd: '17D001',
             name: 'name',
             memo: 'memo',
             contracted: true,
@@ -104,7 +103,7 @@ RSpec.describe 'projects request', versioning: true do
 
         project = Project.first
         expect(project.group_id).to eq project_group.id
-        expect(project.cd).to eq  '17D001A'
+        expect(project.cd).to eq  '17D001'
         expect(project.name).to eq  'name'
         expect(project.memo).to eq  'memo'
         expect(project.contracted).to eq  true
@@ -348,7 +347,7 @@ RSpec.describe 'projects request', versioning: true do
           {
             project: {
               group_id: project_group.id,
-              cd: '17D001A',
+              cd: '17D001',
               name: 'name',
               memo: 'memo',
               contracted: true,
@@ -387,7 +386,7 @@ RSpec.describe 'projects request', versioning: true do
           end.to change { project.reload && project.updated_at }
 
           expect(project.group_id).to eq  project_group.id
-          expect(project.cd).to eq  '17D001A'
+          expect(project.cd).to eq  '17D001'
           expect(project.name).to eq  'name'
           expect(project.memo).to eq  'memo'
           expect(project.contracted).to eq  true
@@ -491,7 +490,7 @@ RSpec.describe 'projects request', versioning: true do
       let(:params) do
         {
           project: {
-            cd: '17D001A',
+            cd: '17D001',
             name: 'name',
             memo: 'memo',
             contracted: false,
@@ -519,7 +518,7 @@ RSpec.describe 'projects request', versioning: true do
           patch path, params: params
         end.to change { project.reload && project.updated_at }
 
-        expect(project.cd).to eq  '17D001A'
+        expect(project.cd).to eq  '17D001'
         expect(project.name).to eq  'name'
         expect(project.memo).to eq  'memo'
         expect(project.contracted).to eq  false

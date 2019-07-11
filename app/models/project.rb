@@ -42,10 +42,6 @@
 #
 #  index_projects_on_cd  (cd) UNIQUE
 #
-# Foreign Keys
-#
-#  fk_rails_a3d5742497  (group_id => project_groups.id)
-#
 
 class Project < ApplicationRecord
   extend Enumerize
@@ -100,8 +96,6 @@ class Project < ApplicationRecord
                 memo
               ).map { |attr_name| ["orderer_#{attr_name}", attr_name] }
 
-  validates :cd, format: { with: /\A\d{2}[a-z|A-Z]\d{3}[AB]?\z/ }
-
   before_save { cd.upcase! }
 
   scope :between, lambda { |start_on, end_on|
@@ -110,9 +104,9 @@ class Project < ApplicationRecord
   scope :gteq_start_on, -> (start_on) { where(Project.arel_table[:start_on].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Project.arel_table[:end_on].lteq(end_on)) }
 
-  def self.sequence(prefix)
+  def self.next_sequence(prefix)
     @max_sequence = where('cd LIKE ?', "%#{prefix}%").pluck(:cd).map { |cd| cd.gsub(prefix, "").to_i }.max
-    @sequence = @max_sequence ? @max_sequence + 1 : 1
+    @max_sequence.present? ? @max_sequence + 1 : 1
   end
 
   def amount=(value)

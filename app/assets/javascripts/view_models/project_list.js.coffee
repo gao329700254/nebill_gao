@@ -27,9 +27,13 @@ $ ->
               end: @end
             }
           .done (response) =>
-            @list = response
+            @list = @reverseList(response)
         finally
           search.prop('disabled', false)
+      reverseList: (list) ->
+        compareUpdatedAt = (a, b) ->
+          if b.updated_at >= a.updated_at then 1 else -1
+        sortedList = list.slice().sort(compareUpdatedAt)
     compiled: ->
       @search()
     events:

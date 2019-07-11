@@ -113,8 +113,8 @@ RSpec.describe Project do
 
   describe 'CD' do
     context 'correct' do
-      context '17D001A' do
-        let(:project) { build(:uncontracted_project, cd: '17D001A') }
+      context '17D001' do
+        let(:project) { build(:uncontracted_project, cd: '17D001') }
         subject { project }
         it { is_expected.to be_valid }
       end
