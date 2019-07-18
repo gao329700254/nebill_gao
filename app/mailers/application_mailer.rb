@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: I18n.t("mail.from"),
+  default from: "Nebill<nebill@cuon.co.jp>",
           reply_to: "nebill@cuon.co.jp"
   layout 'mailer'
 end
