@@ -1,5 +1,5 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :payee_account do
-    employee "MyString"
+    employee { "MyString" }
   end
 end

@@ -20,7 +20,7 @@ RSpec.describe 'user members request' do
 
     it 'create a user member' do
       expect do
-        post path, params
+        post path, params: params
       end.to change(Member, :count).by(1)
 
       expect(project.users).to include user

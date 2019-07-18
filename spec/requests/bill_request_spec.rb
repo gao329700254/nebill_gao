@@ -148,7 +148,7 @@ RSpec.describe 'bills request' do
 
       it 'create a bill' do
         expect do
-          post path, params
+          post path, params: params
         end.to change(Bill, :count).by(1)
 
         bill = Bill.first
@@ -182,7 +182,7 @@ RSpec.describe 'bills request' do
 
       it 'do not create a bill' do
         expect do
-          post path, params
+          post path, params: params
         end.not_to change(Bill, :count)
       end
     end
@@ -212,7 +212,7 @@ RSpec.describe 'bills request' do
 
         it 'update the bill' do
           expect do
-            patch path, params
+            patch path, params: params
           end.to change { bill.reload && bill.updated_at }
 
           expect(bill.project).to             eq project
@@ -227,7 +227,7 @@ RSpec.describe 'bills request' do
         end
 
         it 'return success code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).to be_success
           expect(response.status).to eq 201
@@ -255,12 +255,12 @@ RSpec.describe 'bills request' do
 
         it 'do not update the bill' do
           expect do
-            patch path, params
+            patch path, params: params
           end.not_to change { bill.reload && bill.updated_at }
         end
 
         it 'return 422 Unprocessable Entity code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).not_to be_success
           expect(response.status).to eq 422

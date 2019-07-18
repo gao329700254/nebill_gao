@@ -176,7 +176,7 @@ RSpec.describe 'user request' do
 
       it 'create a user' do
         expect do
-          post path, params
+          post path, params: params
         end.to change(User, :count).by(1)
 
         user = User.last
@@ -186,7 +186,7 @@ RSpec.describe 'user request' do
       end
 
       it 'return success code and message' do
-        post path, params
+        post path, params: params
 
         expect(response).to be_success
         expect(response.status).to eq 201
@@ -201,12 +201,12 @@ RSpec.describe 'user request' do
 
       it 'do not create a project group' do
         expect do
-          post path, params
+          post path, params: params
         end.not_to change(User, :count)
       end
 
       it 'return 422 Unprocessable Entity code and message' do
-        post path, params
+        post path, params: params
 
         expect(response).not_to be_success
         expect(response.status).to eq 422

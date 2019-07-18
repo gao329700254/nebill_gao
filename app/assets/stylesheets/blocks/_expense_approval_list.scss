@@ -63,8 +63,8 @@
       &--name {
         @extend %expense_approval_list__tbl__item;
         @include span-columns(6);
-        white-space: normal;
         word-break: break-word;
+        white-space: normal;
       }
 
       &--status {

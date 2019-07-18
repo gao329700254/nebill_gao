@@ -17,7 +17,7 @@
 #  is_valid        :boolean          default(TRUE)
 #
 
-class Client < ActiveRecord::Base
+class Client < ApplicationRecord
   extend Enumerize
   has_many :approvals, as: :approved
   has_many :files, class_name: 'ClientFile', dependent: :destroy

@@ -1,6 +1,6 @@
 include ActionDispatch::TestProcess
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :project_file do
     project
     association :group, factory: :project_file_group

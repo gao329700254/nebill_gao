@@ -22,7 +22,7 @@
 #  fk_rails_fd5f9a9350  (approval_id => approvals.id)
 #
 
-class ApprovalApprovalGroup < ActiveRecord::Base
+class ApprovalApprovalGroup < ApplicationRecord
   extend Enumerize
 
   belongs_to :approval

@@ -17,7 +17,7 @@
 #  fk_rails_f083143719  (user_id => users.id)
 #
 
-class ExpenseApprovalUser < ActiveRecord::Base
+class ExpenseApprovalUser < ApplicationRecord
   extend Enumerize
   belongs_to :user
   belongs_to :expense_approval

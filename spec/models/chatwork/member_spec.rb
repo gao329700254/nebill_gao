@@ -17,8 +17,8 @@ RSpec.describe Chatwork::Member, type: :model do
   end
 
   before do
-    allow(ENV).to receive(:[]).with('CHATWORK_API_TOKEN').and_return(chatwork_api_token)
-    allow(ENV).to receive(:[]).with('CHATWORK_ROOM_ID').and_return(chatwork_room_id)
+    allow(Rails.configuration.x).to receive(:chatwork_api_token).and_return(chatwork_api_token)
+    allow(Rails.configuration.x).to receive(:chatwork_room_id).and_return(chatwork_room_id)
     allow(Faraday).to receive(:new).and_return(faraday_mock)
     allow(faraday_mock).to receive(:get).with('/v2/rooms/room_id/members').and_return(response_mock)
   end

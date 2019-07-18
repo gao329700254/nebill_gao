@@ -64,7 +64,7 @@
           .client_show__form__file__contents v-if='!client.nda'
             = t('page.client_show.file_no_contents')
           .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' || client.status_num == 'waiting')"
-            = hidden_field_tag :nda_id, '{{client.nda.id}}', 'v-model' => 'nda_id'
+            = hidden_field_tag :nda_id, '{{client.nda ? client.nda.id : ""}}', 'v-model' => 'nda_id'
             = file_field_tag :files, 'v-on:change' => 'ndaInputChange'
             = check_box_tag :nda_legal_check, true, false, 'v-model' => 'nda_legal_check'
             = label_tag :nda_legal_check, t('page.client_new.legal_check')
@@ -79,7 +79,7 @@
           .client_show__form__file__contents v-if='!client.basic_c'
             = t('page.client_show.file_no_contents')
           .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' || client.status_num == 'waiting')"
-            = hidden_field_tag :basic_contract_id, '{{client.basic_c.id}}', 'v-model' => 'basic_contract_id'
+            = hidden_field_tag :basic_contract_id, '{{client.basic_c ? client.basic_c.id : ""}}', 'v-model' => 'basic_contract_id'
             = file_field_tag :files, 'v-on:change' => 'basicContractInputChange'
             = check_box_tag :basic_contract_legal_check, true, false, 'v-model' => 'basic_contract_legal_check'
             = label_tag :basic_contract_legal_check, t('page.client_new.legal_check')

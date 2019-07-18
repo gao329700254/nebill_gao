@@ -8,11 +8,11 @@ module Chatwork
 
     class << self
       def enable?
-        ENV['CHATWORK_API_TOKEN'].present? && ENV['CHATWORK_ROOM_ID'].present?
+        Rails.configuration.x.chatwork_api_token.present? && Rails.configuration.x.chatwork_room_id.present?
       end
 
       def api_prefix
-        Pathname.new('/v2/rooms').join(ENV['CHATWORK_ROOM_ID'])
+        Pathname.new('/v2/rooms').join(Rails.configuration.x.chatwork_room_id)
       end
 
       def get(url, **params)
@@ -61,7 +61,7 @@ module Chatwork
           url: 'https://api.chatwork.com',
           headers: {
             "Content-type" => "application/x-www-form-urlencoded;charset=UTF-8",
-            "X-ChatWorkToken" => ENV['CHATWORK_API_TOKEN'],
+            "X-ChatWorkToken" => Rails.configuration.x.chatwork_api_token,
           },
         )
       end

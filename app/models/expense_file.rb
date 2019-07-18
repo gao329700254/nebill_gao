@@ -15,7 +15,7 @@
 #  fk_rails_024476420e  (expense_id => expenses.id)
 #
 
-class ExpenseFile < ActiveRecord::Base
+class ExpenseFile < ApplicationRecord
   belongs_to :expense
 
   mount_uploader :file, BasicFileUploader

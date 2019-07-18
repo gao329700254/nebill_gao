@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :approval_group do
     name { Faker::Lorem.sentence }
     after(:build) do |approval_group|

@@ -16,7 +16,7 @@
 #  index_employees_on_email  (email) UNIQUE
 #
 
-class Employee < ActiveRecord::Base
+class Employee < ApplicationRecord
   actable
 
   has_many :members
