@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: approval_users
 #
@@ -23,7 +23,7 @@
 #  fk_rails_c7d21d10af  (user_id => users.id)
 #
 
-class ApprovalUser < ActiveRecord::Base
+class ApprovalUser < ApplicationRecord
   extend Enumerize
   belongs_to :approval, touch: true
   belongs_to :user

@@ -22,6 +22,7 @@ Capybara.javascript_driver = :poltergeist
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, js_errors: false, window_size: [1025, 768])
 end
+Capybara.server = :puma, { Silent: true }
 
 SimpleCov.minimum_coverage 40
 
@@ -37,7 +38,14 @@ RSpec.configure do |config|
 
   config.include ActionDispatch::TestProcess
 
-  FactoryGirl::SyntaxRunner.class_eval do
+  FactoryBot::SyntaxRunner.class_eval do
     include ActionDispatch::TestProcess
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end

@@ -11,8 +11,8 @@ RSpec.describe Chatwork::Approval, type: :model do
   let(:target_instance) { described_class.new(approval: approval, to_user: user) }
 
   before do
-    allow(ENV).to receive(:[]).with('CHATWORK_API_TOKEN').and_return('token')
-    allow(ENV).to receive(:[]).with('CHATWORK_ROOM_ID').and_return('room_id')
+    allow(Rails.configuration.x).to receive(:chatwork_api_token).and_return('token')
+    allow(Rails.configuration.x).to receive(:chatwork_room_id).and_return('room_id')
     allow(Faraday).to receive(:new).and_return(faraday_mock)
     allow(faraday_mock).to receive(:post).with('/v2/rooms/room_id/messages', any_args).and_return(response_mock)
     allow(ActionMailer::Base).to receive(:default_url_options).and_return(host: 'http://test.com')

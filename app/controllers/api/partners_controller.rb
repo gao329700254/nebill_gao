@@ -12,6 +12,8 @@ class Api::PartnersController < Api::ApiController
                   Partner.all
                 end
 
+    @partners.order!(id: :asc)
+
     render 'index', formats: 'json', handlers: 'jbuilder'
   end
 

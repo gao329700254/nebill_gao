@@ -4,6 +4,7 @@ $ ->
     mixins: [Vue.modules.modal]
     data: ->
       user:
+        name:            ''
         email:           ''
         role:            ''
         default_allower: ''

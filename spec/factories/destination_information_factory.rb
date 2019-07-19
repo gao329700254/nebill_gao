@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :destination_information do
     initialize_with do
       new(

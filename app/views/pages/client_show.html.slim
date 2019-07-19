@@ -36,6 +36,10 @@
         .client_show__form__item
           = label_tag :memo, t('activerecord.attributes.client.memo')
           = text_field_tag :memo, nil, 'v-model' => 'client.memo', ':disabled' => '!editMode'
+        - if can? :manage, Client
+          .client_show__form__check
+            = check_box_tag :is_valid, true, false, 'v-model' => 'client.is_valid', ':disabled' => '!editMode'
+            = label_tag :is_valid, t('activerecord.attributes.client.is_valid')
         .client_show__form__item
           = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'client_show__form__btn--edit' do
             = fa_icon 'edit', text: t('helpers.edit')
@@ -47,8 +51,8 @@
         = hidden_field_tag :file_url, '', 'v-model' => 'url'
         = hidden_field_tag :approval_status, @approval&.status, 'v-model' => 'approval_status'
         .client_show__form__item
-          = label_tag :memo, t('activerecord.attributes.client.status')
-          = text_field_tag :memo, nil, 'v-model' => 'client.status', ':disabled' => true
+          = label_tag :status, t('activerecord.attributes.client.status')
+          = text_field_tag :status, nil, 'v-model' => 'client.status', ':disabled' => true
         .client_show__form__file
           = label_tag :nda, t('page.client_show.nda_file')
           .client_show__form__file__contents v-if='client.nda'
@@ -60,7 +64,7 @@
           .client_show__form__file__contents v-if='!client.nda'
             = t('page.client_show.file_no_contents')
           .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' || client.status_num == 'waiting')"
-            = hidden_field_tag :nda_id, '{{client.nda.id}}', 'v-model' => 'nda_id'
+            = hidden_field_tag :nda_id, '{{client.nda ? client.nda.id : ""}}', 'v-model' => 'nda_id'
             = file_field_tag :files, 'v-on:change' => 'ndaInputChange'
             = check_box_tag :nda_legal_check, true, false, 'v-model' => 'nda_legal_check'
             = label_tag :nda_legal_check, t('page.client_new.legal_check')
@@ -75,7 +79,7 @@
           .client_show__form__file__contents v-if='!client.basic_c'
             = t('page.client_show.file_no_contents')
           .client_show__form__file__contents v-if="editMode && (approval_status == 'disconfirm' || client.status_num == 'waiting')"
-            = hidden_field_tag :basic_contract_id, '{{client.basic_c.id}}', 'v-model' => 'basic_contract_id'
+            = hidden_field_tag :basic_contract_id, '{{client.basic_c ? client.basic_c.id : ""}}', 'v-model' => 'basic_contract_id'
             = file_field_tag :files, 'v-on:change' => 'basicContractInputChange'
             = check_box_tag :basic_contract_legal_check, true, false, 'v-model' => 'basic_contract_legal_check'
             = label_tag :basic_contract_legal_check, t('page.client_new.legal_check')

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: users
 #
@@ -31,10 +31,11 @@
 #  fk_rails_f76f7dd8cc  (default_allower => users.id)
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   extend Enumerize
   acts_as :employee
   acts_as_authentic do |c|
+    # FIXME: 警告がでるが変わりの手段がわからない
     c.merge_validates_length_of_password_field_options if: -> { password_changed? }
     c.disable_perishable_token_maintenance = true
   end
@@ -71,7 +72,7 @@ class User < ActiveRecord::Base
     user = User.find_by!(email: auth.info.email)
     user.provider = auth.provider
     user.uid      = auth.uid
-    user.name     = auth.info.name
+    user.name   ||= auth.info.name
     user.save!
     user
   end

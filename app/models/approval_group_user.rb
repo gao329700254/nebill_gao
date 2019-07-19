@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: approval_group_users
 #
@@ -20,7 +20,7 @@
 #  fk_rails_3198224b64  (approval_group_id => approval_groups.id)
 #
 
-class ApprovalGroupUser < ActiveRecord::Base
+class ApprovalGroupUser < ApplicationRecord
   belongs_to :approval_group
   belongs_to :user
 

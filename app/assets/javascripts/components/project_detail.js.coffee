@@ -1,7 +1,7 @@
 $ ->
   Vue.component 'projectDetail',
     template: '#project_detail'
-    mixins: [Vue.modules.projectHelper]
+    mixins: [Vue.modules.projectHelper, Vue.modules.numericHelper]
     props: ['projectId']
     data: ->
       approvalId:undefined
@@ -31,13 +31,18 @@ $ ->
         @loadProject()
         @statusList()
       editMode: (val) ->
-        @project = $.extend(true, {}, @projectOriginal) unless val
+        unless val
+          @project = $.extend(true, {}, @projectOriginal)
+          @project.amount = parseInt(@project.amount).toLocaleString()
+          @project.estimated_amount = parseInt(@project.estimated_amount).toLocaleString()
     methods:
       loadProject: ->
         $.ajax "/api/projects/#{@projectId}.json"
           .done (response) =>
             @projectOriginal = response
             @project = $.extend(true, {}, @projectOriginal)
+            @project.amount = if @project.amount then parseInt(@project.amount).toLocaleString() else ''
+            @project.estimated_amount = if @project.estimated_amount then parseInt(@project.estimated_amount).toLocaleString() else ''
           .fail (response) =>
             console.error response
       statusList: ->
@@ -67,7 +72,6 @@ $ ->
               contentType: false
               processData: false
             .done (response) =>
-
               toastr.success('', response.message)
               @loadProject()
               @getApprovalUser()

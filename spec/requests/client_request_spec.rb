@@ -89,7 +89,7 @@ RSpec.describe 'clients request' do
 
       it 'create a client' do
         expect do
-          post path, params
+          post path, params: params
         end.to change(Client, :count).by(1)
 
         client = Client.first
@@ -118,7 +118,7 @@ RSpec.describe 'clients request' do
 
       it 'do not create a client' do
         expect do
-          post path, params
+          post path, params: params
         end.not_to change(Client, :count)
       end
     end
@@ -145,7 +145,7 @@ RSpec.describe 'clients request' do
 
         it 'update the client' do
           expect do
-            patch path, params
+            patch path, params: params
           end.to change { client.reload && client.updated_at }
 
           expect(client.cd).to               eq 'CLIENT-1'
@@ -157,7 +157,7 @@ RSpec.describe 'clients request' do
         end
 
         it 'return success code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).to be_success
           expect(response.status).to eq 201
@@ -183,12 +183,12 @@ RSpec.describe 'clients request' do
 
         it 'do not update the client' do
           expect do
-            patch path, params
+            patch path, params: params
           end.not_to change { client.reload && client.updated_at }
         end
 
         it 'return 422 Unprocessable Entity code and message' do
-          patch path, params
+          patch path, params: params
 
           expect(response).not_to be_success
           expect(response.status).to eq 422

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: projects
 #
@@ -47,7 +47,7 @@
 #  fk_rails_a3d5742497  (group_id => project_groups.id)
 #
 
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   extend Enumerize
   include ProjectValidates
 
@@ -113,5 +113,13 @@ class Project < ActiveRecord::Base
   def self.sequence(prefix)
     @max_sequence = where('cd LIKE ?', "%#{prefix}%").pluck(:cd).map { |cd| cd.gsub(prefix, "").to_i }.max
     @sequence = @max_sequence ? @max_sequence + 1 : 1
+  end
+
+  def amount=(value)
+    super(value.delete(',')) if value
+  end
+
+  def estimated_amount=(value)
+    super(value.delete(',')) if value
   end
 end

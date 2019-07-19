@@ -14,6 +14,7 @@ $ ->
         phone_number:     { init: '' }
         status_num:       { init: '' }
         memo:             { init: '' }
+        is_valid:         { init: true }
       nda:                 ''
       basic_contract:      ''
       nda_id:              ''
@@ -74,6 +75,7 @@ $ ->
           form.append('client[zip_code]', @client.zip_code)
           form.append('client[phone_number]', @client.phone_number)
           form.append('client[memo]', @client.memo)
+          form.append('client[is_valid]', @client.is_valid)
           form.append('approval_id', @approvalId)
           $.ajax
             url: "/api/clients/#{@clientId}.json"

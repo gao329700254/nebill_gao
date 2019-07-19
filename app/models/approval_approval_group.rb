@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: approval_approval_groups
 #
@@ -22,7 +22,7 @@
 #  fk_rails_fd5f9a9350  (approval_id => approvals.id)
 #
 
-class ApprovalApprovalGroup < ActiveRecord::Base
+class ApprovalApprovalGroup < ApplicationRecord
   extend Enumerize
 
   belongs_to :approval

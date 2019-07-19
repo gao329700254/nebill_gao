@@ -13,11 +13,11 @@
 #  legal_check       :boolean          default(FALSE)
 #
 
-class ClientFile < ActiveRecord::Base
+class ClientFile < ApplicationRecord
   extend Enumerize
   belongs_to :client
 
-  mount_uploader :file, ClientFileUploader
+  mount_uploader :file, BasicFileUploader
 
   validates :legal_check, presence: {
     message: -> (_rec, _data) { I18n.t('errors.messages.presence_check_box') },

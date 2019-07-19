@@ -8,6 +8,7 @@ json.phone_number    @client.phone_number
 json.status          @client.status_text
 json.status_num      @client.status
 json.memo            @client.memo
+json.is_valid        @client.is_valid
 json.created_at      @client.created_at
 json.updated_at      I18n.l(@client.updated_at.in_time_zone('Tokyo'))
 json.whodunnit       '（' + @user.name + '）' if @user

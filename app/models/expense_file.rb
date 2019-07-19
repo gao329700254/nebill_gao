@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: expense_files
 #
@@ -15,8 +15,8 @@
 #  fk_rails_024476420e  (expense_id => expenses.id)
 #
 
-class ExpenseFile < ActiveRecord::Base
+class ExpenseFile < ApplicationRecord
   belongs_to :expense
 
-  mount_uploader :file, ExpenseFileUploader
+  mount_uploader :file, BasicFileUploader
 end

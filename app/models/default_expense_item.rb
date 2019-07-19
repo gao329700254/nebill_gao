@@ -15,6 +15,6 @@
 #  is_receipt      :boolean
 #
 
-class DefaultExpenseItem < ActiveRecord::Base
+class DefaultExpenseItem < ApplicationRecord
   has_many :expenses
 end

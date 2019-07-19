@@ -50,7 +50,7 @@ RSpec.describe 'project files request' do
 
     it 'create a project file' do
       expect do
-        post path, params
+        post path, params: params
       end.to change(ProjectFile, :count).by(1)
 
       project_file = ProjectFile.first
@@ -58,7 +58,7 @@ RSpec.describe 'project files request' do
     end
 
     it 'return success code and message' do
-      post path, params
+      post path, params: params
 
       expect(response).to be_success
       expect(response.status).to eq 201
@@ -76,14 +76,14 @@ RSpec.describe 'project files request' do
 
     it 'update the project file' do
       expect do
-        patch path, params
+        patch path, params: params
       end.to change { project_file.reload && project_file.updated_at }
 
       expect(project_file.group).to eq project_file_group
     end
 
     it 'return success code and message' do
-      patch path, params
+      patch path, params: params
 
       expect(response).to be_success
       expect(response.status).to eq 201

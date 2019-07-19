@@ -69,8 +69,8 @@
 
           &__row {
             @include list_tbl__body__row;
-            white-space: normal;
             word-break: break-word;
+            white-space: normal;
           }
         }
       }
@@ -87,8 +87,8 @@
 
         &--approval_user_comment {
           @include span-columns(3);
-          white-space: pre;
           word-break: break-word;
+          white-space: pre;
         }
       }
     }
@@ -123,8 +123,8 @@
         margin-bottom: $small-spacing;
 
         &__text {
-          height: 5rem;
           flex: 1;
+          height: 5rem;
         }
 
         &__btn {
@@ -168,8 +168,8 @@
         @include display(flex);
 
         &__list {
-          margin-bottom: $base-spacing;
           flex: 1;
+          margin-bottom: $base-spacing;
         }
 
         &__btn {

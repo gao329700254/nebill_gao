@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: members
 #
@@ -29,7 +29,7 @@
 #
 
 class PartnerMember < Member
-  has_one :partner, through: :employee, source: :actable, source_type: Partner
+  has_one :partner, through: :employee, source: :actable, source_type: 'Partner'
   belongs_to :project
 
   accepts_nested_attributes_for :partner

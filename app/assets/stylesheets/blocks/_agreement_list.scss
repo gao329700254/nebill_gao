@@ -81,8 +81,8 @@
       &--five {
         @extend %approval_list__tbl__item;
         @include span-columns(5);
-        white-space: normal;
         word-break: break-word;
+        white-space: normal;
       }
 
       &--two {

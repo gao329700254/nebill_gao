@@ -17,7 +17,7 @@
 #  index_partners_on_cd  (cd)
 #
 
-class Partner < ActiveRecord::Base
+class Partner < ApplicationRecord
   acts_as :employee
 
   has_many :members, through: :employee, class_name: 'PartnerMember'

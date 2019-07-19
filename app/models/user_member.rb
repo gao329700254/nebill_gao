@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: members
 #
@@ -29,7 +29,7 @@
 #
 
 class UserMember < Member
-  has_one :user, through: :employee, source: :actable, source_type: User
+  has_one :user, through: :employee, source: :actable, source_type: 'User'
   belongs_to :project
 
   validates :unit_price, :working_rate, :min_limit_time, :max_limit_time, absence: true

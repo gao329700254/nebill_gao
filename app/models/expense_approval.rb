@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: expense_approvals
 #
@@ -18,7 +18,7 @@
 #  fk_rails_17af6d1f20  (created_user_id => users.id)
 #
 
-class ExpenseApproval < ActiveRecord::Base
+class ExpenseApproval < ApplicationRecord
   extend Enumerize
   has_many :expense
   has_many :expense_approval_user

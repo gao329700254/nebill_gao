@@ -29,7 +29,7 @@ Vue.modules.projectHelper = {
         init: 'lump_sum'
         exist: { contracted: true, uncontracted: true }
       estimated_amount:
-        init: 0
+        init: ''
         exist: { contracted: true, uncontracted: true }
       is_using_ses:
         init: false
@@ -47,7 +47,7 @@ Vue.modules.projectHelper = {
         init: ''
         exist: { contracted: true, uncontracted: false }
       amount:
-        init: 0
+        init: ''
         exist: { contracted: true, uncontracted: false }
       payment_type:
         init: 'end_of_the_delivery_date_next_month'

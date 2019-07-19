@@ -32,7 +32,7 @@ fieldset.project_detail__form__basic
     .project_detail__form__container__group
       .project_detail__form__item
         = label_tag :esimated_amount, t('activerecord.attributes.project.estimated_amount')
-        = text_field_tag :estimated_amount, nil, 'v-numeric' => 'project.estimated_amount', ':disabled' => '!editMode'
+        = text_field_tag :estimated_amount, nil, 'v-model' => 'project.estimated_amount', 'v-on:change' => 'setComma', ':disabled' => '!editMode'
   .project_detail__form__container
     .project_detail__form__container__group
       .project_detail__form__item
@@ -69,7 +69,7 @@ fieldset.project_detail__form__basic
       .project_detail__form__container__group
         .project_detail__form__item
           = label_tag :amount, t('activerecord.attributes.project.amount')
-          = text_field_tag :amount, nil, 'v-numeric' => 'project.amount', ':disabled' => '!editMode'
+          = text_field_tag :amount, nil, 'v-model' => 'project.amount', 'v-on:change' => 'setComma', ':disabled' => '!editMode'
       .project_detail__form__container__group
         .project_detail__form__item
           = label_tag :payment_type, t('activerecord.attributes.project.payment_type')

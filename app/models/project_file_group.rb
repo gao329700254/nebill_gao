@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: project_file_groups
 #
@@ -14,7 +14,7 @@
 #  fk_rails_149964afbb  (project_id => projects.id)
 #
 
-class ProjectFileGroup < ActiveRecord::Base
+class ProjectFileGroup < ApplicationRecord
   belongs_to :project
   has_many :files, class_name: 'ProjectFile', foreign_key: :file_group_id
 

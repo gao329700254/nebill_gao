@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190607184247
+# Schema version: 20190627015639
 #
 # Table name: members
 #
@@ -28,7 +28,7 @@
 #  fk_rails_7054080f33  (project_id => projects.id)
 #
 
-class Member < ActiveRecord::Base
+class Member < ApplicationRecord
   belongs_to :employee
 
   validate :check_periods

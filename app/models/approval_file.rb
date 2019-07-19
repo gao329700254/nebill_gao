@@ -11,8 +11,8 @@
 #  updated_at        :datetime         not null
 #
 
-class ApprovalFile < ActiveRecord::Base
+class ApprovalFile < ApplicationRecord
   belongs_to :approval
 
-  mount_uploader :file, ApprovalFileUploader
+  mount_uploader :file, BasicFileUploader
 end
