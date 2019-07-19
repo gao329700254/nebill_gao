@@ -34,7 +34,7 @@ namespace :db do
 
     def populate_project_groups(num = 3)
       ProjectGroup.destroy_all
-      FactoryGirl.create_list(:project_group, num)
+      FactoryBot.create_list(:project_group, num)
     end
 
     def populate_projects(num = 10)
@@ -42,10 +42,10 @@ namespace :db do
       Project.destroy_all
 
       (num - un_contracted_project_count).times do
-        FactoryGirl.create(:contracted_project, group: ProjectGroup.all.sample, contract_type: :lump_sum, end_on: 1.week.ago)
+        FactoryBot.create(:contracted_project, group: ProjectGroup.all.sample, contract_type: :lump_sum, end_on: 1.week.ago)
       end
       un_contracted_project_count.times do
-        FactoryGirl.create(:uncontracted_project, group: ProjectGroup.all.sample, contract_type: :lump_sum)
+        FactoryBot.create(:uncontracted_project, group: ProjectGroup.all.sample, contract_type: :lump_sum)
       end
     end
 
@@ -53,14 +53,14 @@ namespace :db do
       Bill.destroy_all
 
       Project.all.each do |project|
-        FactoryGirl.create(:bill, project: project)
+        FactoryBot.create(:bill, project: project)
       end
     end
 
     def populate_partners(num = 3, company_num = 10)
       Partner.destroy_all
       company_num.times do
-        FactoryGirl.create_list(:partner, num, company_name: Faker::Company.name)
+        FactoryBot.create_list(:partner, num, company_name: Faker::Company.name)
       end
     end
 
@@ -69,24 +69,24 @@ namespace :db do
 
       Project.all.each do |project|
         Employee.where(actable_type: :User).sample(num).each do |employee|
-          FactoryGirl.create(:user_member, employee: employee, project: project)
+          FactoryBot.create(:user_member, employee: employee, project: project)
         end
         Employee.where(actable_type: :Partner).sample(num).each do |employee|
-          FactoryGirl.create(:partner_member, employee: employee, project: project)
+          FactoryBot.create(:partner_member, employee: employee, project: project)
         end
       end
     end
 
     def populate_clients(num = 5)
       Client.destroy_all
-      FactoryGirl.create_list(:client, num, :published)
+      FactoryBot.create_list(:client, num, :published)
     end
 
     def populate_project_file_groups(num = 3)
       ProjectFileGroup.destroy_all
 
       Project.all.each do |project|
-        FactoryGirl.create_list(:project_file_group, num, project: project)
+        FactoryBot.create_list(:project_file_group, num, project: project)
       end
     end
 
@@ -95,7 +95,7 @@ namespace :db do
 
       Project.all.each do |project|
         num.times do
-          FactoryGirl.create(:project_file, project: project, group: project.file_groups.sample)
+          FactoryBot.create(:project_file, project: project, group: project.file_groups.sample)
         end
       end
     end
@@ -114,7 +114,7 @@ namespace :db do
         { name: '仮払い',                   standard_amount: 10_000,  is_routing: false, is_receipt: false },
         { name: '会議費',                   standard_amount: 10_000,  is_routing: false, is_receipt: true },
       ].each do |attrs|
-        FactoryGirl.create(
+        FactoryBot.create(
           :default_expense_item,
           name:            attrs[:name],
           standard_amount: attrs[:standard_amount],

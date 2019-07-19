@@ -1,8 +1,6 @@
 #{$all-text-inputs},
 select,
 textarea {
-  @include box-sizing(border-box);
-
   transition: border-color;
 
   border: $base-border;
@@ -19,6 +17,8 @@ textarea {
 
   font-family: $base-font-family;
   font-size: $base-font-size;
+
+  box-sizing: border-box;
 
   &:hover {
     border-color: darken($base-border-color, 10%);

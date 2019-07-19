@@ -13,7 +13,7 @@
 #  legal_check       :boolean          default(FALSE)
 #
 
-class ClientFile < ActiveRecord::Base
+class ClientFile < ApplicationRecord
   extend Enumerize
   belongs_to :client
 

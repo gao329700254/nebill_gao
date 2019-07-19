@@ -24,7 +24,7 @@ RSpec.describe 'partner members request' do
 
       it 'create a partner member' do
         expect do
-          post path, params
+          post path, params: params
         end.to change(Member, :count).by(1)
 
         expect(project.partners).to include partner
@@ -117,7 +117,7 @@ RSpec.describe 'partner members request' do
 
         it 'update the partner and return success code and message' do
           expect do
-            patch path, params
+            patch path, params: params
           end.to change { member.reload && member.updated_at }
 
           expect(member.unit_price).to eq 1
@@ -150,7 +150,7 @@ RSpec.describe 'partner members request' do
 
         it 'do not update the partner and return 422 Unprocessable Entity message' do
           expect do
-            patch path, params
+            patch path, params: params
           end.not_to change { partner.reload && partner.updated_at }
 
           expect(response).not_to be_success

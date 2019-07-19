@@ -14,5 +14,5 @@
 #  filial_name :string
 #
 
-class PayeeAccount < ActiveRecord::Base
+class PayeeAccount < ApplicationRecord
 end

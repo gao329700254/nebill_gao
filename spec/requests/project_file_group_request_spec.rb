@@ -31,7 +31,7 @@ RSpec.describe 'project file groups request' do
 
     it 'create a project file group' do
       expect do
-        post path, params
+        post path, params: params
       end.to change(ProjectFileGroup, :count).by(1)
 
       project_file_group = ProjectFileGroup.first
@@ -39,7 +39,7 @@ RSpec.describe 'project file groups request' do
     end
 
     it 'return success code and message' do
-      post path, params
+      post path, params: params
 
       expect(response).to be_success
       expect(response.status).to eq 201

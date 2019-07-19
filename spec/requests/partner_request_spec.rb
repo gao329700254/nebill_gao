@@ -162,7 +162,7 @@ RSpec.describe 'partner request' do
 
         it 'update the partner and return success code and message' do
           expect do
-            patch path, params
+            patch path, params: params
           end.to change { partner.reload && partner.updated_at }
 
           expect(partner.id).to eq partner.id
@@ -192,7 +192,7 @@ RSpec.describe 'partner request' do
 
         it 'do not update the partner and return 422 Unprocessable Entity message' do
           expect do
-            patch path, params
+            patch path, params: params
           end.not_to change { partner.reload && partner.updated_at }
 
           expect(response).not_to be_success

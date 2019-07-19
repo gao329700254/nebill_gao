@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :partner do
     sequence(:cd) { |n| "CD-#{n}" }
     name         { Faker::Name.name }

@@ -12,6 +12,8 @@ class Api::UsersController < Api::ApiController
                 User.all
               end
 
+    @users.order!(id: :asc)
+
     render(
       json: @users,
       except: %i(

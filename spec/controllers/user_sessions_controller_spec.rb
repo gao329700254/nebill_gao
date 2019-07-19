@@ -13,7 +13,7 @@ RSpec.describe UserSessionsController do
           uid: '012345678901234567890',
           info: { email: 'alice@example.com', name: 'alice' },
         )
-        post :create, provider: 'google_oauth2'
+        post :create, params: { provider: 'google_oauth2' }
         un_register_user.reload
       end
 
@@ -37,7 +37,7 @@ RSpec.describe UserSessionsController do
           uid: '012345678901234567890',
           info: { email: 'alice@example.com', name: 'alice' },
         )
-        post :create, provider: 'google_oauth2'
+        post :create, params: { provider: 'google_oauth2' }
       end
       it 'should login' do
         expect(controller.session['user_credentials']).to eq user.persistence_token
