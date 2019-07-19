@@ -41,8 +41,8 @@ $ ->
           .done (response) =>
             @projectOriginal = response
             @project = $.extend(true, {}, @projectOriginal)
-            @project.amount = parseInt(@project.amount).toLocaleString()
-            @project.estimated_amount = parseInt(@project.estimated_amount).toLocaleString()
+            @project.amount = if @project.amount then parseInt(@project.amount).toLocaleString() else ''
+            @project.estimated_amount = if @project.estimated_amount then parseInt(@project.estimated_amount).toLocaleString() else ''
           .fail (response) =>
             console.error response
       statusList: ->
