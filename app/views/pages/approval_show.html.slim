@@ -48,7 +48,7 @@
         .approval_show__detail__update
           .approval_show__detail__update__action
             - if (can?(:allread, Approval) && @approval.status != 40) || (@approval.status.in?([10, 30]) && @approval.created_user_id == @current_user.id)
-              = button_to api_approval_invalid_path, method: :post, confirm: I18n.t("action.invalid.confirm"),
+              = button_to api_approval_invalid_path, method: :post, data: { confirm: I18n.t("action.invalid.confirm") },
                                                      class: 'approval_show__detail__update__action__btn--invalid' do
                 = fa_icon 'trash', text: t('page.approval_show.invalid')
             - if @approval.status == 30 && (@approval.created_user_id == @current_user.id || can?(:allread, Approval))
@@ -69,7 +69,7 @@
               = t('page.approval_show.file_no_contents')
         = hidden_field_tag :file_url, '', 'v-model' => 'url'
         .approval_show__detail__approval_user_list
-          = t('page.approval_show.history')
+          = t('page.approval_show.approval_status')
           - if @approval_individual_group_switch.approval_users.present?
             table.approval_show__detail__approval_user_list__tbl
               thead.approval_show__detail__approval_user_list__tbl__head

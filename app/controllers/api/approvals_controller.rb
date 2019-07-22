@@ -15,6 +15,8 @@ class Api::ApprovalsController < Api::ApiController
   def update
     @approval = Approval.find(params[:id])
 
+    # HACK: https://cuonlab.backlog.jp/view/NEBILL-259
+    # 稟議が稟議グループ指定の場合では、@approval.approval_usersが空なので、すぐ下のeach文は現時点で意味がない
     @approval.approval_users.each do |approval_user|
       approval_user.status = :pending if approval_user.status == :disconfirm
     end
@@ -29,7 +31,11 @@ class Api::ApprovalsController < Api::ApiController
 
   def invalid
     @approval = Approval.find(params[:approval_id])
-    @approval.status = 40
+    # HACK: https://cuonlab.backlog.jp/view/NEBILL-259
+    ApprovalIndividualGroupSwitch.new(@approval, current_user)
+
+    @approval.status = :invalid
+    @approval.invalidate_approval_users
     @approval.save
     action_model_flash_success_message(@approval, :invalid)
     redirect_to approval_show_path(params[:approval_id])
