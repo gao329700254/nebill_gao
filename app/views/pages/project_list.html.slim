@@ -26,6 +26,7 @@
       = label_tag :contractedSt, t('page.project_list.contract_type.contracted')
       = check_box_tag :uncontractedSt, false, false, id: 'uncontractedSt', 'v-model' => 'contractStatus'
       = label_tag :uncontractedSt, t('page.project_list.contract_type.uncontracted')
+    .project_list__search__radio
       = check_box_tag :progress, true, false, id: 'progress', 'v-model' => 'progressProject'
       = label_tag :progress, t('page.project_list.progress')
       = check_box_tag :finished, true, false, id: 'finished', 'v-model' => 'finishedStatus'
