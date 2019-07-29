@@ -31,6 +31,7 @@ private
   end
 
   def defaultcan(user)
+    can :manage, Agreement
     can :manage, Page
     can [:read, :create, :update, :destroy], Client
     can :manage, Project
