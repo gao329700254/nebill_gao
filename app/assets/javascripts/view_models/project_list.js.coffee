@@ -8,7 +8,7 @@ $ ->
         orderer_company_name: 'like'
       list: undefined
       searchKeywords: undefined
-      contractStatus: []
+      contractType: []
       start: undefined
       end: undefined
       progressProject: false
