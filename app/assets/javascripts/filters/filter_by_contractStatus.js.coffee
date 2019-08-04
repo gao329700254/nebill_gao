@@ -1,4 +1,4 @@
-Vue.filter 'filterBycontractType', (list, value) ->
+Vue.filter 'filterBycontractStatus', (list, value) ->
 
   _.filter list, (item) ->
     switch value

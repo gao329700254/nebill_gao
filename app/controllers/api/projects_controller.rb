@@ -71,10 +71,13 @@ class Api::ProjectsController < Api::ApiController
   # rubocop:disable Metrics/AbcSize
   def search_result
     @projects = if params[:start].present? && params[:end].present?
+                  # ステータス「終了」の場合
                   Project.between(params[:start], params[:end])
                 elsif params[:start].present?
+                  # ステータス「現在進行中」の場合
                   Project.gteq_start_on(params[:start])
                 elsif params[:end].present?
+                  # ステータス「失注」の場合
                   Project.lteq_end_on(params[:end])
                 else
                   Project.all
