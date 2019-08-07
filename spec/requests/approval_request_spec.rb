@@ -11,7 +11,7 @@ RSpec.describe Approval, type: :request do
 
     context 'approval in user approval' do
       let(:approval) { create(:approval, :user_approval, created_user: user) }
-      before { post path, params }
+      before { post path, params: params }
 
       it 'changes approval.status to "invalid"' do
         expect(subject.status).to eq 'invalid'
@@ -24,7 +24,7 @@ RSpec.describe Approval, type: :request do
 
     context 'approval in group approval' do
       let(:approval) { create(:approval, :group_approval, created_user: user) }
-      before { post path, params }
+      before { post path, params: params }
 
       it 'changes approval.status to "invalid"' do
         expect(subject.status).to eq 'invalid'

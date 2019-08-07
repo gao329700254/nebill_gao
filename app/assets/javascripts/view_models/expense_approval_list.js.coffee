@@ -31,8 +31,8 @@ $ ->
           search = $('.expense_approval_list__search__date__btn--search')
           search.prop('disabled', true)
           $.ajax
-            url: '/api/expense_approvals/search_result.json'
-            type: 'POST'
+            url: '/api/expense_approvals.json'
+            type: 'GET'
             data: {
               created_at: @created_at
             }

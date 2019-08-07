@@ -37,4 +37,21 @@ class ExpenseApproval < ApplicationRecord
   def invalidate_approval_users
     expense_approval_user.map(&:change_invalid)
   end
+
+  scope :my_related_appr,
+        (lambda do |created_user_id|
+          where(id: ExpenseApprovalUser.select(:expense_approval_id).where(user_id: created_user_id))
+          .or(where(created_user_id: created_user_id))
+          .includes([[created_user: :employee], :expense_approval_user]).references(:expense_approval_user)
+        end)
+
+  def self.search_expense_approval(current_user:, search_created_at: nil)
+    result = if current_user.can?(:allread, ExpenseApproval)
+               ExpenseApproval.includes(:created_user)
+             else
+               ExpenseApproval.my_related_appr(current_user.id)
+             end
+
+    search_created_at.present? ? result.where_created_at(search_created_at) : result
+  end
 end
