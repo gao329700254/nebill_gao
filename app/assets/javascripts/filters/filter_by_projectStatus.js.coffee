@@ -3,6 +3,7 @@ Vue.filter 'filterByprojectStatus', (list, value) ->
   _.filter list, (item) ->
     switch value
       when 'finished'
+        console.log(item)
         return item.status == '終了'
       when 'progress'
         # プロジェクトが、「終了」しておらず「失注」もしていないものを取得する

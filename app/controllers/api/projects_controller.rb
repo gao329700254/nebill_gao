@@ -71,19 +71,14 @@ class Api::ProjectsController < Api::ApiController
   # rubocop:disable Metrics/AbcSize
   def search_result
     @projects = if params[:start].present? && params[:end].present?
-                  # ステータス「終了」の場合
                   Project.between(params[:start], params[:end])
                 elsif params[:start].present?
-                  # ステータス「現在進行中」の場合
                   Project.gteq_start_on(params[:start])
                 elsif params[:end].present?
-                  # ステータス「失注」の場合
                   Project.lteq_end_on(params[:end])
                 else
                   Project.all
                 end
-
-    sort_project
 
     @projects = @projects.sort_by do |i|
       year, identifier, sequence, contract = *i.cd.scan(/(.{2})(.)(.{3})(.*)/).first
@@ -143,11 +138,6 @@ private
 
   def set_project
     @project = Project.find(params[:id])
-  end
-
-  def sort_project
-    @projects = @projects.where(Project.arel_table[:status].not_eq("finished")) if params[:today]
-    @projects = @projects.where(Project.arel_table[:unprocessed].eq(true)) if params[:unprocessed]
   end
 
   def edit_file
