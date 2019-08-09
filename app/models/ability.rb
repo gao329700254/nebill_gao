@@ -84,7 +84,7 @@ private
 
     can :manage, ExpenseFile
 
-    can [:read, :create, :update, :destroy, :search_result], ExpenseApproval
+    can [:read, :create, :update], ExpenseApproval
     can :reapproval, ExpenseApproval, status: [30], created_user_id: user.id # 差し戻しの場合、再申請できる
     can [:renewal, :ex_create], ExpenseApproval, status: [10, 30], created_user_id: user.id # 承認待ちまたは差し戻しの場合、更新できる
 

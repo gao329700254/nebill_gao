@@ -1,6 +1,6 @@
 class Api::ExpenseApprovalsController < Api::ApiController
   def index
-    @expense_approvals = ExpenseApproval.search_expense_approval(current_user: current_user, search_created_at: params[:created_at])
+    @expense_approvals = ExpenseApproval.search_expense_approval(current_user: current_user, search_created_at: params[:created_at]).includes(:created_user)
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
