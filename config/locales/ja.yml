@@ -614,7 +614,7 @@ ja:
       note_no_contents: なし
       file_no_contents: なし
       user_no_contents: 承認者が存在しません
-      history: 承認履歴
+      approval_status: 承認ステータス
       invalid: 申請の取り消し
       permission: 承認
       disconfirm: 差し戻し
@@ -677,7 +677,7 @@ ja:
       note_no_contents: なし
       file_no_contents: なし
       user_no_contents: 承認者が存在しません
-      history: 承認履歴
+      approval_status: 承認ステータス
       invalid: 申請の取り消し
       permission: 承認
       disconfirm: 差し戻し

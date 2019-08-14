@@ -82,8 +82,9 @@ private
   end
 
   def invalid
-    @expense_approval.status = 40
-    @expense_approval.save!
+    @expense_approval.status = :invalid
+    @expense_approval.invalidate_approval_users
+    @expense_approval.save
     action_model_flash_success_message(@expense_approval, :invalid)
     redirect_to expense_approval_show_path(params[:id])
   end
