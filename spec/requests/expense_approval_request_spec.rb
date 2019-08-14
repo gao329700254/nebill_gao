@@ -17,7 +17,7 @@ RSpec.describe ExpenseApproval, type: :request do
         }
       end
 
-      before { patch path, params }
+      before { patch path, params: params }
 
       it 'changes expense_approval.status to "invalid"' do
         expect(subject.status).to eq 'invalid'

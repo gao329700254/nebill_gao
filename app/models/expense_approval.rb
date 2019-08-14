@@ -30,11 +30,27 @@ class ExpenseApproval < ApplicationRecord
 
   enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, invalid: 40, unapplied: 50 }, default: :pending
 
-  scope :where_created_at, -> (created_at) { where(created_at: Date.strptime(created_at).beginning_of_day..Date.strptime(created_at).end_of_day) }
+  scope :where_created_on, -> (created_at) { where(created_at: Date.strptime(created_at).beginning_of_day..Date.strptime(created_at).end_of_day) }
   scope :appr_id, -> { maximum(:id) || 0 }
   scope :my_appr, -> (current_user) { where(created_user_id: current_user).map(&:id).sort.reverse }
 
   def invalidate_approval_users
     expense_approval_user.map(&:change_invalid)
+  end
+
+  scope :my_related_appr,
+        (lambda do |created_user_id|
+          where(id: ExpenseApprovalUser.select(:expense_approval_id).where(user_id: created_user_id))
+          .or(where(created_user_id: created_user_id))
+        end)
+
+  def self.search_expense_approval(current_user:, search_created_at: nil)
+    result = if current_user.can?(:allread, ExpenseApproval)
+               ExpenseApproval.all
+             else
+               ExpenseApproval.my_related_appr(current_user.id)
+             end
+
+    search_created_at.present? ? result.where_created_on(search_created_at) : result
   end
 end
