@@ -22,16 +22,21 @@
         = button_tag 'v-on:click' => 'showProjectNew', class: 'project_list__search__date__btn--new_project' do
           = fa_icon 'check', text: t('page.project_new.title')
     .project_list__search__radio
-      = check_box_tag :contractedSt, true, false, id: 'contractedSt', 'v-model' => 'contractStatus'
-      = label_tag :contractedSt, t('page.project_list.contract_type.contracted')
-      = check_box_tag :uncontractedSt, false, false, id: 'uncontractedSt', 'v-model' => 'contractStatus'
-      = label_tag :uncontractedSt, t('page.project_list.contract_type.uncontracted')
-      = check_box_tag :progress, true, false, id: 'progress', 'v-model' => 'progressProject'
-      = label_tag :progress, t('page.project_list.progress')
-      = check_box_tag :finished, true, false, id: 'finished', 'v-model' => 'finishedStatus'
-      = label_tag :finished, t('page.project_list.finished')
-      = check_box_tag :unprocessed, true, false, id: 'unprocessed', 'v-model' => 'unprocessedProject'
-      = label_tag :unprocessed, t('activerecord.attributes.project.unprocessed')
+      = radio_button_tag :all_contract_type, 'all_contract_type', true, id: 'all_contract_type', 'v-model' => 'contractStatus'
+      = label_tag :all_contract_type, t('page.project_list.contract_type.all')
+      = radio_button_tag :contracted, 'contracted', false, id: 'contracted', 'v-model' => 'contractStatus'
+      = label_tag :contracted, t('page.project_list.contract_type.contracted')
+      = radio_button_tag :uncontracted, 'uncontracted', false, id: 'uncontracted', 'v-model' => 'contractStatus'
+      = label_tag :uncontracted, t('page.project_list.contract_type.uncontracted')
+    .project_list__search__radio
+      = radio_button_tag :all_pjt_status, 'all_pjt_status', true, id: 'all_pjt_status', 'v-model' => 'projectStatus'
+      = label_tag :all_pjt_status, t('page.project_list.project_status.all')
+      = radio_button_tag :progress, 'progress', false, id: 'progress', 'v-model' => 'projectStatus'
+      = label_tag :progress, t('page.project_list.project_status.progress')
+      = radio_button_tag :finished, 'finished', false, id: 'finished', 'v-model' => 'projectStatus'
+      = label_tag :finished, t('page.project_list.project_status.finished')
+      = radio_button_tag :unprocessed, 'unprocessed', false, id: 'unprocessed', 'v-model' => 'projectStatus'
+      = label_tag :unprocessed, t('page.project_list.project_status.unprocessed')
   table.project_list__tbl
     thead.project_list__tbl__head
       tr.project_list__tbl__head__row
@@ -49,7 +54,7 @@
                        || project.status === '#{t('enumerize.defaults.status.unprocessed')}'
                          ? 'project_list__tbl__body__row--finished'
                          : 'project_list__tbl__body__row'"
-        v-for      = "project in list | selectBy searchKeywords selectSchema | filterBy contractStatus in 'contracted' | statusBy finishedStatus"
+        v-for      = "project in list | selectBy searchKeywords selectSchema | filterBycontractStatus contractStatus | filterByprojectStatus projectStatus"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"
         track-by   = "id"

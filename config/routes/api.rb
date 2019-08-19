@@ -86,8 +86,7 @@ Rails.application.routes.draw do
     scope path: 'files/:files_id' do
       get 'expense_file_download', to: 'files#expense_file_download'
     end
-    post "expense_approvals/search_result", to: "expense_approvals#search_result"
-    resources :expense_approvals, only: [:show, :create, :update, :destroy, :index]
+    resources :expense_approvals, only: [:show, :create, :update, :index]
     scope path: 'agreements' do
       get "approval_list", to: "agreements#approval_list"
       get "client_list", to: "agreements#client_list"

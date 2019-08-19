@@ -1,34 +1,8 @@
-# rubocop:disable Metrics/ClassLength
 class Api::ExpenseApprovalsController < Api::ApiController
   def index
-    if can?(:allread, ExpenseApproval)
-      @expense_approvals = ExpenseApproval.all.includes(:created_user)
-    else
-      @expense_approvals = ExpenseApproval.all.includes([:created_user, :expense_approval_user])
-                                          .references(:expense_approval_user)
-                                          .where('created_user_id = ? OR expense_approval_users.user_id = ?', current_user.id, current_user.id)
-    end
+    @expense_approvals = ExpenseApproval.search_expense_approval(current_user: current_user, search_created_at: params[:created_at]).includes(:created_user)
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
-
-  # rubocop:disable Metrics/AbcSize
-  def search_result
-    @expense_approvals = if params[:created_at].present? && can?(:allread, ExpenseApproval)
-                           ExpenseApproval.where_created_at(params[:created_at]).includes(:created_user)
-                         elsif params[:created_at].present?
-                           ExpenseApproval.where_created_at(params[:created_at]).includes([:created_user, :expense_approval_user])
-                                          .references(:expense_approval_user)
-                                          .where('created_user_id = ? OR expense_approval_users.user_id = ?', current_user.id, current_user.id)
-                         elsif can?(:allread, ExpenseApproval)
-                           ExpenseApproval.all.includes(:created_user)
-                         else
-                           ExpenseApproval.all.includes([:created_user, :expense_approval_user])
-                                          .references(:expense_approval_user)
-                                          .where('created_user_id = ? OR expense_approval_users.user_id = ?', current_user.id, current_user.id)
-                         end
-    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
-  end
-  # rubocop:enable Metrics/AbcSize
 
   def update
     @expense_approval = ExpenseApproval.find(params[:id])
@@ -82,8 +56,9 @@ private
   end
 
   def invalid
-    @expense_approval.status = 40
-    @expense_approval.save!
+    @expense_approval.status = :invalid
+    @expense_approval.invalidate_approval_users
+    @expense_approval.save
     action_model_flash_success_message(@expense_approval, :invalid)
     redirect_to expense_approval_show_path(params[:id])
   end
@@ -139,4 +114,3 @@ private
     end
   end
 end
-# rubocop:enable Metrics/ClassLength

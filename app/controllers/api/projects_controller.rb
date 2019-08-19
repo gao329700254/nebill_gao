@@ -80,8 +80,6 @@ class Api::ProjectsController < Api::ApiController
                   Project.all
                 end
 
-    sort_project
-
     @projects = @projects.sort_by do |i|
       year, identifier, sequence, contract = *i.cd.scan(/(.{2})(.)(.{3})(.*)/).first
       next identifier, year, sequence, contract
@@ -140,11 +138,6 @@ private
 
   def set_project
     @project = Project.find(params[:id])
-  end
-
-  def sort_project
-    @projects = @projects.where(Project.arel_table[:status].not_eq("finished")) if params[:today]
-    @projects = @projects.where(Project.arel_table[:unprocessed].eq(true)) if params[:unprocessed]
   end
 
   def edit_file

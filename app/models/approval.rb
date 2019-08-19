@@ -63,6 +63,10 @@ class Approval < ApplicationRecord
     end
   end
 
+  def invalidate_approval_users
+    approval_users.map(&:change_invalid)
+  end
+
   class << self
     def related_approval_where_created_on(id, created_at)
       related_approval(id).where_created_on(created_at)

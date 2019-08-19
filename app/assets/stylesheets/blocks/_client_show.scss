@@ -80,7 +80,7 @@
         &--approval_user_comment {
           @include span-columns(3);
           word-break: break-word;
-          white-space: pre;
+          white-space: pre-wrap;
         }
       }
     }

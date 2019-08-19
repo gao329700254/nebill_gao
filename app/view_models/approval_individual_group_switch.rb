@@ -7,7 +7,7 @@ class ApprovalIndividualGroupSwitch
 
     if @approval.approvaler_type.group?
       @approval.approval_group.users.each do |record|
-        @approval.approval_users.build(user: record) if @approval.approval_users.find_by(user: record).blank?
+        @approval.approval_users.find_or_initialize_by(user: record)
       end
     end
   end

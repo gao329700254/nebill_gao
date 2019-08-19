@@ -535,11 +535,14 @@ ja:
       end: 終了日
       search: 検索
       contract_type:
-        all:          "すべて"
-        contracted:   "契約済"
-        uncontracted: "未契約"
-      progress: 現在進行中
-      finished: 終了
+        all:          すべて
+        contracted:   契約済
+        uncontracted: 未契約
+      project_status:
+        all:         すべて
+        progress:    現在進行中
+        finished:    終了
+        unprocessed: 失注
     project_show:
       title: プロジェクト情報
       last_updated_at: '最終更新日時: '
@@ -611,7 +614,7 @@ ja:
       note_no_contents: なし
       file_no_contents: なし
       user_no_contents: 承認者が存在しません
-      history: 承認履歴
+      approval_status: 承認ステータス
       invalid: 申請の取り消し
       permission: 承認
       disconfirm: 差し戻し
@@ -674,7 +677,7 @@ ja:
       note_no_contents: なし
       file_no_contents: なし
       user_no_contents: 承認者が存在しません
-      history: 承認履歴
+      approval_status: 承認ステータス
       invalid: 申請の取り消し
       permission: 承認
       disconfirm: 差し戻し

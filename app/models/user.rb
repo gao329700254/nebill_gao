@@ -58,6 +58,11 @@ class User < ApplicationRecord
   validates :role, presence: true
   validates :default_allower, presence: true, on: :whencreate
   after_create :send_password_setting_email
+  delegate :can?, :cannot?, to: :ability
+
+  def ability
+    @ability ||= Ability.new(self)
+  end
 
   def send_password_setting_email
     reset_perishable_token!

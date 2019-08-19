@@ -9,15 +9,15 @@ RSpec.describe 'projects request', versioning: true do
     let!(:project1) { create(:contracted_project, cd: '17D001A', is_regular_contract: true) }
     let!(:project2) { create(:contracted_project, cd: '17D002A', status: :finished) }
     let!(:project3) { create(:uncontracted_project, cd: '17D001B') }
-    let(:params) { { today: Time.zone.now } }
-    let(:path) { "/api/projects/search_result" }
+    let(:params)    { {} }
+    let(:path)      { "/api/projects/search_result" }
 
     it 'return a list of projects' do
       post path, params: params
 
       expect(response).to be_success
       expect(response.status).to eq 200
-      expect(json.count).to eq 1
+      expect(json.count).to eq 3
 
       expect(json[0]['id']).to                       eq project1.id
       expect(json[0]['group_id']).to                 eq project1.group_id
