@@ -7,9 +7,9 @@ fieldset.project_new__form__orderer
 
   .project_new__form__item
     .project_new__form__fill
-      select#orderer_client_id.project_new__form__fill--select v-model="ordererClientId"
+      select#orderer_client_id.project_new__form__fill--select.select2 v-model="ordererClientId"
         option v-for="client in clients" value="{{client.id}}" {{client.cd + ' ' + client.company_name}}
-      = button_tag class: 'project_new__form__fill--btn', 'v-on:click.prevent' => 'fillOrderer' do
+      = button_tag class: 'project_new__form__fill--btn', 'v-on:click.prevent' => 'setOrdererClientId' do
         = fa_icon 'arrow-down'
   .project_new__form__container
     .project_new__form__container__group_2
