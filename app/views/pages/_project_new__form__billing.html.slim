@@ -5,7 +5,7 @@ fieldset.project_new__form__billing
 
   .project_new__form__item
     .project_new__form__fill
-      select#billing_client_id.project_new__form__fill--select.select2 v-model="billingClientId"
+      select#billing_client_id.select2 v-model="billingClientId"
         option v-for="client in clients" value="{{client.id}}" {{client.cd + ' ' + client.company_name}}
       = button_tag class: 'project_new__form__fill--btn', 'v-on:click.prevent' => 'setBillingClientId' do
         = fa_icon 'arrow-down'
