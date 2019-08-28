@@ -88,7 +88,7 @@ class Api::ExpensesController < Api::ApiController
     @expense_approval[:notes] = params[:notes]
     @expense_approval[:total_amount] = params[:total_amount]
     @expense_approval[:expenses_number] = params[:selected].count
-    @expense_approval[:name] = "#{ExpenseApproval.appr_id + 1}#{User.find(params[:created_user_id]).name}経費精算申請" + params[:total_amount]
+    @expense_approval[:name] = "#{ExpenseApproval.appr_id + 1}#{User.find(params[:created_user_id]).name}経費精算申請"
     @expense_approval[:created_user_id] = params[:created_user_id]
     add_params
 
