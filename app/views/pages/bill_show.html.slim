@@ -16,28 +16,28 @@
       .bill_show__form__container__group
         fieldset.bill_show__form__basic
           .bill_show__form__item
-            = label_tag :contracted, t('activerecord.attributes.bill.cd')
+            = label_tag :cd, Bill.human_attribute_name(:cd)
             = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
           .bill_show__form__item
-            = label_tag :amount, t('activerecord.attributes.bill.amount')
+            = label_tag :amount, Bill.human_attribute_name(:amount)
             = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'
           .bill_show__form__item
-            = label_tag :contracted, t('activerecord.attributes.bill.delivery_on')
+            = label_tag :delivery_on, Bill.human_attribute_name(:delivery_on)
             = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => '!editMode'
           .bill_show__form__item
-            = label_tag :contracted, t('activerecord.attributes.bill.acceptance_on')
+            = label_tag :acceptance_on, Bill.human_attribute_name(:acceptance_on)
             = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on', ':disabled' => '!editMode'
           .bill_show__form__item
-            = label_tag :payment_type, t('activerecord.attributes.project.payment_type')
+            = label_tag :payment_type, Bill.human_attribute_name(:payment_type)
             = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type', ':disabled' => '!editMode'
           .bill_show__form__item
-            = label_tag :contracted, t('activerecord.attributes.bill.bill_on')
+            = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
             = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
           .bill_show__form__item
-            = label_tag :contracted, t('activerecord.attributes.bill.deposit_on')
+            = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
             = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on', ':disabled' => '!editMode'
           .bill_show__form__item
-            = label_tag :contracted, t('activerecord.attributes.bill.memo')
+            = label_tag :memo, Bill.human_attribute_name(:memo)
             = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
 
         = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
