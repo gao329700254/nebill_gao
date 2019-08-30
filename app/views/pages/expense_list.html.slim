@@ -57,7 +57,7 @@ input#header__reapproval_confirm_message type='hidden' value=I18n.t('action.reap
         th.expense_list__tbl__item--notes         = Expense.human_attribute_name(:notes)
     tbody.expense_list__tbl__body
       tr.expense_list__tbl__body__row [
-        v-for      = "expense in list"
+        v-for      = "expense in list | orderBy 'use_date'"
         id         = "expense-{{expense.id}}"
         track-by   = "id"
       ]
