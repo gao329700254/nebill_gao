@@ -127,10 +127,6 @@
     &__fill {
       @include display(flex);
 
-      &--select {
-        @include flex(1);
-      }
-
       &--btn {
         @include btn--default;
       }
