@@ -15,9 +15,22 @@
       .bill_list__search__date__btn
         = button_tag 'v-on:click.prevent' => 'search', class: 'bill_list__search__date__btn--search' do
           = fa_icon 'fa-search', text: t('page.bill_list.search')
+  / TODO(maeda):
+  /   デザインのみ実装。検索ロジックは覧画面作成課題で実装する
+  .bill_list__search__radio
+    = radio_button_tag :unapplied, '未申請'
+    = label_tag '未申請'
+    = radio_button_tag :approving, '承認待'
+    = label_tag '承認待'
+    = radio_button_tag :approved, '承認済'
+    = label_tag '承認済'
+    = radio_button_tag :issued, '発行済'
+    = label_tag '発行済'
   table.bill_list__tbl
     thead.bill_list__tbl__head
       tr.bill_list__tbl__head__row
+        / TODO(maeda): デザイン仮実装のため、別課題にて本実装する。
+        th.bill_list__tbl__item--cd              = 'ステータス'
         th.bill_list__tbl__item--cd              = t('activerecord.attributes.bill.cd')
         th.bill_list__tbl__item--project_name    = t('activerecord.attributes.bill.project')
         th.bill_list__tbl__item--billing_company = t('activerecord.attributes.project.billing_company_name')
@@ -33,6 +46,8 @@
         v-on:click = "linkToShow(bill.id)"
         track-by   = "id"
       ]
+        / TODO(maeda): デザイン仮実装のため、別課題にて本実装する。
+        td.bill_list__tbl__item--cd              v-text=''
         td.bill_list__tbl__item--cd              v-text='bill.cd'
         td.bill_list__tbl__item--project_name    v-text='bill.project.name'
         td.bill_list__tbl__item--billing_company v-text='bill.project.billing_company_name'

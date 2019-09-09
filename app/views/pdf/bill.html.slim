@@ -12,7 +12,6 @@
       .bill_pdf__header__cuon__item = @bill.pdf_project_no
       .bill_pdf__header__cuon__item--bill_cd = @bill.pdf_bill_no
     .bill_pdf__header__company_seal = wicked_pdf_image_tag 'pdf/company_seal.png', size: '80x80'
-      / = image_tag 'pdf/company_seal.png', size: '80x80'
   .bill_pdf__body
     .bill_pdf__body__title
       h2 = t('pdf.bill.title')
