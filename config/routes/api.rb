@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       resources :project_file_groups, only: [:index, :create]
       get 'bill_default_values', on: :member
       collection do
-        get "cd/:project_type", to: "project_cds#cd", as: "project_cd"
+        get "create_cd/:project_type", to: "project_cds#create_cd", as: "create_cd"
       end
     end
     scope path: 'projects/:project_id' do

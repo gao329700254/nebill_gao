@@ -17,7 +17,7 @@
         = date_field_tag :end, nil, 'v-model' => "end"
       .project_list__search__date__btn
         = button_tag 'v-on:click.prevent' => 'search', class: 'project_list__search__date__btn--search' do
-          = fa_icon 'fa-search', text: t('page.project_list.search')
+          = fa_icon 'search', text: t('page.project_list.search')
       .project_list__search__date__btn
         = button_tag 'v-on:click' => 'showProjectNew', class: 'project_list__search__date__btn--new_project' do
           = fa_icon 'check', text: t('page.project_new.title')
@@ -42,6 +42,7 @@
       tr.project_list__tbl__head__row
         th.project_list__tbl__item--status          = t('activerecord.attributes.project.status')
         th.project_list__tbl__item--cd              = t('activerecord.attributes.project.cd')
+        th.project_list__tbl__item--contract        = t('activerecord.attributes.project.contract')
         th.project_list__tbl__item--project_name    = t('activerecord.attributes.project.name')
         th.project_list__tbl__item--orderer_company = t('activerecord.attributes.project.orderer_company_name')
         th.project_list__tbl__item--start_on        = t('activerecord.attributes.project.start_on')
@@ -53,7 +54,9 @@
         v-bind:class = "project.status === '#{t('enumerize.defaults.status.finished')}'
                        || project.status === '#{t('enumerize.defaults.status.unprocessed')}'
                          ? 'project_list__tbl__body__row--finished'
-                         : 'project_list__tbl__body__row'"
+                         : project.status === '#{t('enumerize.defaults.status.unreceive_order')}'
+                           ? 'project_list__tbl__body__row--uncontracted'
+                           : 'project_list__tbl__body__row'"
         v-for      = "project in list | selectBy searchKeywords selectSchema | filterBycontractStatus contractStatus | filterByprojectStatus projectStatus"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"
@@ -61,6 +64,9 @@
       ]
         td.project_list__tbl__item--status          v-text='project.is_regular_contract + project.status'
         td.project_list__tbl__item--cd              v-text='project.cd'
+        td.project_list__tbl__item--contract        v-text="project.contracted
+          ? '#{t('page.project_list.contract_type.contracted')}'
+          : 'B ' + '#{t('page.project_list.contract_type.uncontracted')}'"
         td.project_list__tbl__item--project_name    v-text='project.name'
         td.project_list__tbl__item--orderer_company v-text='project.orderer_company_name'
         td.project_list__tbl__item--start_on        v-text='project.start_on'

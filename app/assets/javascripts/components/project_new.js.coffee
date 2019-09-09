@@ -23,12 +23,10 @@ $ ->
     methods:
       cancel: -> @modalHide()
       setProjectCd: ->
-        projectContracted = @project.contracted
-        projectType = @project.contract_type
         $.ajax
-          url: "/api/projects/cd/#{projectType}.json"
+          url: "/api/projects/create_cd/#{@project.contract_type}.json"
           data:
-            project_contracted: projectContracted
+            project_contracted: @project.contracted
         .done (response) =>
           @project.cd = response.cd
       loadClients: ->

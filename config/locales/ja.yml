@@ -77,7 +77,8 @@ ja:
       project:
         group: グループ
         cd: ID
-        placeholder: 記入例) 17D001A
+        contract: 契約状態
+        placeholder: 記入例) 17D001
         name: 案件名
         memo: メモ
         contracted: 契約済
@@ -440,7 +441,7 @@ ja:
         bill_on_end_of_month_and_payment_on_45th:                     末日締め45日払い
       status:
         receive_order:   受注
-        unreceive_order: 末受注
+        unreceive_order: 未受注
         turn_over:       売上
         publish_bill:    請求書発行
         finished:        終了

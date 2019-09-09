@@ -3,7 +3,8 @@ class Api::ProjectFilesController < Api::ApiController
   before_action :set_project_file, only: [:show, :update, :destroy]
 
   def index
-    @project_files = @project.files.where(file_type: 10)
+    # where(file_type: 10)が本番環境では動作しないため、select文を適用
+    @project_files = @project.files.select { |file| file.file_type == :default }
     respond_to do |format|
       format.json
     end
@@ -13,7 +14,7 @@ class Api::ProjectFilesController < Api::ApiController
     file = @project_file.file
     if ENV["FILE_STORAGE_TYPE"] == "fog"
       data = open(file.url)
-      send_data data.read, filename: @approval_file.original_filename
+      send_data data.read, filename: @project_file.original_filename
     else
       send_file file.path, filename: @project_file.original_filename
     end

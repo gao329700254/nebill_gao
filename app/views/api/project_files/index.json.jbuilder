@@ -1,4 +1,4 @@
-json.array! @project_files.includes(:group) do |project_file|
+json.array! @project_files do |project_file|
   json.extract! project_file, :id, :original_filename, :file_type_text
   json.id                 project_file.id
   json.original_filename  project_file.original_filename

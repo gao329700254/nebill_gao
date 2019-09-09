@@ -35,7 +35,7 @@
     .project_new__form__container__group
       .project_new__form__item
         = label_tag :contracted, t('activerecord.attributes.project.contracted')
-        = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted', 'v-on:change' => 'setProjectCd'
+        = check_box_tag :contracted, true, false, 'v-model' => 'project.contracted'
 
   .project_new__form__contracted v-if='project.contracted'
     .project_new__form__container
