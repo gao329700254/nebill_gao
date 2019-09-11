@@ -1,25 +1,20 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20190911034541
 #
 # Table name: expense_approvals
 #
 #  id              :integer          not null, primary key
 #  total_amount    :integer
 #  notes           :string
-#  status          :integer
+#  status          :integer          default("pending"), not null
 #  created_user_id :integer
 #  expenses_number :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  name            :string
 #
-# Foreign Keys
-#
-#  fk_rails_17af6d1f20  (created_user_id => users.id)
-#
 
 class ExpenseApproval < ApplicationRecord
-  extend Enumerize
   has_many :expense
   has_many :expense_approval_user
   has_many :users, through: :expense_approval_user
@@ -28,7 +23,7 @@ class ExpenseApproval < ApplicationRecord
 
   accepts_nested_attributes_for :expense_approval_user
 
-  enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, invalid: 40, unapplied: 50 }, default: :pending
+  enum status: { pending: 10, permission: 20, disconfirm: 30, invalid: 40, unapplied: 50 }, _suffix: :expense
 
   scope :where_created_on, -> (created_at) { where(created_at: Date.strptime(created_at).beginning_of_day..Date.strptime(created_at).end_of_day) }
   scope :appr_id, -> { maximum(:id) || 0 }
