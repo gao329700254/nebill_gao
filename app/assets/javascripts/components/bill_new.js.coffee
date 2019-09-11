@@ -13,7 +13,6 @@ $ ->
         bill_on:        undefined
         deposit_on:     undefined
         memo:           undefined
-      default_amount: undefined
     methods:
       cancel: -> @modalHide()
       submit: ->
@@ -37,7 +36,7 @@ $ ->
           @$dispatch('createBillEvent')
       initializeBill: ->
         @bill.cd            = undefined
-        @bill.amount        = @default_amount
+        @bill.amount        = undefined
         @bill.delivery_on   = undefined
         @bill.acceptance_on = undefined
         @bill.payment_type  = undefined
