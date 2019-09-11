@@ -39,6 +39,10 @@ class ExpenseApproval < ApplicationRecord
           .or(where(created_user_id: created_user_id))
         end)
 
+  def mine?(current_user)
+    created_user_id == current_user.id
+  end
+
   def self.search_expense_approval(current_user:, search_created_at: nil)
     result = if current_user.can?(:allread, ExpenseApproval)
                ExpenseApproval.all
