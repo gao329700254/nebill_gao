@@ -1,20 +1,21 @@
 # == Schema Information
-# Schema version: 20190911034541
+# Schema version: 20190912021755
 #
 # Table name: bills
 #
-#  id            :integer          not null, primary key
-#  project_id    :integer          not null
-#  cd            :string           not null
-#  delivery_on   :date             not null
-#  acceptance_on :date             not null
-#  bill_on       :date
-#  deposit_on    :date
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  memo          :text
-#  amount        :integer          default(0), not null
-#  payment_type  :string
+#  id                  :integer          not null, primary key
+#  project_id          :integer          not null
+#  cd                  :string           not null
+#  delivery_on         :date             not null
+#  acceptance_on       :date             not null
+#  bill_on             :date
+#  deposit_on          :date
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  memo                :text
+#  amount              :integer          default(0), not null
+#  payment_type        :string
+#  expected_deposit_on :date
 #
 # Indexes
 #
