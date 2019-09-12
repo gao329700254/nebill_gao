@@ -134,4 +134,37 @@ class Project < ApplicationRecord
       memo,
     ]
   end
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
+  def compute_expected_deposit_on(payment_type, bill_on)
+    case payment_type
+    when 'bill_on_15th_and_payment_on_end_of_next_month' # 15日締め翌月末払い
+      if bill_on.day <= 15
+        bill_on.at_end_of_month.next_month
+      else
+        bill_on.at_end_of_month.next_month.next_month
+      end
+    when 'bill_on_20th_and_payment_on_end_of_next_month' # 20日締め翌月末払い
+      if bill_on.day <= 20
+        bill_on.at_end_of_month.next_month
+      else
+        bill_on.at_end_of_month.next_month.next_month
+      end
+    when 'bill_on_end_of_month_and_payment_on_end_of_next_month' # 末日締め翌月末払い
+      bill_on.at_end_of_month.next_month
+    when 'bill_on_end_of_month_and_payment_on_15th_of_month_after_next' # 末日締め翌々月15日払い
+      bill_on.at_beginning_of_month.next_month.next_month + 14
+    when 'bill_on_end_of_month_and_payment_on_20th_of_month_after_next' # 末日締め翌々月20日払い
+      bill_on.at_beginning_of_month.next_month.next_month + 19
+    when 'bill_on_end_of_month_and_payment_on_end_of_month_after_next' # 末日締め翌々月末払い
+      bill_on.at_end_of_month.next_month.next_month
+    when 'bill_on_end_of_month_and_payment_on_35th' # 末日締め35日払い = 翌々月5日？
+      bill_on.at_beginning_of_month.next_month.next_month + 4
+    when 'bill_on_end_of_month_and_payment_on_45th' # 末日締め45日払い = 翌々月15日？
+      bill_on.at_beginning_of_month.next_month.next_month + 14
+    end
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
 end

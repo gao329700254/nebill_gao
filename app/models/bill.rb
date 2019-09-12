@@ -38,10 +38,11 @@ class Bill < ApplicationRecord
 
   has_paper_trail meta: { project_id: :project_id, bill_id: :id }
 
-  validates :cd           , presence: true, uniqueness: { case_sensitive: false }
-  validates :amount       , presence: true
-  validates :delivery_on  , presence: true
-  validates :acceptance_on, presence: true
+  validates :cd                 , presence: true, uniqueness: { case_sensitive: false }
+  validates :amount             , presence: true
+  validates :delivery_on        , presence: true
+  validates :acceptance_on      , presence: true
+  validates :expected_deposit_on, presence: true
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
 

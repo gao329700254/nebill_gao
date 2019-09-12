@@ -113,13 +113,14 @@ ja:
       bill:
         project: プロジェクト
         cd: 請求番号
-        amount:         請求金額
-        delivery_on:    納品日
-        acceptance_on:  検収日
-        payment_type:   支払条件
-        bill_on:        請求日
-        deposit_on:     入金日
-        memo:           メモ
+        amount:              請求金額
+        delivery_on:         納品日
+        acceptance_on:       検収日
+        payment_type:        支払条件
+        bill_on:             請求日
+        expected_deposit_on: 入金予定日
+        deposit_on:          入金日
+        memo:                メモ
       project_file_group:
         name: 名前
       approval_user:

@@ -34,6 +34,9 @@
             = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
             = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
           .bill_show__form__item
+            = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
+            = date_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on', ':disabled' => '!editMode'
+          .bill_show__form__item
             = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
             = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on', ':disabled' => '!editMode'
           .bill_show__form__item

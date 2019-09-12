@@ -82,6 +82,7 @@ private
       :acceptance_on,
       :payment_type,
       :bill_on,
+      :expected_deposit_on,
       :deposit_on,
       :memo,
     )

@@ -7,5 +7,6 @@ json.array!(@bills) do |bill|
   end
   json.amount                        bill.amount
   json.payment_type                  I18n.t("enumerize.defaults.payment_type.#{bill.payment_type}") if bill.payment_type.present?
+  json.expected_deposit_on           bill.expected_deposit_on
   json.deposit_on                    bill.deposit_on
 end
