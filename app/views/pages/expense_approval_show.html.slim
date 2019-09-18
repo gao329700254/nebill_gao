@@ -84,8 +84,8 @@
             - else
               .expense_approval_show__detail__file__contents
                 = t('page.expense_approval_show.user_no_contents')
-          - if can?(:allread, ExpenseApproval) || @current_user_approval
-            - if @expense_approval.pending_expense?
+          - if can?(:allread, ExpenseApproval) || @current_user_approval.present?
+            - if @expense_approval.pending_expense? || @expense_approval.disconfirm_expense?
               .expense_approval_show__detail__update__add_approval_user
                 = fields_for @new_user do |u|
                   = u.collection_select(:id, @users, :id, :name,
@@ -93,19 +93,20 @@
                 = button_tag 'reassignment', class: 'expense_approval_show__detail__update__add_approval_user__btn--reassignment',
                             value: "reassignment", data: { disable_with: t('page.expense_approval_show.wait') } do
                   = fa_icon 'refresh', text: t('page.expense_approval_show.reassignment')
-          - if @current_user_approval.present? && (@expense_approval.pending_expense? || @expense_approval.permission_expense?)
-            .expense_approval_show__detail__update
-              = t('page.expense_approval_show.action')
-              .expense_approval_show__detail__update__action
-                = fields_for @current_user_approval do |a|
-                  = a.text_area :comment, placeholder: t('page.expense_approval_show.comment_placeholder'),
-                                           class: 'expense_approval_show__detail__update__action__text', value: ""
-                - if @expense_approval.pending_expense?
-                  = button_tag 'permission', data: { disable_with: t('page.expense_approval_show.wait') },
-                                            class: 'expense_approval_show__detail__update__action__btn--permission',
-                                            value: "permission" do
-                    = fa_icon 'check', text: t('page.expense_approval_show.permission')
-                = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
-                                          class: 'expense_approval_show__detail__update__action__btn--disconfirm',
-                                          value: "disconfirm" do
-                  = fa_icon 'remove', text: t('page.expense_approval_show.disconfirm')
+          - if @current_user_approval.present?
+            - if @expense_approval.pending_expense? || @expense_approval.permission_expense?
+              .expense_approval_show__detail__update
+                = t('page.expense_approval_show.action')
+                .expense_approval_show__detail__update__action
+                  = fields_for @current_user_approval do |a|
+                    = a.text_area :comment, placeholder: t('page.expense_approval_show.comment_placeholder'),
+                                            class: 'expense_approval_show__detail__update__action__text', value: ""
+                  - if @expense_approval.pending_expense?
+                    = button_tag 'permission', data: { disable_with: t('page.expense_approval_show.wait') },
+                                              class: 'expense_approval_show__detail__update__action__btn--permission',
+                                              value: "permission" do
+                      = fa_icon 'check', text: t('page.expense_approval_show.permission')
+                  = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
+                                            class: 'expense_approval_show__detail__update__action__btn--disconfirm',
+                                            value: "disconfirm" do
+                    = fa_icon 'remove', text: t('page.expense_approval_show.disconfirm')
