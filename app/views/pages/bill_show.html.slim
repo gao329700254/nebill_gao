@@ -42,35 +42,29 @@
           .bill_show__form__item
             = label_tag :memo, Bill.human_attribute_name(:memo)
             = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
-
         / TODO(maeda): ユーザ権限、請求書のステータスに応じて、ボタンを出し分け
         / TODO(maeda): 請求書発行用ボタン
-        = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
-          = fa_icon 'download', text: '発行'
-
+        / = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
+        /   = fa_icon 'download', text: '発行'
         / TODO(maeda): 請求書編集用ボタン
         = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
         class: 'bill_show__form__btn--edit' do
           = fa_icon 'edit', text: t('helpers.edit')
         = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
           = fa_icon 'remove', text: t('helpers.cancel')
-
         / TODO(maeda): 請求書申請用ボタン
-        = button_tag 'v-on:click.prevent' => 'editMode = false',
-          'v-if' =>  '!bill.deposit_on && !editMode && project.status != "finished"', class: 'bill_show__form__btn--cancel' do
-          = fa_icon 'check', text: '申請'
-
+        / = button_tag 'v-on:click.prevent' => 'editMode = false',
+        /   'v-if' =>  '!bill.deposit_on && !editMode && project.status != "finished"', class: 'bill_show__form__btn--cancel' do
+        /   = fa_icon 'check', text: '申請'
         / TODO(maeda): 請求書削除用ボタン
         = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
         class: 'bill_show__form__btn--delete' do
           = fa_icon 'trash', text: '削除'
         = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__btn--submit' do
           = fa_icon 'pencil-square', text: t('helpers.submit.update')
-
         / / TODO(maeda): 請求書Excel発行用ボタン
         / = link_to bill_download_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
           = fa_icon 'download', text: t('helpers.submit.excel')
-
       / / TODO(maeda):請求書内訳編集フォーム
       / .bill_show__detail__form
       /   = '内訳編集エリア'
@@ -113,7 +107,6 @@
       /           placeholder: '手入力、デフォルト値は「0」', class: 'approval_show__detail__update__action__text'
       /   = button_tag '追加', class: 'approval_show__detail__update__action__btn--permission'
       /     = fa_icon 'plus', text: t('helpers.plus')
-
       / / TODO(maeda): 請求書用承認機能
       / .bill_show__detail__approval_user_list
       /   = t('page.approval_show.approval_status')
@@ -128,7 +121,6 @@
       /         td.approval_show__detail__approval_user_list__item--approval_user_name = '前田恭兵'
       /         td.approval_show__detail__approval_user_list__item--approval_user_status = '承認済み'
       /         td.approval_show__detail__approval_user_list__item--approval_user_comment = 'コメントを表示する'
-
       / .bill_show__detail__approval_user_list
       /   = 'アクション'
       /   .approval_show__detail__update__action
