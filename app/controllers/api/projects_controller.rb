@@ -96,7 +96,7 @@ class Api::ProjectsController < Api::ApiController
     bill_on               = view_context.calc_date(now, Regexp.last_match(1))
 
     # 支払い条件と請求日から入金予定日を算出する
-    expected_deposit_on   = @project.compute_expected_deposit_on(@project.payment_type, bill_on)
+    expected_deposit_on   = @project.calc_expected_deposit_on(@project.payment_type, bill_on)
 
     result = {
       amount:              @project.amount,
@@ -105,7 +105,6 @@ class Api::ProjectsController < Api::ApiController
       payment_type:        @project.payment_type,
       bill_on:             bill_on,
       expected_deposit_on: expected_deposit_on,
-      deposit_on:          nil,
     }
 
     render json: result, status: :ok

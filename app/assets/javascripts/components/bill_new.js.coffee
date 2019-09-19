@@ -43,7 +43,6 @@ $ ->
         @bill.payment_type        = undefined
         @bill.bill_on             = undefined
         @bill.expected_deposit_on = undefined
-        @bill.deposit_on          = undefined
         @bill.memo                = undefined
     created: ->
       $.ajax "/api/projects/#{@projectId}/bill_default_values.json"
@@ -54,7 +53,6 @@ $ ->
           @bill.payment_type        = response.payment_type
           @bill.bill_on             = response.bill_on
           @bill.expected_deposit_on = response.expected_deposit_on
-          @bill.deposit_on          = response.deposit_on
         .fail (response) =>
           console.error response
     events:

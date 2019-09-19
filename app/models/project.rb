@@ -137,7 +137,7 @@ class Project < ApplicationRecord
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/AbcSize
-  def compute_expected_deposit_on(payment_type, bill_on)
+  def calc_expected_deposit_on(payment_type, bill_on)
     case payment_type
     when 'bill_on_15th_and_payment_on_end_of_next_month' # 15日締め翌月末払い
       if bill_on.day <= 15

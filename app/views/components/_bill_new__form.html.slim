@@ -22,9 +22,6 @@
       .bill_new__form__item--expected_deposit_on
         = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
         = date_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on'
-      .bill_new__form__item--deposit_on
-        = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
-        = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on'
       .bill_new__form__item--memo
         = label_tag :memo, Bill.human_attribute_name(:memo)
         = text_area_tag :memo, nil, 'v-model' => 'bill.memo'
