@@ -3,179 +3,120 @@ require 'csv'
 namespace :load_external_project_data do
 
   task run: :environment do
-    spread_sheet_csv = CSV.read('project_spread_sheet.csv')
-    spread_sheet_csv.delete_if { |line| unvalid_line?(line) }
-    show_unvalid_lines(spread_sheet_csv)
-    show_valid_line_size(spread_sheet_csv)
+    ss_csv = CSV.read('project_spread_sheet.csv')
+    valid_ss_projects, invalid_ss_projects = ss_csv.partition { |ss_project| valid_project_cd(ss_project[2])  =~ /\A\d{2}[a-zA-Z]\d{3}\z/ }
+    show_invalid_ss_project(invalid_ss_projects)
 
-    spread_sheet_csv.each do |ss_project|
-      nebill_project = Project.find_or_initialize_by(cd: valid_project_cd(ss_project))
-      set_project_attributes(nebill_project, ss_project)
-      nebill_project.save!(validate: false)
+    valid_ss_projects.each do |project|
+      read_ss_project(project)
+      revise_ss_data
+      show_ss_data_unable_to_be_revised
+
+      @nebill_project = Project.find_or_initialize_by(cd: @ss.cd)
+      update_nebill_project
     end
 
-    puts "Notice: load external project data successfully\n\n"
+    puts "Notice: Load external project data successfully. The size of valid csv lines is #{valid_ss_projects.size}.\n\n"
   end
 
   private
 
-  def unvalid_line?(line)
-    !(valid_project_cd(line) =~ /\A\d{2}[a-zA-Z]\d{3}\z/)
+  def read_ss_project(ss_project)
+    @ss = ss_project_struct.new(ss_project[0], [ss_project[1], ss_project[9]], *ss_project[2..8])
   end
 
-  def show_unvalid_lines(revised_project_csv)
-    all_project = CSV.read('project_spread_sheet.csv')
-    puts "\nNotice: skipped lines from spread sheet:"
-    (all_project - revised_project_csv).uniq.each { |line| p line }
+  def ss_project_struct
+    @ss_project_struct ||= Struct.new(*%i(status memo cd name orderer_company_name amount contracted start_on end_on))
+  end
+
+  def valid_project_cd(cd)
+    cd.to_s.delete(' ').tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
+  end
+
+  def show_invalid_ss_project(invalid_ss_projects)
+    puts "Notice: skipped lines from spread sheet:"
+    invalid_ss_projects.uniq.each { |ss_project| p ss_project }
     puts "\n"
   end
 
-  def show_valid_line_size(revised_project_csv)
-    puts "Notice: the size of valid csv lines is #{revised_project_csv.size} "
-    puts "\n"
+  def revise_ss_data
+    @ss.cd = valid_project_cd(@ss.cd)
+    revise_amount
+    revise_date(@ss.start_on)
+    revise_date(@ss.end_on)
   end
 
-  def valid_project_cd(line)
-    project_cd = line[2]
-    full_to_half(remove_space(project_cd)) if project_cd.present?
+  def revise_amount
+    return if @ss.amount.blank?
+    return @ss.amount = nil if @ss.amount.in?(%w(- 時間精算))
+    @ss.amount.slice!(0) if @ss.amount.start_with?('¥')
+    @ss.amount.delete!(',')
   end
 
-  def remove_space(str)
-    str.delete(' ')
-  end
-
-  def full_to_half(str)
-    str.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
-  end
-
-  def set_project_attributes(nebill_project, ss_project)
-    set_status(nebill_project, ss_project)
-    set_memo(nebill_project, ss_project)
-    set_name(nebill_project, ss_project)
-    set_orderer_company_name(nebill_project, ss_project)
-    set_amount(nebill_project, ss_project)
-    set_contracted(nebill_project, ss_project)
-    set_start_on_and_contract_on(nebill_project, ss_project)
-    set_end_on(nebill_project, ss_project)
-  end
-
-  def set_status(nebill_project, ss_project)
-    status = ss_project[0]
-    if status == '*'
-      nebill_project.status = :finished
-    elsif status.present?
-      show_data_unable_to_be_revised('finished status data', status, ss_project)
-    end
-  end
-
-  def set_memo(nebill_project, ss_project)
-    if nebill_project.memo.present?
-      nebill_project.memo += ("\n" + ss_project[1].to_s)
-    else
-      nebill_project.memo = ss_project[1].to_s
-    end
-    nebill_project.memo += ("\n" + ss_project[9].to_s)
-  end
-
-  def set_name(nebill_project, ss_project)
-    nebill_project.name = ss_project[3].to_s
-  end
-
-  def set_orderer_company_name(nebill_project, ss_project)
-    nebill_project.orderer_company_name = ss_project[4]
-  end
-
-  def set_amount(nebill_project, ss_project)
-    amount = ss_project[5]
-    return if unvalid_amount?(amount)
-
-    amount.slice!(0) if amount.start_with?('¥')
-    amount.delete!(',')
-
-    if amount =~ /\d+/
-      nebill_project.amount = amount
-    elsif amount.present?
-      show_data_unable_to_be_revised('amount', amount, ss_project)
-    end
-  end
-
-  def unvalid_amount?(amount)
-    return true if amount.blank?
-    case amount
-    when '-', '時間精算' then true
-    else false
-    end
-  end
-
-  def set_contracted(nebill_project, ss_project)
-    contracted = ss_project[6]
-    nebill_project.contracted =
-      if contracted == '済' || contracted == '-' then true
-      elsif contracted.present?
-        show_data_unable_to_be_revised('contracted', contracted, ss_project)
-      else
-        false
-      end
-  end
-
-  def set_start_on_and_contract_on(nebill_project, ss_project)
-    start_on = ss_project[7]
-    return if unvalid_date?(start_on)
-
-    start_on = formatted_date(start_on)
-    if start_on =~ %r(\A\d{4}\/\d{1,2}\/\d{1,2}\z)
-      nebill_project.start_on = nebill_project.contract_on = Date.parse(start_on)
-    else
-      show_data_unable_to_be_revised('start_on and contract_on', start_on, ss_project)
-    end
-  end
-
-  def set_end_on(nebill_project, ss_project)
-    end_on = ss_project[8]
-    return if unvalid_date?(end_on)
-
-    end_on = formatted_date(end_on)
-    if end_on =~ %r(\A\d{4}\/\d{1,2}\/\d{1,2}\z)
-      nebill_project.end_on = Date.parse(end_on)
-    else
-      show_data_unable_to_be_revised('end_on', end_on, ss_project)
-    end
-  end
-
-  def unvalid_date?(date)
-    return true if date.blank?
-    case date
-    when '保留', '/', '基本開発終了後設定' then true
-    else false
-    end
-  end
-
-  def formatted_date(date)
-    date = full_to_half(date)
+  def revise_date(date)
+    return if date.blank?
+    date.tr!('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
     date.chop! if date.end_with?('～')
-    revised_specific_date(date)
+    revise_specific_date(date)
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
-  def revised_specific_date(date)
-    case date
-    when '2月、7月他'             then '2016/2/1'
-    when '二重採番（16K014使用）'   then '2016/4/30'
-    when '8/31、9/30'            then '2016/9/30'
-    when '9/30,10/31'            then '2016/10/31'
-    when '4月～5月纏めて請求'       then '2017/5/1'
-    when '11月30日'               then '2017/11/30'
-    when '10月1日'                then '2018/10/1'
-    when '2月28日'                then '2019/2/28'
-    else date
-    end
+  def revise_specific_date(date)
+    revised_date =
+      case date
+      when '2月、7月他'                   then '2016/2/1'
+      when '二重採番（16K014使用）'         then '2016/4/30'
+      when '8/31、9/30'                  then '2016/9/30'
+      when '9/30,10/31'                  then '2016/10/31'
+      when '4月～5月纏めて請求'             then '2017/5/1'
+      when '11月30日'                     then '2017/11/30'
+      when '10月1日'                      then '2018/10/1'
+      when '2月28日'                      then '2019/2/28'
+      when '保留', '/', '基本開発終了後設定' then ''
+      else date
+      end
+    date.replace revised_date
   end
+
+  # rubocop:disable Metrics/AbcSize
+  def show_ss_data_unable_to_be_revised
+    tasks = [
+      { attr_name: 'status',                   attr_value: @ss.status,     condition: !(@ss.status.blank? || @ss.status.to_s == '*')           },
+      { attr_name: 'amount',                   attr_value: @ss.amount,     condition: !(@ss.amount.blank? || @ss.amount =~ /\d+/)              },
+      { attr_name: 'contracted',               attr_value: @ss.contracted, condition: !(@ss.contracted.blank? || @ss.contracted.in?(%w(済 -))) },
+      { attr_name: 'start_on and contract_on', attr_value: @ss.start_on,   condition: !(@ss.start_on.blank? || valid_date?(@ss.start_on))      },
+      { attr_name: 'end_on',                   attr_value: @ss.end_on,     condition: !(@ss.end_on.blank? || valid_date?(@ss.end_on))          },
+    ]
+    tasks.each { |t| show_ss_data(t[:attr_name], t[:attr_value]) if t[:condition] }
+  end
+  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
 
-  def show_data_unable_to_be_revised(attr_name, attr_value, ss_project)
+  def valid_date?(date)
+    date =~ %r(\A\d{4}\/\d{1,2}\/\d{1,2}\z)
+  end
+
+  def show_ss_data(attr_name, attr_value)
     puts "Notice: found [#{attr_name}: #{attr_value}] unable to be revised in below project of spread sheet"
     puts 'Skip inputting this attribute data to nebill'
-    p ss_project
+    p @ss.to_a
     puts "\n"
   end
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
+  def update_nebill_project
+    @nebill_project.update_attributes(status: :finished) if @ss.status == '*'
+    @nebill_project.update_attributes(
+      memo: @nebill_project.memo.blank? ? @ss.memo.join("\n") : [@nebill_project.memo, @ss.memo].join("\n"),
+      name: @ss.name.to_s,
+      orderer_company_name: @ss.orderer_company_name.to_s,
+    )
+    @nebill_project.update_attributes(amount: @ss.amount) if @ss.amount =~ /\d+/
+    @nebill_project.update_attributes(contracted: @ss.contracted.in?(%w(済 -)) ? true : false)
+    @nebill_project.update_attributes(start_on: @nebill_project.contract_on = Date.parse(@ss.start_on)) if valid_date?(@ss.start_on)
+    @nebill_project.update_attributes(end_on: Date.parse(@ss.end_on)) if valid_date?(@ss.end_on)
+  end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/CyclomaticComplexity
 end
