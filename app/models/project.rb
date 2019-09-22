@@ -138,31 +138,33 @@ class Project < ApplicationRecord
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/AbcSize
   def calc_expected_deposit_on(payment_type, bill_on)
+    day = payment_type[/\d+/].to_i
+
     case payment_type
     when 'bill_on_15th_and_payment_on_end_of_next_month' # 15日締め翌月末払い
-      if bill_on.day <= 15
-        bill_on.at_end_of_month.next_month
+      if bill_on.day <= day
+        Date.parse bill_on.since(1.month).end_of_month.strftime("%Y-%m-%d")
       else
-        bill_on.at_end_of_month.next_month.next_month
+        Date.parse bill_on.since(2.months).end_of_month.strftime("%Y-%m-%d")
       end
     when 'bill_on_20th_and_payment_on_end_of_next_month' # 20日締め翌月末払い
-      if bill_on.day <= 20
-        bill_on.at_end_of_month.next_month
+      if bill_on.day <= day
+        Date.parse bill_on.since(1.month).end_of_month.strftime("%Y-%m-%d")
       else
-        bill_on.at_end_of_month.next_month.next_month
+        Date.parse bill_on.since(2.months).end_of_month.strftime("%Y-%m-%d")
       end
     when 'bill_on_end_of_month_and_payment_on_end_of_next_month' # 末日締め翌月末払い
-      bill_on.at_end_of_month.next_month
+      Date.parse bill_on.since(1.month).end_of_month.strftime("%Y-%m-%d")
     when 'bill_on_end_of_month_and_payment_on_15th_of_month_after_next' # 末日締め翌々月15日払い
-      bill_on.at_beginning_of_month.next_month.next_month + 14
+      Date.parse bill_on.since(2.months).strftime("%Y-%m-#{day}")
     when 'bill_on_end_of_month_and_payment_on_20th_of_month_after_next' # 末日締め翌々月20日払い
-      bill_on.at_beginning_of_month.next_month.next_month + 19
+      Date.parse bill_on.since(2.months).strftime("%Y-%m-#{day}")
     when 'bill_on_end_of_month_and_payment_on_end_of_month_after_next' # 末日締め翌々月末払い
-      bill_on.at_end_of_month.next_month.next_month
+      Date.parse bill_on.since(2.months).end_of_month.strftime("%Y-%m-%d")
     when 'bill_on_end_of_month_and_payment_on_35th' # 末日締め35日払い = 翌々月5日？
-      bill_on.at_beginning_of_month.next_month.next_month + 4
+      Date.parse((bill_on + 35.days).strftime("%Y-%m-%d"))
     when 'bill_on_end_of_month_and_payment_on_45th' # 末日締め45日払い = 翌々月15日？
-      bill_on.at_beginning_of_month.next_month.next_month + 14
+      Date.parse((bill_on + 45.days).strftime("%Y-%m-%d"))
     end
   end
   # rubocop:enable Metrics/CyclomaticComplexity

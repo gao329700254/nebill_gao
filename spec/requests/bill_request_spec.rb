@@ -27,6 +27,7 @@ RSpec.describe 'bills request' do
       expect(json[0]['acceptance_on']).to                    eq bill1.acceptance_on.strftime("%Y-%m-%d")
       expect(json[0]['payment_type']).to                     eq I18n.t("enumerize.defaults.payment_type.#{bill1.payment_type}")
       expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
+      expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
       expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill1.memo
       expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
@@ -62,6 +63,7 @@ RSpec.describe 'bills request' do
         expect(json[0]['acceptance_on']).to                    eq bill1.acceptance_on.strftime("%Y-%m-%d")
         expect(json[0]['payment_type']).to                     eq I18n.t("enumerize.defaults.payment_type.#{bill1.payment_type}")
         expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
+        expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
         expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json[0]['memo']).to                             eq bill1.memo
         expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
@@ -96,18 +98,19 @@ RSpec.describe 'bills request' do
         expect(response).to be_success
         expect(response.status).to eq 200
 
-        expect(json['id']).to             eq bill.id
-        expect(json['project_id']).to     eq bill.project_id
-        expect(json['cd']).to             eq bill.cd
-        expect(json['amount']).to         eq bill.amount
-        expect(json['delivery_on']).to    eq bill.delivery_on.strftime("%Y-%m-%d")
-        expect(json['acceptance_on']).to  eq bill.acceptance_on.strftime("%Y-%m-%d")
-        expect(json['payment_type']).to   eq bill.payment_type
-        expect(json['bill_on']).to        eq bill.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
-        expect(json['deposit_on']).to     eq bill.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
-        expect(json['memo']).to           eq bill.memo
-        expect(json['created_at']).to     eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
-        expect(json['updated_at']).to     eq I18n.l(bill.updated_at.in_time_zone('Tokyo'))
+        expect(json['id']).to                  eq bill.id
+        expect(json['project_id']).to          eq bill.project_id
+        expect(json['cd']).to                  eq bill.cd
+        expect(json['amount']).to              eq bill.amount
+        expect(json['delivery_on']).to         eq bill.delivery_on.strftime("%Y-%m-%d")
+        expect(json['acceptance_on']).to       eq bill.acceptance_on.strftime("%Y-%m-%d")
+        expect(json['payment_type']).to        eq bill.payment_type
+        expect(json['bill_on']).to             eq bill.bill_on ? bill.bill_on.strftime("%Y-%m-%d") : nil
+        expect(json['expected_deposit_on']).to eq bill.expected_deposit_on.strftime("%Y-%m-%d")
+        expect(json['deposit_on']).to          eq bill.deposit_on ? bill.deposit_on.strftime("%Y-%m-%d") : nil
+        expect(json['memo']).to                eq bill.memo
+        expect(json['created_at']).to          eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+        expect(json['updated_at']).to          eq I18n.l(bill.updated_at.in_time_zone('Tokyo'))
         # expect(json['shodunnit']).to
       end
 
@@ -135,13 +138,13 @@ RSpec.describe 'bills request' do
         {
           bill: {
             cd: 'BILL-1',
-            amount:        100_000,
-            delivery_on:   '2016-01-01',
-            acceptance_on: '2016-01-02',
-            payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
-            bill_on:       '2016-01-04',
-            deposit_on:    '2016-01-05',
-            memo:          'memo',
+            amount:              100_000,
+            delivery_on:         '2016-01-01',
+            acceptance_on:       '2016-01-02',
+            payment_type:        'bill_on_15th_and_payment_on_end_of_next_month',
+            bill_on:             '2016-01-04',
+            expected_deposit_on: '2016-01-05',
+            memo:                'memo',
           },
         }
       end
@@ -154,13 +157,13 @@ RSpec.describe 'bills request' do
         bill = Bill.first
         expect(bill.project).to eq project
         expect(bill.cd).to eq 'BILL-1'
-        expect(bill.amount).to              eq 100_000
-        expect(bill.delivery_on.to_s).to    eq '2016-01-01'
-        expect(bill.acceptance_on.to_s).to  eq '2016-01-02'
-        expect(bill.payment_type).to        eq 'bill_on_15th_and_payment_on_end_of_next_month'
-        expect(bill.bill_on.to_s).to        eq '2016-01-04'
-        expect(bill.deposit_on.to_s).to     eq '2016-01-05'
-        expect(bill.memo).to                eq 'memo'
+        expect(bill.amount).to                   eq 100_000
+        expect(bill.delivery_on.to_s).to         eq '2016-01-01'
+        expect(bill.acceptance_on.to_s).to       eq '2016-01-02'
+        expect(bill.payment_type).to             eq 'bill_on_15th_and_payment_on_end_of_next_month'
+        expect(bill.bill_on.to_s).to             eq '2016-01-04'
+        expect(bill.expected_deposit_on.to_s).to eq '2016-01-05'
+        expect(bill.memo).to                     eq 'memo'
       end
     end
 
@@ -169,13 +172,13 @@ RSpec.describe 'bills request' do
         {
           bill: {
             cd: '',
-            amount:        100_000,
-            delivery_on:   '2016-01-01',
-            acceptance_on: '2016-01-02',
-            payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
-            bill_on:       '2016-01-04',
-            deposit_on:    '2016-01-05',
-            memo:          'memo',
+            amount:              100_000,
+            delivery_on:         '2016-01-01',
+            acceptance_on:       '2016-01-02',
+            payment_type:        'bill_on_15th_and_payment_on_end_of_next_month',
+            bill_on:             '2016-01-04',
+            expected_deposit_on: '2016-01-05',
+            memo:                'memo',
           },
         }
       end
@@ -199,13 +202,14 @@ RSpec.describe 'bills request' do
           {
             bill: {
               cd: 'BILL-1',
-              amount:        100_000,
-              delivery_on:   '2016-01-01',
-              acceptance_on: '2016-01-02',
-              payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
-              bill_on:       '2016-01-04',
-              deposit_on:    '2016-01-05',
-              memo:          'memo',
+              amount:              100_000,
+              delivery_on:         '2016-01-01',
+              acceptance_on:       '2016-01-02',
+              payment_type:        'bill_on_15th_and_payment_on_end_of_next_month',
+              bill_on:             '2016-01-04',
+              expected_deposit_on: '2016-01-05',
+              deposit_on:          '2016-01-05',
+              memo:                'memo',
             },
           }
         end
@@ -215,15 +219,16 @@ RSpec.describe 'bills request' do
             patch path, params: params
           end.to change { bill.reload && bill.updated_at }
 
-          expect(bill.project).to             eq project
-          expect(bill.cd).to                  eq 'BILL-1'
-          expect(bill.amount).to              eq 100_000
-          expect(bill.delivery_on.to_s).to    eq '2016-01-01'
-          expect(bill.acceptance_on.to_s).to  eq '2016-01-02'
-          expect(bill.payment_type).to        eq 'bill_on_15th_and_payment_on_end_of_next_month'
-          expect(bill.bill_on.to_s).to        eq '2016-01-04'
-          expect(bill.deposit_on.to_s).to     eq '2016-01-05'
-          expect(bill.memo).to                eq 'memo'
+          expect(bill.project).to                  eq project
+          expect(bill.cd).to                       eq 'BILL-1'
+          expect(bill.amount).to                   eq 100_000
+          expect(bill.delivery_on.to_s).to         eq '2016-01-01'
+          expect(bill.acceptance_on.to_s).to       eq '2016-01-02'
+          expect(bill.payment_type).to             eq 'bill_on_15th_and_payment_on_end_of_next_month'
+          expect(bill.bill_on.to_s).to             eq '2016-01-04'
+          expect(bill.expected_deposit_on.to_s).to eq '2016-01-05'
+          expect(bill.deposit_on.to_s).to          eq '2016-01-05'
+          expect(bill.memo).to                     eq 'memo'
         end
 
         it 'return success code and message' do
@@ -242,13 +247,14 @@ RSpec.describe 'bills request' do
           {
             bill: {
               cd: '  ',
-              amount:        100_000,
-              delivery_on:   '2016-01-01',
-              acceptance_on: '2016-01-02',
-              payment_type:  'bill_on_15th_and_payment_on_end_of_next_month',
-              bill_on:       '2016-01-04',
-              deposit_on:    '2016-01-05',
-              memo:          'memo',
+              amount:              100_000,
+              delivery_on:         '2016-01-01',
+              acceptance_on:       '2016-01-02',
+              payment_type:        'bill_on_15th_and_payment_on_end_of_next_month',
+              bill_on:             '2016-01-04',
+              expected_deposit_on: '2016-01-05',
+              deposit_on:          '2016-01-05',
+              memo:                'memo',
             },
           }
         end
