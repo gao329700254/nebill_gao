@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :project do
     association :group, factory: :project_group
 
-    sequence(:cd) { |n| "#{rand(11..20)}D#{n.to_s.rjust(3, '0')}A" }
+    sequence(:cd) { |n| "#{rand(11..20)}D#{n.to_s.rjust(3, '0')}" }
     name { Faker::App.name }
     contracted { false }
     contract_on { Faker::Date.between(6.months.ago, 5.months.ago) }
