@@ -13,7 +13,8 @@ namespace :load_external_project_data do
       show_ss_data_unable_to_be_revised
 
       @nebill_project = Project.find_or_initialize_by(cd: @ss.cd)
-      update_nebill_project
+      set_nebill_project_attrs
+      @nebill_project.save!(validate: false)
     end
 
     puts "Notice: Load external project data successfully. The size of valid csv lines is #{valid_ss_projects.size}.\n\n"
@@ -104,19 +105,15 @@ namespace :load_external_project_data do
   end
 
   # rubocop:disable Metrics/CyclomaticComplexity
-  # rubocop:disable Metrics/AbcSize
-  def update_nebill_project
-    @nebill_project.update_attributes(status: :finished) if @ss.status == '*'
-    @nebill_project.update_attributes(
-      memo: @nebill_project.memo.blank? ? @ss.memo.join("\n") : [@nebill_project.memo, @ss.memo].join("\n"),
-      name: @ss.name.to_s,
-      orderer_company_name: @ss.orderer_company_name.to_s,
-    )
-    @nebill_project.update_attributes(amount: @ss.amount) if @ss.amount =~ /\d+/
-    @nebill_project.update_attributes(contracted: @ss.contracted.in?(%w(済 -)) ? true : false)
-    @nebill_project.update_attributes(start_on: @nebill_project.contract_on = Date.parse(@ss.start_on)) if valid_date?(@ss.start_on)
-    @nebill_project.update_attributes(end_on: Date.parse(@ss.end_on)) if valid_date?(@ss.end_on)
+  def set_nebill_project_attrs
+    @nebill_project.status               = :finished if @ss.status == '*'
+    @nebill_project.memo                 = @nebill_project.memo.blank? ? @ss.memo.join("\n") : [@nebill_project.memo, @ss.memo].join("\n")
+    @nebill_project.name                 = @ss.name.to_s
+    @nebill_project.orderer_company_name = @ss.orderer_company_name.to_s
+    @nebill_project.amount               = @ss.amount if @ss.amount =~ /\d+/
+    @nebill_project.contracted           = @ss.contracted.in?(%w(済 -)) ? true : false
+    @nebill_project.start_on             = @nebill_project.contract_on = Date.parse(@ss.start_on) if valid_date?(@ss.start_on)
+    @nebill_project.end_on               = Date.parse(@ss.end_on) if valid_date?(@ss.end_on)
   end
-  # rubocop:enable Metrics/AbcSize
   # rubocop:enable Metrics/CyclomaticComplexity
 end
