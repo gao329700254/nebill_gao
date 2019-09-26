@@ -422,6 +422,15 @@ ja:
     send_email:
       success: 'メールを送信しました'
       fail: 'メールを送信できませんでした'
+  # enum_helpで使用するロケール情報
+  enums:
+    expense_approval:
+      status:
+        pending:    承認待ち
+        permission: 承認済み
+        disconfirm: 差し戻し
+        invalid:    取り消し
+        unapplied:  未申請
   enumerize:
     defaults:
       contract_type:

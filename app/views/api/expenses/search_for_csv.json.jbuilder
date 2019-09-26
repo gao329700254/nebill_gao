@@ -5,7 +5,7 @@ json.array!(@expenses) do |expense|
   json.amount                   expense.amount
   json.project                  Expense.project_name(expense)
   json.notes                    expense.notes
-  json.status                   expense.expense_approval.status_text
+  json.status                   expense.expense_approval.status_i18n
   json.expense_approval_id      expense.expense_approval_id
   json.approval_created_at      expense.expense_approval.created_at.strftime("%Y-%m-%d %H:%M")
   json.created_user_name        expense.expense_approval.created_user.name

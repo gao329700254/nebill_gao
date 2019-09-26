@@ -56,7 +56,7 @@ class Expense < ApplicationRecord
     CSV.generate(headers: headers, write_headers: true, force_quotes: true) do |csv|
       all.find_each do |exp|
         csv << [exp.expense_approval_id,
-                exp.expense_approval.status_text,
+                exp.expense_approval.status_i18n,
                 exp.expense_approval.created_at.strftime("%Y-%m-%d %H:%M"),
                 exp.expense_approval.created_user.name,
                 exp.expense_approval.expense_approval_user.last.user.name,
