@@ -31,7 +31,7 @@ namespace :load_external_project_data do
   end
 
   def valid_project_cd(cd)
-    cd.to_s.delete(' ').tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
+    cd.to_s.delete(' ').tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z').upcase
   end
 
   def show_invalid_ss_project(invalid_ss_projects)
