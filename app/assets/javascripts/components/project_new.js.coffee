@@ -23,12 +23,10 @@ $ ->
     methods:
       cancel: -> @modalHide()
       setProjectCd: ->
-        projectContracted = @project.contracted
-        projectType = @project.contract_type
         $.ajax
-          url: "/api/projects/cd/#{projectType}.json"
+          url: "/api/projects/create_cd/#{@project.contract_type}.json"
           data:
-            project_contracted: projectContracted
+            project_contracted: @project.contracted
         .done (response) =>
           @project.cd = response.cd
       loadClients: ->
@@ -37,6 +35,9 @@ $ ->
             @clients = []
             response.forEach (element) =>
               @clients.push(element)
+      setOrdererClientId: ->
+        @ordererClientId = $('#orderer_client_id').val()
+        @fillOrderer()
       fillOrderer: ->
         $.ajax "/api/clients/#{@ordererClientId}.json"
           .done (response) =>
@@ -45,6 +46,9 @@ $ ->
             @project.orderer_address          = response.address
             @project.orderer_zip_code         = response.zip_code
             @project.orderer_phone_number     = response.phone_number
+      setBillingClientId: ->
+        @billingClientId = $('#billing_client_id').val()
+        @fillBilling()
       fillBilling: ->
         $.ajax "/api/clients/#{@billingClientId}.json"
           .done (response) =>

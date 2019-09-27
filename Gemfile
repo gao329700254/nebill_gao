@@ -33,6 +33,8 @@ gem 'nested_form_fields'
 gem 'sendgrid-actionmailer'
 gem 'gon'
 gem "puma", "~> 3.12"
+gem 'select2-rails'
+gem 'enum_help'
 
 group :development do
   gem 'web-console', '~> 2.0'

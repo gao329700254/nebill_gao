@@ -2,7 +2,7 @@ module ProjectValidates
   extend ActiveSupport::Concern
 
   included do
-    validates :cd               , presence: true, uniqueness: { case_sensitive: false }
+    validates :cd               , presence: true, format: { with: /\A\d{2}[a-z|A-Z]\d{3}[AB]?\z/ }, uniqueness: { case_sensitive: false }
     validates :name             , presence: true
     validates :amount           , numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }
     validates :estimated_amount , numericality: { only_integer: true, greater_than_or_equal_to: 0, allow_nil: true }

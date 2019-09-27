@@ -36,3 +36,15 @@ textarea {
   display: inline;
   margin-left: $small-spacing;
 }
+
+/*
+Select2
+-------------------------------------*/
+.select2 {
+  @include flex(1);
+
+  &-search__field,
+  &-results__options {
+    color: $black;
+  }
+}

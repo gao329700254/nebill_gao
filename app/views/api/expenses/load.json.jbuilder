@@ -27,7 +27,7 @@ end
 
 json.expense_approval do
   json.id                       @eappr&.id || '0'
-  json.status                   @eappr&.status_text || I18n.t("page.expense_list.unapplove")
+  json.status                   @eappr&.status_i18n || I18n.t("page.expense_list.unapplove")
 end
 
 json.ability do

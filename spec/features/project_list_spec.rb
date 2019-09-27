@@ -4,9 +4,9 @@ RSpec.feature 'Project Index Page', js: true do
   subject { page }
 
   given!(:user)      { create(:user) }
-  given!(:project_A) { create(:contracted_project, cd: '11D111A', name: "project_A", status: "receive_order") }
-  given!(:project_B) { create(:contracted_project, cd: '22D222A', name: "project_B", status: "finished") }
-  given!(:project_C) { create(:uncontracted_project, cd: '33D333A', name: "project_C", unprocessed: true) }
+  given!(:project_A) { create(:contracted_project, cd: '11D111', name: "project_A", status: "receive_order") }
+  given!(:project_B) { create(:contracted_project, cd: '22D222', name: "project_B", status: "finished") }
+  given!(:project_C) { create(:uncontracted_project, cd: '33D333', name: "project_C", unprocessed: true) }
 
   background { login user, with_capybara: true }
   background do

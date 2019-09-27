@@ -1,5 +1,7 @@
 //= require jquery
 //= require jquery_ujs
+//= require select2
+//= require select2_locale_ja
 //= require underscore/underscore
 //= require vue/dist/vue
 //= require toastr/toastr
@@ -38,4 +40,10 @@ $(function() {
   $(document).on('.home__img_box__google', 'active', function() {
     this.css('background-image',  "url(" + this.data('image-active') + ")");
   })
+
+  $(document).ready(function () {
+    $('.select2').select2({
+      language: 'ja'
+    });
+  });
 })

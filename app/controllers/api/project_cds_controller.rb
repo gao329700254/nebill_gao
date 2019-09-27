@@ -1,12 +1,10 @@
 class Api::ProjectCdsController < Api::ApiController
   PROJECT_TYPES = %w(lump_sum uncontracted consignment maintenance ses other).freeze
 
-  before_action :set_project_type, only: [:cd]
+  before_action :set_project_type, only: [:create_cd]
 
-  def cd
-    @prefix = Time.zone.today.strftime("%y") + identifier(@project_type)
-    @cd = { cd: @prefix + format("%03d", Project.sequence(@prefix)) + (params[:project_contracted] == 'true' ? 'A' : 'B') }
-
+  def create_cd
+    @cd = { cd: cd_of_new_project }
     render json: @cd, status: :ok
   end
 
@@ -33,5 +31,10 @@ private
     else
       render_not_found_message
     end
+  end
+
+  def cd_of_new_project
+    @prefix = Time.zone.today.strftime("%y") + identifier(@project_type)
+    @prefix + format("%03d", Project.next_sequence(@prefix))
   end
 end

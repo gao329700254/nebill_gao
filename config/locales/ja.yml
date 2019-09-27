@@ -77,7 +77,8 @@ ja:
       project:
         group: グループ
         cd: ID
-        placeholder: 記入例) 17D001A
+        contract: 契約状態
+        placeholder: 記入例) 17D001
         name: 案件名
         memo: メモ
         contracted: 契約済
@@ -421,6 +422,15 @@ ja:
     send_email:
       success: 'メールを送信しました'
       fail: 'メールを送信できませんでした'
+  # enum_helpで使用するロケール情報
+  enums:
+    expense_approval:
+      status:
+        pending:    承認待ち
+        permission: 承認済み
+        disconfirm: 差し戻し
+        invalid:    取り消し
+        unapplied:  未申請
   enumerize:
     defaults:
       contract_type:
@@ -440,7 +450,7 @@ ja:
         bill_on_end_of_month_and_payment_on_45th:                     末日締め45日払い
       status:
         receive_order:   受注
-        unreceive_order: 末受注
+        unreceive_order: 未受注
         turn_over:       売上
         publish_bill:    請求書発行
         finished:        終了

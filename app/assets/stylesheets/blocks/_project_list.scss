@@ -57,6 +57,11 @@
           border-bottom: $bold-border;
           background-color: $light-grey;
         }
+
+        &--uncontracted {
+          border-bottom: $bold-border;
+          background-color: $yellow;
+        }
       }
     }
 
@@ -73,6 +78,11 @@
       &--cd {
         @extend %project_list__tbl__item;
         @include span-columns(2);
+      }
+
+      &--contract {
+        @extend %project_list__tbl__item;
+        @include span-columns(3);
       }
 
       &--project_name {
