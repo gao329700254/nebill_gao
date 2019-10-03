@@ -42,6 +42,7 @@ namespace :load_external_project_data do
 
   def revise_ss_data
     @ss.cd = valid_project_cd(@ss.cd)
+    @ss.memo = @ss.memo.compact.join("\n")
     revise_amount
     revise_date(@ss.start_on)
     revise_date(@ss.end_on)
@@ -107,7 +108,7 @@ namespace :load_external_project_data do
   # rubocop:disable Metrics/CyclomaticComplexity
   def set_nebill_project_attrs
     @nebill_project.status               = :finished if @ss.status == '*'
-    @nebill_project.memo                 = @nebill_project.memo.blank? ? @ss.memo.join("\n") : [@nebill_project.memo, @ss.memo].join("\n")
+    @nebill_project.memo                 = [@nebill_project.memo, @ss.memo].compact.join("\n") unless @nebill_project.memo&.include?(@ss.memo)
     @nebill_project.name                 = @ss.name.to_s
     @nebill_project.orderer_company_name = @ss.orderer_company_name.to_s
     @nebill_project.amount               = @ss.amount if @ss.amount =~ /\d+/

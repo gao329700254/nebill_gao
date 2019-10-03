@@ -34,6 +34,22 @@ $ ->
         compareUpdatedAt = (a, b) ->
           if b.updated_at >= a.updated_at then 1 else -1
         sortedList = list.slice().sort(compareUpdatedAt)
+      download: ->
+        $.ajax
+          url: '/projects/csv'
+          type: 'GET'
+          data: {
+            status:          @projectStatus
+            contract_status: @contractStatus
+            start:           @start
+            end:             @end
+          }
+        .done (response) =>
+          blob = new Blob([response], { type: 'text/csv' })
+          link = document.createElement('a')
+          link.href = window.URL.createObjectURL(blob)
+          link.download = 'projects.csv'
+          link.click()
     compiled: ->
       @search()
     events:

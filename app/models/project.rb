@@ -120,4 +120,18 @@ class Project < ApplicationRecord
   def estimated_amount=(value)
     super(value.delete(',')) if value
   end
+
+  def csv_columns
+    [
+      status.finished? ? I18n.t('page.project_list.project_status.finished') : I18n.t('page.project_list.project_status.progress'),
+      cd,
+      name,
+      orderer_company_name,
+      amount&.to_s(:delimited),
+      contracted? ? '済' : '',
+      start_on.to_s,
+      end_on.to_s,
+      memo,
+    ]
+  end
 end

@@ -28,6 +28,8 @@
       = label_tag :contracted, t('page.project_list.contract_type.contracted')
       = radio_button_tag :uncontracted, 'uncontracted', false, id: 'uncontracted', 'v-model' => 'contractStatus'
       = label_tag :uncontracted, t('page.project_list.contract_type.uncontracted')
+      = button_tag 'v-on:click' => 'download', class: 'project_list__search__date__btn--csv_download' do
+        = fa_icon 'download', text: t('page.project_list.csv_download')
     .project_list__search__radio
       = radio_button_tag :all_pjt_status, 'all_pjt_status', true, id: 'all_pjt_status', 'v-model' => 'projectStatus'
       = label_tag :all_pjt_status, t('page.project_list.project_status.all')
