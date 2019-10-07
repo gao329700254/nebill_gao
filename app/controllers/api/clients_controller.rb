@@ -2,7 +2,6 @@
 class Api::ClientsController < Api::ApiController
   def index
     @clients = Client.all.includes(:approvals)
-
     render json: @clients, status: :ok
   end
 
@@ -10,13 +9,13 @@ class Api::ClientsController < Api::ApiController
     @client = Client.new(client_param)
     if @client.valid?
       params[:client][:files_attributes]&.each do |file|
-        @client.status = 10 if file.second[:file_type] == '10'
+        @client.pending_client! if file.second[:file_type] == '10'
       end
       Client.transaction do
         @client.save!
         create_approval
       end
-      create_notice if @client.status == 10
+      create_notice if @client.pending_client?
       render_action_model_success_message(@client, :create)
     else
       render_action_model_fail_message(@client, :create)
@@ -46,7 +45,7 @@ class Api::ClientsController < Api::ApiController
   end
 
   def statuses
-    @statuses = t('enumerize.client.status')
+    @statuses = t('enums.client.status')
     render json: @statuses, status: :ok
   end
 
@@ -116,8 +115,7 @@ private
 
   def update_status
     @client = Client.find(params[:client_id])
-    @client.status = 30 if params[:button] == 'permission'
-    @client.save
+    @client.published_client! if params[:button] == 'permission'
   end
 
   def create_notice
@@ -137,10 +135,10 @@ private
   def update_approval_notice
     approval = @services.approval
     if params[:button] == 'permission'
-      if @client.status == 20
+      if @client.waiting_client?
         ClientMailer.nda_permission_client_approval(user: approval.created_user, approval: approval).deliver_now
         Chatwork::Client.new(approval: approval, to_user: approval.created_user).notify_nda_permited
-      elsif @client.status == 30
+      elsif @client.published_client?
         ClientMailer.permission_client_approval(user: approval.created_user, approval: approval).deliver_now
         Chatwork::Client.new(approval: approval, to_user: approval.created_user).notify_permited
       end
@@ -153,13 +151,13 @@ private
   def check_files
     db_file_type = @client.files.first.file_type
     uploading_file_type = params[:client][:files_attributes].first.second[:file_type]
-    @client.status = if params[:client][:files_attributes].length == 2
-                       10
-                     elsif db_file_type == 'nda' || uploading_file_type == '10'
-                       10
-                     else
-                       20
-                     end
+    if params[:client][:files_attributes].length == 2
+      @client.pending_client!
+    elsif db_file_type == 'nda' || uploading_file_type == '10'
+      @client.pending_client!
+    else
+      @client.waiting_client!
+    end
   end
 
   def create_approval
@@ -187,8 +185,8 @@ private
     @appr_params = { approval_id: @approval.id, button: 'pending', comment: '' }
     @services = ApprovalUsers::UpdateStatusService.new(update_params: @appr_params, current_user: User.find_by(is_chief: true))
     @services.execute
-    check_files if @client.status == 20
-    update_notice if @client.status == 10
+    check_files if @client.waiting_client?
+    update_notice if @client.pending_client?
   end
 end
 # rubocop:enable Metrics/ClassLength
