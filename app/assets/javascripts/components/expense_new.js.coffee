@@ -150,7 +150,6 @@ $ ->
           .done (response) =>
             @project_list.push(response)
             @selected_project = response.id
-      setProjectModal: -> @$broadcast('showExpenseNewEvent')
       showExpenseTransportation: -> @$broadcast('showExpenseTransportationEvent')
     events:
       showExpenseNewEvent: (val) ->
