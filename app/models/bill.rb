@@ -29,6 +29,7 @@
 
 class Bill < ApplicationRecord
   belongs_to :project
+  has_one  :bill_applicant
   has_many :user_members
   has_many :users, through: :user_members
 
@@ -60,5 +61,9 @@ class Bill < ApplicationRecord
   def bill_on_cannot_predate_acceptance_on
     return if bill_on.nil?
     errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on')) if bill_on < acceptance_on
+  end
+
+  def applicant
+    bill_applicant.user
   end
 end

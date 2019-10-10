@@ -2,7 +2,6 @@
 class PagesController < ApplicationController
   skip_authorize_resource     only: [:home]
   before_action :set_project              , only: [:project_show]
-  before_action :set_bill                 , only: [:bill_show]
   before_action :set_client               , only: [:client_show]
   before_action :create_approval          , only: [:approval_new]
   before_action :set_expense              , only: [:expense_edit]
@@ -40,6 +39,8 @@ class PagesController < ApplicationController
   end
 
   def bill_show
+    @bill = Bill.find(params[:bill_id])
+    @bill_applicant   = @bill.bill_applicant
   end
 
   def project_groups
@@ -106,10 +107,6 @@ private
     @project = Project.find(params[:project_id])
     @approval = Approval.find_by(approved_type: 'Project', approved_id: @project.id)
     @current_user_approval = ApprovalUser.find_by(approval_id: @approval.id, user_id: @current_user.id) if @approval.present?
-  end
-
-  def set_bill
-    @bill = Bill.find(params[:bill_id])
   end
 
   def set_client

@@ -49,25 +49,21 @@
         / TODO(maeda): 請求書発行用ボタン
         / = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
         /   = fa_icon 'download', text: '発行'
-        / TODO(maeda): 請求書編集用ボタン
-        = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
-        class: 'bill_show__form__btn--edit' do
-          = fa_icon 'edit', text: t('helpers.edit')
-        = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
-          = fa_icon 'remove', text: t('helpers.cancel')
-        / TODO(maeda): 請求書申請用ボタン
-        / = button_tag 'v-on:click.prevent' => 'editMode = false',
-        /   'v-if' =>  '!bill.deposit_on && !editMode && project.status != "finished"', class: 'bill_show__form__btn--cancel' do
-        /   = fa_icon 'check', text: '申請'
-        / TODO(maeda): 請求書削除用ボタン
-        = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
-        class: 'bill_show__form__btn--delete' do
-          = fa_icon 'trash', text: '削除'
-        = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__btn--submit' do
-          = fa_icon 'pencil-square', text: t('helpers.submit.update')
-        / / TODO(maeda): 請求書Excel発行用ボタン
-        / = link_to bill_download_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
-          = fa_icon 'download', text: t('helpers.submit.excel')
+        / -----------------------------------------------------
+        / 請求フォーム操作アクション
+        / -----------------------------------------------------
+        - if @bill_applicant.user.id == @current_user.id
+          - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill?
+            = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
+            class: 'bill_show__form__btn--edit' do
+              = fa_icon 'edit', text: t('helpers.edit')
+            = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
+              = fa_icon 'remove', text: t('helpers.cancel')
+            = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
+            class: 'bill_show__form__btn--delete' do
+              = fa_icon 'trash', text: '削除'
+            = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__btn--submit' do
+              = fa_icon 'pencil-square', text: t('helpers.submit.update')
       / / TODO(maeda):請求書内訳編集フォーム
       / .bill_show__detail__form
       /   = '内訳編集エリア'
@@ -110,7 +106,9 @@
       /           placeholder: '手入力、デフォルト値は「0」', class: 'approval_show__detail__update__action__text'
       /   = button_tag '追加', class: 'approval_show__detail__update__action__btn--permission'
       /     = fa_icon 'plus', text: t('helpers.plus')
-      / / TODO(maeda): 請求書用承認機能
+      / -----------------------------------------------------
+      / 請求書承認テーブル
+      / -----------------------------------------------------
       / .bill_show__detail__approval_user_list
       /   = t('page.approval_show.approval_status')
       /   table.approval_show__detail__approval_user_list__tbl
@@ -124,15 +122,26 @@
       /         td.approval_show__detail__approval_user_list__item--approval_user_name = '前田恭兵'
       /         td.approval_show__detail__approval_user_list__item--approval_user_status = '承認済み'
       /         td.approval_show__detail__approval_user_list__item--approval_user_comment = 'コメントを表示する'
-      / .bill_show__detail__approval_user_list
-      /   = 'アクション'
-      /   .approval_show__detail__update__action
-      /     = text_area :comment, class: 'approval_show__detail__update__action__text'
-      /     = button_tag 'permission', class: 'approval_show__detail__update__action__btn--permission'
-      /       = fa_icon 'check', text: t('page.approval_show.permission')
-      /     = button_tag 'disconfirm', data: { confirm: I18n.t("action.disconfirm.confirm") },
-      /       class: 'approval_show__detail__update__action__btn--disconfirm'
-      /       = fa_icon 'remove', text: t('page.approval_show.disconfirm')
+  .bill_approval_show__detail__update
+    = 'アクション'
+    / -----------------------------------------------------
+    / 申請者用アクション
+    / -----------------------------------------------------
+    - if @bill_applicant.user.id == @current_user.id
+      - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
+        = form_tag api_bill_bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
+          .approval_show__detail__update__action
+            = select_tag :user_id, options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name), { include_blank: true }
+            = text_area_tag :comment
+            - if @bill.unapplied_bill? || @bill.cancelled_bill?
+              = submit_tag '申請'
+            - if @bill.sent_back_bill?
+              = submit_tag '再申請', name: 'reapply'
+      = form_for [:api, @bill_applicant] do |form|
+        - if @bill.pending_bill?
+          .approval_show__detail__update__action
+            = form.hidden_field :bill_id
+            = form.submit '取消', data: { confirm: I18n.t("action.cancel.confirm") }
 
   component [
     :is        = "'partnerNew'"

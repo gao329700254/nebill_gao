@@ -40,6 +40,7 @@ private
     can :manage, ProjectFile
     can :manage, Member
     can :manage, Bill
+    can :manage, BillApplicant
     can :manage, ApprovalsSearch
     can :manage, ProjectCd
 
