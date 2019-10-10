@@ -121,6 +121,7 @@ ja:
         expected_deposit_on: 入金予定日
         deposit_on:          入金日
         memo:                メモ
+        status:              ステータス
       project_file_group:
         name: 名前
       approval_user:
@@ -438,6 +439,12 @@ ja:
         pending:   承認待ち
         waiting:   ファイル添付待ち
         published: 承認済み
+    bill:
+      status:
+        unapplied: 未申請
+        pending:   承認待ち
+        approved:  承認済み
+        issued:    発行済み
   enumerize:
     defaults:
       contract_type:

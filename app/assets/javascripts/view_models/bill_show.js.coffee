@@ -15,6 +15,7 @@ $ ->
         bill_on:             { init: '' }
         expected_deposit_on: { init: '' }
         deposit_on:          { init: '' }
+        status:              { init: '' }
         created_at:          { init: '' }
         updated_at:          { init: '' }
       editMode: false
@@ -61,6 +62,7 @@ $ ->
                 expected_deposit_on: @bill.expected_deposit_on
                 deposit_on:          @bill.deposit_on
                 memo:                @bill.memo
+                status:              @bill.status
           .done (response) =>
             toastr.success('', response.message)
             @loadBill()

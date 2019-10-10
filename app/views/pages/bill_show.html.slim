@@ -16,6 +16,9 @@
       .bill_show__form__container__group
         fieldset.bill_show__form__basic
           .bill_show__form__item
+            = label_tag :status, Bill.human_attribute_name(:status)
+            = text_field_tag :status, nil, 'v-model' => 'bill.status', ':disabled' => true
+          .bill_show__form__item
             = label_tag :cd, Bill.human_attribute_name(:cd)
             = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
           .bill_show__form__item

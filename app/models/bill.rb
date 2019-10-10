@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190912021755
+# Schema version: 20190925020855
 #
 # Table name: bills
 #
@@ -16,6 +16,7 @@
 #  amount              :integer          default(0), not null
 #  payment_type        :string
 #  expected_deposit_on :date
+#  status              :integer          default("unapplied"), not null
 #
 # Indexes
 #
@@ -27,14 +28,11 @@
 #
 
 class Bill < ApplicationRecord
-  extend Enumerize
-
   belongs_to :project
   has_many :user_members
-  has_many :partner_members
   has_many :users, through: :user_members
-  has_many :partners, through: :partner_members
-  has_many :approvals, as: :approved
+
+  enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60 }, _suffix: :bill
 
   has_paper_trail meta: { project_id: :project_id, bill_id: :id }
 
