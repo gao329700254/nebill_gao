@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20191007083806
 #
 # Table name: users
 #
@@ -13,7 +13,7 @@
 #  last_login_at      :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
-#  role               :integer          default(10), not null
+#  role               :integer          default("general"), not null
 #  default_allower    :integer
 #  chatwork_id        :integer
 #  chatwork_name      :string
@@ -25,10 +25,6 @@
 # Indexes
 #
 #  index_users_on_provider_and_uid  (provider,uid) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_f76f7dd8cc  (default_allower => users.id)
 #
 
 class User < ApplicationRecord

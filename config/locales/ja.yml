@@ -431,6 +431,11 @@ ja:
         disconfirm: 差し戻し
         invalid:    取り消し
         unapplied:  未申請
+    client:
+      status:
+        pending:   承認待ち
+        waiting:   ファイル添付待ち
+        published: 承認済み
   enumerize:
     defaults:
       contract_type:
@@ -478,11 +483,6 @@ ja:
       person_rebuilding:      本人立替
       invoice:                請求書
       corporate_card:         法人カード
-    client:
-      status:
-        approval_pending:           承認待ち
-        waiting: ファイル添付待ち
-        published:                  承認済み
   approval_groups:
     show:
       title: 稟議グループ

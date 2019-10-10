@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190911034541) do
+ActiveRecord::Schema.define(version: 20191007083806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(version: 20190911034541) do
     t.string   "project_id"
     t.integer  "created_user_id",              null: false
     t.string   "notes"
-    t.integer  "approved_id"
     t.string   "approved_type"
+    t.integer  "approved_id"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "status"
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20190911034541) do
     t.text     "memo"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.integer  "status"
+    t.integer  "status",          default: 20,   null: false
     t.boolean  "is_valid",        default: true
   end
 

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20191007083806
 #
 # Table name: expenses
 #
@@ -18,13 +18,6 @@
 #  expense_approval_id :integer
 #  is_round_trip       :boolean          default(FALSE)
 #  project_id          :integer
-#
-# Foreign Keys
-#
-#  fk_rails_5ae686df24  (expense_approval_id => expense_approvals.id)
-#  fk_rails_e2984c1aec  (created_user_id => users.id)
-#  fk_rails_f097e0a9ca  (project_id => projects.id)
-#  fk_rails_fe4b1121aa  (default_id => default_expense_items.id)
 #
 
 class Expense < ApplicationRecord

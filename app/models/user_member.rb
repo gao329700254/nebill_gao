@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20191007083806
 #
 # Table name: members
 #
@@ -21,11 +21,6 @@
 #
 #  index_members_on_project_id  (project_id)
 #  index_members_on_type        (type)
-#
-# Foreign Keys
-#
-#  fk_rails_1e30d6a7f9  (employee_id => employees.id)
-#  fk_rails_7054080f33  (project_id => projects.id)
 #
 
 class UserMember < Member
