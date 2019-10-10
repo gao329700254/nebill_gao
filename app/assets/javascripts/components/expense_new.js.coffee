@@ -93,7 +93,6 @@ $ ->
             }
           .done (response) =>
             @expense = response
-            @expense.notes = ''
             if @expense.default_id
               @onItemChange()
             if @expense.project_id
