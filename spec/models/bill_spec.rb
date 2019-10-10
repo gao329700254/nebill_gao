@@ -15,7 +15,6 @@ RSpec.describe Bill do
 
   it { is_expected.to belong_to(:project) }
   it { is_expected.to have_many(:users).through(:user_members) }
-  it { is_expected.to have_many(:partners).through(:partner_members) }
 
   it { is_expected.to validate_presence_of(:cd) }
   it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }
