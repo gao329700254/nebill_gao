@@ -131,7 +131,8 @@
       - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
         = form_tag api_bill_bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
           .approval_show__detail__update__action
-            = select_tag :user_id, options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name), { include_blank: true }
+            = select_tag :user_id,
+                options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name), include_blank: true
             = text_area_tag :comment
             - if @bill.unapplied_bill? || @bill.cancelled_bill?
               = submit_tag '申請'
