@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190912021755) do
+ActiveRecord::Schema.define(version: 20190925020855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,18 +80,19 @@ ActiveRecord::Schema.define(version: 20190912021755) do
   end
 
   create_table "bills", force: :cascade do |t|
-    t.integer  "project_id",                      null: false
-    t.string   "cd",                              null: false
-    t.date     "delivery_on",                     null: false
-    t.date     "acceptance_on",                   null: false
+    t.integer  "project_id",                       null: false
+    t.string   "cd",                               null: false
+    t.date     "delivery_on",                      null: false
+    t.date     "acceptance_on",                    null: false
     t.date     "bill_on"
     t.date     "deposit_on"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.text     "memo"
-    t.integer  "amount",              default: 0, null: false
+    t.integer  "amount",              default: 0,  null: false
     t.string   "payment_type"
     t.date     "expected_deposit_on"
+    t.integer  "status",              default: 10, null: false
     t.index ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
   end
 
