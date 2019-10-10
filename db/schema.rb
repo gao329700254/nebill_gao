@@ -89,6 +89,18 @@ ActiveRecord::Schema.define(version: 20191007052937) do
     t.index ["user_id"], name: "index_bill_applicants_on_user_id", using: :btree
   end
 
+  create_table "bill_approval_users", force: :cascade do |t|
+    t.integer  "role",                    null: false
+    t.integer  "status",     default: 10, null: false
+    t.string   "comment"
+    t.integer  "user_id"
+    t.integer  "bill_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["bill_id"], name: "index_bill_approval_users_on_bill_id", using: :btree
+    t.index ["user_id"], name: "index_bill_approval_users_on_user_id", using: :btree
+  end
+
   create_table "bills", force: :cascade do |t|
     t.integer  "project_id",                       null: false
     t.string   "cd",                               null: false
@@ -346,6 +358,8 @@ ActiveRecord::Schema.define(version: 20191007052937) do
   add_foreign_key "approval_users", "users", on_delete: :cascade
   add_foreign_key "bill_applicants", "bills"
   add_foreign_key "bill_applicants", "users"
+  add_foreign_key "bill_approval_users", "bills"
+  add_foreign_key "bill_approval_users", "users"
   add_foreign_key "bills", "projects", on_delete: :cascade
   add_foreign_key "expense_approval_users", "expense_approvals", on_delete: :nullify
   add_foreign_key "expense_approval_users", "users", on_delete: :nullify

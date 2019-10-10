@@ -111,6 +111,12 @@
 #                                       POST   /api/projects/:id/member_partner(.:format)                  api/projects#member_partner
 #                                       GET    /api/projects/bill/:bill_id(.:format)                       api/projects#show
 #                     api_project_users GET    /api/projects/:project_id/users(.:format)                   api/users#index
+#              api_bill_bill_applicants POST   /api/bills/:bill_id/bill_applicants(.:format)               api/bill_applicants#create
+#                    api_bill_applicant PATCH  /api/bill_applicants/:id(.:format)                          api/bill_applicants#update
+#                                       PUT    /api/bill_applicants/:id(.:format)                          api/bill_applicants#update
+#          api_bill_bill_approval_users POST   /api/bills/:bill_id/bill_approval_users(.:format)           api/bill_approval_users#create
+#                api_bill_approval_user PATCH  /api/bill_approval_users/:id(.:format)                      api/bill_approval_users#update
+#                                       PUT    /api/bill_approval_users/:id(.:format)                      api/bill_approval_users#update
 #                     api_project_bills GET    /api/projects/:project_id/bills(.:format)                   api/bills#index
 #                                       POST   /api/projects/:project_id/bills(.:format)                   api/bills#create
 #                              api_bill GET    /api/bills/:id(.:format)                                    api/bills#show

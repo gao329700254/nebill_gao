@@ -41,6 +41,7 @@ private
     can :manage, Member
     can :manage, Bill
     can :manage, BillApplicant
+    can :manage, BillApprovalUser
     can :manage, ApprovalsSearch
     can :manage, ProjectCd
 

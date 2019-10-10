@@ -29,9 +29,9 @@
 
 class Bill < ApplicationRecord
   belongs_to :project
-  has_one  :bill_applicant
-  has_many :user_members
-  has_many :users, through: :user_members
+  has_one    :bill_applicant,      dependent: :destroy
+  has_many   :bill_approval_users, dependent: :destroy
+  has_many   :users, through:   :bill_approval_users
 
   enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60 }, _suffix: :bill
 
@@ -65,5 +65,13 @@ class Bill < ApplicationRecord
 
   def applicant
     bill_applicant.user
+  end
+
+  def primary_approver
+    bill_approval_users.primary_role.first.user
+  end
+
+  def secondary_approver
+    bill_approval_users.secondary_role.first.user
   end
 end

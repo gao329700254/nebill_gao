@@ -6,6 +6,8 @@ class BillApplicantsController < ApplicationController
     @bill.pending_bill!
     @bill.bill_applicant.update!(comment: params[:comment])
 
+    create_bill_approval_users!
+
     show_success_message(@bill, :apply, params[:bill_id])
   rescue ActiveRecord::RecordInvalid
     show_failure_message(:apply)
@@ -17,6 +19,7 @@ class BillApplicantsController < ApplicationController
     @bill   = Bill.find(bill_id)
 
     @bill.cancelled_bill!
+    @bill.bill_approval_users.destroy_all
 
     show_success_message(@bill, :cancel, bill_id)
   rescue ActiveRecord::RecordInvalid
@@ -33,5 +36,17 @@ private
   def show_failure_message(action)
     flash[:error] = I18n.t("action.#{action}.fail", model: I18n.t('activerecord.models.bill'))
     redirect_to(:back)
+  end
+
+private
+
+  def create_bill_approval_users!
+    @bill.bill_approval_users.destroy_all if params[:reapply].present?
+
+    # 申請時に選択されたユーザを一段目承認者として作成する
+    @bill.bill_approval_users.create!(role: 'primary', status: 'pending', user_id: params[:user_id])
+    # 「社長フラグ(= is_chief)」を有するユーザを二段目承認者として作成する
+    chief = User.find_by(is_chief: true)
+    @bill.bill_approval_users.create!(role: 'secondary', status: 'pending', user_id: chief.id)
   end
 end

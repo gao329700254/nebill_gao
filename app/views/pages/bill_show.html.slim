@@ -106,22 +106,26 @@
       /           placeholder: '手入力、デフォルト値は「0」', class: 'approval_show__detail__update__action__text'
       /   = button_tag '追加', class: 'approval_show__detail__update__action__btn--permission'
       /     = fa_icon 'plus', text: t('helpers.plus')
-      / -----------------------------------------------------
-      / 請求書承認テーブル
-      / -----------------------------------------------------
-      / .bill_show__detail__approval_user_list
-      /   = t('page.approval_show.approval_status')
-      /   table.approval_show__detail__approval_user_list__tbl
-      /     thead.approval_show__detail__approval_user_list__tbl__head
-      /       tr.approval_show__detail__approval_user_list__tbl__head__row
-      /         th.approval_show__detail__approval_user_list__item--approval_user_name = ApprovalUser.human_attribute_name(:name)
-      /         th.approval_show__detail__approval_user_list__item--approval_user_status = ApprovalUser.human_attribute_name(:status)
-      /         th.approval_show__detail__approval_user_list__item--approval_user_comment = ApprovalUser.human_attribute_name(:comment)
-      /     tbody.approval_show__detail__approval_user_list__tbl__body
-      /       tr.approval_show__detail__approval_user_list__tbl__body__row
-      /         td.approval_show__detail__approval_user_list__item--approval_user_name = '前田恭兵'
-      /         td.approval_show__detail__approval_user_list__item--approval_user_status = '承認済み'
-      /         td.approval_show__detail__approval_user_list__item--approval_user_comment = 'コメントを表示する'
+  / -----------------------------------------------------
+  / 請求書承認テーブル
+  / -----------------------------------------------------
+  .bill_show__detail__approval_user_list
+    = t('page.approval_show.approval_status')
+    - if @bill_approvers.present?
+      table.approval_show__detail__approval_user_list__tbl
+        thead.approval_show__detail__approval_user_list__tbl__head
+          tr.approval_show__detail__approval_user_list__tbl__head__row
+            th.approval_show__detail__approval_user_list__item--approval_user_name = '役割'
+            th.approval_show__detail__approval_user_list__item--approval_user_name = ApprovalUser.human_attribute_name(:name)
+            th.approval_show__detail__approval_user_list__item--approval_user_status = ApprovalUser.human_attribute_name(:status)
+            th.approval_show__detail__approval_user_list__item--approval_user_comment = ApprovalUser.human_attribute_name(:comment)
+        tbody.approval_show__detail__approval_user_list__tbl__body
+          - @bill_approvers.each do |approver|
+            tr.approval_show__detail__approval_user_list__tbl__body__row
+              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.role
+              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.user.name
+              td.approval_show__detail__approval_user_list__item--approval_user_status = approver.status
+              td.approval_show__detail__approval_user_list__item--approval_user_comment = approver.comment
   .bill_approval_show__detail__update
     = 'アクション'
     / -----------------------------------------------------
@@ -144,6 +148,21 @@
           .approval_show__detail__update__action
             = form.hidden_field :bill_id
             = form.submit '取消', data: { confirm: I18n.t("action.cancel.confirm") }
+    / -----------------------------------------------------
+    / 承認者用アクション
+    / -----------------------------------------------------
+    - if @current_approver.present?
+      = form_tag api_bill_bill_approval_users_path(@bill), class: 'bill_show__detail__approval_user_list' do
+        .approval_show__detail__update__action
+          - if @bill.pending_bill?
+            = text_area_tag :comment
+            = submit_tag '承認'
+      = form_for [:api, @current_approver] do |form|
+        .approval_show__detail__update__action
+          - if @bill.pending_bill? || @bill.approved_bill?
+            = form.hidden_field :bill_id
+            = form.text_area :comment, value: ''
+            = form.submit '差戻', data: { confirm: I18n.t("action.send_back.confirm") }
 
   component [
     :is        = "'partnerNew'"
