@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20191007083806
+# Schema version: 20190911034541
 #
 # Table name: project_file_groups
 #
@@ -8,6 +8,10 @@
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Foreign Keys
+#
+#  fk_rails_...  (project_id => projects.id) ON DELETE => cascade
 #
 
 class ProjectFileGroup < ApplicationRecord

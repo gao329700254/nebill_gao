@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20191007083806
+# Schema version: 20190911034541
 #
 # Table name: expense_approval_users
 #
@@ -10,6 +10,11 @@
 #  updated_at          :datetime         not null
 #  status              :string
 #  comment             :string
+#
+# Foreign Keys
+#
+#  fk_rails_...  (expense_approval_id => expense_approvals.id) ON DELETE => nullify
+#  fk_rails_...  (user_id => users.id) ON DELETE => nullify
 #
 
 class ExpenseApprovalUser < ApplicationRecord
