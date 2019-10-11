@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20191007083806
 #
 # Table name: project_files
 #
@@ -11,10 +11,6 @@
 #  file_group_id     :integer
 #  original_filename :string           not null
 #  file_type         :integer
-#
-# Foreign Keys
-#
-#  fk_rails_c26fbba4b3  (project_id => projects.id)
 #
 
 class ProjectFile < ApplicationRecord

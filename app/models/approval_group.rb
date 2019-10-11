@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20191007083806
 #
 # Table name: approval_groups
 #
@@ -13,10 +13,6 @@
 # Indexes
 #
 #  index_approval_groups_on_user_id  (user_id)
-#
-# Foreign Keys
-#
-#  fk_rails_0ff4ca1016  (user_id => users.id)
 #
 
 class ApprovalGroup < ApplicationRecord
