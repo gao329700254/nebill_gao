@@ -20,6 +20,7 @@ class Employee < ApplicationRecord
   actable
 
   has_many :members
+  has_many :projects, through: :members
 
   validates :email,
             presence: true,

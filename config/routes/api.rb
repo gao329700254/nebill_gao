@@ -81,6 +81,7 @@ Rails.application.routes.draw do
       post "expense_history", to: "expenses#expense_history"
       post "set_project", to: "expenses#set_project"
       post "expense_transportation", to: "expenses#expense_transportation"
+      post "load_projects", to: "expenses#load_projects"
       post "load_expense", to: "expenses#load_expense"
     end
     scope path: 'files/:files_id' do

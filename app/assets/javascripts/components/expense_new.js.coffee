@@ -84,6 +84,12 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
+      loadProjects: ->
+        $.ajax
+            url: '/api/expenses/load_projects.json'
+            type: 'POST'
+          .done (response) =>
+            @project_list = response
       loadExpense: ->
         if @ids
           $.ajax
@@ -155,6 +161,7 @@ $ ->
       showExpenseNewEvent: (val) ->
         @modalShow()
         @expense_approval_id = val
+        @loadProjects()
         @loadExpense()
       loadProject: (projectId) -> @setProject(projectId)
     compiled: ->

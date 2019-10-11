@@ -68,6 +68,11 @@ class Api::ExpensesController < Api::ApiController
     render json: @list, status: :ok
   end
 
+  def load_projects
+    @projects = @current_user.role == (40||50) ? Project.all : Employee.find(@current_user).projects
+    render 'load_projects', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
   def load_expense
     @list = Expense.find(params[:expense_id])
     render json: @list, status: :ok
