@@ -43,7 +43,7 @@ group :development do
   gem 'pry-doc'
   gem 'hirb-unicode'
   gem 'rails-erd'
-  gem 'annotate', '~> 2.6.6'
+  gem 'annotate'
   gem 'bullet'
   gem 'rubocop'  , require: false
   gem 'slim_lint', require: false

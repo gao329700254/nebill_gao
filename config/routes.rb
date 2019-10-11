@@ -121,7 +121,7 @@
 #       api_project_project_file_groups GET    /api/projects/:project_id/project_file_groups(.:format)     api/project_file_groups#index
 #                                       POST   /api/projects/:project_id/project_file_groups(.:format)     api/project_file_groups#create
 #       bill_default_values_api_project GET    /api/projects/:id/bill_default_values(.:format)             api/projects#bill_default_values
-#               project_cd_api_projects GET    /api/projects/create_cd/:project_type(.:format)                    api/project_cds#cd
+#                create_cd_api_projects GET    /api/projects/create_cd/:project_type(.:format)             api/project_cds#create_cd
 #                          api_projects GET    /api/projects(.:format)                                     api/projects#index
 #                                       POST   /api/projects(.:format)                                     api/projects#create
 #                           api_project GET    /api/projects/:id(.:format)                                 api/projects#show
@@ -179,7 +179,6 @@
 #                  api_expense_approval GET    /api/expense_approvals/:id(.:format)                        api/expense_approvals#show
 #                                       PATCH  /api/expense_approvals/:id(.:format)                        api/expense_approvals#update
 #                                       PUT    /api/expense_approvals/:id(.:format)                        api/expense_approvals#update
-#                                       DELETE /api/expense_approvals/:id(.:format)                        api/expense_approvals#destroy
 #                     api_approval_list GET    /api/agreements/approval_list(.:format)                     api/agreements#approval_list
 #                       api_client_list GET    /api/agreements/client_list(.:format)                       api/agreements#client_list
 #                      api_project_list GET    /api/agreements/project_list(.:format)                      api/agreements#project_list
@@ -197,7 +196,6 @@
 #       letters GET    /                                letter_opener_web/letters#index
 #        letter GET    /:id(/:style)(.:format)          letter_opener_web/letters#show
 #               GET    /:id/attachments/:file(.:format) letter_opener_web/letters#attachment
-#
 
 Rails.application.routes.draw do
   resources :approval_groups

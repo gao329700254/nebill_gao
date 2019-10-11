@@ -13,6 +13,10 @@
 #  updated_at      :datetime         not null
 #  name            :string
 #
+# Foreign Keys
+#
+#  fk_rails_...  (created_user_id => users.id) ON DELETE => nullify
+#
 
 class ExpenseApproval < ApplicationRecord
   has_many :expense

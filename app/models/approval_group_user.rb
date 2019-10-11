@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20191007083806
+# Schema version: 20190911034541
 #
 # Table name: approval_group_users
 #
@@ -13,6 +13,11 @@
 #
 #  index_approval_group_users_on_approval_group_id  (approval_group_id)
 #  index_approval_group_users_on_user_id            (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (approval_group_id => approval_groups.id) ON DELETE => cascade
+#  fk_rails_...  (user_id => users.id) ON DELETE => cascade
 #
 
 class ApprovalGroupUser < ApplicationRecord

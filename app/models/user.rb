@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20191007083806
+# Schema version: 20190911034541
 #
 # Table name: users
 #
@@ -25,6 +25,10 @@
 # Indexes
 #
 #  index_users_on_provider_and_uid  (provider,uid) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (default_allower => users.id) ON DELETE => nullify
 #
 
 class User < ApplicationRecord
