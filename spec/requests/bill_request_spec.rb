@@ -10,7 +10,7 @@ RSpec.describe 'bills request' do
     let!(:bill2) { create(:bill) }
     let!(:bill3) { create(:bill) }
     let!(:bill4) { create(:bill) }
-    let(:path) { "/api/bills" }
+    let(:path)   { "/api/bills" }
 
     it 'return a list of bills and projects that belong to the bill' do
       get path
@@ -30,6 +30,8 @@ RSpec.describe 'bills request' do
       expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
       expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill1.memo
+      # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
+      # expect(json[0]['status']).to                           eq bill1.status
       expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       expect(json[0]['project']['name']).to                  eq bill1.project.name
@@ -40,11 +42,11 @@ RSpec.describe 'bills request' do
   describe 'GET /api/projects/:project_id/bills' do
     context 'with exist bill id' do
       let(:project) { create(:project) }
-      let!(:bill1) { create(:bill, project: project) }
-      let!(:bill2) { create(:bill, project: project) }
-      let!(:bill3) { create(:bill, project: project) }
-      let!(:bill4) { create(:bill) }
-      let(:path) { "/api/projects/#{project.id}/bills" }
+      let!(:bill1)  { create(:bill, project: project) }
+      let!(:bill2)  { create(:bill, project: project) }
+      let!(:bill3)  { create(:bill, project: project) }
+      let!(:bill4)  { create(:bill) }
+      let(:path)    { "/api/projects/#{project.id}/bills" }
 
       it 'returns a list of bills which belong to project' do
         get path
@@ -66,6 +68,8 @@ RSpec.describe 'bills request' do
         expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
         expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json[0]['memo']).to                             eq bill1.memo
+        # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
+        # expect(json[0]['status']).to                           eq bill1.status
         expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[0]['project']['name']).to                  eq bill1.project.name
@@ -90,7 +94,7 @@ RSpec.describe 'bills request' do
   describe 'GET /api/bills/:id' do
     context 'with exist bill id' do
       let!(:bill) { create(:bill) }
-      let(:path) { "/api/bills/#{bill.id}" }
+      let(:path)  { "/api/bills/#{bill.id}" }
 
       it 'return the bill' do
         get path
@@ -108,6 +112,7 @@ RSpec.describe 'bills request' do
         expect(json['bill_on']).to             eq bill.bill_on ? bill.bill_on.strftime("%Y-%m-%d") : nil
         expect(json['expected_deposit_on']).to eq bill.expected_deposit_on.strftime("%Y-%m-%d")
         expect(json['deposit_on']).to          eq bill.deposit_on ? bill.deposit_on.strftime("%Y-%m-%d") : nil
+        expect(json['status']).to              eq bill.status
         expect(json['memo']).to                eq bill.memo
         expect(json['created_at']).to          eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json['updated_at']).to          eq I18n.l(bill.updated_at.in_time_zone('Tokyo'))
@@ -137,7 +142,7 @@ RSpec.describe 'bills request' do
       let(:params) do
         {
           bill: {
-            cd: 'BILL-1',
+            cd:                  'BILL-1',
             amount:              100_000,
             delivery_on:         '2016-01-01',
             acceptance_on:       '2016-01-02',
@@ -164,6 +169,7 @@ RSpec.describe 'bills request' do
         expect(bill.bill_on.to_s).to             eq '2016-01-04'
         expect(bill.expected_deposit_on.to_s).to eq '2016-01-05'
         expect(bill.memo).to                     eq 'memo'
+        expect(bill.status).to                   eq 'unapplied'
       end
     end
 
@@ -194,14 +200,14 @@ RSpec.describe 'bills request' do
   describe 'PATCH /api/bills/:id' do
     context 'with exist bill id' do
       let(:project) { create(:project) }
-      let(:bill) { create(:bill, project: project) }
-      let(:path) { "/api/bills/#{bill.id}" }
+      let(:bill)    { create(:bill, project: project) }
+      let(:path)    { "/api/bills/#{bill.id}" }
 
       context 'with correct parameter' do
         let(:params) do
           {
             bill: {
-              cd: 'BILL-1',
+              cd:                  'BILL-1',
               amount:              100_000,
               delivery_on:         '2016-01-01',
               acceptance_on:       '2016-01-02',
@@ -229,6 +235,7 @@ RSpec.describe 'bills request' do
           expect(bill.expected_deposit_on.to_s).to eq '2016-01-05'
           expect(bill.deposit_on.to_s).to          eq '2016-01-05'
           expect(bill.memo).to                     eq 'memo'
+          expect(bill.status).to                   eq 'unapplied'
         end
 
         it 'return success code and message' do

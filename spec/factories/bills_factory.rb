@@ -9,5 +9,6 @@ FactoryBot.define do
     expected_deposit_on     { acceptance_on + 1.month }
     memo                    { Faker::Lorem.sentence }
     amount                  { rand(10) * (10 ** rand(3)) * 10_000 }
+    status                  { "unapplied" }
   end
 end
