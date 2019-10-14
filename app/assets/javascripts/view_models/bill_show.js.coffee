@@ -62,7 +62,6 @@ $ ->
                 expected_deposit_on: @bill.expected_deposit_on
                 deposit_on:          @bill.deposit_on
                 memo:                @bill.memo
-                status:              @bill.status
           .done (response) =>
             toastr.success('', response.message)
             @loadBill()
