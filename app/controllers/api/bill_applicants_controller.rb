@@ -1,4 +1,5 @@
 class Api::BillApplicantsController < Api::ApiController
+  # 申請者による、「申請」アクション
   def create
     @bill = Bill.find(params[:bill_id])
 
@@ -10,6 +11,7 @@ class Api::BillApplicantsController < Api::ApiController
     show_failure_message(@bill, :apply)
   end
 
+  # 申請者による、「取り消し」アクション
   def update
     bill_id = params[:bill_applicant][:bill_id]
     @bill   = Bill.find(bill_id)
