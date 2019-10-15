@@ -52,6 +52,15 @@ $ ->
         .done (response) =>
           @defaule_expense_items = response
           @defaule_expense_items.standard_amount = gon.amount
+      loadProjects: ->
+        $.ajax
+            url: '/api/expenses/load_projects.json'
+            type: 'POST'
+          .done (response) =>
+            @project_list
+            response.forEach (element) =>
+              @project_list.push(element)
+
       checkRoundTrip: ->
         if gon.is_round_trip
           @arrow = '↔️'
@@ -71,6 +80,7 @@ $ ->
             @selected_project = response.id
     ready: ->
       @loadDefaultExpenseItem()
+      @loadProjects()
       @checkRoundTrip()
       if gon.project
         @setProject(gon.project)
