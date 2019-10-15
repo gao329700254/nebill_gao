@@ -40,6 +40,7 @@ $ ->
       cancel: ->
         @modalHide()
       submit: (e) ->
+        @expense.project_id = $('#expense_project_id').val()
         try
           submit = $('.expense_new__form__btn--submit')
           submit.prop('disabled', true)
@@ -93,8 +94,6 @@ $ ->
             @project_list
             response.forEach (element) =>
               @project_list.push(element)
-      setExpenseProjectId: ->
-        @expenseProjectId = $('#expense_project_id').val()
       loadExpense: ->
         if @ids
           $.ajax
