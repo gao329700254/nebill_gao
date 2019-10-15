@@ -89,7 +89,9 @@ $ ->
             url: '/api/expenses/load_projects.json'
             type: 'POST'
           .done (response) =>
-            @project_list = response
+            @project_list
+            response.forEach (element) =>
+              @project_list.push(element)
       loadExpense: ->
         if @ids
           $.ajax
