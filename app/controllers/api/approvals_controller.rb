@@ -66,7 +66,11 @@ private
 
   def create_execut_success
     action_model_flash_success_message(@approval, :create)
-    redirect_to approval_show_path(approval_id: @approval.id)
+    if params[:button] == "submit"
+      redirect_to approval_show_path(approval_id: @approval.id)
+    elsif params[:button] == "repeat"
+      redirect_to approval_new_path
+    end
   end
 
   def create_execut_fail

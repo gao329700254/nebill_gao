@@ -29,8 +29,10 @@
           = f.text_area :notes, maxlength: "2000", class: 'approval_new__form__item__area'
         = button_tag type: 'button', onclick: "history.back()", class: 'approval_new__form__btn--cancel' do
           = fa_icon 'remove', text: t('helpers.cancel')
-        = button_tag 'submit', class: 'approval_new__form__btn--submit' , value: "submit", data: { disable_with: t('page.approval_new.wait') } do
+        = button_tag 'submit', class: 'approval_new__form__btn--submit', value: "submit", data: { disable_with: t('page.approval_new.wait') } do
           = fa_icon 'check', text: t('helpers.submit.create')
+        = button_tag 'submit', class: 'approval_new__form__btn--repeat', value: "repeat", data: { display_with: t('page.approval_new.wait') } do
+          = fa_icon 'check', text: t('helpers.submit.repeat')
       .approval_new__form__container__group
         .approval_new__form__item
           - @approval.files.build if @approval.files.blank?
