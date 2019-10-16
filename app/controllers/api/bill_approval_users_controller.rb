@@ -5,7 +5,8 @@ class Api::BillApprovalUsersController < Api::ApiController
     @current_approver = @bill.bill_approval_users.where(user_id: @current_user.id).first
 
     ActiveRecord::Base.transaction do
-      @bill.approved_bill!
+      # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
+      @bill.approved_bill! if @current_approver.secondary_role?
       @current_approver.update!(status: 'approved', comment: params[:comment])
 
       show_success_message(params[:bill_id], @bill, :approve)
@@ -20,12 +21,12 @@ class Api::BillApprovalUsersController < Api::ApiController
   def update
     bill_id           = params[:bill_approval_user][:bill_id]
     @bill             = Bill.find(bill_id)
-    @current_approver = @bill.bill_approval_users.where(user_id: @current_user.id)
+    @current_approver = @bill.bill_approval_users.find_by(user_id: @current_user.id)
 
     ActiveRecord::Base.transaction do
       @bill.sent_back_bill!
       @current_approver.update!(status: 'sent_back', comment: params[:bill_approval_user][:comment])
-      @bill.bill_approval_users.update!(status: 'sent_back')
+      @bill.bill_approval_users.each(&:sent_back_bill!)
 
       show_success_message(bill_id, @bill, :send_back)
     rescue ActiveRecord::RecordInvalid
