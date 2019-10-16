@@ -55,12 +55,12 @@
 #                       bill_applicants POST   /bills/bill_applicants(.:format)                            bill_applicants#create
 #                        bill_applicant PATCH  /bills/bill_applicants/:id(.:format)                        bill_applicants#update
 #                                       PUT    /bills/bill_applicants/:id(.:format)                        bill_applicants#update
+#                   bill_approval_users POST   /bills/bill_approval_users(.:format)                        bill_approval_users#create
+#                    bill_approval_user PATCH  /bills/bill_approval_users/:id(.:format)                    bill_approval_users#update
+#                                       PUT    /bills/bill_approval_users/:id(.:format)                    bill_approval_users#update
 #                             bill_show GET    /bills/:bill_id/show(.:format)                              pages#bill_show
 #                         bill_download GET    /bills/:bill_id/xlsx(.:format)                              bills/xlsx#download
 #                     bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                               bills/pdf#download
-#                       bill_applicants POST   /bill_applicants(.:format)                                  bill_applicants#create
-#                        bill_applicant PATCH  /bill_applicants/:id(.:format)                              bill_applicants#update
-#                                       PUT    /bill_applicants/:id(.:format)                              bill_applicants#update
 #                        project_groups GET    /project_groups(.:format)                                   pages#project_groups
 #                              partners GET    /partners(.:format)                                         pages#partners
 #                        agreement_list GET    /agreements/list(.:format)                                  pages#agreement_list
@@ -111,12 +111,6 @@
 #                                       POST   /api/projects/:id/member_partner(.:format)                  api/projects#member_partner
 #                                       GET    /api/projects/bill/:bill_id(.:format)                       api/projects#show
 #                     api_project_users GET    /api/projects/:project_id/users(.:format)                   api/users#index
-#              api_bill_bill_applicants POST   /api/bills/:bill_id/bill_applicants(.:format)               api/bill_applicants#create
-#                    api_bill_applicant PATCH  /api/bill_applicants/:id(.:format)                          api/bill_applicants#update
-#                                       PUT    /api/bill_applicants/:id(.:format)                          api/bill_applicants#update
-#          api_bill_bill_approval_users POST   /api/bills/:bill_id/bill_approval_users(.:format)           api/bill_approval_users#create
-#                api_bill_approval_user PATCH  /api/bill_approval_users/:id(.:format)                      api/bill_approval_users#update
-#                                       PUT    /api/bill_approval_users/:id(.:format)                      api/bill_approval_users#update
 #                     api_project_bills GET    /api/projects/:project_id/bills(.:format)                   api/bills#index
 #                                       POST   /api/projects/:project_id/bills(.:format)                   api/bills#create
 #                              api_bill GET    /api/bills/:id(.:format)                                    api/bills#show
@@ -268,14 +262,14 @@ Rails.application.routes.draw do
   end
   scope path: 'bills' do
     get 'list', to: 'pages#bill_list', as: 'bill_list'
-    resources :bill_applicants, only: [:create, :update]
+    resources :bill_applicants,     only: [:create, :update]
+    resources :bill_approval_users, only: [:create, :update]
   end
   scope path: 'bills/:bill_id' do
     get 'show', to: 'pages#bill_show', as: 'bill_show'
     get 'xlsx', to: 'bills/xlsx#download', as: 'bill_download'
     get 'pdf', to: 'bills/pdf#download', as: 'bill_download_pdf'
   end
-  resources :bill_applicants, only: [:create, :update]
   get 'project_groups', to: 'pages#project_groups'
   get 'partners'      , to: 'pages#partners'
   scope path: 'agreements' do

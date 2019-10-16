@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe 'bill approval users request' do
+RSpec.describe BillApprovalUsersController, type: :request do
   let(:project_member) { create(:user) }
   let(:chief)          { create(:user, is_chief: true) }
   let(:bill)           { create(:bill, status: 'pending') }
 
-  describe "POST /api/bills/:bill_id/bill_approval_users" do
+  describe "POST /bills/bill_approval_users" do
     subject { post path, params: params }
 
     context 'login user is primary approver' do
       let(:primary_approver)    { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
       let!(:secondary_approver) { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
-      let(:path)                { "/api/bills/#{bill.id}/bill_approval_users" }
+      let(:path)                { "/bills/bill_approval_users" }
       let(:params) do
         {
           user_id: primary_approver.id,
@@ -43,7 +43,7 @@ RSpec.describe 'bill approval users request' do
     context 'login user is secondary approver' do
       let!(:primary_approver)   { create(:bill_approval_user, bill: bill, user: project_member, status: 'approved', role: 'primary') }
       let(:secondary_approver)  { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
-      let(:path)                { "/api/bills/#{bill.id}/bill_approval_users" }
+      let(:path)                { "/bills/bill_approval_users" }
       let(:params) do
         {
           user_id: secondary_approver.id,
@@ -73,13 +73,13 @@ RSpec.describe 'bill approval users request' do
     end
   end
 
-  describe "PATCH /api/bill_approval_users/:id" do
+  describe "PATCH /bills/bill_approval_users/:id" do
     subject { patch path, params: params }
 
     context 'login user is primary approver' do
       let(:primary_approver)    { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
       let!(:secondary_approver) { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
-      let(:path)                { "/api/bill_approval_users/#{primary_approver.id}" }
+      let(:path)                { "/bills/bill_approval_users/#{primary_approver.id}" }
       let(:params) do
         {
           bill_approval_user: {
@@ -113,7 +113,7 @@ RSpec.describe 'bill approval users request' do
     context 'login user is secondary approver' do
       let!(:primary_approver)   { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
       let(:secondary_approver)  { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
-      let(:path)                { "/api/bill_approval_users/#{secondary_approver.id}" }
+      let(:path)                { "/bills/bill_approval_users/#{secondary_approver.id}" }
       let(:params) do
         {
           bill_approval_user: {

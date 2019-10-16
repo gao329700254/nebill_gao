@@ -33,25 +33,25 @@ class BillApplicantsController < ApplicationController
     end
   end
 
-private
+  private
 
-  def create_bill_approval_users!
-    @bill.bill_approval_users.destroy_all if params[:reapply].present?
+    def create_bill_approval_users!
+      @bill.bill_approval_users.destroy_all if params[:reapply].present?
 
-    # 申請時に選択されたユーザを一段目承認者として作成する
-    @bill.bill_approval_users.create!(role: 'primary', status: 'pending', user_id: params[:user_id])
-    # 「社長フラグ(= is_chief)」を有するユーザを二段目承認者として作成する
-    chief = User.find_by(is_chief: true)
-    @bill.bill_approval_users.create!(role: 'secondary', status: 'pending', user_id: chief.id)
-  end
+      # 申請時に選択されたユーザを一段目承認者として作成する
+      @bill.bill_approval_users.create!(role: 'primary', status: 'pending', user_id: params[:user_id])
+      # 「社長フラグ(= is_chief)」を有するユーザを二段目承認者として作成する
+      chief = User.find_by(is_chief: true)
+      @bill.bill_approval_users.create!(role: 'secondary', status: 'pending', user_id: chief.id)
+    end
 
-  def show_success_message(model, action, params)
-    flash[:success] = I18n.t("action.#{action}.success", model: I18n.t("activerecord.models.#{model.class.name.underscore}"))
-    redirect_to bill_show_path(params)
-  end
+    def show_success_message(model, action, params)
+      flash[:success] = I18n.t("action.#{action}.success", model: I18n.t("activerecord.models.#{model.class.name.underscore}"))
+      redirect_to bill_show_path(params)
+    end
 
-  def show_failure_message(action)
-    flash[:error] = I18n.t("action.#{action}.fail", model: I18n.t('activerecord.models.bill'))
-    redirect_to(:back)
-  end
+    def show_failure_message(action)
+      flash[:error] = I18n.t("action.#{action}.fail", model: I18n.t('activerecord.models.bill'))
+      redirect_to(:back)
+    end
 end

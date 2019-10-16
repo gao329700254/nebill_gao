@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'bill applicants request' do
+RSpec.describe BillApplicantsController, type: :request do
   let(:bill)           { create(:bill) }
   let(:user)           { create(:user) }
   let!(:applicant)     { create(:bill_applicant, user: user, bill: bill) }
@@ -9,10 +9,10 @@ RSpec.describe 'bill applicants request' do
 
   before { login(user) }
 
-  describe 'POST /api/bills/:bill_id/bill_applicants' do
+  describe 'POST /bills/bill_applicants' do
     subject { post path, params: params }
 
-    let(:path)   { "/api/bills/#{bill.id}/bill_applicants" }
+    let(:path)   { "/bills/bill_applicants" }
     let(:params) do
       {
         user_id: project_member.id,
@@ -47,12 +47,12 @@ RSpec.describe 'bill applicants request' do
     end
   end
 
-  describe 'PATCH /api/bill_applicants/:id' do
+  describe 'PATCH /bills/bill_applicants/:id' do
     subject { patch path, params: params }
 
     let!(:primary_approver)   { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
     let!(:secondary_approver) { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
-    let(:path)   { "/api/bill_applicants/#{applicant.id}" }
+    let(:path)   { "/bills/bill_applicants/#{applicant.id}" }
     let(:params) do
       {
         bill_applicant: {
