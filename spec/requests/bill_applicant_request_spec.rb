@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'bill applicants request' do
-  let!(:bill)               { create(:bill) }
-  let!(:user)               { create(:user) }
-  let!(:applicant)          { create(:bill_applicant, user: user, bill: bill) }
-  let!(:primary_approver)   { create(:user) }
-  let!(:secondary_approver) { create(:user, is_chief: true) }
+  let(:bill)           { create(:bill) }
+  let(:user)           { create(:user) }
+  let!(:applicant)     { create(:bill_applicant, user: user, bill: bill) }
+  let(:project_member) { create(:user) }
+  let!(:chief)         { create(:user, is_chief: true) }
 
   before { login(user) }
 
@@ -15,9 +15,9 @@ RSpec.describe 'bill applicants request' do
     let(:path)   { "/api/bills/#{bill.id}/bill_applicants" }
     let(:params) do
       {
-        user_id: primary_approver.id,
+        user_id: project_member.id,
         bill_id: bill.id,
-        comment: '申請します。',
+        comment: '',
         commit:  '申請',
       }
     end
@@ -28,13 +28,16 @@ RSpec.describe 'bill applicants request' do
         expect(Bill.find(bill.id).status).to eq 'pending'
       end
 
-      it 'create 2 approval users' do
+      it 'create primary and secondary approval users' do
         subject
-        expect(BillApprovalUser.find_by(role: 'primary').user_id).to eq primary_approver.id
-        expect(BillApprovalUser.find_by(role: 'primary').status).to eq 'pending'
 
-        expect(BillApprovalUser.find_by(role: 'secondary').user_id).to eq secondary_approver.id
-        expect(BillApprovalUser.find_by(role: 'secondary').status).to eq 'pending'
+        primary = BillApprovalUser.find_by(role: 'primary')
+        expect(primary.user_id).to eq project_member.id
+        expect(primary.status).to eq 'pending'
+
+        secondary = BillApprovalUser.find_by(role: 'secondary')
+        expect(secondary.user_id).to eq chief.id
+        expect(secondary.status).to eq 'pending'
       end
     end
   end
@@ -42,8 +45,8 @@ RSpec.describe 'bill applicants request' do
   describe 'PATCH /api/bill_applicants/:id' do
     subject { patch path, params: params }
 
-    let!(:primary_approval_user)   { create(:bill_approval_user, bill: bill, user: primary_approver, status: 'pending', role: 'primary') }
-    let!(:secondary_approval_user) { create(:bill_approval_user, bill: bill, user: secondary_approver, status: 'pending', role: 'secondary') }
+    let!(:primary_approver)   { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
+    let!(:secondary_approver) { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
     let(:path)   { "/api/bill_applicants/#{applicant.id}" }
     let(:params) do
       {
@@ -53,6 +56,12 @@ RSpec.describe 'bill applicants request' do
         commit: '取消',
         id:     applicant.id,
       }
+    end
+
+    it 'originally primary and secondary approvers are set' do
+      expect(BillApprovalUser.where(bill_id: bill.id).count).to eq 2
+      expect(BillApprovalUser.find_by(bill_id: bill.id, role: 'primary').user_id).to eq project_member.id
+      expect(BillApprovalUser.find_by(bill_id: bill.id, role: 'secondary').user_id).to eq chief.id
     end
 
     context 'cancenl when bill is "pending" for primary approver' do
