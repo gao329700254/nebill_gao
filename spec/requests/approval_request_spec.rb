@@ -74,6 +74,7 @@ RSpec.describe Approval, type: :request do
           post path, params: params
         end.not_to change(Approval, :count)
         expect(response).to redirect_to approval_new_path
+        expect(flash[:error]).to eq "稟議が作成できませんでした \n 件名を入力してください"
       end
     end
 
@@ -110,6 +111,7 @@ RSpec.describe Approval, type: :request do
           post path, params: params
         end.not_to change(Approval, :count)
         expect(response).to redirect_to approval_new_path
+        expect(flash[:error]).to eq "稟議が作成できませんでした \n 件名を入力してください"
       end
     end
   end
