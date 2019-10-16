@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20190911034541
 #
 # Table name: bills
 #
@@ -22,7 +22,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_9a464041fd  (project_id => projects.id)
+#  fk_rails_...  (project_id => projects.id) ON DELETE => cascade
 #
 
 class Bill < ApplicationRecord

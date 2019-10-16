@@ -66,7 +66,11 @@ Rails.application.configure do
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
-  config.i18n.fallbacks = true
+
+  # i18n.fallbacksはi18の仕様変更により設定を変更しました。
+  # この変更はrailsのバージョンに依存しているため、railsを5.2.2以上へアップグレードした場合は以下のように修正してください。
+  # config.i18n.fallbacks = true
+  config.i18n.fallbacks = [I18n.default_locale]
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify

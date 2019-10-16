@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20190911034541
 #
 # Table name: expense_files
 #
@@ -12,7 +12,7 @@
 #
 # Foreign Keys
 #
-#  fk_rails_024476420e  (expense_id => expenses.id)
+#  fk_rails_...  (expense_id => expenses.id) ON DELETE => nullify
 #
 
 class ExpenseFile < ApplicationRecord

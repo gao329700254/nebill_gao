@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190409072211
+# Schema version: 20190911034541
 #
 # Table name: approvals
 #
@@ -8,13 +8,13 @@
 #  project_id      :string
 #  created_user_id :integer          not null
 #  notes           :string
-#  approved_id     :integer
 #  approved_type   :string
+#  approved_id     :integer
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  status          :integer
 #  category        :integer
-#  approvaler_type :integer          default(10), not null
+#  approvaler_type :integer          default("user"), not null
 #
 # Indexes
 #

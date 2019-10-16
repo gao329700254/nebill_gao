@@ -18,6 +18,7 @@ $ ->
       selected: ''
       defaultIds: []
       expense:
+        payment_type: 'person_rebuilding'
         use_date: new Date().toISOString().substr(0, 10)
         depatture_location: ''
         arrival_location: ''
@@ -93,7 +94,6 @@ $ ->
             }
           .done (response) =>
             @expense = response
-            @expense.notes = ''
             if @expense.default_id
               @onItemChange()
             if @expense.project_id

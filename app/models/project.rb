@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20190911034541
 #
 # Table name: projects
 #
@@ -41,6 +41,10 @@
 # Indexes
 #
 #  index_projects_on_cd  (cd) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => project_groups.id) ON DELETE => nullify
 #
 
 class Project < ApplicationRecord

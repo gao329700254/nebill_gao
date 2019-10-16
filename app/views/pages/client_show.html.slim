@@ -96,7 +96,7 @@
                   td.client_show__form__approval_user_list__item--approval_user_name    v-text="approval_user.name"
                   td.client_show__form__approval_user_list__item--approval_user_status  v-text="approval_user.status"
                   td.client_show__form__approval_user_list__item--approval_user_comment v-text="approval_user.comment"
-            - if @approval.status != 40 && @approval.status != 20 && @client.status == 10 && @current_user_approval.present?
+            - if @approval.status != 40 && @approval.status != 20 && @client.pending_client? && @current_user_approval.present?
               = form_tag api_update_approval_path(approval_id: @approval.id), method: :post, class: 'approval_show__reassignment__form' do
                 .client_show__form__update
                   = t('page.approval_show.action')

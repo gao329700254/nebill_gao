@@ -15,7 +15,7 @@ gem 'enumerize'
 gem 'authlogic'
 gem 'omniauth-google-oauth2', '~> 0.6'
 gem 'bourbon', '4.2.6'
-gem 'neat', '1.7.2'
+gem 'neat', '1.9.1'
 gem 'bower-rails'
 gem 'font-awesome-rails'
 gem 'highline'
@@ -43,7 +43,7 @@ group :development do
   gem 'pry-doc'
   gem 'hirb-unicode'
   gem 'rails-erd'
-  gem 'annotate', '~> 2.6.6'
+  gem 'annotate'
   gem 'bullet'
   gem 'rubocop'  , require: false
   gem 'slim_lint', require: false

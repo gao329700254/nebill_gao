@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20190911034541
 #
 # Table name: approval_approval_groups
 #
 #  id                :integer          not null, primary key
 #  approval_id       :integer
 #  approval_group_id :integer
-#  status            :integer          default(10), not null
+#  status            :integer          default("pending"), not null
 #  comment           :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -18,8 +18,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_4e8fa86d40  (approval_group_id => approval_groups.id)
-#  fk_rails_fd5f9a9350  (approval_id => approvals.id)
+#  fk_rails_...  (approval_group_id => approval_groups.id) ON DELETE => cascade
+#  fk_rails_...  (approval_id => approvals.id) ON DELETE => cascade
 #
 
 class ApprovalApprovalGroup < ApplicationRecord

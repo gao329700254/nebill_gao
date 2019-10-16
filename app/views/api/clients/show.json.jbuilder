@@ -5,7 +5,7 @@ json.department_name @client.department_name
 json.address         @client.address
 json.zip_code        @client.zip_code
 json.phone_number    @client.phone_number
-json.status          @client.status_text
+json.status          @client.status_i18n
 json.status_num      @client.status
 json.memo            @client.memo
 json.is_valid        @client.is_valid

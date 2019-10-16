@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20190911034541
 #
 # Table name: members
 #
@@ -24,8 +24,8 @@
 #
 # Foreign Keys
 #
-#  fk_rails_1e30d6a7f9  (employee_id => employees.id)
-#  fk_rails_7054080f33  (project_id => projects.id)
+#  fk_rails_...  (employee_id => employees.id) ON DELETE => cascade
+#  fk_rails_...  (project_id => projects.id) ON DELETE => cascade
 #
 
 class Member < ApplicationRecord

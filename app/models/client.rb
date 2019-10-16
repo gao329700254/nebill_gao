@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20191007083806
 #
 # Table name: clients
 #
@@ -13,12 +13,11 @@
 #  memo            :text
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  status          :integer
+#  status          :integer          default("waiting"), not null
 #  is_valid        :boolean          default(TRUE)
 #
 
 class Client < ApplicationRecord
-  extend Enumerize
   has_many :approvals, as: :approved
   has_many :files, class_name: 'ClientFile', dependent: :destroy
   accepts_nested_attributes_for :files, allow_destroy: true
@@ -31,7 +30,7 @@ class Client < ApplicationRecord
   before_save { cd.upcase! if cd.present? }
   before_save :set_cd, unless: :cd?
 
-  enumerize :status, in: { approval_pending: 10, waiting: 20, published: 30 }, default: :waiting
+  enum status: { pending: 10, waiting: 20, published: 30 }, _suffix: :client
 
   def set_cd
     max_cd = Client.all.pluck(:cd).compact.map { |cd| cd.gsub(/[^\d]/, "").to_i if cd.start_with?("CD") }.compact.max if Client.all.present?
