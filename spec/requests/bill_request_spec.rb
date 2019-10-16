@@ -171,6 +171,13 @@ RSpec.describe 'bills request' do
         expect(bill.memo).to                     eq 'memo'
         expect(bill.status).to                   eq 'unapplied'
       end
+
+      it 'create bill applicant' do
+        post path, params: params
+
+        bill = Bill.first
+        expect(bill.bill_applicant.user_id).to eq user.id
+      end
     end
 
     context 'with uncorrect parameter' do

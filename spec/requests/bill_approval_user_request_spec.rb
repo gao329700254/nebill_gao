@@ -16,7 +16,7 @@ RSpec.describe 'bill approval users request' do
         {
           user_id: primary_approver.id,
           bill_id: bill.id,
-          comment: '',
+          comment: '承認します。',
           commit:  '承認',
         }
       end
@@ -26,6 +26,11 @@ RSpec.describe 'bill approval users request' do
       it 'do not update bill status' do
         subject
         expect(Bill.find(bill.id).status).to eq 'pending'
+      end
+
+      it 'update primary approver comment' do
+        subject
+        expect(BillApprovalUser.find_by(role: 'primary').comment).to eq '承認します。'
       end
 
       it 'update only primary approver status to approved' do
@@ -43,7 +48,7 @@ RSpec.describe 'bill approval users request' do
         {
           user_id: secondary_approver.id,
           bill_id: bill.id,
-          comment: '',
+          comment: '承認します。',
           commit:  '承認',
         }
       end
@@ -53,6 +58,11 @@ RSpec.describe 'bill approval users request' do
       it 'do not update bill status' do
         subject
         expect(Bill.find(bill.id).status).to eq 'approved'
+      end
+
+      it 'update primary approver comment' do
+        subject
+        expect(BillApprovalUser.find_by(role: 'secondary').comment).to eq '承認します。'
       end
 
       it 'update only primary approver status to approved' do
@@ -74,7 +84,7 @@ RSpec.describe 'bill approval users request' do
         {
           bill_approval_user: {
             bill_id: bill.id,
-            comment: '',
+            comment: '差し戻します。',
           },
           commit: '差戻',
           id:     primary_approver.id,
@@ -86,6 +96,11 @@ RSpec.describe 'bill approval users request' do
       it 'update bill status to "sent back"' do
         subject
         expect(Bill.find(bill.id).status).to eq 'sent_back'
+      end
+
+      it 'update primary approver comment' do
+        subject
+        expect(BillApprovalUser.find_by(role: 'primary').comment).to eq '差し戻します。'
       end
 
       it 'update all approvers status to "sent_back"' do
@@ -103,7 +118,7 @@ RSpec.describe 'bill approval users request' do
         {
           bill_approval_user: {
             bill_id: bill.id,
-            comment: '',
+            comment: '差し戻します。',
           },
           commit: '差戻',
           id:     secondary_approver.id,
@@ -115,6 +130,11 @@ RSpec.describe 'bill approval users request' do
       it 'update bill status to "sent back"' do
         subject
         expect(Bill.find(bill.id).status).to eq 'sent_back'
+      end
+
+      it 'update primary approver comment' do
+        subject
+        expect(BillApprovalUser.find_by(role: 'secondary').comment).to eq '差し戻します。'
       end
 
       it 'update all approvers status to "sent_back"' do

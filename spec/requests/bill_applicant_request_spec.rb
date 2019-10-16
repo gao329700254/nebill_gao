@@ -17,7 +17,7 @@ RSpec.describe 'bill applicants request' do
       {
         user_id: project_member.id,
         bill_id: bill.id,
-        comment: '',
+        comment: '申請します。',
         commit:  '申請',
       }
     end
@@ -26,6 +26,11 @@ RSpec.describe 'bill applicants request' do
       it 'update bill status to "pending"' do
         subject
         expect(Bill.find(bill.id).status).to eq 'pending'
+      end
+
+      it 'update bill applicant comment' do
+        subject
+        expect(BillApplicant.find_by(bill_id: bill.id).comment).to eq '申請します。'
       end
 
       it 'create primary and secondary approval users' do
