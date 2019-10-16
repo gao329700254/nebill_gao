@@ -6,9 +6,9 @@ class Api::BillApplicantsController < Api::ApiController
     @bill.pending_bill!
     @bill.bill_applicant.update!(comment: params[:comment])
 
-    show_success_message(@bill, :apply, params[:bill_id])
+    show_success_message(params[:bill_id], @bill, :apply)
   rescue ActiveRecord::RecordInvalid
-    show_failure_message(@bill, :apply)
+    show_failure_message(:apply)
   end
 
   # 申請者による、「取り消し」アクション
@@ -18,8 +18,20 @@ class Api::BillApplicantsController < Api::ApiController
 
     @bill.cancelled_bill!
 
-    show_success_message(@bill, :cancel, bill_id)
+    show_success_message(bill_id, @bill, :cancel)
   rescue ActiveRecord::RecordInvalid
-    show_failure_message(@bill, :cancel)
+    show_failure_message(:cancel)
   end
+
+  private
+
+    def show_success_message(params, model, action)
+      redirect_to bill_show_path(params)
+      action_model_flash_success_message(model, action)
+    end
+
+    def show_failure_message(action)
+      flash[:error] = I18n.t("action.#{action}.fail", model: I18n.t('activerecord.models.bill'))
+      redirect_to(:back)
+    end
 end

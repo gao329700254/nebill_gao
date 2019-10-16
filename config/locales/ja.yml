@@ -425,6 +425,13 @@ ja:
     send_email:
       success: 'メールを送信しました'
       fail: 'メールを送信できませんでした'
+    apply:
+      success: '%{model}を申請しました'
+      fail:    '%{model}を申請できませんでした'
+    cancel:
+      confirm: "本当に取り消してよろしいですか？\n取り消し後は、修正して再申請が可能です。"
+      success: '%{model}の申請を取り消しました'
+      fail:    '%{model}の申請を取り消しできませんでした'
   # enum_helpで使用するロケール情報
   enums:
     expense_approval:
