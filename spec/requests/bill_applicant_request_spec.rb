@@ -7,11 +7,7 @@ RSpec.describe BillApplicantsController, type: :request do
   let(:project_member) { create(:user) }
   let!(:chief)         { create(:user, is_chief: true) }
 
-  before { login(user) }
-
   describe 'POST /bills/bill_applicants' do
-    subject { post path, params: params }
-
     let(:path)   { "/bills/bill_applicants" }
     let(:params) do
       {
@@ -22,28 +18,27 @@ RSpec.describe BillApplicantsController, type: :request do
       }
     end
 
-    context 'apply bill' do
-      it 'update bill status to "pending"' do
-        subject
-        expect(Bill.find(bill.id).status).to eq 'pending'
-      end
+    before do
+      login(user)
+      post path, params: params
+    end
 
-      it 'update bill applicant comment' do
-        subject
-        expect(BillApplicant.find_by(bill_id: bill.id).comment).to eq '申請します。'
-      end
+    it 'update bill status to "pending"' do
+      expect(Bill.find(bill.id).status).to eq 'pending'
+    end
 
-      it 'create primary and secondary approval users' do
-        subject
+    it 'update bill applicant comment' do
+      expect(BillApplicant.find_by(bill_id: bill.id).comment).to eq '申請します。'
+    end
 
-        primary = BillApprovalUser.find_by(role: 'primary')
-        expect(primary.user_id).to eq project_member.id
-        expect(primary.status).to eq 'pending'
+    it 'create primary and secondary approval users' do
+      primary = BillApprovalUser.find_by(role: 'primary')
+      expect(primary.user_id).to eq project_member.id
+      expect(primary.status).to eq 'pending'
 
-        secondary = BillApprovalUser.find_by(role: 'secondary')
-        expect(secondary.user_id).to eq chief.id
-        expect(secondary.status).to eq 'pending'
-      end
+      secondary = BillApprovalUser.find_by(role: 'secondary')
+      expect(secondary.user_id).to eq chief.id
+      expect(secondary.status).to eq 'pending'
     end
   end
 
@@ -63,6 +58,8 @@ RSpec.describe BillApplicantsController, type: :request do
       }
     end
 
+    before { login(user) }
+
     it 'originally primary and secondary approvers are set' do
       expect(BillApprovalUser.where(bill_id: bill.id).count).to eq 2
       expect(BillApprovalUser.find_by(bill_id: bill.id, role: 'primary').user_id).to eq project_member.id
@@ -70,29 +67,31 @@ RSpec.describe BillApplicantsController, type: :request do
     end
 
     context 'cancenl when bill is "pending" for primary approver' do
-      before { bill.update(status: 'pending') }
+      before do
+        bill.update(status: 'pending')
+        subject
+      end
 
       it 'update bill status to cancel' do
-        subject
         expect(Bill.find(bill.id).status).to eq 'cancelled'
       end
 
       it 'all approvers are deleted' do
-        subject
         expect(BillApprovalUser.where(bill_id: bill.id).count).to eq 0
       end
     end
 
     context 'cancenl when bill is sent back' do
-      before { bill.update(status: 'sent_back') }
+      before do
+        bill.update(status: 'sent_back')
+        subject
+      end
 
       it 'update bill status to cancel' do
-        subject
         expect(Bill.find(bill.id).status).to eq 'cancelled'
       end
 
       it 'all approvers are deleted' do
-        subject
         expect(BillApprovalUser.where(bill_id: bill.id).count).to eq 0
       end
     end
