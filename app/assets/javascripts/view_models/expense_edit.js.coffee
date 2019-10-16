@@ -78,6 +78,8 @@ $ ->
             }
           .done (response) =>
             @selected_project = response.id
+      setSelectedProjectID: ->
+            @selected_project = $('#selected_project_id').val()
     ready: ->
       @loadDefaultExpenseItem()
       @loadProjects()
