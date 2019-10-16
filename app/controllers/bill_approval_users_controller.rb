@@ -10,9 +10,9 @@ class BillApprovalUsersController < ApplicationController
       @current_approver.update!(status: 'approved', comment: params[:comment])
 
       show_success_message(@bill, :approve, params[:bill_id])
-    rescue ActiveRecord::RecordInvalid
-      show_failure_message(:approve)
     end
+  rescue ActiveRecord::RecordInvalid
+    show_failure_message(:approve)
   end
 
   # 承認者による「差戻」アクション
@@ -29,20 +29,20 @@ class BillApprovalUsersController < ApplicationController
       @bill.bill_approval_users.each(&:sent_back_bill!)
 
       show_success_message(@bill, :send_back, bill_id)
-    rescue ActiveRecord::RecordInvalid
-      show_failure_message(:send_back)
     end
+  rescue ActiveRecord::RecordInvalid
+    show_failure_message(:send_back)
   end
 
-  private
+private
 
-    def show_success_message(model, action, params)
-      flash[:success] = I18n.t("action.#{action}.success", model: I18n.t("activerecord.models.#{model.class.name.underscore}"))
-      redirect_to bill_show_path(params)
-    end
+  def show_success_message(model, action, params)
+    flash[:success] = I18n.t("action.#{action}.success", model: I18n.t("activerecord.models.#{model.class.name.underscore}"))
+    redirect_to bill_show_path(params)
+  end
 
-    def show_failure_message(action)
-      flash[:error] = I18n.t("action.#{action}.fail", model: I18n.t('activerecord.models.bill'))
-      redirect_to(:back)
-    end
+  def show_failure_message(action)
+    flash[:error] = I18n.t("action.#{action}.fail", model: I18n.t('activerecord.models.bill'))
+    redirect_to(:back)
+  end
 end
