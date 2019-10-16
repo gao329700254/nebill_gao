@@ -34,9 +34,7 @@ Rails.application.routes.draw do
         get 'bill/:bill_id', to: "projects#show"
       end
       resources :users, only: [:index]
-      resources :bills, only: [:index, :create, :show, :update, :destroy] do
-        resources :bill_applicants,     only: [:create, :update]
-      end
+      resources :bills, only: [:index, :create, :show, :update, :destroy]
       resources :partners, only: [:index]
       resources :project_files, only: [:index, :show, :create, :update, :destroy]
       resources :project_file_groups, only: [:index, :create]

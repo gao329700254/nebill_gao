@@ -129,8 +129,9 @@
     / -----------------------------------------------------
     - if @bill_applicant.user.id == @current_user.id
       - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
-        = form_tag api_bill_bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
+        = form_tag bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
           .approval_show__detail__update__action
+            = hidden_field_tag :bill_id, @bill.id
             = select_tag :user_id,
                 options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name), include_blank: true
             = text_area_tag :comment
@@ -138,7 +139,7 @@
               = submit_tag '申請'
             - if @bill.sent_back_bill?
               = submit_tag '再申請', name: 'reapply'
-      = form_for [:api, @bill_applicant] do |form|
+      = form_for @bill_applicant do |form|
         - if @bill.pending_bill?
           .approval_show__detail__update__action
             = form.hidden_field :bill_id

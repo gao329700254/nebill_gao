@@ -52,6 +52,9 @@
 #                 expense_approval_show GET    /expense/approval/:expense_approval_id/show(.:format)       pages#expense_approval_show
 #                 expense_approval_edit GET    /expense/approval/:expense_approval_id/edit(.:format)       pages#expense_approval_edit
 #                             bill_list GET    /bills/list(.:format)                                       pages#bill_list
+#                       bill_applicants POST   /bills/bill_applicants(.:format)                            bill_applicants#create
+#                        bill_applicant PATCH  /bills/bill_applicants/:id(.:format)                        bill_applicants#update
+#                                       PUT    /bills/bill_applicants/:id(.:format)                        bill_applicants#update
 #                             bill_show GET    /bills/:bill_id/show(.:format)                              pages#bill_show
 #                         bill_download GET    /bills/:bill_id/xlsx(.:format)                              bills/xlsx#download
 #                     bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                               bills/pdf#download
@@ -256,6 +259,7 @@ Rails.application.routes.draw do
   end
   scope path: 'bills' do
     get 'list', to: 'pages#bill_list', as: 'bill_list'
+    resources :bill_applicants, only: [:create, :update]
   end
   scope path: 'bills/:bill_id' do
     get 'show', to: 'pages#bill_show', as: 'bill_show'
