@@ -58,6 +58,9 @@
 #                             bill_show GET    /bills/:bill_id/show(.:format)                              pages#bill_show
 #                         bill_download GET    /bills/:bill_id/xlsx(.:format)                              bills/xlsx#download
 #                     bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                               bills/pdf#download
+#                       bill_applicants POST   /bill_applicants(.:format)                                  bill_applicants#create
+#                        bill_applicant PATCH  /bill_applicants/:id(.:format)                              bill_applicants#update
+#                                       PUT    /bill_applicants/:id(.:format)                              bill_applicants#update
 #                        project_groups GET    /project_groups(.:format)                                   pages#project_groups
 #                              partners GET    /partners(.:format)                                         pages#partners
 #                        agreement_list GET    /agreements/list(.:format)                                  pages#agreement_list
@@ -266,6 +269,7 @@ Rails.application.routes.draw do
     get 'xlsx', to: 'bills/xlsx#download', as: 'bill_download'
     get 'pdf', to: 'bills/pdf#download', as: 'bill_download_pdf'
   end
+  resources :bill_applicants, only: [:create, :update]
   get 'project_groups', to: 'pages#project_groups'
   get 'partners'      , to: 'pages#partners'
   scope path: 'agreements' do
