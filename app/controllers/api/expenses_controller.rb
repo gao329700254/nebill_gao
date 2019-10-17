@@ -69,7 +69,7 @@ class Api::ExpensesController < Api::ApiController
   end
 
   def load_projects
-    @projects = (@current_user.role == 40 || @current_user.role == 50) ? Project.all : Employee.find(@current_user).projects
+    @projects = Employee.find(@current_user).projects
     render 'load_projects', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 

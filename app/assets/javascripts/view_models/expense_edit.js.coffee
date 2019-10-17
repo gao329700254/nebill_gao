@@ -59,7 +59,7 @@ $ ->
           .done (response) =>
             @project_list
             response.forEach (element) =>
-              @project_list.push(element)
+              @project_list.push(element) 
       setExpenseProjectId: ->
         @expenseProjectId = $('#expense_project_id').val()
       checkRoundTrip: ->
@@ -77,9 +77,8 @@ $ ->
               project_id: e
             }
           .done (response) =>
+            @project_list.push(response)
             @selected_project = response.id
-      setSelectedProjectID: ->
-            @selected_project = $('#selected_project_id').val()
     ready: ->
       @loadDefaultExpenseItem()
       @loadProjects()

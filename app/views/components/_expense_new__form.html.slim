@@ -55,8 +55,11 @@
             .expense_new__form__fill
               .expense_new__form__fill--select
                 = label_tag :project_id, Expense.human_attribute_name(:project_id)
-                select#expense_project_id.select2 v-model= "expense.project_id"
+                select v-model= "selected_project"
                   option v-for="project in project_list" value="{{project.id}}" {{project.cd + ":" + project.name}}
+              .expense_new__form__fill--btn
+                = button_tag type: 'button', 'v-on:click' => 'setProjectModal', class: 'expense_new__form__fill--btn--set_project' do
+                  = fa_icon 'search'
       .expense_new__form__item
         = label_tag :notes, Expense.human_attribute_name(:notes)
         = text_area_tag :notes, nil, class: 'expense_new__form__item__area', 'v-model' => 'expense.notes'
