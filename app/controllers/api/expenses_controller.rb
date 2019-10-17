@@ -68,9 +68,9 @@ class Api::ExpensesController < Api::ApiController
     render json: @list, status: :ok
   end
 
-  def load_projects
-    @projects = Employee.find(@current_user).projects
-    render 'load_projects', formats: 'json', handlers: 'jbuilder', status: :ok
+  def employee_load_projects
+    @employee_projects = Employee.find(@current_user).projects
+    render 'employee_load_projects', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def load_expense

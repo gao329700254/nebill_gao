@@ -28,6 +28,7 @@ $ ->
       checked: false
       selected_project: ''
       project_list: []
+      employee_project_list: []
       files: []
       return:
         expense:
@@ -53,7 +54,7 @@ $ ->
             form.append('expense[arrival_location]', @expense.arrival_location)
           form.append('expense[amount]', @defaule_expense_items.standard_amount)
           form.append('expense[payment_type]', @expense.payment_type)
-          form.append('expense[project_id]', @selected_project) if @selected_project
+          form.append('expense[project_id]', @expense.employee_project_list) if @expense.employee_project_list
           form.append('expense[notes]', @expense.notes)
           form.append('fix_amount', @fix_amount)
           $.ajax
@@ -84,12 +85,12 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
-      loadProjects: ->
+      employeeLoadProjects: ->
         $.ajax
-            url: '/api/expenses/load_projects.json'
+            url: '/api/expenses/employee_load_projects.json'
             type: 'POST'
           .done (response) =>
-            @project_list = response
+            @employee_project_list = response
       loadExpense: ->
         if @ids
           $.ajax
@@ -162,7 +163,7 @@ $ ->
       showExpenseNewEvent: (val) ->
         @modalShow()
         @expense_approval_id = val
-        @loadProjects()
+        @employeeLoadProjects()
         @loadExpense()
       loadProject: (projectId) -> @setProject(projectId)
     compiled: ->
