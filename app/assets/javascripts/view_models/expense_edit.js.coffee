@@ -57,9 +57,7 @@ $ ->
             url: '/api/expenses/load_projects.json'
             type: 'POST'
           .done (response) =>
-            @project_list
-            response.forEach (element) =>
-              @project_list.push(element) 
+            @project_list = response
       setExpenseProjectId: ->
         @expenseProjectId = $('#expense_project_id').val()
       checkRoundTrip: ->
