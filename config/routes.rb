@@ -148,6 +148,7 @@
 #            api_approval_approval_user PATCH  /api/approvals/:approval_id/approval_users/:id(.:format)    api/approval_users#update
 #                                       PUT    /api/approvals/:approval_id/approval_users/:id(.:format)    api/approval_users#update
 #             api_approval_search_index POST   /api/approvals/:approval_id/search/index(.:format)          api/approvals_search#index
+#           approval_files_api_approval GET    /api/approvals/:id/approval_files(.:format)                 api/approvals#approval_files
 #                         api_approvals GET    /api/approvals(.:format)                                    api/approvals#index
 #                                       POST   /api/approvals(.:format)                                    api/approvals#create
 #                          api_approval GET    /api/approvals/:id(.:format)                                api/approvals#show
@@ -183,6 +184,7 @@
 #                       api_client_list GET    /api/agreements/client_list(.:format)                       api/agreements#client_list
 #                      api_project_list GET    /api/agreements/project_list(.:format)                      api/agreements#project_list
 #             api_expense_approval_list GET    /api/agreements/expense_approval_list(.:format)             api/agreements#expense_approval_list
+#                    api_approval_files POST   /api/approval_files(.:format)                               api/approval_files#create
 #
 # Routes for Teaspoon::Engine:
 #    root GET  /                             teaspoon/suite#index

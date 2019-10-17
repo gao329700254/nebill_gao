@@ -115,4 +115,25 @@ RSpec.describe Approval, type: :request do
       end
     end
   end
+
+  describe 'GET  /api/approvals/:approval_id/approval_files' do
+    let(:path) { "/api/approvals/#{approval.id}/approval_files" }
+    let(:approval) { create(:approval, :user_approval, created_user: user) }
+    let(:approval_files) { create_list(:approval_file, 3, approval: approval) }
+
+    subject { get path }
+
+    context 'check schema' do
+      it do
+        approval_files
+        subject
+
+        expect(json).to have_key('approval_files')
+        expect(json['approval_files']).to be_an_instance_of(Array)
+        expect(json['approval_files'].length).to eq(3)
+        expect(json['approval_files'][0]).to have_key('id')
+        expect(json['approval_files'][0]).to have_key('original_filename')
+      end
+    end
+  end
 end

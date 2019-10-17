@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       post "invalid", to: "approvals#invalid"
       resources :approval_users, only: [:create, :update]
       post "search/index", to: "approvals_search#index"
+      get :approval_files, on: :member
     end
     scope path: 'files/:files_id' do
       get 'approval_file_download', to: 'files#approval_file_download'
@@ -93,5 +94,7 @@ Rails.application.routes.draw do
       get "project_list", to: "agreements#project_list"
       get "expense_approval_list", to: "agreements#expense_approval_list"
     end
+
+    resources :approval_files, only: [:create]
   end
 end

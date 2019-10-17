@@ -1,3 +1,5 @@
+= javascript_include_tag 'view_models/approval_edit'
+= render 'components/approval_file_upload'
 
 - provide(:title, t('page.approval_edit.title'))
 
@@ -22,16 +24,4 @@
                                        model: I18n.t("activerecord.models.approval")) } , class: 'approval_edit__form__btn--submit' , value: "edit" do
           = fa_icon 'pencil-square', text: t('helpers.submit.update')
       .approval_edit__form__container__group
-        .approval_edit__form__item
-          = f.label :files, Approval.human_attribute_name(:file)
-          = f.nested_fields_for :files do |q|
-            .approval_edit__form__item__file
-              - if q.object.id
-                = t('page.approval_edit.uploaded_file')
-                .approval_edit__form__item__file__name
-                  = link_to q.object.original_filename, api_approval_file_download_path(q.object)
-              = q.file_field :file, class: 'form-control'
-              = q.remove_nested_fields_link 'Delete', class: 'btn btn-danger approval_edit__form__btn--delete', role: 'button' do
-                = fa_icon 'remove', text: t('helpers.delete')
-        = f.add_nested_fields_link :files, 'Add new', class: 'btn btn-primary approval_edit__form__btn--new', role: 'button'
-          = fa_icon 'plus', text: t('helpers.plus')
+        component [is="approvalFileUpload" approval-id="#{@approval.id}"]

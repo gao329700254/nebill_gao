@@ -15,4 +15,8 @@ class ApprovalFile < ApplicationRecord
   belongs_to :approval
 
   mount_uploader :file, BasicFileUploader
+
+  def restore_cache!
+    file.retrieve_from_cache!(file_cache) if file_cache.present?
+  end
 end
