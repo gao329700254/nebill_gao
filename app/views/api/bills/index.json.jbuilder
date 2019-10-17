@@ -9,4 +9,6 @@ json.array!(@bills) do |bill|
   json.payment_type                  I18n.t("enumerize.defaults.payment_type.#{bill.payment_type}") if bill.payment_type.present?
   json.expected_deposit_on           bill.expected_deposit_on
   json.deposit_on                    bill.deposit_on
+  # enum_helpをmergeした後にi18n化する
+  json.status                        bill.status
 end

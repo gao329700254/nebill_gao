@@ -9,11 +9,12 @@ script type='text/x-template' id='project_bill_list'
       table.project_bill__list__tbl
         thead.project_bill__list__tbl__head
           tr.project_bill__list__tbl__head__row
-            th.project_bill__list__tbl__item--cd              = t('activerecord.attributes.bill.cd')
-            th.project_bill__list__tbl__item--amount          = t('activerecord.attributes.bill.amount')
-            th.project_bill__list__tbl__item--payment_type    = t('activerecord.attributes.project.payment_type')
-            th.project_bill__list__tbl__item--bill_on         = t('activerecord.attributes.bill.bill_on')
-            th.project_bill__list__tbl__item--deposit_on      = t('activerecord.attributes.bill.deposit_on')
+            th.project_bill__list__tbl__item--status              = Bill.human_attribute_name(:status)
+            th.project_bill__list__tbl__item--cd                  = Bill.human_attribute_name(:cd)
+            th.project_bill__list__tbl__item--amount              = Bill.human_attribute_name(:amount)
+            th.project_bill__list__tbl__item--payment_type        = Bill.human_attribute_name(:payment_type)
+            th.project_bill__list__tbl__item--bill_on             = Bill.human_attribute_name(:bill_on)
+            th.project_bill__list__tbl__item--expected_deposit_on = Bill.human_attribute_name(:expected_deposit_on)
         tbody.project_bill__list__tbl__body
           tr.project_bill__list__tbl__body__row [
             v-bind:class = "bill.deposit_on ? 'project_bill__list__tbl__body__row--deposited'
@@ -23,11 +24,12 @@ script type='text/x-template' id='project_bill_list'
             v-on:click   = "linkToShow(bill.id)"
             track-by     = "id"
           ]
-            td.project_bill__list__tbl__item--cd              v-text='bill.cd'
-            td.project_bill__list__tbl__item--amount          v-text='bill.amount.toLocaleString()'
-            td.project_bill__list__tbl__item--payment_type    v-text='bill.payment_type'
-            td.project_bill__list__tbl__item--bill_on         v-text='bill.bill_on'
-            td.project_bill__list__tbl__item--deposit_on      v-text='bill.deposit_on'
+            td.project_bill__list__tbl__item--status              v-text='bill.status'
+            td.project_bill__list__tbl__item--cd                  v-text='bill.cd'
+            td.project_bill__list__tbl__item--amount              v-text='bill.amount.toLocaleString()'
+            td.project_bill__list__tbl__item--payment_type        v-text='bill.payment_type'
+            td.project_bill__list__tbl__item--bill_on             v-text='bill.bill_on'
+            td.project_bill__list__tbl__item--expected_deposit_on v-text='bill.expected_deposit_on'
 
     component [
       :is        = "'billNew'"

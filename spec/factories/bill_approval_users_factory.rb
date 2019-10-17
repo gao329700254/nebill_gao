@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :bill_approval_user do
-    role { 1 }
-    status { 1 }
+    role { "primary" }
+    status { "unapplied" }
     comment { "MyString" }
     user { nil }
     bill { nil }

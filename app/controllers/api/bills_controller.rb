@@ -88,7 +88,6 @@ private
       :expected_deposit_on,
       :deposit_on,
       :memo,
-      :status,
     )
   end
 
