@@ -26,7 +26,7 @@ $ ->
       fix_amount: ''
       arrow: '→'
       checked: false
-      selected_project: ''
+      selected_employe_project: ''
       project_list: []
       employee_project_list: []
       files: []
