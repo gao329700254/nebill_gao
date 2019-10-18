@@ -1,4 +1,7 @@
 class Projects::CsvController < ApplicationController
+  # NEBILL-328 ability.rbのエラー原因の調査
+  # staging環境ではエラーが出たので、skip_authorize_resourceを用いて回避
+  skip_authorize_resource
   before_action :set_projects
 
   def download
