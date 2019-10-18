@@ -14,8 +14,8 @@ $ ->
       arrow: '→'
       checked: false
       selected_employee_project: @employee_project_list
-      project_list: []
       employee_project_list: []
+      project_list: []
     methods:
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
       onFileChange: (e) ->
@@ -53,6 +53,13 @@ $ ->
         .done (response) =>
           @defaule_expense_items = response
           @defaule_expense_items.standard_amount = gon.amount
+      setExpenseProjectId: ->
+        @expenseProjectId = $('#expense_project_id').val()
+      checkRoundTrip: ->
+        if gon.is_round_trip
+          @arrow = '↔️'
+        else
+          @arrow = '→'
       employeeLoadProjects: (e)->
         $.ajax
             url: '/api/expenses/employee_load_projects.json'
@@ -62,14 +69,6 @@ $ ->
             }
           .done (response) =>
             @employee_project_list = response
-      setExpenseProjectId: ->
-        @expenseProjectId = $('#expense_project_id').val()
-      checkRoundTrip: ->
-        if gon.is_round_trip
-          @arrow = '↔️'
-        else
-          @arrow = '→'
-      
       setProject: (e) ->
         try
           $.ajax

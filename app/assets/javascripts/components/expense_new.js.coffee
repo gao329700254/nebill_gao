@@ -27,8 +27,8 @@ $ ->
       arrow: '→'
       checked: false
       selected_employe_project: ''
-      project_list: []
       employee_project_list: []
+      project_list: []
       files: []
       return:
         expense:
@@ -85,16 +85,6 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
-      employeeLoadProjects: (e)->
-        $.ajax
-            url: '/api/expenses/employee_load_projects.json'
-            type: 'POST'
-            data: {
-              project_id: e
-            }
-          .done (response) =>
-            @employee_project_list = response
-            @selected_employee_project = response.id
       loadExpense: ->
         if @ids
           $.ajax
@@ -150,6 +140,15 @@ $ ->
           @arrow = '↔️'
         else
           @arrow = '→'
+      employeeLoadProjects: (e)->
+        $.ajax
+            url: '/api/expenses/employee_load_projects.json'
+            type: 'POST'
+            data: {
+              project_id: e
+            }
+          .done (response) =>
+            @employee_project_list = response
       setProject: (e) ->
         try
           $.ajax
