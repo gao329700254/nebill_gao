@@ -14,7 +14,7 @@
           = date_field_tag :end, nil, 'v-model' => "end"
         .expense_csv__search__date__btn
           = button_tag 'v-on:click.prevent' => 'search', type: 'button', class: 'expense_csv__search__date__btn--search' do
-            = fa_icon 'fa-search', text: t('page.expense_csv.search')
+            = fa_icon 'search', text: t('page.expense_csv.search')
         .expense_csv__search__date__btn
           = button_tag 'v-on:click' => '', class: 'expense_csv__search__date__btn--csv' do
             = fa_icon 'download', text: t('page.expense_csv.download')

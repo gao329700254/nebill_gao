@@ -58,6 +58,9 @@ private
     can :download, Bill
     can :download, Xlsx
     can :download, Pdf
+    # NEBILL-328 ability.rbのエラー原因の調査
+    # staging環境ではエラーが出たので、下の行をコメントアウト
+    # can :download, Csv
     can :approval_file_download, File
     can :expense_file_download, File
   end

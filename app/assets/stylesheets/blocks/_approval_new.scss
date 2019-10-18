@@ -78,6 +78,11 @@
         @include btn--default;
       }
 
+      &--repeat {
+        @include btn--default;
+        float: right;
+      }
+
       &--submit {
         @include btn--primary;
         width: 130px;

@@ -544,6 +544,7 @@ ja:
       start: 開始日
       end: 終了日
       search: 検索
+      csv_download: CSV
       contract_type:
         all:          すべて
         contracted:   契約済
@@ -905,3 +906,14 @@ ja:
         company:  "nebill by 株式会社Cuon"
   chatwork:
     annotate_to: "[To:%{id}] %{name}さん"
+  csv:
+    projects:
+      - 進行状況
+      - ID
+      - プロジェクト名
+      - お客様名
+      - 金額
+      - 契約書受領
+      - 契約日/開始日
+      - 終了日
+      - 備考

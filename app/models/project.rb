@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190627015639
+# Schema version: 20190911034541
 #
 # Table name: projects
 #
@@ -41,6 +41,10 @@
 # Indexes
 #
 #  index_projects_on_cd  (cd) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => project_groups.id) ON DELETE => nullify
 #
 
 class Project < ApplicationRecord
@@ -115,5 +119,19 @@ class Project < ApplicationRecord
 
   def estimated_amount=(value)
     super(value.delete(',')) if value
+  end
+
+  def csv_columns
+    [
+      status.finished? ? I18n.t('page.project_list.project_status.finished') : I18n.t('page.project_list.project_status.progress'),
+      cd,
+      name,
+      orderer_company_name,
+      amount&.to_s(:delimited),
+      contracted? ? '済' : '',
+      start_on.to_s,
+      end_on.to_s,
+      memo,
+    ]
   end
 end
