@@ -7,6 +7,10 @@
 
     &__radio {
       margin-bottom: $base-spacing;
+
+      .button_to {
+        display: inline;
+      }
     }
 
     &__date {
@@ -24,10 +28,20 @@
       &__btn {
         @include span-columns(3);
 
-        &--search,
-        &--new_project {
+        &--search {
           @include btn--primary;
           margin-top: $base-spacing;
+        }
+
+        &--new_project {
+          @include btn--primary;
+          float: right;
+          margin-top: $base-spacing;
+        }
+
+        &--csv_download {
+          @include btn--primary;
+          float: right;
         }
       }
     }

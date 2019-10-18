@@ -58,6 +58,7 @@ private
     can :download, Bill
     can :download, Xlsx
     can :download, Pdf
+    can :download, Csv
     can :approval_file_download, File
     can :expense_file_download, File
   end
