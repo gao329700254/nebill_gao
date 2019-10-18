@@ -26,7 +26,7 @@ $ ->
       fix_amount: ''
       arrow: '→'
       checked: false
-      selected_employe_project: ''
+      selected_employee_project: ''
       employee_project_list: []
       project_list: []
       files: []
@@ -54,7 +54,7 @@ $ ->
             form.append('expense[arrival_location]', @expense.arrival_location)
           form.append('expense[amount]', @defaule_expense_items.standard_amount)
           form.append('expense[payment_type]', @expense.payment_type)
-          form.append('expense[project_id]', @expense.employee_project_list) if @expense.employee_project_list
+          form.append('expense[project_id]', @selected_employee_project) if @selected_employee_project
           form.append('expense[notes]', @expense.notes)
           form.append('fix_amount', @fix_amount)
           $.ajax
