@@ -85,12 +85,16 @@ $ ->
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
         finally
           submit.prop('disabled', false)
-      employeeLoadProjects: ->
+      employeeLoadProjects: (e)->
         $.ajax
             url: '/api/expenses/employee_load_projects.json'
             type: 'POST'
+            data: {
+              project_id: e
+            }
           .done (response) =>
             @employee_project_list = response
+            @selected_employee_project = response.id
       loadExpense: ->
         if @ids
           $.ajax
@@ -155,8 +159,8 @@ $ ->
               project_id: e
             }
           .done (response) =>
-            @project_list.push(response)
-            @selected_project = response.id
+            @all_selectbox_project_list = @employee_project_list.push(response)
+            @selected_employee_project = response.id
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
       showExpenseTransportation: -> @$broadcast('showExpenseTransportationEvent')
     events:
