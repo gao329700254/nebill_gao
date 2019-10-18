@@ -79,7 +79,8 @@ $ ->
               project_id: e
             }
           .done (response) =>
-            @all_selectbox_project_list = @employee_project_list.push(response)
+            @employee_project_list.push(response)
+            @employee_project_list = _.uniq(@employee_project_list, 'cd')
             @selected_employee_project = response.id
     ready: ->
       @loadDefaultExpenseItem()
