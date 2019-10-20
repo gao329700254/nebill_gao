@@ -92,6 +92,7 @@ Rails.application.routes.draw do
       get "approval_list", to: "agreements#approval_list"
       get "client_list", to: "agreements#client_list"
       get "project_list", to: "agreements#project_list"
+      get "bill_list", to: "agreements#bill_list"
       get "expense_approval_list", to: "agreements#expense_approval_list"
     end
 

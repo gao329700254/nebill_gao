@@ -20,6 +20,12 @@ class Api::AgreementsController < Api::ApiController
     render 'api/projects/agreement_project', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
+  def bill_list
+    @bills = Bill.joins(:bill_approval_users)
+                 .where(bill_approval_users: { status: 'pending', user_id: @current_user.id })
+    render 'api/bills/agreement_bill', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
   def expense_approval_list
     @expense_approvals = ExpenseApproval.includes([[created_user: :employee], :expense_approval_user])
                                         .references(:expense_approval_user)

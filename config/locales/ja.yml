@@ -779,9 +779,10 @@ ja:
     agreement:
       title: 承認ページ
       component:
-        approval_list: 稟議
-        client_list: 取引先
-        project_list: プロジェクト
+        approval_list:         稟議
+        client_list:           取引先
+        project_list:          プロジェクト
+        bill_list:             請求
         expense_approval_list: 経費
       list:
         created_by: 作成者

@@ -1,0 +1,26 @@
+script type='text/x-template' id='agreement_bill_list'
+  .agreement_list
+    table.agreement_list__tbl
+      thead.agreement_list__tbl__head
+        tr.agreement_list__tbl__head__row
+          th.agreement_list__tbl__item--onehalf    = Bill.human_attribute_name(:cd)
+          th.agreement_list__tbl__item--onehalf    = Project.human_attribute_name(:name)
+          th.agreement_list__tbl__item--onehalf    = Project.human_attribute_name(:orderer_company_name)
+          th.agreement_list__tbl__item--onehalf    = Bill.human_attribute_name(:amount)
+          th.agreement_list__tbl__item--onehalf    = Bill.human_attribute_name(:payment_type)
+          th.agreement_list__tbl__item--onehalf    = t('page.agreement.list.created_by')
+          th.agreement_list__tbl__item--onehalf    = t('page.agreement.list.created_at')
+      tbody.agreement_list__tbl__body
+        tr.agreement_list__tbl__body__row [
+          v-for      = "bill in list"
+          id         = "bill-{{bill.id}}"
+          v-on:click = "linkToShow(bill.id)"
+          track-by   = "id"
+        ]
+          td.agreement_list__tbl__item--onehalf    v-text='bill.cd'
+          td.agreement_list__tbl__item--onehalf    v-text='bill.name'
+          td.agreement_list__tbl__item--onehalf    v-text='bill.orderer_company_name'
+          td.agreement_list__tbl__item--onehalf    v-numeric='bill.amount'
+          td.agreement_list__tbl__item--onehalf    v-text='bill.payment_type'
+          td.agreement_list__tbl__item--onehalf    v-text='bill.created_by'
+          td.agreement_list__tbl__item--onehalf    v-text='bill.created_at'

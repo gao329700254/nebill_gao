@@ -189,6 +189,7 @@
 #                     api_approval_list GET    /api/agreements/approval_list(.:format)                     api/agreements#approval_list
 #                       api_client_list GET    /api/agreements/client_list(.:format)                       api/agreements#client_list
 #                      api_project_list GET    /api/agreements/project_list(.:format)                      api/agreements#project_list
+#                         api_bill_list GET    /api/agreements/bill_list(.:format)                         api/agreements#bill_list
 #             api_expense_approval_list GET    /api/agreements/expense_approval_list(.:format)             api/agreements#expense_approval_list
 #                    api_approval_files POST   /api/approval_files(.:format)                               api/approval_files#create
 #
