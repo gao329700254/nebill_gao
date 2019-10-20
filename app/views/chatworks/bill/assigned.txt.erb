@@ -1,0 +1,12 @@
+[To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
+[info]
+  [title]
+    <%= from_user.user.name %>さんから「<%= bill.cd %>: <%= bill.project.name %>」が申請されました。
+  [/title]
+  [info]
+    <%= from_user.comment %>
+
+    以下のリンクをクリックして、内容を確認ください。
+    <%= Rails.application.routes.url_helpers.bill_show_url(bill, ActionMailer::Base.default_url_options) %>
+  [/info]
+[/info]

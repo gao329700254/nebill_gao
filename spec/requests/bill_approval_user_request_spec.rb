@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe BillApprovalUsersController, type: :request do
-  let(:project_member) { create(:user) }
-  let(:chief)          { create(:user, is_chief: true) }
-  let(:bill)           { create(:bill, status: 'pending') }
+  let(:applicant_user)  { create(:user) }
+  let(:project_member)  { create(:user) }
+  let(:chief)           { create(:user, is_chief: true) }
+  let(:bill)            { create(:bill, status: 'pending') }
+  let!(:bill_applicant) { create(:bill_applicant, user: applicant_user, bill: bill) }
 
   describe "POST /bills/bill_approval_users" do
     subject { post path, params: params }

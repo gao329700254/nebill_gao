@@ -1,0 +1,14 @@
+[To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
+[info]
+  [title]
+    申請「<%= bill.cd %>: <%= bill.project.name %>」が承認されました。
+  [/title]
+  [info]
+    <% bill.bill_approval_users.each do |approver| %>
+      <%= approver.user.name %> ： <%= approver.comment %>
+    <% end %>
+
+    以下のリンクをクリックして、内容を確認ください。
+    <%= Rails.application.routes.url_helpers.bill_show_url(bill, ActionMailer::Base.default_url_options) %>
+  [/info]
+[/info]

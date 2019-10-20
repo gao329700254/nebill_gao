@@ -468,6 +468,16 @@ ja:
         pending:   承認待ち
         approved:  承認済み
         issued:    発行済み
+    bill_approval_user:
+      role:
+        primary:   一段目承認者
+        secondary: 二段目承認者
+      status:
+        unapplied: 未申請
+        pending:   承認待ち
+        approved:  承認済み
+        sent_back: 差し戻し
+        cancelled: 取り消し
   enumerize:
     defaults:
       contract_type:

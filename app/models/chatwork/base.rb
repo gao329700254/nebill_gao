@@ -32,7 +32,7 @@ module Chatwork
       def post(url, **params)
         res = new.api_client.post(url, params)
 
-        Rails.logger.error("chatwork send message eroor! #{res.body}") unless res.success?
+        Rails.logger.error("chatwork send message error! #{res.body}") unless res.success?
 
         res.success?
       end

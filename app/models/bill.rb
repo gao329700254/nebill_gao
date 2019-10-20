@@ -63,6 +63,10 @@ class Bill < ApplicationRecord
     errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on')) if bill_on < acceptance_on
   end
 
+  def primary_approver
+    bill_approval_users.primary_role.first
+  end
+
   def secondary_approver
     bill_approval_users.secondary_role.first
   end
@@ -85,6 +89,8 @@ class Bill < ApplicationRecord
     # 「社長フラグ(= is_chief)」を有するユーザを二段目承認者として作成する
     chief = User.find_by(is_chief: true)
     bill_approval_users.create!(role: 'secondary', status: 'pending', user_id: chief.id)
+
+    Chatwork::Bill.new(bill: self, to_user: primary_approver.user, from_user: bill_applicant).notify_assigned
   end
 
   def cancel_apply!
@@ -98,17 +104,27 @@ class Bill < ApplicationRecord
     current_approver = bill_approval_users.find_by(user_id: user_id)
 
     ActiveRecord::Base.transaction do
-      # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
-      approved_bill! if current_approver.secondary_role?
       current_approver.update!(status: 'approved', comment: comment)
+
+      # 一段目承認者が承認したとき、二段目承認者に通知する
+      # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
+      if current_approver.primary_role?
+        Chatwork::Bill.new(bill: self, to_user: secondary_approver.user, from_user: bill_applicant).notify_assigned
+      else
+        approved_bill!
+        Chatwork::Bill.new(bill: self, to_user: bill_applicant.user).notify_approved
+      end
     end
   end
 
   def send_back_bill_application!(user_id, comment)
     ActiveRecord::Base.transaction do
       sent_back_bill!
-      bill_approval_users.find_by(user_id: user_id).update!(status: 'sent_back', comment: comment)
+      current_approver = bill_approval_users.find_by(user_id: user_id)
+      current_approver.update!(status: 'sent_back', comment: comment)
       bill_approval_users.each(&:sent_back_bill!)
+
+      Chatwork::Bill.new(bill: self, to_user: bill_applicant.user, from_user: current_approver).notify_sent_back
     end
   end
 end
