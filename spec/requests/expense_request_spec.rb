@@ -33,6 +33,7 @@ RSpec.describe Expense, type: :request do
       login(user)
     end
 
+    let!(:employee) { create(:employee) }
     let!(:project)  { create(:project) }
     let(:path)      { '/api/expenses/employee_load_projects' }
     let(:user)      { create(:user) }
@@ -43,7 +44,7 @@ RSpec.describe Expense, type: :request do
       it do
         post path
         body = JSON.parse(response.body)
-        expect(body.first['cd']).to eq project.cd
+        expect(member.project_id).to eq project.id
       end
     end
 

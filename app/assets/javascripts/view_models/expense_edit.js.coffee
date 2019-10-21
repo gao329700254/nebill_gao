@@ -67,8 +67,8 @@ $ ->
           data: {
             project_id: e
           }
-          .done (response) =>
-            @employee_project_list = response
+        .done (response) =>
+          @employee_project_list = response
       setProject: (e) ->
         try
           $.ajax

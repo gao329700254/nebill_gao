@@ -69,7 +69,7 @@ class Api::ExpensesController < Api::ApiController
   end
 
   def employee_load_projects
-    @employee_projects = Employee.find(@current_user).projects
+    @employee_projects = Employee.find_by(actable_id: @current_user.id, actable_type: 'User').projects
     render 'employee_load_projects', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
