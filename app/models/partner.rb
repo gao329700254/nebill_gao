@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190409072211
+# Schema version: 20190911034541
 #
 # Table name: partners
 #
@@ -7,7 +7,7 @@
 #  company_name :string           not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  cd           :string           not null
+#  cd           :string
 #  address      :string
 #  zip_code     :string
 #  phone_number :string

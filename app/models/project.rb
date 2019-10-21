@@ -4,39 +4,32 @@
 # Table name: projects
 #
 #  id                      :integer          not null, primary key
-#  cd                      :string           not null
+#  key                     :string           not null
 #  name                    :string           not null
 #  contracted              :boolean          not null
-#  contract_on             :date
+#  contract_on             :date             not null
 #  contract_type           :string
 #  start_on                :date
 #  end_on                  :date
 #  amount                  :integer
 #  billing_company_name    :string
 #  billing_department_name :string
+#  billing_personnel_names :string
 #  billing_address         :string
 #  billing_zip_code        :string
 #  billing_memo            :text
 #  orderer_company_name    :string
 #  orderer_department_name :string
+#  orderer_personnel_names :string
 #  orderer_address         :string
 #  orderer_zip_code        :string
 #  orderer_memo            :text
 #  created_at              :datetime         not null
 #  updated_at              :datetime         not null
+#  contractual_coverage    :string
 #  is_using_ses            :boolean
 #  group_id                :integer
 #  payment_type            :string
-#  billing_personnel_names :string           is an Array
-#  orderer_personnel_names :string           is an Array
-#  estimated_amount        :integer
-#  is_regular_contract     :boolean
-#  status                  :string
-#  orderer_phone_number    :string
-#  billing_phone_number    :string
-#  memo                    :text
-#  unprocessed             :boolean          default(FALSE)
-#  leader_id               :integer
 #
 # Indexes
 #
