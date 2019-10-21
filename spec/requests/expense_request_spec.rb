@@ -30,7 +30,7 @@ RSpec.describe Expense, type: :request do
 
   describe 'POST /api/expenses/employee_load_projects.json' do
     before do
-     login(user)
+      login(user)
     end
 
     let!(:project)  { create(:project) }

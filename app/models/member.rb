@@ -31,7 +31,7 @@
 class Member < ApplicationRecord
   belongs_to :employee
   belongs_to :project
-  
+
   validate :check_periods
 
   has_paper_trail meta: { project_id: :project_id }
