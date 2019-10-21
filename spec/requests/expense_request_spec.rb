@@ -44,7 +44,7 @@ RSpec.describe Expense, type: :request do
       it do
         post path
         body = JSON.parse(response.body)
-        expect(member.project_id).to eq project.id
+        expect(body.first['id']).to eq project.id
       end
     end
 
