@@ -41,7 +41,9 @@ $ ->
             @list = response.list
         finally
           search.prop('disabled', false)
-      showExpenseNew: (val) -> @$broadcast('showExpenseNewEvent', '')
+      showExpenseNew: (val) ->
+        @modalHide()
+        @$dispatch('showExpenseNewEvent', '')
       changeRadio: (expenseId) -> @ids = expenseId
     compiled: ->
       @loadDefaultIds()

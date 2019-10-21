@@ -310,6 +310,7 @@ ja:
       download: 出力
     edit: 編集
     cancel: キャンセル
+    show_history: 履歴から読み込み
     delete: 削除
     back: 戻る
     login: ログイン

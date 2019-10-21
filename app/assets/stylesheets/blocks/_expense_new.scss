@@ -73,16 +73,24 @@
 
       &--cancel {
         @include btn--default;
+        margin-top: $small-spacing;
+        width: 180px;
       }
 
       &--repeat {
         @include btn--primary;
-        float: right;
+        width: 210px;
       }
 
       &--submit {
         @include btn--primary;
-        width: 130px;
+        width: 180px;
+      }
+
+      &--history {
+        @include btn--primary;
+        margin-top: $small-spacing;
+        width: 210px;
       }
 
       &--arrow,

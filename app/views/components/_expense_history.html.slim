@@ -27,8 +27,4 @@ script type='text/x-template' id='expense_history' name='expense_history'
                   = fa_icon 'search', text: t('page.expense_list.search')
           == render 'components/expense_history__form'
 
-  component [
-    :is        = "'expenseNew'"
-    :ids       = "ids"
-    keep-alive = true
-  ]
+  

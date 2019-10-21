@@ -152,6 +152,7 @@ $ ->
             @selected_project = response.id
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
       showExpenseTransportation: -> @$broadcast('showExpenseTransportationEvent')
+      showExpenseHistory: -> @$broadcast('showExpenseHistoryEvent')
     events:
       showExpenseNewEvent: (val) ->
         @modalShow()
