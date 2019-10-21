@@ -59,12 +59,12 @@
                   select name='expense[project_id]' v-model= "selected_employee_project"
                     option [
                       v-for = "project in employee_project_list"
-                      v-bind:value = "project.id" 
+                      v-bind:value = "project.id"
                     ]
                       = "{{project.cd}}" + ':' + "{{project.name}}"
                 .expense_edit__form__fill--btn
                   = button_tag type: 'button', 'v-on:click' => 'setProjectModal', class: 'expense_edit__form__fill--btn--set_project' do
-                    = fa_icon 'search'                    
+                    = fa_icon 'search'
         .expense_edit__form__item
           = f.label :notes, Expense.human_attribute_name(:notes)
           = f.text_area :notes, class: 'expense_edit__form__item__area'

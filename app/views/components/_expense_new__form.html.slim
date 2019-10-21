@@ -58,7 +58,7 @@
                 select v-model= "selected_employee_project"
                   option [
                     v-for = "project in employee_project_list"
-                    v-bind:value = "project.id" 
+                    v-bind:value = "project.id"
                   ]
                     = "{{project.cd}}" + ':' + "{{project.name}}"
               .expense_new__form__fill--btn
