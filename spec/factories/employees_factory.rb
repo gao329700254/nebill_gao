@@ -7,7 +7,7 @@ FactoryBot.define do
     email { 'example@email.co.jp' }
 
     after(:create) do |employee|
-      create_list( :project, 3, employees: [employee] )
+      create_list(:project, 3, employees: [employee])
     end
   end
 end
