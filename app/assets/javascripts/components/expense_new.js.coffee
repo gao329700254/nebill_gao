@@ -140,13 +140,13 @@ $ ->
           @arrow = '↔️'
         else
           @arrow = '→'
-      employeeLoadProjects: (e)->
+      employeeLoadProjects: (e) ->
         $.ajax
-            url: '/api/expenses/employee_load_projects.json'
-            type: 'POST'
-            data: {
-              project_id: e
-            }
+          url: '/api/expenses/employee_load_projects.json'
+          type: 'POST'
+          data: {
+            project_id: e
+          }
           .done (response) =>
             @employee_project_list = response
       setProject: (e) ->
