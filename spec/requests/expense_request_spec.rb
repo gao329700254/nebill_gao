@@ -27,4 +27,33 @@ RSpec.describe Expense, type: :request do
       end
     end
   end
+
+  describe 'POST /api/expenses/employee_load_projects.json' do
+    before do
+     login(user)
+    end
+
+    let!(:project)  { create(:project) }
+    let(:path)      { '/api/expenses/employee_load_projects' }
+    let(:user)      { create(:user) }
+    let(:user2)     { create(:user) }
+
+    context 'employeeに紐づいているProjectがある場合' do
+      let!(:member) { create(:member, project_id: project.id, employee_id: user.employee.id, type: 'User') }
+      it do
+        post path
+        body = JSON.parse(response.body)
+        expect(body.first['cd']).to eq project.cd
+      end
+    end
+
+    context 'employeeに紐づいているProjectがない場合' do
+      let!(:member)                 { create(:member, project_id: project.id, employee_id: user2.employee.id, type: 'User') }
+      it do
+        post path
+        body = JSON.parse(response.body)
+        expect(body).to eq []
+      end
+    end
+  end
 end

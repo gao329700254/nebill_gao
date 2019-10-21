@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :member do
     project
+    employee
   end
 
   factory :user_member, parent: :member, class: UserMember do
