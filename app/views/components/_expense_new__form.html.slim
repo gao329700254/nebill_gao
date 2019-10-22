@@ -11,6 +11,8 @@
           .expense_new__form__item
             = label_tag :name, Expense.human_attribute_name(:default_id)
             select [
+                     name='name'
+                     id='name'
                      v-model='expense.default_id'
                      v-on:change ='onItemChange'
                     ]

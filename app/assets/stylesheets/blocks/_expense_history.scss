@@ -5,6 +5,7 @@
 
   &__outer {
     @include modal__outer;
+    z-index: 101;
     padding-top: 5em;
 
     &__inner {

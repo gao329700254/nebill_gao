@@ -43,7 +43,7 @@ $ ->
           search.prop('disabled', false)
       showExpenseNew: (val) ->
         @modalHide()
-        @$dispatch('showExpenseNewEvent', '')
+        @$broadcast('showExpenseNewEvent', '')
       changeRadio: (expenseId) -> @ids = expenseId
     compiled: ->
       @loadDefaultIds()
