@@ -86,15 +86,27 @@ private
 
   def render_csv_zip_from_tsv
     t = Tempfile.new("transfer_informations")
-    Zip::OutputStream.open(t.path) do |z|
-      service = FbZipGenerateService.new(params[:transfer_informations])
-      service.execute.each do |date, body|
-        z.put_next_entry("全銀_#{date}.csv".encode(Encoding::CP932))
-        z.print(body)
+    begin
+      Zip::OutputStream.open(t.path) do |z|
+        FbZipGenerateService.new(params[:transfer_informations]).execute.each do |date, body|
+          z.put_next_entry("全銀_#{date}.csv".encode(Encoding::CP932))
+          z.print(body)
+        end
       end
+    rescue FbZipGenerateService::InvalidRowError => e
+      t.close
+      flash[:error] = e.message
+      render 'admin/pages/fb_date_output'
+      return
     end
 
-    send_file(t.path, :type => 'application/zip', dispositon: 'attachment', filename: "全銀データ_#{Date.today}.zip")
+    send_file(
+      t.path,
+      type: 'application/zip',
+      dispositon: 'attachment',
+      filename: "全銀データ_#{Time.zone.today}.zip",
+    )
+
     t.close
   end
 end
