@@ -107,31 +107,25 @@
       /   = button_tag '追加', class: 'approval_show__detail__update__action__btn--permission'
       /     = fa_icon 'plus', text: t('helpers.plus')
   / -----------------------------------------------------
-  / 請求書承認テーブル
+  / 請求書申請者テーブル
   / -----------------------------------------------------
   .bill_show__detail__approval_user_list
-    = t('page.approval_show.approval_status')
-    - if @bill_approvers.present?
-      table.approval_show__detail__approval_user_list__tbl
-        thead.approval_show__detail__approval_user_list__tbl__head
-          tr.approval_show__detail__approval_user_list__tbl__head__row
-            th.approval_show__detail__approval_user_list__item--approval_user_name = '役割'
-            th.approval_show__detail__approval_user_list__item--approval_user_name = ApprovalUser.human_attribute_name(:name)
-            th.approval_show__detail__approval_user_list__item--approval_user_status = ApprovalUser.human_attribute_name(:status)
-            th.approval_show__detail__approval_user_list__item--approval_user_comment = ApprovalUser.human_attribute_name(:comment)
-        tbody.approval_show__detail__approval_user_list__tbl__body
-          - @bill_approvers.each do |approver|
-            tr.approval_show__detail__approval_user_list__tbl__body__row
-              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.role
-              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.user.name
-              td.approval_show__detail__approval_user_list__item--approval_user_status = approver.status
-              td.approval_show__detail__approval_user_list__item--approval_user_comment = approver.comment
-  .bill_approval_show__detail__update
-    = 'アクション'
-    / -----------------------------------------------------
-    / 申請者用アクション
-    / -----------------------------------------------------
-    - if @bill_applicant.user.id == @current_user.id
+    = '申請者'
+    table.approval_show__detail__approval_user_list__tbl
+      thead.approval_show__detail__approval_user_list__tbl__head
+        tr.approval_show__detail__approval_user_list__tbl__head__row
+          th.approval_show__detail__approval_user_list__item--approval_user_name = BillApplicant.human_attribute_name(:user_id)
+          th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApplicant.human_attribute_name(:comment)
+      tbody.approval_show__detail__approval_user_list__tbl__body
+        tr.approval_show__detail__approval_user_list__tbl__body__row
+          td.approval_show__detail__approval_user_list__item--approval_user_name = @bill_applicant.user.name
+          td.approval_show__detail__approval_user_list__item--approval_user_comment = @bill_applicant.comment
+  / -----------------------------------------------------
+  / 申請者用アクション
+  / -----------------------------------------------------
+  - if @bill_applicant.user.id == @current_user.id
+    .bill_approval_show__detail__update
+      = 'アクション'
       - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
         = form_tag bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
           .approval_show__detail__update__action
@@ -148,19 +142,41 @@
           .approval_show__detail__update__action
             = form.hidden_field :bill_id
             = form.submit '取消', data: { confirm: I18n.t("action.cancel.confirm") }
-    / -----------------------------------------------------
-    / 承認者用アクション
-    / -----------------------------------------------------
-    - if @current_approver.present?
-      = form_tag bill_approval_users_path(@bill), class: 'bill_show__detail__approval_user_list' do
-        .approval_show__detail__update__action
-          - if @bill.pending_bill?
+  / -----------------------------------------------------
+  / 請求書承認者テーブル
+  / -----------------------------------------------------
+  - if @bill_approvers.present?
+    .bill_show__detail__approval_user_list
+      = '承認者'
+      table.approval_show__detail__approval_user_list__tbl
+        thead.approval_show__detail__approval_user_list__tbl__head
+          tr.approval_show__detail__approval_user_list__tbl__head__row
+            th.approval_show__detail__approval_user_list__item--approval_user_name = BillApprovalUser.human_attribute_name(:role)
+            th.approval_show__detail__approval_user_list__item--approval_user_name = BillApprovalUser.human_attribute_name(:user_id)
+            th.approval_show__detail__approval_user_list__item--approval_user_status = BillApprovalUser.human_attribute_name(:status)
+            th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApprovalUser.human_attribute_name(:comment)
+        tbody.approval_show__detail__approval_user_list__tbl__body
+          - @bill_approvers.each do |approver|
+            tr.approval_show__detail__approval_user_list__tbl__body__row
+              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.role
+              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.user.name
+              td.approval_show__detail__approval_user_list__item--approval_user_status = approver.status
+              td.approval_show__detail__approval_user_list__item--approval_user_comment = approver.comment
+  / -----------------------------------------------------
+  / 承認者用アクション
+  / -----------------------------------------------------
+  - if @current_approver.present?
+    .bill_approval_show__detail__update
+      - if @current_approver.pending_bill?
+        = 'アクション'
+        = form_tag bill_approval_users_path(@bill), class: 'bill_show__detail__approval_user_list' do
+          .approval_show__detail__update__action
             = hidden_field_tag :bill_id, @bill.id
             = text_area_tag :comment
             = submit_tag '承認'
-      = form_for @current_approver do |form|
-        .approval_show__detail__update__action
-          - if @bill.pending_bill? || @bill.approved_bill?
+      - if @current_approver.pending_bill? || (@current_approver.approved_bill? && @bill.secondary_approver.pending_bill?)
+        = form_for @current_approver do |form|
+          .approval_show__detail__update__action
             = form.hidden_field :bill_id
             = form.text_area :comment, value: ''
             = form.submit '差戻', data: { confirm: I18n.t("action.send_back.confirm") }

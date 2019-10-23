@@ -111,8 +111,8 @@ ja:
       project_group:
         name: 名前
       bill:
-        project: プロジェクト
-        cd: 請求番号
+        project:             プロジェクト
+        cd:                  請求番号
         amount:              請求金額
         delivery_on:         納品日
         acceptance_on:       検収日
@@ -122,6 +122,14 @@ ja:
         deposit_on:          入金日
         memo:                メモ
         status:              ステータス
+      bill_applicant:
+        comment: コメント
+        user_id: 名前
+      bill_approval_user:
+        role:    役割
+        status:  ステータス
+        user_id: 名前
+        comment: コメント
       project_file_group:
         name: 名前
       approval_user:

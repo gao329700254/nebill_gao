@@ -63,15 +63,7 @@ class Bill < ApplicationRecord
     errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on')) if bill_on < acceptance_on
   end
 
-  def applicant
-    bill_applicant.user
-  end
-
-  def primary_approver
-    bill_approval_users.primary_role.first.user
-  end
-
   def secondary_approver
-    bill_approval_users.secondary_role.first.user
+    bill_approval_users.secondary_role.first
   end
 end
