@@ -14,7 +14,7 @@ $ ->
       end: undefined
     methods:
       linkToShow: (projectId) -> window.location = "/projects/#{projectId}/show"
-      showProjectNew: -> @$broadcast('showProjectNewEvent')
+      showProjectNew: -> window.location = '/projects/new'
       search: ->
         try
           search = $('.project_list__search__date__btn--search')
