@@ -124,11 +124,11 @@ ja:
         status:              ステータス
       bill_applicant:
         comment: コメント
-        user_id: 名前
+        user_id: 申請者
       bill_approval_user:
         role:    役割
         status:  ステータス
-        user_id: 名前
+        user_id: 承認者
         comment: コメント
       project_file_group:
         name: 名前

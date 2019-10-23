@@ -43,6 +43,11 @@
           @include span-columns(2);
         }
 
+        &--applicant_name {
+        @extend %bill_list__tbl__item;
+        @include span-columns(2);
+      }
+
         &--cd {
           @extend %bill_list__tbl__item;
           @include span-columns(2);
@@ -61,7 +66,7 @@
 
         &--bill_on {
           @extend %bill_list__tbl__item;
-          @include span-columns(3);
+          @include span-columns(2);
         }
 
         &--expected_deposit_on {

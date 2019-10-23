@@ -30,6 +30,7 @@
     thead.bill_list__tbl__head
       tr.bill_list__tbl__head__row
         th.bill_list__tbl__item--status              = Bill.human_attribute_name(:status)
+        th.bill_list__tbl__item--applicant_name      = BillApplicant.human_attribute_name(:user_id)
         th.bill_list__tbl__item--cd                  = Bill.human_attribute_name(:cd)
         th.bill_list__tbl__item--project_name        = Project.human_attribute_name(:name)
         th.bill_list__tbl__item--billing_company     = Project.human_attribute_name(:billing_company_name)
@@ -46,6 +47,7 @@
         track-by   = "id"
       ]
         td.bill_list__tbl__item--status              v-text='bill.status'
+        td.bill_list__tbl__item--applicant_name      v-text='bill.applicant_name'
         td.bill_list__tbl__item--cd                  v-text='bill.cd'
         td.bill_list__tbl__item--project_name        v-text='bill.project.name'
         td.bill_list__tbl__item--billing_company     v-text='bill.project.billing_company_name'

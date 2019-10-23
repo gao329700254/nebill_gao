@@ -10,6 +10,7 @@ script type='text/x-template' id='project_bill_list'
         thead.project_bill__list__tbl__head
           tr.project_bill__list__tbl__head__row
             th.project_bill__list__tbl__item--status              = Bill.human_attribute_name(:status)
+            th.project_bill__list__tbl__item--applicant_name      = BillApplicant.human_attribute_name(:user_id)
             th.project_bill__list__tbl__item--cd                  = Bill.human_attribute_name(:cd)
             th.project_bill__list__tbl__item--amount              = Bill.human_attribute_name(:amount)
             th.project_bill__list__tbl__item--payment_type        = Bill.human_attribute_name(:payment_type)
@@ -25,6 +26,7 @@ script type='text/x-template' id='project_bill_list'
             track-by     = "id"
           ]
             td.project_bill__list__tbl__item--status              v-text='bill.status'
+            td.project_bill__list__tbl__item--applicant_name      v-text='bill.applicant_name'
             td.project_bill__list__tbl__item--cd                  v-text='bill.cd'
             td.project_bill__list__tbl__item--amount              v-text='bill.amount.toLocaleString()'
             td.project_bill__list__tbl__item--payment_type        v-text='bill.payment_type'
