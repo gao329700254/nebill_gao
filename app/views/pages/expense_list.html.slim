@@ -73,17 +73,16 @@ input#header__reapproval_confirm_message type='hidden' value=I18n.t('action.reap
         td.expense_list__tbl__item--amount          v-numeric='expense.amount' v-on:click="linkToShow(expense.id, expense.update_flug)"
         td.expense_list__tbl__item--project         v-text='expense.project' v-on:click="linkToShow(expense.id, expense.update_flug)"
         td.expense_list__tbl__item--notes           v-text='expense.notes' v-on:click="linkToShow(expense.id, expense.update_flug)"
-  = button_tag 'v-on:click.prevent' => "showExpenseNew('')", 'v-if' => 'ability.show_expense_new', class: 'expense_list__btn--new_expense' do
-    = fa_icon 'check', text: t('page.expense_list.new')
-  = button_tag 'v-on:click.prevent' => "showExpenseNew(selectedApproval)", 'v-if' => 'ability.add_expense', class: 'expense_list__btn--new_expense' do
-    = fa_icon 'check', text: t('page.expense_list.add_expense')
-  = button_tag 'v-on:click' => 'destroy', 'v-if' => 'ability.destroy', class: 'expense_list__btn--delete' do
-    = fa_icon 'trash', text: t('helpers.delete')
-  = button_tag 'v-on:click' => 'InvalidApproval', 'v-if' => 'ability.invalid_approval', class: 'expense_list__btn--invalid_approval' do
-    = fa_icon 'trash', text: t('page.expense_list.invalid_approval')
   .expense_list__function
     .expense_list__function__date
-      .expense_list__function__date__blank
+      = button_tag 'v-on:click.prevent' => "showExpenseNew('')", 'v-if' => 'ability.show_expense_new', class: 'expense_list__btn--new_expense' do
+        = fa_icon 'check', text: t('page.expense_list.new')
+      = button_tag 'v-on:click.prevent' => "showExpenseNew(selectedApproval)", 'v-if' => 'ability.add_expense', class: 'expense_list__btn--new_expense' do
+        = fa_icon 'check', text: t('page.expense_list.add_expense')
+      = button_tag 'v-on:click' => 'destroy', 'v-if' => 'ability.destroy', class: 'expense_list__btn--delete' do
+        = fa_icon 'trash', text: t('helpers.delete')
+      = button_tag 'v-on:click' => 'InvalidApproval', 'v-if' => 'ability.invalid_approval', class: 'expense_list__btn--invalid_approval' do
+        = fa_icon 'trash', text: t('page.expense_list.invalid_approval')
       .expense_list__function__date__text
         = t('page.expense_list.reimbursement_amount')
       .expense_list__function__date__num  v-if='total'
