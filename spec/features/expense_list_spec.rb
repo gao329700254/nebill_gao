@@ -58,6 +58,11 @@ RSpec.feature 'Expenxe List Page', js: true do
 
       click_button '読み込み'
       expect(page).not_to have_css    '.expense_history__outer'
+      expect(page).to have_field '利用日', with: expense1.use_date
+      expect(page).to have_field '費目', with: expense1.default_id
+      expect(page).to have_field '金額', with: expense1.amount
+      expect(page).to have_field '支払種別', with: expense1.payment_type
+      expect(page).to have_field '概要', with: expense1.notes
 
       expect do
         click_button '登録'
@@ -89,6 +94,11 @@ RSpec.feature 'Expenxe List Page', js: true do
 
       click_button '読み込み'
       expect(page).not_to have_css    '.expense_history__outer'
+      expect(page).to have_field '利用日', with: expense1.use_date
+      expect(page).to have_field '費目', with: expense1.default_id
+      expect(page).to have_field '金額', with: expense1.amount
+      expect(page).to have_field '支払種別', with: expense1.payment_type
+      expect(page).to have_field '概要', with: expense1.notes
 
       expect do
         click_button '続けて入力'
