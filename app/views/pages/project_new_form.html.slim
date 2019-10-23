@@ -1,4 +1,10 @@
-= form_tag api_projects_path, class: 'project_new__form'
+= javascript_include_tag 'view_models/project_new_form'
+
+- provide(:title, t('page.project_new.title'))
+
+== render 'components/project_new'
+
+#project_new_form.project_new_form
   .project_new__form__container
     .project_new__form__container__group
       == render 'project_new__form__basic'
@@ -15,3 +21,8 @@
     = fa_icon 'remove', text: t('helpers.cancel')
   = button_tag 'v-on:click.prevent' => 'submit', class: 'project_new__form__submit_btn' do
     = fa_icon 'check', text: t('helpers.submit.create')
+
+  component [
+    :is        = "'projectNew'"
+    keep-alive = true
+  ]
