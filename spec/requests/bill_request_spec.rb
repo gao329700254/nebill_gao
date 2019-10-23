@@ -10,6 +10,11 @@ RSpec.describe 'bills request' do
     let!(:bill2) { create(:bill) }
     let!(:bill3) { create(:bill) }
     let!(:bill4) { create(:bill) }
+    let!(:user1) { create(:user) }
+    let!(:applicant1) { create(:bill_applicant, bill: bill1, user: user1) }
+    let!(:applicant2) { create(:bill_applicant, bill: bill2, user: user1) }
+    let!(:applicant3) { create(:bill_applicant, bill: bill3, user: user1) }
+    let!(:applicant4) { create(:bill_applicant, bill: bill4, user: user1) }
     let(:path)   { "/api/bills" }
 
     it 'return a list of bills and projects that belong to the bill' do
@@ -30,6 +35,7 @@ RSpec.describe 'bills request' do
       expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
       expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill1.memo
+      expect(json[0]['applicant_name']).to                   eq bill1.bill_applicant.user.name
       # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
       # expect(json[0]['status']).to                           eq bill1.status
       expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
@@ -46,6 +52,11 @@ RSpec.describe 'bills request' do
       let!(:bill2)  { create(:bill, project: project) }
       let!(:bill3)  { create(:bill, project: project) }
       let!(:bill4)  { create(:bill) }
+      let!(:user1) { create(:user) }
+      let!(:applicant1) { create(:bill_applicant, bill: bill1, user: user1) }
+      let!(:applicant2) { create(:bill_applicant, bill: bill2, user: user1) }
+      let!(:applicant3) { create(:bill_applicant, bill: bill3, user: user1) }
+      let!(:applicant4) { create(:bill_applicant, bill: bill4, user: user1) }
       let(:path)    { "/api/projects/#{project.id}/bills" }
 
       it 'returns a list of bills which belong to project' do
@@ -68,6 +79,7 @@ RSpec.describe 'bills request' do
         expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
         expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json[0]['memo']).to                             eq bill1.memo
+        expect(json[0]['applicant_name']).to                   eq bill1.bill_applicant.user.name
         # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
         # expect(json[0]['status']).to                           eq bill1.status
         expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
@@ -94,6 +106,8 @@ RSpec.describe 'bills request' do
   describe 'GET /api/bills/:id' do
     context 'with exist bill id' do
       let!(:bill) { create(:bill) }
+      let!(:user1) { create(:user) }
+      let!(:applicant1) { create(:bill_applicant, bill: bill, user: user1) }
       let(:path)  { "/api/bills/#{bill.id}" }
 
       it 'return the bill' do

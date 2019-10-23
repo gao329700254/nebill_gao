@@ -44,9 +44,9 @@
         }
 
         &--applicant_name {
-        @extend %bill_list__tbl__item;
-        @include span-columns(2);
-      }
+          @extend %bill_list__tbl__item;
+          @include span-columns(2);
+        }
 
         &--cd {
           @extend %bill_list__tbl__item;
