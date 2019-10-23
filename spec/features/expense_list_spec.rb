@@ -69,7 +69,7 @@ RSpec.feature 'Expenxe List Page', js: true do
         wait_for_ajax
       end.to change(Expense, :count).by(1)
 
-      expense2 = Expense.where(created_user_id: user.id).last
+      expense2 = Expense.where(created_user_id: user.id).sort.last
 
       expect(expense2.use_date).to eq expense1.use_date
       expect(expense2.amount).to eq expense1.amount
@@ -105,7 +105,7 @@ RSpec.feature 'Expenxe List Page', js: true do
         wait_for_ajax
       end.to change(Expense, :count).by(1)
 
-      expense2 = Expense.where(created_user_id: user.id).last
+      expense2 = Expense.where(created_user_id: user.id).sort.last
 
       expect(expense2.use_date).to eq expense1.use_date
       expect(expense2.amount).to eq expense1.amount
