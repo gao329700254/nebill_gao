@@ -1,5 +1,6 @@
 class Api::ApprovalsController < Api::ApiController
   before_action :the_value_present?, only: [:create]
+  before_action :set_approval, only: %i(update approval_files)
 
   def create
     @approval = Approval.new(approval_params)
@@ -13,15 +14,16 @@ class Api::ApprovalsController < Api::ApiController
   end
 
   def update
-    @approval = Approval.find(params[:id])
-
     # HACK: https://cuonlab.backlog.jp/view/NEBILL-259
     # 稟議が稟議グループ指定の場合では、@approval.approval_usersが空なので、すぐ下のeach文は現時点で意味がない
     @approval.approval_users.each do |approval_user|
       approval_user.status = :pending if approval_user.status == :disconfirm
     end
 
-    if @approval.update(approval_params)
+    @approval.assign_attributes(approval_params)
+    @approval.files.each(&:restore_cache!)
+
+    if @approval.save
       update_notice
       update_execut_success
     else
@@ -41,7 +43,15 @@ class Api::ApprovalsController < Api::ApiController
     redirect_to approval_show_path(params[:approval_id])
   end
 
+  def approval_files
+    render json: { approval_files: @approval.files.as_json(only: [:original_filename, :id]) }
+  end
+
 private
+
+  def set_approval
+    @approval = Approval.find(params[:id])
+  end
 
   def approval_params
     params.require(:approval).permit(
@@ -53,7 +63,7 @@ private
       :approvaler_type,
       approval_approval_group_attributes: [:id, :approval_group_id, :_destroy],
       approval_users_attributes: [:id, :user_id, :status, :comment, :_destroy],
-      files_attributes: [:id, :file, :original_filename, :_destroy],
+      files_attributes: [:id, :file_cache, :original_filename, :_destroy],
     )
   end
 

@@ -31,6 +31,29 @@
         padding-top: $base-spacing;
         padding-bottom: $base-spacing;
 
+        &__input {
+          display: none;
+        }
+
+        &__item {
+
+          margin: .4rem;
+          box-shadow: $form-box-shadow;
+          background-color: $base-bg-color;
+          padding-left: .6em;
+
+          width: 100%;
+          height: 2rem;
+
+          font-family: $base-font-family;
+          font-size: $base-font-size;
+          box-sizing: border-box;
+
+          &.hidden {
+            display: none;
+          }
+        }
+
         &__drop_container {
           padding-top: 20px;
 
@@ -47,6 +70,7 @@
 
             display: block;
             border: 1px dashed $label_boder_color;
+            cursor: pointer;
             padding: 2rem;
             text-align: center;
             color: $label_color;
@@ -86,6 +110,14 @@
       &--submit {
         @include btn--primary;
         width: 130px;
+      }
+
+      &--trash {
+        @include btn--default;
+        float: right;
+        width: 30px;
+        text-align: center;
+        font-size: 1.5rem;
       }
     }
   }
