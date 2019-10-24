@@ -93,7 +93,6 @@ $ ->
           .done (response) =>
             toastr.success('', response.message)
             @initializeProject()
-            @modalHide()
             @$dispatch('loadSearchEvent')
             @partners = []
             @members = []
