@@ -40,7 +40,7 @@ RSpec.describe ApprovalUsers::UpdateStatusService do
           is_expected.to be_truthy
           prv_approval = Approval.find(approval.id)
           prv_user = prv_approval.approval_users.first
-          
+
           expect(prv_approval.status).to eq('pending')
           expect(prv_user.status).to eq('permission')
         end
