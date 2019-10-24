@@ -66,4 +66,43 @@ class Bill < ApplicationRecord
   def secondary_approver
     bill_approval_users.secondary_role.first
   end
+
+  def update_bill_and_applicant!(comment)
+    pending_bill!
+    bill_applicant.update!(comment: comment)
+  end
+
+  def create_bill_approval_users!(user_id)
+    # 申請時に選択されたユーザを一段目承認者として作成する
+    bill_approval_users.create!(role: 'primary', status: 'pending', user_id: user_id)
+
+    # 「社長フラグ(= is_chief)」を有するユーザを二段目承認者として作成する
+    chief = User.find_by(is_chief: true)
+    bill_approval_users.create!(role: 'secondary', status: 'pending', user_id: chief.id)
+  end
+
+  def recreate_bill_approval_users!(user_id)
+    # 承認者の洗い替え
+    bill_approval_users.destroy_all
+    create_bill_approval_users!(user_id)
+  end
+
+  def cancel_apply!
+    cancelled_bill!
+    bill_approval_users.destroy_all
+  end
+
+  def approve_bill_application!(user_id, comment)
+    current_approver = bill_approval_users.find_by(user_id: user_id)
+
+    # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
+    approved_bill! if current_approver.secondary_role?
+    current_approver.update!(status: 'approved', comment: comment)
+  end
+
+  def send_back_bill_application!(user_id, comment)
+    sent_back_bill!
+    bill_approval_users.find_by(user_id: user_id).update!(status: 'sent_back', comment: comment)
+    bill_approval_users.each(&:sent_back_bill!)
+  end
 end
