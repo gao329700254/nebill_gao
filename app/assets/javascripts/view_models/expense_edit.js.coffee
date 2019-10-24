@@ -69,6 +69,8 @@ $ ->
           }
         .done (response) =>
           @employee_project_list = response
+          if gon.project
+            @setProject(gon.project)
       setProject: (e) ->
         try
           $.ajax
@@ -85,7 +87,5 @@ $ ->
       @loadDefaultExpenseItem()
       @employeeLoadProjects()
       @checkRoundTrip()
-      if gon.project
-        @setProject(gon.project)
     events:
       loadProject: (projectId) -> @setProject(projectId)
