@@ -13,9 +13,10 @@ class ApprovalUsers::UpdateStatusService < BaseService
     if @set_user.valid? && @approval.valid?
       Approval.transaction do
         @set_user.update!(status: update_params[:button], comment: update_params[:comment])
-        @approval.approval_users.each do |user|
-          next if user.user_id == current_user.id
-          user.update!(status: update_params[:button])
+        if update_params[:button] == 'disconfirm'
+          @approval.approval_users.where.not(user_id: current_user.id).each do |user|
+            user.update!(status: update_params[:button])
+          end
         end
       end
       return true
