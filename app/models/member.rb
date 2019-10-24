@@ -1,12 +1,21 @@
 # == Schema Information
-# Schema version: 20190911034541
+# Schema version: 20191007083806
 #
 # Table name: members
 #
-#  id          :integer          not null, primary key
-#  employee_id :integer          not null
-#  project_id  :integer          not null
-#  type        :string
+#  id                   :integer          not null, primary key
+#  employee_id          :integer          not null
+#  type                 :string           not null
+#  unit_price           :integer
+#  min_limit_time       :integer
+#  max_limit_time       :integer
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  working_rate         :float
+#  project_id           :integer          not null
+#  working_period_start :date
+#  working_period_end   :date
+#  man_month            :float
 #
 # Indexes
 #

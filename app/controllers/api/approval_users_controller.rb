@@ -30,7 +30,7 @@ private
     )
   end
 
-  def  update_params
+  def update_params
     params.permit(
       :approval_id,
       :button,

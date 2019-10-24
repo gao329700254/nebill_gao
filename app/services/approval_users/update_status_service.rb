@@ -12,12 +12,10 @@ class ApprovalUsers::UpdateStatusService < BaseService
 
     if @set_user.valid? && @approval.valid?
       Approval.transaction do
-        if update_params[:button] == 'permission'
-          @approval.approval_users.includes(:user).find_by(user_id: current_user.id).update!(status: update_params[:button], comment: update_params[:comment])
-        else
-          @approval.approval_users.each do |user|
-            user.update!(status: update_params[:button], comment: update_params[:comment])
-          end
+        @set_user.update!(status: update_params[:button], comment: update_params[:comment])
+        @approval.approval_users.each do |user|
+          next if user.user_id == current_user.id
+          user.update!(status: update_params[:button])
         end
       end
       return true

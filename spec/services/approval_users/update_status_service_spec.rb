@@ -28,8 +28,8 @@ RSpec.describe ApprovalUsers::UpdateStatusService do
         prv_approval = Approval.find(approval.id)
         prv_user = prv_approval.approval_users.first
 
-        expect(prv_approval.status).to eq(20)
-        expect(prv_user.status).to eq(20)
+        expect(prv_approval.status).to eq('permission')
+        expect(prv_user.status).to eq(permission)
       end
 
       context 'when oneuser inputting correctly(permission)' do
@@ -41,8 +41,8 @@ RSpec.describe ApprovalUsers::UpdateStatusService do
           prv_approval = Approval.find(approval.id)
           prv_user = prv_approval.approval_users.first
 
-          expect(prv_approval.status).to eq(10)
-          expect(prv_user.status).to eq(20)
+          expect(prv_approval.status).to eq('pending')
+          expect(prv_user.status).to eq(permission)
         end
       end
     end
@@ -63,8 +63,8 @@ RSpec.describe ApprovalUsers::UpdateStatusService do
         prv_approval = Approval.find(approval.id)
         prv_user = prv_approval.approval_users.first
 
-        expect(prv_approval.status).to eq(30)
-        expect(prv_user.status).to eq(30)
+        expect(prv_approval.status).to eq('disconfirm')
+        expect(prv_user.status).to eq('disconfirm')
       end
 
       context 'when oneuser inputting correctly(disconfirm)' do
@@ -76,8 +76,8 @@ RSpec.describe ApprovalUsers::UpdateStatusService do
           prv_approval = Approval.find(approval.id)
           prv_user = prv_approval.approval_users.first
 
-          expect(prv_approval.status).to eq(30)
-          expect(prv_user.status).to eq(30)
+          expect(prv_approval.status).to eq('disconfirm')
+          expect(prv_user.status).to eq('disconfirm')
         end
       end
     end
