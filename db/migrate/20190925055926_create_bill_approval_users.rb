@@ -4,8 +4,8 @@ class CreateBillApprovalUsers < ActiveRecord::Migration[5.0]
       t.integer :role, null: false
       t.integer :status, default: 10, null: false
       t.string :comment
-      t.references :user, foreign_key: true
-      t.references :bill, foreign_key: true
+      t.references :user, null: false, foreign_key: true
+      t.references :bill, null: false, foreign_key: true
 
       t.timestamps
     end

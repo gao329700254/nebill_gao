@@ -5,8 +5,8 @@
 #
 #  id         :integer          not null, primary key
 #  comment    :string
-#  user_id    :integer
-#  bill_id    :integer
+#  user_id    :integer          not null
+#  bill_id    :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

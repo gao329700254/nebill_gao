@@ -7,8 +7,8 @@
 #  role       :integer          not null
 #  status     :integer          default("unapplied"), not null
 #  comment    :string
-#  user_id    :integer
-#  bill_id    :integer
+#  user_id    :integer          not null
+#  bill_id    :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

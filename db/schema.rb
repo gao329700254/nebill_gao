@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(version: 20191007052937) do
 
   create_table "bill_applicants", force: :cascade do |t|
     t.string   "comment"
-    t.integer  "user_id"
-    t.integer  "bill_id"
+    t.integer  "user_id",    null: false
+    t.integer  "bill_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bill_id"], name: "index_bill_applicants_on_bill_id", using: :btree
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20191007052937) do
     t.integer  "role",                    null: false
     t.integer  "status",     default: 10, null: false
     t.string   "comment"
-    t.integer  "user_id"
-    t.integer  "bill_id"
+    t.integer  "user_id",                 null: false
+    t.integer  "bill_id",                 null: false
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.index ["bill_id"], name: "index_bill_approval_users_on_bill_id", using: :btree
