@@ -2,6 +2,8 @@ class Admin::FbController < ApplicationController
   before_action :fb_validates, only: [:fb_download_csv]
 
   def fb_download_csv
+    return render_csv_zip_from_tsv if params[:transfer_informations].present?
+
     Dir.mkdir('tmp/zip_target')
     payee_accounts = PayeeAccount.all
     csv_data = CSV.read(params[:file].path).sort_by { |row| [row[0].to_i, row[1].to_i] }
@@ -27,7 +29,7 @@ private
       redirect_to root_path
       return
     end
-    unless params[:file].present?
+    unless params[:file].present? || params[:transfer_informations].present?
       flash[:error] = I18n.t("errors.format", attribute: "ファイル", message: I18n.t("errors.messages.unselected"))
       redirect_to admin_fb_date_output_path
       return
@@ -80,5 +82,31 @@ private
       file << trailer_record
       file << end_record
     end
+  end
+
+  def render_csv_zip_from_tsv
+    t = Tempfile.new("transfer_informations")
+    begin
+      Zip::OutputStream.open(t.path) do |z|
+        FbZipGenerateService.new(params[:transfer_informations]).execute.each do |date, body|
+          z.put_next_entry("全銀_#{date}.csv".encode(Encoding::CP932))
+          z.print(body)
+        end
+      end
+    rescue FbZipGenerateService::InvalidRowError => e
+      t.close
+      flash[:error] = e.message
+      render 'admin/pages/fb_date_output'
+      return
+    end
+
+    send_file(
+      t.path,
+      type: 'application/zip',
+      dispositon: 'attachment',
+      filename: "全銀データ_#{Time.zone.today}.zip",
+    )
+
+    t.close
   end
 end

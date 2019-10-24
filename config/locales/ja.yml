@@ -734,6 +734,7 @@ ja:
         send_password_setting_email: 'パスワード再設定メール送信'
       fb_date_output:
         title: 全銀データ出力
+        paste_tsv: TSVの貼り付け
     agreement:
       title: 承認ページ
       component:

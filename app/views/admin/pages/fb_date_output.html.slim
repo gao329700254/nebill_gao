@@ -7,3 +7,10 @@
     = file_field_tag :file, accept: 'text/csv'
     = button_tag class: 'fb_date_output__button'
       = fa_icon 'upload', text: t('helpers.submit.download')
+
+  div(style='padding-top: 30px')
+  = t('page.admin.fb_date_output.paste_tsv')
+  = form_tag admin_fb_download_csv_path do
+    = text_area_tag :transfer_informations, params[:transfer_informations], rows: 30, style: "height: 400px;"
+    = button_tag value: 'tsv', class: 'fb_date_output__button'
+      = fa_icon 'upload', text: t('helpers.submit.download')
