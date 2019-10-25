@@ -37,7 +37,7 @@ $ ->
             elems[i].disabled = true
       loadPartners: ->
         $.ajax
-          url: "/api/projects/#{@projectId}/member_partner.json"
+          url: "/api/projects/#{@projectId}/members_and_partners.json"
           type: 'POST'
           data: { type: 'PartnerMember' }
         .done (response) =>

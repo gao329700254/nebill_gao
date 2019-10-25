@@ -82,10 +82,6 @@ class User < ApplicationRecord
     user
   end
 
-  def join!(project)
-    project.user_members.create!(employee_id: employee.id)
-  end
-
   def self.chatwork_members_options
     Chatwork::Member.member_list.map { |m| m.values_at('name', 'account_id') }
   end

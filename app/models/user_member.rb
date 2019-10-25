@@ -39,4 +39,20 @@ class UserMember < Member
     return if working_period_end.nil? || working_period_start.nil?
     errors.add(:working_period_end, I18n.t('errors.messages.greater_than', count: '稼働開始')) if working_period_end < working_period_start
   end
+
+  def create_in_sf
+    SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(
+      project_cd: Project.find(project_id).cd,
+      user_names: [user.name],
+      action: 'create_work_item_and_details',
+    )
+  end
+
+  def destroy_in_sf
+    SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(
+      project_cd: Project.find(project_id).cd,
+      user_names: [user.name],
+      action: 'destroy_work_item_and_details',
+    )
+  end
 end
