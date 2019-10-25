@@ -178,5 +178,82 @@ class Project < ApplicationRecord
 
     "#{cd}#{I18n.l(Time.zone.today, format: :bill_cd)}#{format('%#02d', suffix_num)}"
   end
+
+  def create_in_nebill_and_sf!(file_param)
+    Project.transaction do
+      save!
+      if file_param
+        @file = files.build(file: file_param, original_filename: file_param.original_filename, file_type: 20)
+        @file.save!
+        create_approval
+        create_notice
+      end
+      SfProjectCrudJob.perform_later(project_cd: cd, action: 'create_or_update')
+    end
+  end
+
+  def create_approval
+    approval_params = {
+      name: Project.human_attribute_name(:approval_name, project: name),
+      created_user_id: UserSession.find.user.id,
+      category: 10,
+      project_id: id,
+      approved_id: id,
+      approved_type: "Project",
+    }
+    create_params = { user_id: User.find_by(is_chief: true).id }
+    services ||= Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params)
+    return if services.execute
+    fail
+  end
+
+  def create_notice
+    approval = Approval.find_by(approved_type: 'Project', approved_id: id)
+    user = approval.users.first
+    ProjectMailer.assignment_user(user: user, approval: approval).deliver_now
+    Chatwork::Project.new(approval: approval, to_user: user).notify_assigned
+  end
+
+  def update_approval
+    appr_params = { approval_id: params[:approval_id], button: 'pending', comment: params[:appr_comment] }
+    @services ||= ApprovalUsers::UpdateStatusService.new(update_params: appr_params, current_user: User.find_by(is_chief: true))
+    @services.execute
+    @services.approval.update(status: 'pending')
+  end
+
+  def update_notice
+    approval = @services.approval
+    user = approval.users.first
+    ProjectMailer.update_project_approval(user: user, approval: approval).deliver_now
+    Chatwork::Project.new(approval: approval, to_user: approval.users).notify_edit
+  end
+
+  def update_in_nebill_and_sf!(project_params, file_params)
+    Project.transaction do
+      self.attributes = project_params
+      self.status = :finished if unprocessed
+      save!
+      edit_file(file_params) if file_params.present?
+      SfProjectCrudJob.perform_later(project_cd: cd, action: 'create_or_update')
+    end
+  end
+
+  def edit_file(file_param)
+    project_file = files&.find_by(file_type: 20) if files.present?
+    if project_file.present?
+      project_file.update!(file: file_param, original_filename: file_param.original_filename)
+      update_approval
+      update_notice
+    else
+      @file = @project.files.build(file: file_param, original_filename: file_param.original_filename, file_type: 20)
+      @file.save!
+      create_approval
+      create_notice
+    end
+  end
+
+  def destroy_in_sf
+    SfProjectCrudJob.perform_later(project_cd: cd, action: 'destroy')
+  end
 end
 # rubocop:enable Metrics/ClassLength
