@@ -30,7 +30,6 @@
 
 class Member < ApplicationRecord
   belongs_to :employee
-  belongs_to :project
 
   validate :check_periods
 

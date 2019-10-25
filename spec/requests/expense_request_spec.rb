@@ -27,34 +27,4 @@ RSpec.describe Expense, type: :request do
       end
     end
   end
-
-  describe 'POST /api/expenses/employee_load_projects.json' do
-    before do
-      login(user)
-    end
-
-    let!(:employee) { create(:employee) }
-    let!(:project)  { create(:project) }
-    let(:path)      { '/api/expenses/employee_load_projects' }
-    let(:user)      { create(:user) }
-    let(:user2)     { create(:user) }
-
-    context 'response project is equal project of login_user' do
-      let!(:member) { create(:member, project_id: project.id, employee_id: user.employee.id, type: 'User') }
-      it do
-        post path
-        body = JSON.parse(response.body)
-        expect(body.first['id']).to eq project.id
-      end
-    end
-
-    context 'response project is no project' do
-      let!(:member)                 { create(:member, project_id: project.id, employee_id: user2.employee.id, type: 'User') }
-      it do
-        post path
-        body = JSON.parse(response.body)
-        expect(body).to eq []
-      end
-    end
-  end
 end
