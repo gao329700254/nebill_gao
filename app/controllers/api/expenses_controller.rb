@@ -68,6 +68,11 @@ class Api::ExpensesController < Api::ApiController
     render json: @list, status: :ok
   end
 
+  def employee_load_projects
+    @employee_projects = Employee.find_by(actable_id: @current_user.id, actable_type: 'User').projects
+    render 'employee_load_projects', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
   def load_expense
     @list = Expense.find(params[:expense_id])
     render json: @list, status: :ok
