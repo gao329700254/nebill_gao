@@ -140,8 +140,8 @@ RSpec.describe 'projects request', versioning: true do
         expect(response).to be_success
         expect(response.status).to eq 201
 
-        expect(json['id']).not_to eq nil
-        expect(json['message']).to eq 'プロジェクトを作成しました'
+        expect(flash['id']).not_to eq nil
+        expect(flash['success']).to eq 'プロジェクトを作成しました'
       end
     end
 
