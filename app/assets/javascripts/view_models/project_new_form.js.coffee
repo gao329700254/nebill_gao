@@ -91,10 +91,6 @@ $ ->
             contentType: false
             processData: false
           .done (response) =>
-            @initializeProject()
-            @$dispatch('loadSearchEvent')
-            @partners = []
-            @members = []
             @project_id = response.flat()[3]
             window.location = "/projects/#{@project_id}/show"
           .fail (response) =>
