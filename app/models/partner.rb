@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190409072211
+# Schema version: 20191007083806
 #
 # Table name: partners
 #

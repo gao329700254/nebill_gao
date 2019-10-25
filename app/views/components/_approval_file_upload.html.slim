@@ -1,0 +1,27 @@
+script type='text/x-template' id='approval_file_upload'
+  .approval_new__form__item
+    label
+      = Approval.human_attribute_name(:file)
+    input.approval_new__form__item__file__input(type="file" multiple @change="onChangeFiles" v-el:fileInput)
+    .approval_new__form__item__file__item(v-for="(index, file) in approvalFiles" :track-by="index")
+      input(:name="'approval[files_attributes][' + index +'][file_cache]'" type="hidden" :value="file.file_cache")
+      input(:name="'approval[files_attributes][' + index +'][original_filename]'" type="hidden" :value="file.original_filename")
+      input(:name="'approval[files_attributes][' + index +'][id]'" type="hidden" :value="file.id")
+      span(v-if="file.id")
+        a(:href="approvalFileDownloadUrl(file.id)")
+          | {{file.original_filename}}
+      span(v-else)
+        | {{file.original_filename}}
+      a.fa.fa-trash.approval_new__form__btn--trash(@click="deleteFile(index)")
+    .approval_new__form__item__file__item.hidden(v-for="(index, file) in deletedFiles")
+      input(:name="'approval[files_attributes][' + (approvalFiles.length + index) +'][_destroy]'" type="hidden" :value="1")
+      input(:name="'approval[files_attributes][' + (approvalFiles.length + index) +'][id]'" type="hidden" :value="file.id")
+    .approval_new__form__item__file__drop_container(
+      @dragleave.prevent="leave"
+      @dragover.prevent="over"
+      @drop.prevent="onDrop"
+      @click.prevent="click"
+      :class="{over: dragOver}"
+    )
+      label
+        p ファイルをドロップするか、クリックで選択してください。
