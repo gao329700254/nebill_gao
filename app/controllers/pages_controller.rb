@@ -40,9 +40,9 @@ class PagesController < ApplicationController
 
   def bill_show
     @bill = Bill.find(params[:bill_id])
-    @bill_applicant   = @bill.bill_applicant
-    @bill_approvers   = @bill.bill_approval_users.order(role: :asc)
-    @current_approver = @bill.bill_approval_users.find_by(user_id: @current_user.id)
+    @bill_applicant   = @bill.applicant
+    @bill_approvers   = @bill.approvers.order(role: :asc)
+    @current_approver = @bill.approvers.find_by(user_id: @current_user.id)
   end
 
   def project_groups

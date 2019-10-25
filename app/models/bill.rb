@@ -29,9 +29,9 @@
 
 class Bill < ApplicationRecord
   belongs_to :project
-  has_one    :bill_applicant,      dependent: :destroy
-  has_many   :bill_approval_users, dependent: :destroy
-  has_many   :users, through: :bill_approval_users
+  has_one    :applicant, class_name: 'BillApplicant', dependent: :destroy
+  has_many   :approvers, class_name: 'BillApprovalUser', dependent: :destroy
+  has_many   :users, through: :approvers
 
   enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60 }, _suffix: :bill
 
@@ -68,27 +68,27 @@ class Bill < ApplicationRecord
   end
 
   def secondary_approver
-    bill_approval_users.secondary_role.first
+    approvers.secondary_role.first
   end
 
   def make_apply!(comment, user_id, reapply)
     ActiveRecord::Base.transaction do
       pending_bill!
-      bill_applicant.update!(comment: comment)
+      applicant.update!(comment: comment)
 
       # 承認者の洗い替え
-      bill_approval_users.destroy_all if reapply.present?
-      create_bill_approval_users!(user_id)
+      approvers.destroy_all if reapply.present?
+      create_bill_approvers!(user_id)
     end
   end
 
-  def create_bill_approval_users!(user_id)
+  def create_bill_approvers!(user_id)
     # 申請時に選択されたユーザを一段目承認者として作成する
-    bill_approval_users.create!(role: 'primary', status: 'pending', user_id: user_id)
+    approvers.create!(role: 'primary', status: 'pending', user_id: user_id)
 
     # 「社長フラグ(= is_chief)」を有するユーザを二段目承認者として作成する
     chief = User.find_by(is_chief: true)
-    bill_approval_users.create!(role: 'secondary', status: 'pending', user_id: chief.id)
+    approvers.create!(role: 'secondary', status: 'pending', user_id: chief.id)
 
     Chatwork::Bill.new(bill: self, to_user: primary_approver.user, from_user: bill_applicant).notify_assigned
   end
@@ -96,12 +96,12 @@ class Bill < ApplicationRecord
   def cancel_apply!
     ActiveRecord::Base.transaction do
       cancelled_bill!
-      bill_approval_users.destroy_all
+      approvers.destroy_all
     end
   end
 
   def approve_bill_application!(user_id, comment)
-    current_approver = bill_approval_users.find_by(user_id: user_id)
+    current_approver = approvers.find_by(user_id: user_id)
 
     ActiveRecord::Base.transaction do
       current_approver.update!(status: 'approved', comment: comment)
@@ -120,9 +120,8 @@ class Bill < ApplicationRecord
   def send_back_bill_application!(user_id, comment)
     ActiveRecord::Base.transaction do
       sent_back_bill!
-      current_approver = bill_approval_users.find_by(user_id: user_id)
-      current_approver.update!(status: 'sent_back', comment: comment)
-      bill_approval_users.each(&:sent_back_bill!)
+      approvers.find_by(user_id: user_id).update!(status: 'sent_back', comment: comment)
+      approvers.each(&:sent_back_bill!)
 
       Chatwork::Bill.new(bill: self, to_user: bill_applicant.user, from_user: current_approver).notify_sent_back
     end

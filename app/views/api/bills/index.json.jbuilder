@@ -11,5 +11,5 @@ json.array!(@bills) do |bill|
   json.deposit_on                    bill.deposit_on
   # enum_helpをmergeした後にi18n化する
   json.status                        bill.status
-  json.applicant_name                bill.bill_applicant.user.name
+  json.applicant_name                bill.applicant.user.name
 end

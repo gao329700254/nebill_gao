@@ -35,7 +35,7 @@ RSpec.describe 'bills request' do
       expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
       expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill1.memo
-      expect(json[0]['applicant_name']).to                   eq bill1.bill_applicant.user.name
+      expect(json[0]['applicant_name']).to                   eq bill1.applicant.user.name
       # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
       # expect(json[0]['status']).to                           eq bill1.status
       expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
@@ -79,7 +79,7 @@ RSpec.describe 'bills request' do
         expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
         expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json[0]['memo']).to                             eq bill1.memo
-        expect(json[0]['applicant_name']).to                   eq bill1.bill_applicant.user.name
+        expect(json[0]['applicant_name']).to                   eq bill1.applicant.user.name
         # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
         # expect(json[0]['status']).to                           eq bill1.status
         expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
@@ -190,7 +190,7 @@ RSpec.describe 'bills request' do
         post path, params: params
 
         bill = Bill.first
-        expect(bill.bill_applicant.user_id).to eq user.id
+        expect(bill.applicant.user_id).to eq user.id
       end
     end
 
