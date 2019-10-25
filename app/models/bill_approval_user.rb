@@ -19,13 +19,11 @@
 #
 
 class BillApprovalUser < ApplicationRecord
-  belongs_to :user
-  belongs_to :bill
+  belongs_to :user, required: true
+  belongs_to :bill, required: true
 
   validates :role,    presence: true
   validates :status,  presence: true
-  validates :user_id, presence: true
-  validates :bill_id, presence: true
   validates :comment, length: { maximum: 200 }
 
   enum role:   { primary: 10, secondary: 20 }, _suffix: true

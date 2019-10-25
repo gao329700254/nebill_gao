@@ -17,10 +17,8 @@
 #
 
 class BillApplicant < ApplicationRecord
-  belongs_to :user
-  belongs_to :bill
+  belongs_to :user, required: true
+  belongs_to :bill, required: true
 
   validates :comment, length: { maximum: 200 }
-  validates :user_id, presence: true
-  validates :bill_id, presence: true
 end
