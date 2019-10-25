@@ -91,12 +91,12 @@ $ ->
             contentType: false
             processData: false
           .done (response) =>
-            toastr.success('', response.message)
             @initializeProject()
             @$dispatch('loadSearchEvent')
             @partners = []
             @members = []
-            window.location = "/projects/#{response.id}/show"
+            @project_id = response.flat()[3]
+            window.location = "/projects/#{@project_id}/show"
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
