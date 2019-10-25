@@ -13,8 +13,7 @@ $ ->
         is_receipt: ''
       arrow: '→'
       checked: false
-      selected_employee_project: @employee_project_list
-      employee_project_list: []
+      selected_project: ''
       project_list: []
     methods:
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
@@ -53,24 +52,12 @@ $ ->
         .done (response) =>
           @defaule_expense_items = response
           @defaule_expense_items.standard_amount = gon.amount
-      setExpenseProjectId: ->
-        @expenseProjectId = $('#expense_project_id').val()
       checkRoundTrip: ->
         if gon.is_round_trip
           @arrow = '↔️'
         else
           @arrow = '→'
-      employeeLoadProjects: (e) ->
-        $.ajax
-          url: '/api/expenses/employee_load_projects.json'
-          type: 'POST'
-          data: {
-            project_id: e
-          }
-        .done (response) =>
-          @employee_project_list = response
-          if gon.project
-            @setProject(gon.project)
+      
       setProject: (e) ->
         try
           $.ajax
@@ -80,12 +67,12 @@ $ ->
               project_id: e
             }
           .done (response) =>
-            @employee_project_list.push(response)
-            @employee_project_list = _.uniq(@employee_project_list, 'cd')
-            @selected_employee_project = response.id
+            @project_list.push(response)
+            @selected_project = response.id
     ready: ->
       @loadDefaultExpenseItem()
-      @employeeLoadProjects()
       @checkRoundTrip()
+      if gon.project
+        @setProject(gon.project)
     events:
       loadProject: (projectId) -> @setProject(projectId)
