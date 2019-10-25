@@ -17,7 +17,7 @@
         = button_tag 'v-on:click.prevent' => 'search', class: 'project_list__search__date__btn--search' do
           = fa_icon 'search', text: t('page.project_list.search')
       .project_list__search__date__btn
-        = button_tag 'v-on:click' => 'showProjectNew', class: 'project_list__search__date__btn--new_project' do
+        = link_to project_new_form_path, type: 'button', class: 'project_list__search__date__btn--new_project' do
           = fa_icon 'check', text: t('page.project_new.title')
     .project_list__search__radio
       = radio_button_tag :all_contract_type, 'all_contract_type', true, id: 'all_contract_type', 'v-model' => 'contractStatus'
