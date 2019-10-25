@@ -67,9 +67,15 @@ class Bill < ApplicationRecord
     bill_approval_users.secondary_role.first
   end
 
-  def update_bill_and_applicant!(comment)
-    pending_bill!
-    bill_applicant.update!(comment: comment)
+  def make_apply!(comment, user_id, reapply)
+    ActiveRecord::Base.transaction do
+      pending_bill!
+      bill_applicant.update!(comment: comment)
+
+      # 承認者の洗い替え
+      bill_approval_users.destroy_all if reapply.present?
+      create_bill_approval_users!(user_id)
+    end
   end
 
   def create_bill_approval_users!(user_id)
@@ -81,28 +87,28 @@ class Bill < ApplicationRecord
     bill_approval_users.create!(role: 'secondary', status: 'pending', user_id: chief.id)
   end
 
-  def recreate_bill_approval_users!(user_id)
-    # 承認者の洗い替え
-    bill_approval_users.destroy_all
-    create_bill_approval_users!(user_id)
-  end
-
   def cancel_apply!
-    cancelled_bill!
-    bill_approval_users.destroy_all
+    ActiveRecord::Base.transaction do
+      cancelled_bill!
+      bill_approval_users.destroy_all
+    end
   end
 
   def approve_bill_application!(user_id, comment)
     current_approver = bill_approval_users.find_by(user_id: user_id)
 
-    # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
-    approved_bill! if current_approver.secondary_role?
-    current_approver.update!(status: 'approved', comment: comment)
+    ActiveRecord::Base.transaction do
+      # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
+      approved_bill! if current_approver.secondary_role?
+      current_approver.update!(status: 'approved', comment: comment)
+    end
   end
 
   def send_back_bill_application!(user_id, comment)
-    sent_back_bill!
-    bill_approval_users.find_by(user_id: user_id).update!(status: 'sent_back', comment: comment)
-    bill_approval_users.each(&:sent_back_bill!)
+    ActiveRecord::Base.transaction do
+      sent_back_bill!
+      bill_approval_users.find_by(user_id: user_id).update!(status: 'sent_back', comment: comment)
+      bill_approval_users.each(&:sent_back_bill!)
+    end
   end
 end

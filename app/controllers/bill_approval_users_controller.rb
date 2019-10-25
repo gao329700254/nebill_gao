@@ -2,11 +2,9 @@ class BillApprovalUsersController < ApplicationController
   # 承認者による「承認」アクション
   def create
     @bill = Bill.find(params[:bill_id])
+    @bill.approve_bill_application!(@current_user.id, params[:comment])
 
-    ActiveRecord::Base.transaction do
-      @bill.approve_bill_application!(@current_user.id, params[:comment])
-      show_success_message(:approve, params[:bill_id])
-    end
+    show_success_message(:approve, params[:bill_id])
   rescue ActiveRecord::RecordInvalid
     show_failure_message(:approve)
   end
@@ -17,11 +15,9 @@ class BillApprovalUsersController < ApplicationController
   def update
     bill_id = params[:bill_approval_user][:bill_id]
     @bill   = Bill.find(bill_id)
+    @bill.send_back_bill_application!(@current_user.id, params[:bill_approval_user][:comment])
 
-    ActiveRecord::Base.transaction do
-      @bill.send_back_bill_application!(@current_user.id, params[:bill_approval_user][:comment])
-      show_success_message(:send_back, bill_id)
-    end
+    show_success_message(:send_back, bill_id)
   rescue ActiveRecord::RecordInvalid
     show_failure_message(:send_back)
   end
