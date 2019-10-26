@@ -28,4 +28,9 @@ class BillApprovalUser < ApplicationRecord
 
   enum role:   { primary: 10, secondary: 20 }, _suffix: true
   enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50 }, _suffix: :bill
+
+  # 自分が承認者＆＆承認ステータスが「承認待ち」
+  scope :related_to_me, lambda  { |current_user_id|
+    where(user_id: current_user_id, status: 'pending')
+  }
 end

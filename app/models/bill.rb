@@ -47,6 +47,14 @@ class Bill < ApplicationRecord
 
   before_save { cd.upcase! }
 
+  scope :assigned_to_me, lambda  { |current_user_id|
+    joins(:approvers).merge(BillApprovalUser.where(user_id: current_user_id, status: 'pending'))
+  }
+
+  scope :only_approved_by_primary, lambda {
+    joins(:approvers).merge(BillApprovalUser.where(role: 'primary', status: 'approved'))
+  }
+
   scope :between, lambda { |start_on, end_on|
     where(Bill.arel_table[:bill_on].gteq(start_on)).where(Bill.arel_table[:bill_on].lteq(end_on))
   }

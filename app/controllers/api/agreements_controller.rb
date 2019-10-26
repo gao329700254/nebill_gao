@@ -20,9 +20,15 @@ class Api::AgreementsController < Api::ApiController
     render 'api/projects/agreement_project', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
+  # ログインユーザがis_chiefであるとき、一段目承認者が承認した申請のみを表示する
+  # ログインユーザがis_chiefでないとき、自分が一段目承認者に設定されており、自分のステータスが承認待ちの申請を表示する
   def bill_list
-    @bills = Bill.joins(:bill_approval_users)
-                 .where(bill_approval_users: { status: 'pending', user_id: @current_user.id })
+    @bills = if @current_user.is_chief?
+               Bill.assigned_to_me(@current_user.id) & Bill.only_approved_by_primary
+             else
+               Bill.assigned_to_me(@current_user.id)
+             end
+
     render 'api/bills/agreement_bill', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
