@@ -55,9 +55,11 @@ $ ->
         else
           @arrow = '→'
       onDepattureExchangeArrival:　(e) ->
-        console.log('ok')
-        [@expense.depatture_location, @expense.arrival_location]　= [@expense.arrival_location, @expense.depatture_location]
-        [@expense.depatture_location, @expense.arrival_location]
+        departure = document.getElementById('expense_depatture_location').value
+        arrival   = document.getElementById('expense_arrival_location').value
+
+        document.getElementById('expense_depatture_location').value = arrival
+        document.getElementById('expense_arrival_location').value   = departure
       loadDefaultExpenseItem: (e) ->
         $.ajax
           url: '/api/expenses/load_item.json'
