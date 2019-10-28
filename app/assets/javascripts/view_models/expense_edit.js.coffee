@@ -14,6 +14,18 @@ $ ->
       arrow: '→'
       checked: false
       selected_project: ''
+      expense:
+        payment_type: 'person_rebuilding'
+        use_date: new Date().toISOString().substr(0, 10)
+        depatture_location: ''
+        arrival_location: ''
+        notes: ''
+      return:
+        expense:
+          depatture_location: ''
+          arrival_location: ''
+        defaule_expense_items:
+          standard_amount: ''
       project_list: []
     methods:
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
@@ -42,6 +54,10 @@ $ ->
           @arrow = '↔️'
         else
           @arrow = '→'
+      onDepattureExchangeArrival:　(e) ->
+        console.log('ok')
+        [@expense.depatture_location, @expense.arrival_location]　= [@expense.arrival_location, @expense.depatture_location]
+        [@expense.depatture_location, @expense.arrival_location]
       loadDefaultExpenseItem: (e) ->
         $.ajax
           url: '/api/expenses/load_item.json'
