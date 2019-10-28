@@ -310,6 +310,7 @@ ja:
       download: 出力
     edit: 編集
     cancel: キャンセル
+    show_history: 履歴から読み込み
     delete: 削除
     back: 戻る
     login: ログイン
@@ -656,7 +657,6 @@ ja:
       reapproval: 再申請
       invalid_approval: 申請を取り消す
       add_expense: 経費追加
-      show_history: 履歴から読み込み
       station: 駅名
       search: 検索
       read: 読み込み

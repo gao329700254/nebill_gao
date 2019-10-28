@@ -21,10 +21,6 @@
         @include span-columns(3);
       }
 
-      &__right {
-        @include span-columns(5);
-      }
-
       &__end {
         @include span-columns(4);
       }
@@ -150,11 +146,14 @@
   }
 
   &__btn {
+    &--delete {
+      @include btn--primary;
+      margin-right: $base-spacing * 5;
+    }
+
     &--new_expense,
-    &--delete,
     &--invalid_approval {
       @include btn--primary;
-      margin-top: $base-spacing;
       margin-right: $base-spacing;
     }
   }
