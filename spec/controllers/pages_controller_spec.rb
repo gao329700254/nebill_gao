@@ -21,6 +21,23 @@ RSpec.describe PagesController do
     end
   end
 
+  describe 'GET #project_new_form' do
+    context 'when not logged in' do
+      before { get :project_new_form }
+
+      it { is_expected.to redirect_to root_path }
+    end
+    context 'when logged in' do
+      let(:user) { create(:user) }
+      before do
+        login(user)
+        get :project_new_form
+      end
+
+      it { is_expected.to render_template :project_new_form }
+    end
+  end
+
   describe 'GET #project_list' do
     context 'when not logged in' do
       before { get :project_list }

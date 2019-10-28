@@ -2,8 +2,6 @@
 
 - provide(:title, t('page.project_list.title'))
 
-== render 'components/project_new'
-
 #project_list.project_list
   = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
                      placeholder: t('page.project_list.search_form_placeholder'), lazy: true, class: 'project_list__search'
@@ -19,7 +17,7 @@
         = button_tag 'v-on:click.prevent' => 'search', class: 'project_list__search__date__btn--search' do
           = fa_icon 'search', text: t('page.project_list.search')
       .project_list__search__date__btn
-        = button_tag 'v-on:click' => 'showProjectNew', class: 'project_list__search__date__btn--new_project' do
+        = link_to project_new_form_path, type: 'button', class: 'project_list__search__date__btn--new_project' do
           = fa_icon 'check', text: t('page.project_new.title')
     .project_list__search__radio
       = radio_button_tag :all_contract_type, 'all_contract_type', true, id: 'all_contract_type', 'v-model' => 'contractStatus'
@@ -75,8 +73,3 @@
         td.project_list__tbl__item--end_on          v-text='project.end_on'
         td.project_list__tbl__item--contract_on     v-text='project.contract_on'
         td.project_list__tbl__item--amount          v-numeric='project.amount'
-
-  component [
-    :is        = "'projectNew'"
-    keep-alive = true
-  ]

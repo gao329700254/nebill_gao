@@ -1,8 +1,8 @@
 $ ->
-  Vue.component 'projectNew',
-    template: '#project_new'
-    mixins: [Vue.modules.projectHelper, Vue.modules.modal, Vue.modules.numericHelper]
-    data: ->
+  window.projectNewForm = new Vue
+    el: '#project_new_form'
+    mixins: [Vue.modules.projectHelper, Vue.modules.numericHelper]
+    data:
       file: ''
       clients: []
       project: undefined
@@ -21,7 +21,6 @@ $ ->
       allPartners: []
       allMembers: []
     methods:
-      cancel: -> @modalHide()
       setProjectCd: ->
         $.ajax
           url: "/api/projects/create_cd/#{@project.contract_type}.json"
@@ -92,12 +91,8 @@ $ ->
             contentType: false
             processData: false
           .done (response) =>
-            toastr.success('', response.message)
-            @initializeProject()
-            @modalHide()
-            @$dispatch('loadSearchEvent')
-            @partners = []
-            @members = []
+            @project_id = response.flat()[3]
+            window.location = "/projects/#{@project_id}/show"
           .fail (response) =>
             json = response.responseJSON
             toastr.error(json.errors.full_messages.join('<br>'), json.message)
@@ -136,5 +131,3 @@ $ ->
       @setProjectCd()
       @loadAllUsers()
       @loadPartnersUsers()
-    events:
-      showProjectNewEvent: -> @modalShow()

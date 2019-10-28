@@ -30,6 +30,9 @@ class PagesController < ApplicationController
   def project_new
   end
 
+  def project_new_form
+  end
+
   def project_list
   end
 

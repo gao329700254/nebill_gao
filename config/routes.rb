@@ -220,6 +220,7 @@ Rails.application.routes.draw do
     get 'show', to: 'pages#client_show', as: 'client_show'
   end
   scope path: 'projects' do
+    get 'new',  to: 'pages#project_new_form', as: 'project_new_form'
     get 'list', to: 'pages#project_list', as: 'project_list'
     get 'csv',  to: 'projects/csv#download', defaults: { format: :csv }, as: 'project_download_csv'
   end
