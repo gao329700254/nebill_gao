@@ -1,0 +1,41 @@
+= javascript_include_tag 'view_models/bill_list'
+
+- provide(:title, t('page.bill_confirmation.title'))
+
+#bill_list.bill_list
+  = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+                     placeholder: t('page.bill_confirmation.search_form_placeholder'), lazy: true, class: 'bill_list__search'
+  .bill_list__search
+    .bill_list__search__date
+      .bill_list__search__date__start
+        = label_tag :start, t('page.bill_confirmation.fill_date_form')
+        = date_field_tag :start, nil, 'v-model' => "start"
+      .bill_list__search__date__end
+        = date_field_tag :end, nil, 'v-model' => "end"
+      .bill_list__search__date__btn
+        = button_tag 'v-on:click.prevent' => 'search', class: 'bill_list__search__date__btn--search' do
+          = fa_icon 'fa-search', text: t('page.bill_confirmation.search')
+  table.bill_list__tbl
+    thead.bill_list__tbl__head
+      tr.bill_list__tbl__head__row
+        th.bill_list__tbl__item--cd              = t('activerecord.attributes.bill.cd')
+        th.bill_list__tbl__item--project_name    = t('activerecord.attributes.bill.project')
+        th.bill_list__tbl__item--billing_company = t('activerecord.attributes.project.billing_company_name')
+        th.bill_list__tbl__item--amount          = t('activerecord.attributes.bill.amount')
+        th.bill_list__tbl__item--payment_type    = t('activerecord.attributes.project.payment_type')
+        th.bill_list__tbl__item--deposit_on      = t('activerecord.attributes.bill.deposit_on')
+    tbody.bill_list__tbl__body
+      tr.bill_list__tbl__body__row [
+        v-bind:class = "bill.deposit_on ? 'bill_list__tbl__body__row--deposited'
+                                        : 'bill_list__tbl__body__row'"
+        v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
+        id         = "bill-{{bill.id}}"
+        v-on:click = "linkToShow(bill.id)"
+        track-by   = "id"
+      ]
+        td.bill_list__tbl__item--cd              v-text='bill.cd'
+        td.bill_list__tbl__item--project_name    v-text='bill.project.name'
+        td.bill_list__tbl__item--billing_company v-text='bill.project.billing_company_name'
+        td.bill_list__tbl__item--amount          v-text='bill.amount.toLocaleString()'
+        td.bill_list__tbl__item--payment_type    v-text='bill.payment_type'
+        td.bill_list__tbl__item--deposit_on      v-text='bill.deposit_on'
