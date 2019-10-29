@@ -51,6 +51,9 @@ class PagesController < ApplicationController
   def bill_list
   end
 
+  def bill_confirmation
+  end
+  
   def partners
   end
 
