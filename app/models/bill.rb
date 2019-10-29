@@ -98,7 +98,7 @@ class Bill < ApplicationRecord
     chief = User.find_by(is_chief: true)
     approvers.create!(role: 'secondary', status: 'pending', user_id: chief.id)
 
-    Chatwork::Bill.new(bill: self, to_user: primary_approver.user, from_user: bill_applicant).notify_assigned
+    Chatwork::Bill.new(bill: self, to_user: primary_approver.user, from_user: applicant).notify_assigned
   end
 
   def cancel_apply!
@@ -117,10 +117,10 @@ class Bill < ApplicationRecord
       # 一段目承認者が承認したとき、二段目承認者に通知する
       # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
       if current_approver.primary_role?
-        Chatwork::Bill.new(bill: self, to_user: secondary_approver.user, from_user: bill_applicant).notify_assigned
+        Chatwork::Bill.new(bill: self, to_user: secondary_approver.user, from_user: applicant).notify_assigned
       else
         approved_bill!
-        Chatwork::Bill.new(bill: self, to_user: bill_applicant.user).notify_approved
+        Chatwork::Bill.new(bill: self, to_user: applicant.user).notify_approved
       end
     end
   end
@@ -131,7 +131,7 @@ class Bill < ApplicationRecord
       approvers.find_by(user_id: user_id).update!(status: 'sent_back', comment: comment)
       approvers.each(&:sent_back_bill!)
 
-      Chatwork::Bill.new(bill: self, to_user: bill_applicant.user, from_user: current_approver).notify_sent_back
+      Chatwork::Bill.new(bill: self, to_user: applicant.user, from_user: current_approver).notify_sent_back
     end
   end
 end

@@ -4,7 +4,7 @@
     申請「<%= bill.cd %>: <%= bill.project.name %>」が承認されました。
   [/title]
   [info]
-    <% bill.bill_approval_users.each do |approver| %>
+    <% bill.approvers.each do |approver| %>
       <%= approver.user.name %> ： <%= approver.comment %>
     <% end %>
 
