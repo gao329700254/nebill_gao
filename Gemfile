@@ -25,7 +25,7 @@ gem 'mime-types'
 gem 'rack-dev-mark'
 gem 'rubyXL'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary', "~> 0.12.3"
 gem 'draper'
 gem 'paper_trail'
 gem 'cancancan'

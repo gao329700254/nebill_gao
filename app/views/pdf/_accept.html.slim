@@ -1,26 +1,32 @@
 / 検収書
-.bill_pdf__header--accept
+.bill_pdf__header--accept.page_break
   .bill_pdf__header--today = @today
   .bill_pdf__header--billing_company_name = t('pdf.accept.company')
   .bill_pdf__header__cuon--accept
     .bill_pdf__header__cuon--accept--project_no = @bill.pdf_project_no
-.bill_pdf__body
-  .bill_pdf__body__title--accept
-    h2 = t('pdf.accept.title')
-  .bill_pdf__body__note = t('pdf.accept.note')
-  == render 'pdf/table'
+  .bill_pdf__body
+    .bill_pdf__body__title--accept
+      h2 = t('pdf.accept.title')
+    .bill_pdf__body__note = t('pdf.accept.note')
+    .bill_pdf__body__subject
+      .bill_pdf__body__subject--title = t('pdf.subject_title')
+      span.bill_pdf__body__subject--project_name = @bill.project.name
+    .bill_pdf__body__price
+      .bill_pdf__body__price--title = t('pdf.charged_price')
+      .bill_pdf__body__price--subject = @bill.pdf_total_price_yen
+    == render 'pdf/table'
 
-.bill_pdf__footer
-  table.bill_pdf__footer__tbl
-    thead.bill_pdf__footer__tbl__head
-      tr.bill_pdf__footer__tbl__head__row
-        th.bill_pdf__footer__tbl__head__row__item = t('activerecord.attributes.bill.acceptance_on')
-        th.bill_pdf__footer__tbl__head__row__item--blank
-        th.bill_pdf__footer__tbl__head__row__item = t('activerecord.attributes.client.company_name')
-        th.bill_pdf__footer__tbl__head__row__item--blank2
-      tr.bill_pdf__footer__tbl__head__row2
-        th.bill_pdf__footer__tbl__head__row2__item--blank
-        th.bill_pdf__footer__tbl__head__row2__item--blank
-        th.bill_pdf__footer__tbl__head__row2__item = t('page.project_new.personnel_names')
-        th.bill_pdf__footer__tbl__head__row2__item--blank2
-  span.bill_pdf__footer__seal = t('pdf.accept.seal')
+  .bill_pdf__footer
+    table.bill_pdf__footer__tbl
+      thead.bill_pdf__footer__tbl__head
+        tr.bill_pdf__footer__tbl__head__row
+          th.bill_pdf__footer__tbl__head__row__item = t('activerecord.attributes.bill.acceptance_on')
+          th.bill_pdf__footer__tbl__head__row__item--blank
+          th.bill_pdf__footer__tbl__head__row__item = t('activerecord.attributes.client.company_name')
+          th.bill_pdf__footer__tbl__head__row__item--blank2
+        tr.bill_pdf__footer__tbl__head__row2
+          th.bill_pdf__footer__tbl__head__row2__item--blank
+          th.bill_pdf__footer__tbl__head__row2__item--blank
+          th.bill_pdf__footer__tbl__head__row2__item = t('page.project_new.personnel_names')
+          th.bill_pdf__footer__tbl__head__row2__item--blank2
+    span.bill_pdf__footer__seal = t('pdf.accept.seal')
