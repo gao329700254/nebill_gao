@@ -1,0 +1,93 @@
+.bill_confirmation {
+
+  padding: $base-spacing;
+
+  &__search {
+    margin-bottom: $base-spacing;
+
+    &__date {
+      @include display(flex);
+      margin-bottom: $base-spacing;
+
+      &__start {
+        @include span-columns(3);
+      }
+
+      &__end {
+        @include span-columns(3);
+        margin-top: $base-spacing;
+      }
+
+      &__btn {
+        @include span-columns(2);
+        margin-top: $base-spacing;
+
+        &--search {
+          @include btn--default;
+        }
+      }
+    }
+  }
+
+  &__tbl {
+    @include list_tbl;
+
+    &__head {
+      &__row {
+        @include list_tbl__head__row;
+      }
+    }
+
+    &__body {
+      @include list_tbl__body;
+      &__row {
+        @include list_tbl__head__row;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $theme-lighen-color;
+          }
+
+        &--deposited {
+          background-color: $light-grey;
+        }
+      }
+    }
+
+    &__item,
+    %bill_list__tbl__item {
+      @include list_tbl__item;
+
+      &--cd {
+        @extend %bill_list__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--project_name {
+        @extend %bill_list__tbl__item;
+        @include span-columns(3);
+      }
+
+      &--billing_company {
+        @extend %bill_list__tbl__item;
+        @include span-columns(3);
+      }
+
+      &--amount {
+        @extend %bill_list__tbl__item;
+        @include span-columns(2);
+        text-align: right;
+      }
+
+      &--payment_type {
+        @extend %bill_list__tbl__item;
+        @include span-columns(2);
+      }
+
+      &--deposit_on {
+        @extend %bill_list__tbl__item;
+        @include span-columns(2);
+      }
+    }
+  }
+}
