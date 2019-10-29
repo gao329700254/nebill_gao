@@ -15,7 +15,7 @@ class BillApprovalUsersController < ApplicationController
   def update
     bill_id = params[:bill_approval_user][:bill_id]
     @bill   = Bill.find(bill_id)
-    @bill.send_back_bill_application!(@current_user.id, params[:bill_approval_user][:comment])
+    @bill.send_back_bill_application!(@current_user, params[:bill_approval_user][:comment])
 
     show_success_message(:send_back, bill_id)
   rescue ActiveRecord::RecordInvalid

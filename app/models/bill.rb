@@ -72,7 +72,7 @@ class Bill < ApplicationRecord
   end
 
   def primary_approver
-    bill_approval_users.primary_role.first
+    approvers.primary_role.first
   end
 
   def secondary_approver
@@ -125,13 +125,13 @@ class Bill < ApplicationRecord
     end
   end
 
-  def send_back_bill_application!(user_id, comment)
+  def send_back_bill_application!(user, comment)
     ActiveRecord::Base.transaction do
       sent_back_bill!
-      approvers.find_by(user_id: user_id).update!(status: 'sent_back', comment: comment)
+      approvers.find_by(user_id: user.id).update!(status: 'sent_back', comment: comment)
       approvers.each(&:sent_back_bill!)
 
-      Chatwork::Bill.new(bill: self, to_user: applicant.user, from_user: current_approver).notify_sent_back
+      Chatwork::Bill.new(bill: self, to_user: applicant.user, from_user: user).notify_sent_back
     end
   end
 end
