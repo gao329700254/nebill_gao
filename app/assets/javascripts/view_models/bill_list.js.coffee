@@ -2,15 +2,18 @@ $ ->
   window.billList = new Vue
     el: '#bill_list'
     data:
-      sortKey: 'cd'
       selectSchema:
         cd: 'like'
         'project.name': 'like'
         'project.billing_company_name': 'like'
       list: undefined
       searchKeywords: undefined
+      status: ''
       start: undefined
       end: undefined
+    watch:
+      status: (checkedStatus) ->
+        localStorage.status = checkedStatus
     methods:
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
       search: ->

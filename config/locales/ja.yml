@@ -541,6 +541,15 @@ ja:
     home:
       title: ホーム
       description: シンプルで高機能なプロジェクト管理システム
+    bill:
+      status:
+        all_status: すべて
+        unapplied:  未申請
+        pending:    承認待ち
+        approved:   承認済み
+        sent_back:  差し戻し
+        cancelled:  取り消し
+        issued:     発行済み
     client_new:
       title: 取引先新規作成
       legal_check: リーガルチェック
