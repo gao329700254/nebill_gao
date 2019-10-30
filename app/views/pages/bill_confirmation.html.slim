@@ -31,12 +31,12 @@
                                         : 'bill_confirmation__tbl__body__row'"
         v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
         id         = "bill-{{bill.id}}"
-        v-on:click = "linkToShow(bill.id)"
         track-by   = "id"
       ]
-        td.bill_confirmation__tbl__item--cd              v-text='bill.cd'
-        td.bill_confirmation__tbl__item--project_name    v-text='bill.project.name'
-        td.bill_confirmation__tbl__item--billing_company v-text='bill.project.billing_company_name'
-        td.bill_confirmation__tbl__item--amount          v-text='bill.amount.toLocaleString()'
-        td.bill_confirmation__tbl__item--payment_type    v-text='bill.payment_type'
-        td.bill_confirmation__tbl__item--deposit_on      v-text='bill.deposit_on'
+        td.bill_confirmation__tbl__item--cd              v-text='bill.cd' v-on:click = "linkToShow(bill.id)"
+        td.bill_confirmation__tbl__item--project_name    v-text='bill.project.name' v-on:click = "linkToShow(bill.id)"
+        td.bill_confirmation__tbl__item--billing_company v-text='bill.project.billing_company_name' v-on:click = "linkToShow(bill.id)"
+        td.bill_confirmation__tbl__item--amount          v-text='bill.amount.toLocaleString()' v-on:click = "linkToShow(bill.id)"
+        td.bill_confirmation__tbl__item--payment_type    v-text='bill.payment_type' v-on:click = "linkToShow(bill.id)"
+        td.bill_confirmation__tbl__item--deposit_on      v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
+        td.bill_confirmation__tbl__item--deposit_on      v-text='bill.confirm'
