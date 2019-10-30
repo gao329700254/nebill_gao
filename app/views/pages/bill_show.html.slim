@@ -11,61 +11,61 @@
     = t('page.bill_show.last_updated_at')
     span v-text='bill.updated_at'
     span v-text='bill.whodunnit' 'v-if'=>'bill.whodunnit'
-  .bill_show__form_wrapper
-    = form_tag nil, class: 'bill_show__form'
-      .bill_show__form__container
-        .bill_show__form__container__group
-          fieldset.bill_show__form__basic
-            .bill_show__form__item
-              = label_tag :status, Bill.human_attribute_name(:status)
-              = text_field_tag :status, nil, 'v-model' => 'bill.status', ':disabled' => true
-            .bill_show__form__item
-              = label_tag :cd, Bill.human_attribute_name(:cd)
-              = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :amount, Bill.human_attribute_name(:amount)
-              = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :delivery_on, Bill.human_attribute_name(:delivery_on)
-              = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :acceptance_on, Bill.human_attribute_name(:acceptance_on)
-              = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :payment_type, Bill.human_attribute_name(:payment_type)
-              = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
-              = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
-              = date_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
-              = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on', ':disabled' => '!editMode'
-            .bill_show__form__item
-              = label_tag :memo, Bill.human_attribute_name(:memo)
-              = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
-          / -----------------------------------------------------
-          / 請求書発行アクション
-          / -----------------------------------------------------
-          = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
-            = fa_icon 'download', text: 'PDF出力'
-          / -----------------------------------------------------
-          / 請求フォーム操作アクション
-          / -----------------------------------------------------
-          - if @bill_applicant.user.id == @current_user.id
-            - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill?
-              = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
-              class: 'bill_show__form__btn--edit' do
-                = fa_icon 'edit', text: t('helpers.edit')
-              = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
-                = fa_icon 'remove', text: t('helpers.cancel')
-              = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
-              class: 'bill_show__form__btn--delete' do
-                = fa_icon 'trash', text: '削除'
-              = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__btn--submit' do
-                = fa_icon 'pencil-square', text: t('helpers.submit.update')
+  = form_tag nil, class: 'bill_show__form'
+    .bill_show__form__container
+      .bill_show__form__container__group
+        fieldset.bill_show__form__basic
+          .bill_show__form__item
+            = label_tag :status, Bill.human_attribute_name(:status)
+            = text_field_tag :status, nil, 'v-model' => 'bill.status', ':disabled' => true
+          .bill_show__form__item
+            = label_tag :cd, Bill.human_attribute_name(:cd)
+            = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :amount, Bill.human_attribute_name(:amount)
+            = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :delivery_on, Bill.human_attribute_name(:delivery_on)
+            = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :acceptance_on, Bill.human_attribute_name(:acceptance_on)
+            = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :payment_type, Bill.human_attribute_name(:payment_type)
+            = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
+            = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
+            = date_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
+            = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on', ':disabled' => '!editMode'
+          .bill_show__form__item
+            = label_tag :memo, Bill.human_attribute_name(:memo)
+            = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
+        / -----------------------------------------------------
+        / 請求書発行アクション
+        / -----------------------------------------------------
+        = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
+          = fa_icon 'download', text: 'PDF出力'
+        / -----------------------------------------------------
+        / 請求フォーム操作アクション
+        / -----------------------------------------------------
+        - if @bill_applicant.user.id == @current_user.id
+          - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill? || @bill.issued_bill?
+            = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode',
+            class: 'bill_show__form__btn--edit' do
+              = fa_icon 'edit', text: t('helpers.edit')
+            = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
+              = fa_icon 'remove', text: t('helpers.cancel')
+            = button_tag 'v-on:click.prevent' => 'submit', 'v-if' => 'editMode', class: 'bill_show__form__btn--submit' do
+              = fa_icon 'pencil-square', text: t('helpers.submit.update')
+          - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill?
+            = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
+            class: 'bill_show__form__btn--delete' do
+              = fa_icon 'trash', text: '削除'
       / / TODO(maeda):請求書内訳編集フォーム
       / .bill_show__detail__form
       /   = '内訳編集エリア'
