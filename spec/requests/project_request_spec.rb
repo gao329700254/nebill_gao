@@ -567,7 +567,7 @@ RSpec.describe 'projects request', versioning: true do
 
   describe 'GET /api/projects/:id/bill_default_values' do
     let!(:project) do
-      create(:contracted_project, end_on: '2016-06-10', payment_type: 'bill_on_15th_and_payment_on_end_of_next_month')
+      create(:contracted_project, cd: '11D001', end_on: '2016-06-10', payment_type: 'bill_on_15th_and_payment_on_end_of_next_month')
     end
     let(:now) { Time.zone.parse('2016-06-01') }
     let(:path) { "/api/projects/#{project.id}/bill_default_values" }
@@ -580,6 +580,7 @@ RSpec.describe 'projects request', versioning: true do
       expect(response).to be_success
       expect(response.status).to eq 200
 
+      expect(json['cd']).to            eq "11D0011606"
       expect(json['amount']).to        eq project.amount
       expect(json['delivery_on']).to   eq '2016-06-10'
       expect(json['acceptance_on']).to eq '2016-06-10'

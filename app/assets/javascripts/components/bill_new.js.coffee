@@ -47,6 +47,7 @@ $ ->
     created: ->
       $.ajax "/api/projects/#{@projectId}/bill_default_values.json"
         .done (response) =>
+          @bill.cd                  = response.cd
           @bill.amount              = response.amount
           @bill.delivery_on         = response.delivery_on
           @bill.acceptance_on       = response.acceptance_on

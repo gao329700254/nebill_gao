@@ -170,5 +170,9 @@ class Project < ApplicationRecord
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
+
+  def generate_bill_cd
+    cd + Time.zone.today.strftime("%y%m")
+  end
 end
 # rubocop:enable Metrics/ClassLength

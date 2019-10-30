@@ -99,6 +99,7 @@ class Api::ProjectsController < Api::ApiController
     expected_deposit_on   = @project.calc_expected_deposit_on(@project.payment_type, bill_on)
 
     result = {
+      cd:                  @project.generate_bill_cd,
       amount:              @project.amount,
       delivery_on:         @project.end_on,
       acceptance_on:       @project.end_on,
