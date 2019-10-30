@@ -88,6 +88,11 @@
         @extend %bill_list__tbl__item;
         @include span-columns(2);
       }
+
+      &--confirm {
+        @extend %bill_list__tbl__item;
+        @include span-columns(2);
+      }
     }
   }
 }
