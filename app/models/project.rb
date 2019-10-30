@@ -47,6 +47,7 @@
 #  fk_rails_...  (group_id => project_groups.id) ON DELETE => nullify
 #
 
+# rubocop:disable Metrics/ClassLength
 class Project < ApplicationRecord
   extend Enumerize
   include ProjectValidates
@@ -170,3 +171,4 @@ class Project < ApplicationRecord
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
 end
+# rubocop:enable Metrics/ClassLength
