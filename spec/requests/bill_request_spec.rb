@@ -36,8 +36,7 @@ RSpec.describe 'bills request' do
       expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill1.memo
       expect(json[0]['applicant_name']).to                   eq bill1.applicant.user.name
-      # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
-      # expect(json[0]['status']).to                           eq bill1.status
+      expect(json[0]['status']).to                           eq bill1.status_i18n
       expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       expect(json[0]['project']['name']).to                  eq bill1.project.name
@@ -80,8 +79,7 @@ RSpec.describe 'bills request' do
         expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
         expect(json[0]['memo']).to                             eq bill1.memo
         expect(json[0]['applicant_name']).to                   eq bill1.applicant.user.name
-        # 一覧表示の実装時に、以下のテスト項目をコメントアウトする
-        # expect(json[0]['status']).to                           eq bill1.status
+        expect(json[0]['status']).to                           eq bill1.status_i18n
         expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[0]['project']['name']).to                  eq bill1.project.name
@@ -126,7 +124,7 @@ RSpec.describe 'bills request' do
         expect(json['bill_on']).to             eq bill.bill_on ? bill.bill_on.strftime("%Y-%m-%d") : nil
         expect(json['expected_deposit_on']).to eq bill.expected_deposit_on.strftime("%Y-%m-%d")
         expect(json['deposit_on']).to          eq bill.deposit_on ? bill.deposit_on.strftime("%Y-%m-%d") : nil
-        expect(json['status']).to              eq bill.status
+        expect(json['status']).to              eq bill.status_i18n
         expect(json['memo']).to                eq bill.memo
         expect(json['created_at']).to          eq bill.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json['updated_at']).to          eq I18n.l(bill.updated_at.in_time_zone('Tokyo'))

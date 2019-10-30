@@ -467,6 +467,8 @@ ja:
         unapplied: 未申請
         pending:   承認待ち
         approved:  承認済み
+        sent_back: 差し戻し
+        cancelled: 取り消し
         issued:    発行済み
     bill_approval_user:
       role:
