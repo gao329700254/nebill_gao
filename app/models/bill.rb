@@ -116,12 +116,14 @@ class Bill < ApplicationRecord
   end
 
   def send_back_bill_application!(user, comment)
+    current_approver = approvers.find_by(user_id: user.id)
+
     ActiveRecord::Base.transaction do
       sent_back_bill!
-      approvers.find_by(user_id: user.id).update!(status: 'sent_back', comment: comment)
+      current_approver.update!(status: 'sent_back', comment: comment)
       approvers.each(&:sent_back_bill!)
 
-      Chatwork::Bill.new(bill: self, to_user: applicant.user, from_user: user).notify_sent_back
+      Chatwork::Bill.new(bill: self, to_user: applicant.user, from_user: current_approver).notify_sent_back
     end
   end
 end

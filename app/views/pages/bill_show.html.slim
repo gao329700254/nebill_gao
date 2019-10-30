@@ -133,8 +133,9 @@
           .approval_show__detail__update__action
             = hidden_field_tag :bill_id, @bill.id
             = select_tag :user_id,
-                options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name), include_blank: true
-            = text_area_tag :comment
+                options_from_collection_for_select(User.where.not(id: @current_user.id).where.not(is_chief: true).without_role('outer'), :id, :name),
+                prompt: t('page.bill.approver_select_placeholder')
+            = text_area_tag :comment, '', placeholder: t('page.bill.comment_placeholder')
             - if @bill.unapplied_bill? || @bill.cancelled_bill?
               = submit_tag '申請'
             - if @bill.sent_back_bill?
@@ -160,7 +161,7 @@
         tbody.approval_show__detail__approval_user_list__tbl__body
           - @bill_approvers.each do |approver|
             tr.approval_show__detail__approval_user_list__tbl__body__row
-              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.role
+              td.approval_show__detail__approval_user_list__item--approval_user_name = approver.role_i18n
               td.approval_show__detail__approval_user_list__item--approval_user_name = approver.user.name
               td.approval_show__detail__approval_user_list__item--approval_user_status = approver.status_i18n
               td.approval_show__detail__approval_user_list__item--approval_user_comment = approver.comment
@@ -174,13 +175,13 @@
         = form_tag bill_approval_users_path(@bill), class: 'bill_show__detail__approval_user_list' do
           .approval_show__detail__update__action
             = hidden_field_tag :bill_id, @bill.id
-            = text_area_tag :comment
+            = text_area_tag :comment, '', placeholder: t('page.bill.comment_placeholder')
             = submit_tag '承認'
       - if @current_approver.pending_bill? || (@current_approver.approved_bill? && @bill.secondary_approver.pending_bill?)
         = form_for @current_approver do |form|
           .approval_show__detail__update__action
             = form.hidden_field :bill_id
-            = form.text_area :comment, value: ''
+            = form.text_area :comment, value: '', placeholder: t('page.bill.comment_placeholder')
             = form.submit '差戻', data: { confirm: I18n.t("action.send_back.confirm") }
 
   component [

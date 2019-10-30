@@ -24,23 +24,23 @@ RSpec.describe 'bills request' do
       expect(response.status).to eq 200
       expect(json.count).to eq 4
 
-      expect(json[0]['id']).to                               eq bill1.id
-      expect(json[0]['project_id']).to                       eq bill1.project_id
-      expect(json[0]['cd']).to                               eq bill1.cd
-      expect(json[0]['amount']).to                           eq bill1.amount
-      expect(json[0]['delivery_on']).to                      eq bill1.delivery_on.strftime("%Y-%m-%d")
-      expect(json[0]['acceptance_on']).to                    eq bill1.acceptance_on.strftime("%Y-%m-%d")
-      expect(json[0]['payment_type']).to                     eq I18n.t("enumerize.defaults.payment_type.#{bill1.payment_type}")
-      expect(json[0]['bill_on']).to                          eq bill1.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
-      expect(json[0]['expected_deposit_on']).to              eq bill1.expected_deposit_on.strftime("%Y-%m-%d")
-      expect(json[0]['deposit_on']).to                       eq bill1.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
-      expect(json[0]['memo']).to                             eq bill1.memo
-      expect(json[0]['applicant_name']).to                   eq bill1.applicant.user.name
-      expect(json[0]['status']).to                           eq bill1.status_i18n
-      expect(json[0]['created_at']).to                       eq bill1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
-      expect(json[0]['updated_at']).to                       eq bill1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
-      expect(json[0]['project']['name']).to                  eq bill1.project.name
-      expect(json[0]['project']['billing_company_name']).to  eq bill1.project.billing_company_name
+      expect(json[0]['id']).to                               eq bill4.id
+      expect(json[0]['project_id']).to                       eq bill4.project_id
+      expect(json[0]['cd']).to                               eq bill4.cd
+      expect(json[0]['amount']).to                           eq bill4.amount
+      expect(json[0]['delivery_on']).to                      eq bill4.delivery_on.strftime("%Y-%m-%d")
+      expect(json[0]['acceptance_on']).to                    eq bill4.acceptance_on.strftime("%Y-%m-%d")
+      expect(json[0]['payment_type']).to                     eq I18n.t("enumerize.defaults.payment_type.#{bill4.payment_type}")
+      expect(json[0]['bill_on']).to                          eq bill4.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
+      expect(json[0]['expected_deposit_on']).to              eq bill4.expected_deposit_on.strftime("%Y-%m-%d")
+      expect(json[0]['deposit_on']).to                       eq bill4.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
+      expect(json[0]['memo']).to                             eq bill4.memo
+      expect(json[0]['applicant_name']).to                   eq bill4.applicant.user.name
+      expect(json[0]['status']).to                           eq bill4.status_i18n
+      expect(json[0]['created_at']).to                       eq bill4.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+      expect(json[0]['updated_at']).to                       eq bill4.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+      expect(json[0]['project']['name']).to                  eq bill4.project.name
+      expect(json[0]['project']['billing_company_name']).to  eq bill4.project.billing_company_name
     end
   end
 

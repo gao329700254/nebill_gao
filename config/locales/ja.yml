@@ -550,6 +550,8 @@ ja:
         sent_back:  差し戻し
         cancelled:  取り消し
         issued:     発行済み
+      comment_placeholder: コメントを入力してください
+      approver_select_placeholder: 一段目承認者を選択してください
     client_new:
       title: 取引先新規作成
       legal_check: リーガルチェック
