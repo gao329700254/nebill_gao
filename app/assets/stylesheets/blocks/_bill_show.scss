@@ -24,7 +24,8 @@
 
       #{$all-text-inputs-disabled},
       select:disabled,
-      textarea:disabled {
+      textarea:disabled,
+      a {
         border-bottom: $base-border;
         border-radius: 0;
         border-top-color: $white-bg-color;

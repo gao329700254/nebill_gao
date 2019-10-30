@@ -22,6 +22,9 @@
             = label_tag :cd, Bill.human_attribute_name(:cd)
             = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
           .bill_show__form__item
+            = label_tag :project_id, Project.human_attribute_name(:name)
+            = link_to @bill.project.name, project_show_path(@bill.project), type: 'button'
+          .bill_show__form__item
             = label_tag :amount, Bill.human_attribute_name(:amount)
             = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'
           .bill_show__form__item
