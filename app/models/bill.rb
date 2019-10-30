@@ -47,14 +47,6 @@ class Bill < ApplicationRecord
 
   before_save { cd.upcase! }
 
-  scope :assigned_to_me, lambda  { |current_user_id|
-    joins(:approvers).merge(BillApprovalUser.where(user_id: current_user_id, status: 'pending'))
-  }
-
-  scope :only_approved_by_primary, lambda {
-    joins(:approvers).merge(BillApprovalUser.where(role: 'primary', status: 'approved'))
-  }
-
   scope :between, lambda { |start_on, end_on|
     where(Bill.arel_table[:bill_on].gteq(start_on)).where(Bill.arel_table[:bill_on].lteq(end_on))
   }
@@ -79,29 +71,29 @@ class Bill < ApplicationRecord
     approvers.secondary_role.first
   end
 
-  def make_apply!(comment, user_id, reapply)
+  def make_bill_application!(comment, user_id, reapply)
     ActiveRecord::Base.transaction do
       pending_bill!
       applicant.update!(comment: comment)
 
       # 承認者の洗い替え
       approvers.destroy_all if reapply.present?
-      create_bill_approvers!(user_id)
+      create_primary_approver!(user_id)
     end
   end
 
-  def create_bill_approvers!(user_id)
-    # 申請時に選択されたユーザを一段目承認者として作成する
+  def create_primary_approver!(user_id)
     approvers.create!(role: 'primary', status: 'pending', user_id: user_id)
-
-    # 「社長フラグ(= is_chief)」を有するユーザを二段目承認者として作成する
-    chief = User.find_by(is_chief: true)
-    approvers.create!(role: 'secondary', status: 'pending', user_id: chief.id)
-
     Chatwork::Bill.new(bill: self, to_user: primary_approver.user, from_user: applicant).notify_assigned
   end
 
-  def cancel_apply!
+  def create_secondary_approver!
+    chief = User.find_by(is_chief: true)
+    approvers.create!(role: 'secondary', status: 'pending', user_id: chief.id)
+    Chatwork::Bill.new(bill: self, to_user: secondary_approver.user, from_user: applicant).notify_assigned
+  end
+
+  def cancel_bill_application!
     ActiveRecord::Base.transaction do
       cancelled_bill!
       approvers.destroy_all
@@ -114,10 +106,8 @@ class Bill < ApplicationRecord
     ActiveRecord::Base.transaction do
       current_approver.update!(status: 'approved', comment: comment)
 
-      # 一段目承認者が承認したとき、二段目承認者に通知する
-      # 二段目承認者が承認＝承認者全員が承認したときに、請求のステータスを「承認済み」に更新する
       if current_approver.primary_role?
-        Chatwork::Bill.new(bill: self, to_user: secondary_approver.user, from_user: applicant).notify_assigned
+        create_secondary_approver!
       else
         approved_bill!
         Chatwork::Bill.new(bill: self, to_user: applicant.user).notify_approved

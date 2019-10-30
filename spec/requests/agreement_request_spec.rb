@@ -17,7 +17,6 @@ RSpec.describe Api::AgreementsController, type: :request do
       let!(:bill_A)               { create(:bill, cd: 'BILL_A', status: 'pending') }
       let!(:applicant_A)          { create(:bill_applicant, user: applicant, bill: bill_A) }
       let!(:primary_approver_A)   { create(:bill_approval_user, bill: bill_A, user: member, status: 'pending', role: 'primary') }
-      let!(:secondary_approver_A) { create(:bill_approval_user, bill: bill_A, user: chief,  status: 'pending', role: 'secondary') }
 
       # ログインユーザ「承認済み」の申請
       let!(:bill_B)               { create(:bill, cd: 'BILL_B', status: 'pending') }
@@ -29,7 +28,6 @@ RSpec.describe Api::AgreementsController, type: :request do
       let!(:bill_C)               { create(:bill, cd: 'BILL_C', status: 'pending') }
       let!(:applicant_C)          { create(:bill_applicant, user: applicant, bill: bill_C) }
       let!(:primary_approver_C)   { create(:bill_approval_user, bill: bill_C, user: another_member, status: 'pending', role: 'primary') }
-      let!(:secondary_approver_C) { create(:bill_approval_user, bill: bill_C, user: chief,          status: 'pending', role: 'secondary') }
 
       # 「差し戻し」の申請
       let!(:bill_E)               { create(:bill, cd: 'BILL_E', status: 'sent_back') }
@@ -49,12 +47,6 @@ RSpec.describe Api::AgreementsController, type: :request do
     end
 
     context 'ログインユーザが二段目承認者である' do
-      # 一段目承認者「承認待ち」の申請
-      let!(:bill_A)               { create(:bill, cd: 'BILL_A', status: 'pending') }
-      let!(:applicant_A)          { create(:bill_applicant, user: applicant, bill: bill_A) }
-      let!(:primary_approver_A)   { create(:bill_approval_user, bill: bill_A, user: member, status: 'pending', role: 'primary') }
-      let!(:secondary_approver_A) { create(:bill_approval_user, bill: bill_A, user: chief,  status: 'pending', role: 'secondary') }
-
       # 一段目承認者「承認済み」、ログインユーザ「承認待ち」の申請
       let!(:bill_B)               { create(:bill, cd: 'BILL_B', status: 'pending') }
       let!(:applicant_B)          { create(:bill_applicant, user: applicant, bill: bill_B) }

@@ -3,7 +3,7 @@ class BillApplicantsController < ApplicationController
   # 申請時に承認者を設定する
   def create
     @bill = Bill.find(params[:bill_id])
-    @bill.make_apply!(params[:comment], params[:user_id], params[:reapply])
+    @bill.make_bill_application!(params[:comment], params[:user_id], params[:reapply])
 
     show_success_message(:apply, params[:bill_id])
   rescue ActiveRecord::RecordInvalid
@@ -16,7 +16,7 @@ class BillApplicantsController < ApplicationController
   def update
     bill_id = params[:bill_applicant][:bill_id]
     @bill   = Bill.find(bill_id)
-    @bill.cancel_apply!
+    @bill.cancel_bill_application!
 
     show_success_message(:cancel, bill_id)
   rescue ActiveRecord::RecordInvalid

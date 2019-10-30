@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe BillApprovalUsersController, type: :request do
   let(:applicant_user)  { create(:user) }
   let(:project_member)  { create(:user) }
-  let(:chief)           { create(:user, is_chief: true) }
+  let!(:chief)          { create(:user, is_chief: true) }
   let(:bill)            { create(:bill, status: 'pending') }
   let!(:bill_applicant) { create(:bill_applicant, user: applicant_user, bill: bill) }
 
@@ -11,9 +11,8 @@ RSpec.describe BillApprovalUsersController, type: :request do
     subject { post path, params: params }
 
     context 'login user is primary approver' do
-      let(:primary_approver)    { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
-      let!(:secondary_approver) { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
-      let(:path)                { "/bills/bill_approval_users" }
+      let(:primary_approver) { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
+      let(:path)             { "/bills/bill_approval_users" }
       let(:params) do
         {
           user_id: primary_approver.id,
@@ -25,19 +24,20 @@ RSpec.describe BillApprovalUsersController, type: :request do
 
       before { login(project_member) }
 
-      it 'do not update bill status' do
+      it 'bill is still "pending"' do
         subject
         expect(Bill.find(bill.id).status).to eq 'pending'
       end
 
-      it 'update primary approver comment' do
+      it 'update primary approver status and comment' do
         subject
+        expect(BillApprovalUser.find_by(role: 'primary').status).to eq 'approved'
         expect(BillApprovalUser.find_by(role: 'primary').comment).to eq '承認します。'
       end
 
-      it 'update only primary approver status to approved' do
+      it 'create secondary approver with chief user' do
         subject
-        expect(BillApprovalUser.find_by(role: 'primary').status).to eq 'approved'
+        expect(BillApprovalUser.find_by(role: 'secondary').user_id).to eq chief.id
         expect(BillApprovalUser.find_by(role: 'secondary').status).to eq 'pending'
       end
     end
@@ -57,20 +57,15 @@ RSpec.describe BillApprovalUsersController, type: :request do
 
       before { login(chief) }
 
-      it 'do not update bill status' do
+      it 'update bill status' do
         subject
         expect(Bill.find(bill.id).status).to eq 'approved'
       end
 
-      it 'update primary approver comment' do
+      it 'update secondary approver status and comment' do
         subject
-        expect(BillApprovalUser.find_by(role: 'secondary').comment).to eq '承認します。'
-      end
-
-      it 'update only primary approver status to approved' do
-        subject
-        expect(BillApprovalUser.find_by(role: 'primary').status).to eq 'approved'
         expect(BillApprovalUser.find_by(role: 'secondary').status).to eq 'approved'
+        expect(BillApprovalUser.find_by(role: 'secondary').comment).to eq '承認します。'
       end
     end
   end
@@ -79,9 +74,8 @@ RSpec.describe BillApprovalUsersController, type: :request do
     subject { patch path, params: params }
 
     context 'login user is primary approver' do
-      let(:primary_approver)    { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
-      let!(:secondary_approver) { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
-      let(:path)                { "/bills/bill_approval_users/#{primary_approver.id}" }
+      let(:primary_approver) { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
+      let(:path)             { "/bills/bill_approval_users/#{primary_approver.id}" }
       let(:params) do
         {
           bill_approval_user: {
@@ -100,20 +94,15 @@ RSpec.describe BillApprovalUsersController, type: :request do
         expect(Bill.find(bill.id).status).to eq 'sent_back'
       end
 
-      it 'update primary approver comment' do
-        subject
-        expect(BillApprovalUser.find_by(role: 'primary').comment).to eq '差し戻します。'
-      end
-
-      it 'update all approvers status to "sent_back"' do
+      it 'update primary approver status and comment' do
         subject
         expect(BillApprovalUser.find_by(role: 'primary').status).to eq 'sent_back'
-        expect(BillApprovalUser.find_by(role: 'secondary').status).to eq 'sent_back'
+        expect(BillApprovalUser.find_by(role: 'primary').comment).to eq '差し戻します。'
       end
     end
 
     context 'login user is secondary approver' do
-      let!(:primary_approver)   { create(:bill_approval_user, bill: bill, user: project_member, status: 'pending', role: 'primary') }
+      let!(:primary_approver)   { create(:bill_approval_user, bill: bill, user: project_member, status: 'approved', role: 'primary') }
       let(:secondary_approver)  { create(:bill_approval_user, bill: bill, user: chief, status: 'pending', role: 'secondary') }
       let(:path)                { "/bills/bill_approval_users/#{secondary_approver.id}" }
       let(:params) do
@@ -134,7 +123,7 @@ RSpec.describe BillApprovalUsersController, type: :request do
         expect(Bill.find(bill.id).status).to eq 'sent_back'
       end
 
-      it 'update primary approver comment' do
+      it 'update secondary approver comment' do
         subject
         expect(BillApprovalUser.find_by(role: 'secondary').comment).to eq '差し戻します。'
       end
