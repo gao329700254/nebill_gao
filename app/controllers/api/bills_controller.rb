@@ -6,7 +6,7 @@ class Api::BillsController < Api::ApiController
     @bills = if @project
                @project.bills.order(created_at: :desc)
              else
-               Bill.all.includes(:project).order(created_at: :desc)
+               Bill.includes(:project).order(created_at: :desc)
              end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok

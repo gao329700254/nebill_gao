@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20191007052937
+# Schema version: 20191031050805
 #
 # Table name: bill_approval_users
 #
@@ -16,6 +16,11 @@
 #
 #  index_bill_approval_users_on_bill_id  (bill_id)
 #  index_bill_approval_users_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (bill_id => bills.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class BillApprovalUser < ApplicationRecord

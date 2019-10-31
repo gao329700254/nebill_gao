@@ -580,7 +580,7 @@ RSpec.describe 'projects request', versioning: true do
       expect(response).to be_success
       expect(response.status).to eq 200
 
-      expect(json['cd']).to            eq "11D0011606"
+      expect(json['cd']).to            eq "11D001160601"
       expect(json['amount']).to        eq project.amount
       expect(json['delivery_on']).to   eq '2016-06-10'
       expect(json['acceptance_on']).to eq '2016-06-10'

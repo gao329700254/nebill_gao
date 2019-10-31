@@ -31,7 +31,7 @@ RSpec.describe 'bills request' do
       expect(json[0]['delivery_on']).to                      eq bill4.delivery_on.strftime("%Y-%m-%d")
       expect(json[0]['acceptance_on']).to                    eq bill4.acceptance_on.strftime("%Y-%m-%d")
       expect(json[0]['payment_type']).to                     eq I18n.t("enumerize.defaults.payment_type.#{bill4.payment_type}")
-      expect(json[0]['bill_on']).to                          eq bill4.bill_on ? bill1.bill_on.strftime("%Y-%m-%d") : nil
+      expect(json[0]['bill_on']).to                          eq bill4.bill_on.strftime("%Y-%m-%d")
       expect(json[0]['expected_deposit_on']).to              eq bill4.expected_deposit_on.strftime("%Y-%m-%d")
       expect(json[0]['deposit_on']).to                       eq bill4.deposit_on ? bill1.deposit_on.strftime("%Y-%m-%d") : nil
       expect(json[0]['memo']).to                             eq bill4.memo

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20190925020855
+# Schema version: 20191031050805
 #
 # Table name: bills
 #
@@ -8,14 +8,14 @@
 #  cd                  :string           not null
 #  delivery_on         :date             not null
 #  acceptance_on       :date             not null
-#  bill_on             :date
+#  bill_on             :date             not null
 #  deposit_on          :date
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  memo                :text
 #  amount              :integer          default(0), not null
-#  payment_type        :string
-#  expected_deposit_on :date
+#  payment_type        :string           not null
+#  expected_deposit_on :date             not null
 #  status              :integer          default("unapplied"), not null
 #
 # Indexes
@@ -41,6 +41,8 @@ class Bill < ApplicationRecord
   validates :amount             , presence: true
   validates :delivery_on        , presence: true
   validates :acceptance_on      , presence: true
+  validates :payment_type       , presence: true
+  validates :bill_on            , presence: true
   validates :expected_deposit_on, presence: true
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
@@ -54,13 +56,13 @@ class Bill < ApplicationRecord
   scope :lteq_end_on, -> (end_on) { where(Bill.arel_table[:bill_on].lteq(end_on)) }
 
   def bill_on_cannot_predate_delivery_on
-    return if bill_on.nil?
-    errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_delivery_on')) if bill_on < delivery_on
+    return if bill_on.nil? || delivery_on.nil? || bill_on >= delivery_on
+    errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_delivery_on'))
   end
 
   def bill_on_cannot_predate_acceptance_on
-    return if bill_on.nil?
-    errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on')) if bill_on < acceptance_on
+    return if bill_on.nil? || acceptance_on.nil? || bill_on >= acceptance_on
+    errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on'))
   end
 
   def primary_approver
