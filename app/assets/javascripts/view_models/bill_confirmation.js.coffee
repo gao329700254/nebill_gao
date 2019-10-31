@@ -13,6 +13,7 @@ $ ->
       end: undefined
     methods:
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
+      linkToNew: -> window.location = "/approvals/new" #ボタンテスト用
       search: ->
         try
           search = $('.bill_list__search__date__btn--search')

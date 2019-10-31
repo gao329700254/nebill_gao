@@ -14,7 +14,7 @@
         = date_field_tag :end, nil, 'v-model' => "end"
       .bill_confirmation__search__date__btn
         = button_tag 'v-on:click.prevent' => 'search', class: 'bill_confirmation__search__date__btn--search' do
-          = fa_icon 'fa-search', text: t('page.bill_confirmation.search')
+          = fa_icon 'search', text: t('page.bill_confirmation.search')
   table.bill_confirmation__tbl
     thead.bill_confirmation__tbl__head
       tr.bill_confirmation__tbl__head__row
@@ -39,4 +39,10 @@
         td.bill_confirmation__tbl__item--amount          v-text='bill.amount.toLocaleString()' v-on:click = "linkToShow(bill.id)"
         td.bill_confirmation__tbl__item--payment_type    v-text='bill.payment_type' v-on:click = "linkToShow(bill.id)"
         td.bill_confirmation__tbl__item--deposit_on      v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
-        td.bill_confirmation__tbl__item--deposit_on      v-text='bill.confirm'
+        td.bill_confirmation__tbl__item--confirm
+          = button_tag class: 'bill_confirmation__tbl__item--confirmbtn', \
+            'type' => 'button', 'v-on:click' => 'linkToNew' do
+            = t('page.bill_confirmation.not_confirm')
+        /  = button_tag 'v-on:click' => 'linkToNew',  class: 'bill_confirmation__tbl__item--confirmbtn' do
+        /   = fa_icon 'check', text:t('page.bill_confirmation.not_confirm')
+        
