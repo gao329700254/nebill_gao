@@ -23,20 +23,25 @@
             = label_tag :depatture_location, Expense.human_attribute_name(:depatture_location)
             = text_field_tag :depatture_location, nil, class: 'expense_new__form__item__area', 'v-model' => 'expense.depatture_location'
         .expense_new__form__container__group2
-          .expense_new__form__item
-            br
-            = check_box_tag :is_round_trip, false, false, class: 'expense_new__form__item__check_box', \
-                            'v-model' => "checked", 'v-on:change' => 'onArrowChange(checked)'
-            = label_tag :is_round_trip, "{{arrow}}", class: 'all_button_inputs expense_new__form__btn--arrow'
+            .expense_new__form__item
+              br
+                = check_box_tag :is_round_trip, false, false, class: 'expense_new__form__item__check_box', \
+                              'v-model' => "checked", 'v-on:change' => 'onArrowChange(checked)'
+                = label_tag :is_round_trip, "{{arrow}}", class: 'all_button_inputs expense_new__form__btn--arrow'
         .expense_new__form__container__group3
           .expense_new__form__item
             = label_tag :arrival_location, Expense.human_attribute_name(:arrival_location)
             = text_field_tag :arrival_location, nil, class: 'expense_new__form__item__area', 'v-model' => 'expense.arrival_location'
-        .expense_new__form__container__group4
+        .expense_new__form__container__group1
             .expense_new__form__item
               br
               = button_tag type: 'button', 'v-on:click' => 'showExpenseTransportation', class: 'expense_new__form__btn--search' do
                 = fa_icon 'search'
+        .expense_new__form__container__group2
+            .expense_new__form__item
+              br
+              = button_tag type: 'button', 'v-on:click' => 'onDepattureExchangeArrival', class: 'expense_new__form__btn--exchange' do
+                = fa_icon 'exchange', text: t('helpers.exchange')
       .expense_new__form__container
         .expense_new__form__container__group
           .expense_new__form__item

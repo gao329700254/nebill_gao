@@ -134,6 +134,9 @@ $ ->
             @image = ''
           .fail (response) =>
             @defaule_expense_items = ''
+      onDepattureExchangeArrival:　(e) ->
+        [@expense.depatture_location, @expense.arrival_location]　= [@expense.arrival_location, @expense.depatture_location]
+        [@expense.depatture_location, @expense.arrival_location]
       onArrowChange: (e) ->
         if e
           @arrow = '↔️'

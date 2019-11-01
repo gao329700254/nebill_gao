@@ -317,6 +317,7 @@ ja:
     logout: ログアウト
     unauthorized: 許可されていません
     plus: 追加
+    exchange: 入替
   number:
     currency:
       format:
