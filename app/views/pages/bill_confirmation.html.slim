@@ -25,6 +25,7 @@
         th.bill_confirmation__tbl__item--payment_type    = t('activerecord.attributes.project.payment_type')
         th.bill_confirmation__tbl__item--deposit_on      = t('activerecord.attributes.bill.deposit_on')
         th.bill_confirmation__tbl__item--confirm         = t('activerecord.attributes.bill.confirm')
+        td.bill_confirmation__tbl__item--memo            = t('activerecord.attributes.bill.memo')
     tbody.bill_confirmation__tbl__body
       tr.bill_confirmation__tbl__body__row [
         v-bind:class = "bill.deposit_on ? 'bill_confirmation__tbl__body__row--deposited'
@@ -41,8 +42,11 @@
         td.bill_confirmation__tbl__item--deposit_on      v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
         td.bill_confirmation__tbl__item--confirm
           = button_tag class: 'bill_confirmation__tbl__item--confirmbtn', \
-            'type' => 'button', 'v-on:click' => 'linkToNew' do
+            'type' => 'button', 'v-on:click' => 'changeButton' do
             = t('page.bill_confirmation.not_confirm')
         /  = button_tag 'v-on:click' => 'linkToNew',  class: 'bill_confirmation__tbl__item--confirmbtn' do
         /   = fa_icon 'check', text:t('page.bill_confirmation.not_confirm')
+        td.bill_confirmation__tbl__item--memo
+          = text_area_tag :memo, nil, 'v-model' => 'bill.memo'
+
         
