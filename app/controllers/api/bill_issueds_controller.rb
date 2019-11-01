@@ -1,0 +1,67 @@
+class Api::BillIssuedsController < Api::ApiController
+  before_action :set_project, only: [:index], if: -> { params.key? :project_id }
+  before_action :set_bill   , only: [:update]
+
+  def index
+    @bills = if @project
+                @project.bills
+             else
+                Bill.all.includes(:project)
+             end
+
+    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
+  def update
+    @bill.attributes = bill_param
+    @bill.save!
+
+    render_action_model_success_message(@bill, :update)
+  rescue ActiveRecord::RecordInvalid
+    render_action_model_fail_message(@bill, :update)
+  end
+
+  def search_result
+    @bills = if params[:start].present? && params[:end].present?
+                Bill.between(params[:start], params[:end]).includes(:project)
+              elsif params[:start].present?
+                Bill.gteq_start_on(params[:start]).includes(:project)
+              elsif params[:end].present?
+                Bill.lteq_end_on(params[:end]).includes(:project)
+              else
+                Bill.all.includes(:project)
+              end
+
+    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
+  end
+
+private
+
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
+
+  def set_bill
+    @bill = Bill.find(params[:id])
+  end
+
+  def bill_param
+    params.require(:bill).permit(
+      :cd,
+      :amount,
+      :delivery_on,
+      :acceptance_on,
+      :payment_type,
+      :bill_on,
+      :deposit_on,
+      :memo,
+    )
+  end
+
+  def bill_index_project_cols
+    [
+      :name,
+      :billing_company_name,
+    ]
+  end
+end

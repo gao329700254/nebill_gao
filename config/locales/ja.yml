@@ -659,7 +659,7 @@ ja:
       search_form_placeholder: 'ID,プロジェクト名,請求先会社名で検索できます'
       fill_date_form: 請求日検索
       search: 検索
-    bill_confirmation:
+    bill_issueds_list:
       title: 入金確認一覧
       search_form_placeholder: 'ID,プロジェクト名,請求先会社名で検索できます'
       fill_date_form: 請求日検索

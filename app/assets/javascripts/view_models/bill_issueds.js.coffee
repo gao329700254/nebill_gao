@@ -1,6 +1,6 @@
 $ ->
-  window.billConfirmation = new Vue
-    el: '#bill_confirmation'
+  window.billIssueds = new Vue
+    el: '#bill_issueds_list'
     data:
       sortKey: 'cd'
       selectSchema:
@@ -31,7 +31,16 @@ $ ->
             @list = response
         finally
           search.prop('disabled', false)
-    compiled: ->
-      $.ajax '/api/bills.json'
+      LoadIssuedBillsList: ->
+        $.ajax 
+          url: '/api/bills.json'
+          type: 'GET'
         .done (response) =>
           @list = response
+          # console.log(@list)
+          # console.log(@list[0])
+          # console.log(@list[0].memo)
+
+    compiled: ->
+      @LoadIssuedBillsList()
+
