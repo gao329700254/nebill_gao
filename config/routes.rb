@@ -276,6 +276,9 @@ Rails.application.routes.draw do
   scope path: 'agreements' do
     get 'list', to: 'pages#agreement_list', as: 'agreement_list'
   end
+  scope path: 'bill_issueds' do
+    get 'list', to: 'pages#bill_issueds_list', as: 'bill_issueds_list'
+  end
 
   namespace :admin do
     get 'users', to: 'pages#users'
