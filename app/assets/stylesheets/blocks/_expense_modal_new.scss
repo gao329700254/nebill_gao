@@ -46,28 +46,6 @@
       }
     }
 
-    &__btn {
-      &--file_delete,
-      &--file_new {
-        @include btn--default;
-        padding: $small-spacing;
-      }
-
-      &--cancel {
-        @include btn--default;
-      }
-
-      &--repeat {
-        @include btn--primary;
-        float: right;
-      }
-
-      &--submit {
-        @include btn--primary;
-        width: 130px;
-      }
-    }
-
     &__img {
       @include span-columns(12);
     }

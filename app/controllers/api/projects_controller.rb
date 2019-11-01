@@ -22,7 +22,7 @@ class Api::ProjectsController < Api::ApiController
           create_notice
         end
       end
-      render_action_model_success_message(@project, :create)
+      render_action_model_flash_success_message_create(@project, :create)
     else
       render_action_model_fail_message(@project, :create)
     end

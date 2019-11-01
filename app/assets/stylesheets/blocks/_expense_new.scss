@@ -16,16 +16,24 @@
         @include span-columns(6);
       }
 
+      &__group1 {
+        @include span-columns(1.5);
+      }
+
       &__group2 {
-        @include span-columns(1.25);
+        @include span-columns(2);
       }
 
       &__group3 {
-        @include span-columns(5);
+        @include span-columns(3);
       }
 
       &__group4 {
         @include span-columns(.75);
+      }
+
+      &__group5 {
+        @include span-columns(1);
       }
     }
 
@@ -73,16 +81,24 @@
 
       &--cancel {
         @include btn--default;
+        margin-top: $small-spacing;
+        width: 180px;
       }
 
       &--repeat {
         @include btn--primary;
-        float: right;
+        width: 210px;
       }
 
       &--submit {
         @include btn--primary;
-        width: 130px;
+        width: 180px;
+      }
+
+      &--history {
+        @include btn--primary;
+        margin-top: $small-spacing;
+        width: 210px;
       }
 
       &--arrow,
@@ -90,6 +106,13 @@
         @include btn--primary;
         display: block;
         margin: auto;
+        padding: .6em 1em;
+        text-align: center;
+      }
+
+      &--exchange {
+        @include btn--primary;
+        display: block;
         padding: .6em 1em;
         text-align: center;
       }

@@ -30,7 +30,6 @@ $ ->
         if updateFlug
           window.location = "/expense/#{expenseId}/edit"
       showExpenseApprovalNew: -> @$broadcast('showExpenseApprovalNewEvent')
-      showExpenseHistory: -> @$broadcast('showExpenseHistoryEvent')
       showExpenseNew: (val) -> @$broadcast('showExpenseNewEvent', val)
       checkAll: ->
         @isCheckAll = !@isCheckAll

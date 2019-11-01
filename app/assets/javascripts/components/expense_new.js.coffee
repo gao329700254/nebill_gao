@@ -134,6 +134,9 @@ $ ->
             @image = ''
           .fail (response) =>
             @defaule_expense_items = ''
+      onDepattureExchangeArrival:　(e) ->
+        [@expense.depatture_location, @expense.arrival_location]　= [@expense.arrival_location, @expense.depatture_location]
+        [@expense.depatture_location, @expense.arrival_location]
       onArrowChange: (e) ->
         if e
           @arrow = '↔️'
@@ -152,6 +155,7 @@ $ ->
             @selected_project = response.id
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
       showExpenseTransportation: -> @$broadcast('showExpenseTransportationEvent')
+      showExpenseHistory: -> @$dispatch('showExpenseHistoryEvent')
     events:
       showExpenseNewEvent: (val) ->
         @modalShow()

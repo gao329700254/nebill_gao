@@ -36,6 +36,11 @@
             .expense_new__form__item
               = f.label :arrival_location, Expense.human_attribute_name(:arrival_location)
               = f.text_field :arrival_location, class: 'expense_new__form__item__area'
+          .expense_new__form__container__group2
+            .expense_new__form__item
+              br
+              = button_tag type: 'button', 'v-on:click' => 'onDepattureExchangeArrival', class: 'expense_new__form__btn--exchange' do
+                = fa_icon 'exchange', text: t('helpers.exchange')
         .expense_edit__form__container
           .expense_edit__form__container__group
             .expense_edit__form__item

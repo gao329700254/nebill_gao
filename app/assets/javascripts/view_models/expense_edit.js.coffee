@@ -42,6 +42,12 @@ $ ->
           @arrow = '↔️'
         else
           @arrow = '→'
+      onDepattureExchangeArrival:　(e) ->
+        departure = document.getElementById('expense_depatture_location').value
+        arrival   = document.getElementById('expense_arrival_location').value
+
+        document.getElementById('expense_depatture_location').value = arrival
+        document.getElementById('expense_arrival_location').value   = departure
       loadDefaultExpenseItem: (e) ->
         $.ajax
           url: '/api/expenses/load_item.json'
