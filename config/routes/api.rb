@@ -56,7 +56,6 @@ Rails.application.routes.draw do
     resources :bills, only: [:index]
     post "projects/search_result", to: "projects#search_result"
     post "bills/search_result", to: "bills#search_result"
-    post "approvals_search/index", to: "approvals_search#index"
     resources :approvals, only: [:show, :create, :update, :destroy, :index] do
       post "invalid", to: "approvals#invalid"
       resources :approval_users, only: [:create, :update]

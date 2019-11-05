@@ -1,5 +1,5 @@
 json.array!(@approvals) do |approval|
-  json.extract! approval, :id, :name, :project_id, :status_text, :created_user_id, :notes
+  json.extract! approval, :id, :project_id, :status_text, :created_user_id, :notes
   json.name                          approval.name.truncate(40)
   json.approvaler_type               approval.approvaler_type_text
   json.category                      approval.category_text

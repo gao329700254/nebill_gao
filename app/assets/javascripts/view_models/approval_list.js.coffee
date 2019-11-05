@@ -2,50 +2,15 @@ $ ->
   window.approvalList = new Vue
     el: '#approval_list'
     data:
-      sortKey: 'id'
       selectSchema:
         name: 'like'
         created_user_name: 'like'
-      list: undefined
-      searchKeywords: ''
+      search_keywords: ''
       status: ''
       created_at: ''
       category: ''
-    watch:
-      searchKeywords: (newSearchKeywords) ->
-        localStorage.searchKeywords = newSearchKeywords
-      status: (newStatus) ->
-        localStorage.status = newStatus
-      category: (newCategory) ->
-        localStorage.category = newCategory
-      created_at: (newCreated_at) ->
-        localStorage.created_at = newCreated_at
     methods:
-      loadLocalStorage: ->
-        if localStorage.searchKeywords
-          @searchKeywords = localStorage.searchKeywords
-        if localStorage.status
-          @status = localStorage.status
-        if localStorage.category
-          @category = localStorage.category
-        if localStorage.created_at
-          @created_at = localStorage.created_at
-      linkToShow: (approvalId) -> window.location = "/approvals/#{approvalId}/show"
       showApprovalNew: -> window.location = '/approvals/new'
-      search: ->
-        try
-          search = $('.approval_list__search__date__btn--search')
-          search.prop('disabled', true)
-          $.ajax
-            url: '/api/approvals_search/index.json'
-            type: 'POST'
-            data: {
-              created_at: @created_at
-            }
-          .done (response) =>
-            @list = response
-        finally
-          search.prop('disabled', false)
-    compiled: ->
-      @loadLocalStorage()
-      @search()
+      # coffeelint: disable=no_empty_param_list
+      search: () ->
+        window.location = "/approvals/list?status=#{@status}&category=#{@category}&created_at=#{@created_at}&search_keywords=#{@search_keywords}"

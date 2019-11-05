@@ -55,6 +55,11 @@ class PagesController < ApplicationController
   end
 
   def approval_list
+    @approvals = search_approval.only_approval.to_a
+    sort_by_keywords
+    sort_by_status
+    sort_by_category
+    @approvals = Approval.where(id: @approvals.map(&:id)).order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def approval_show
@@ -170,6 +175,65 @@ private
 
   def set_agreement_list
     @current_view = params[:format] || 'agreementApprovalList'
+  end
+
+  def search_approval
+    if params[:created_at].present? && can?(:allread, Approval)
+      Approval.where_created_on(params[:created_at]).includes(:created_user)
+    elsif params[:created_at].present?
+      Approval.related_approval_where_created_on(current_user.id, params[:created_at])
+              .includes(:users, created_user: :employee, approval_group: :users)
+              .references(approval_group: :users)
+    elsif can?(:allread, Approval)
+      Approval.includes([:created_user, [users: :employee], :approval_users])
+    else
+      Approval.related_approval(current_user.id)
+              .includes(:users, created_user: :employee, approval_group: :users)
+              .references(approval_group: :users)
+    end
+  end
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
+  def sort_by_keywords
+    if params[:search_keywords] && params[:search_keywords] != ''
+      search_keywords = params[:search_keywords].sub(/\A[[:space:]]+/, "").split(/[[:blank:]]+/)
+      if search_keywords.count == 1
+        word = search_keywords[0]
+        @approvals.select! { |approval| approval.name.include?(word) || approval.created_user.name.include?(word) }
+      elsif search_keywords.count > 1
+        search_keywords.each do |keyword|
+          @approvals.select! { |approval| approval.name.include?(keyword) || approval.created_user.name.include?(keyword) }
+        end
+      end
+    end
+  end
+
+  def sort_by_status
+    if params[:status] == t('page.approval_list.status_type.pending')
+      @approvals.select! { |app| app.status == "pending" }
+    elsif params[:status] == t('page.approval_list.status_type.permission')
+      @approvals.select! { |app| app.status == "permission" }
+    elsif params[:status] == t('page.approval_list.status_type.disconfirm')
+      @approvals.select! { |app| app.status == "disconfirm" }
+    elsif params[:status] == t('page.approval_list.status_type.invalid')
+      @approvals.select! { |app| app.status == "invalid" }
+    end
+  end
+
+  # rubocop:disable Metrics/AbcSize
+  def sort_by_category
+    if params[:category] ==  t('page.approval_list.category_type.contract_relationship')
+      @approvals.select! { |app| app.category == "contract_relationship" }
+    elsif params[:category] == t('page.approval_list.category_type.new_client')
+      @approvals.select! { |app| app.category == "new_client" }
+    elsif params[:category] == t('page.approval_list.category_type.consumables')
+      @approvals.select! { |app| app.category == "consumables" }
+    elsif params[:category] == t('page.approval_list.category_type.other_purchasing')
+      @approvals.select! { |app| app.category == "other_purchasing" }
+    elsif params[:category] == t('page.approval_list.category_type.other')
+      @approvals.select! { |app| app.category == "other" }
+    end
   end
 end
 # rubocop:enable Metrics/ClassLength
