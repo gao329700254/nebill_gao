@@ -9,8 +9,7 @@ json.bill_on             @bill.bill_on
 json.expected_deposit_on @bill.expected_deposit_on
 json.deposit_on          @bill.deposit_on
 json.memo                @bill.memo
-# 経費申請のPRがdevelopにmergeされた後に、rebaseしてenum_helpを取り込み、i18nを付与する
-json.status              @bill.status
+json.status              @bill.status_i18n
 json.created_at          @bill.created_at
 json.updated_at          I18n.l(@last_updated_at.in_time_zone('Tokyo'))
 json.whodunnit           '（' + @user.name + '）' if @user

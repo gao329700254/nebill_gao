@@ -204,6 +204,7 @@ ja:
       default: "%Y/%m/%d"
       long: "%Y年%m月%d日(%a)"
       short: "%m/%d"
+      bill_cd: "%y%m"
     month_names:
     -
     - 1月
@@ -467,6 +468,8 @@ ja:
         unapplied: 未申請
         pending:   承認待ち
         approved:  承認済み
+        sent_back: 差し戻し
+        cancelled: 取り消し
         issued:    発行済み
     bill_approval_user:
       role:
@@ -539,6 +542,17 @@ ja:
     home:
       title: ホーム
       description: シンプルで高機能なプロジェクト管理システム
+    bill:
+      status:
+        all_status: すべて
+        unapplied:  未申請
+        pending:    承認待ち
+        approved:   承認済み
+        sent_back:  差し戻し
+        cancelled:  取り消し
+        issued:     発行済み
+      comment_placeholder: コメントを入力してください
+      approver_select_placeholder: 一段目承認者を選択してください
     client_new:
       title: 取引先新規作成
       legal_check: リーガルチェック

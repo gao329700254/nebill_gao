@@ -10,28 +10,26 @@ script type='text/x-template' id='project_bill_list'
         thead.project_bill__list__tbl__head
           tr.project_bill__list__tbl__head__row
             th.project_bill__list__tbl__item--status              = Bill.human_attribute_name(:status)
-            th.project_bill__list__tbl__item--applicant_name      = BillApplicant.human_attribute_name(:user_id)
             th.project_bill__list__tbl__item--cd                  = Bill.human_attribute_name(:cd)
             th.project_bill__list__tbl__item--amount              = Bill.human_attribute_name(:amount)
-            th.project_bill__list__tbl__item--payment_type        = Bill.human_attribute_name(:payment_type)
             th.project_bill__list__tbl__item--bill_on             = Bill.human_attribute_name(:bill_on)
             th.project_bill__list__tbl__item--expected_deposit_on = Bill.human_attribute_name(:expected_deposit_on)
+            th.project_bill__list__tbl__item--applicant_name      = BillApplicant.human_attribute_name(:user_id)
         tbody.project_bill__list__tbl__body
           tr.project_bill__list__tbl__body__row [
             v-bind:class = "bill.deposit_on ? 'project_bill__list__tbl__body__row--deposited'
                                             : 'project_bill__list__tbl__body__row'"
-            v-for        = "bill in list | orderBy sortKey -1"
+            v-for        = "bill in list"
             id           = "bill-{{bill.id}}"
             v-on:click   = "linkToShow(bill.id)"
             track-by     = "id"
           ]
             td.project_bill__list__tbl__item--status              v-text='bill.status'
-            td.project_bill__list__tbl__item--applicant_name      v-text='bill.applicant_name'
             td.project_bill__list__tbl__item--cd                  v-text='bill.cd'
             td.project_bill__list__tbl__item--amount              v-text='bill.amount.toLocaleString()'
-            td.project_bill__list__tbl__item--payment_type        v-text='bill.payment_type'
             td.project_bill__list__tbl__item--bill_on             v-text='bill.bill_on'
             td.project_bill__list__tbl__item--expected_deposit_on v-text='bill.expected_deposit_on'
+            td.project_bill__list__tbl__item--applicant_name      v-text='bill.applicant_name'
 
     component [
       :is        = "'billNew'"

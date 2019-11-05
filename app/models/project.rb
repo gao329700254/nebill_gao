@@ -47,6 +47,7 @@
 #  fk_rails_...  (group_id => project_groups.id) ON DELETE => nullify
 #
 
+# rubocop:disable Metrics/ClassLength
 class Project < ApplicationRecord
   extend Enumerize
   include ProjectValidates
@@ -169,4 +170,13 @@ class Project < ApplicationRecord
   end
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/AbcSize
+
+  # 請求番号の末尾に、月ごとに連番2桁（01〜99）を付与する
+  def generate_bill_cd
+    bills_count = bills.where(created_at: Time.current.all_month).count
+    suffix_num  = bills_count < 100 ? bills_count + 1 : 1
+
+    "#{cd}#{I18n.l(Time.zone.today, format: :bill_cd)}#{format('%#02d', suffix_num)}"
+  end
 end
+# rubocop:enable Metrics/ClassLength
