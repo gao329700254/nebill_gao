@@ -14,14 +14,13 @@ $ ->
       buttonText: '未確認'
     methods:
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
-      changeButton: -> 
-          window.location = "/projects/list"
+      changeButton: (billId) -> window.location = "/bills/#{billId}/show"
       search: ->
         try
           search = $('.bill_list__search__date__btn--search')
           search.prop('disabled', true)
           $.ajax
-            url: '/api/bills/search_result.json'
+            url: '/api/bill_issueds/search_result.json'
             type: 'POST'
             data: {
               start: @start
@@ -33,13 +32,10 @@ $ ->
           search.prop('disabled', false)
       LoadIssuedBillsList: ->
         $.ajax 
-          url: '/api/bills.json'
+          url: '/api/bill_issueds.json'
           type: 'GET'
         .done (response) =>
           @list = response
-          # console.log(@list)
-          # console.log(@list[0])
-          # console.log(@list[0].memo)
 
     compiled: ->
       @LoadIssuedBillsList()

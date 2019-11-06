@@ -35,10 +35,12 @@ Rails.application.routes.draw do
       end
       resources :users, only: [:index]
       resources :bills, only: [:index, :create, :show, :update, :destroy]
+      resources :bill_issueds, only: [:index, :update]
       resources :partners, only: [:index]
       resources :project_files, only: [:index, :show, :create, :update, :destroy]
       resources :project_file_groups, only: [:index, :create]
       get 'bill_default_values', on: :member
+      get 'bill_issued_default_values', on: :member
       collection do
         get "create_cd/:project_type", to: "project_cds#create_cd", as: "create_cd"
       end
@@ -54,8 +56,10 @@ Rails.application.routes.draw do
     patch "user_members/:project_id/:user_id", to: "user_members#update", as: "update_user_members"
     resources :project_groups, only: [:index, :create, :update]
     resources :bills, only: [:index]
+    resources :bill_issueds, only: [:index]
     post "projects/search_result", to: "projects#search_result"
     post "bills/search_result", to: "bills#search_result"
+    post "bill_issueds/search_result", to: "bill_issueds#search_result"
     post "approvals_search/index", to: "approvals_search#index"
     resources :approvals, only: [:show, :create, :update, :destroy, :index] do
       post "invalid", to: "approvals#invalid"
