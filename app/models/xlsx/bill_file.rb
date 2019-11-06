@@ -2,7 +2,7 @@ require 'rubyXL'
 
 module Xlsx
   class BillFile
-    CONSUMPTION_TAX = 0.08
+    CONSUMPTION_TAX = 0.1
 
     def initialize(bill, template)
       @bill = bill

@@ -3,7 +3,7 @@
     = link_to nil, 'v-on:click.prevent' => "viewShow('project_detail')"
       li :class = "currentView === 'projectDetail' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
         span.project_show__menu_bar__item__title = t('page.project_show.component.project_detail')
-    /= link_to nil, 'v-on:click.prevent' => "viewShow('project_bill_list')"
+    = link_to nil, 'v-on:click.prevent' => "viewShow('project_bill_list')"
       li :class = "currentView === 'projectBillList' ? 'project_show__menu_bar__item--active' : 'project_show__menu_bar__item'"
         span.project_show__menu_bar__item__title = t('page.project_show.component.bill')
     = link_to nil, 'v-on:click.prevent' => "viewShow('member_list')"
