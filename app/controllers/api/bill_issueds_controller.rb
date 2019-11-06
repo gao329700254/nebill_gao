@@ -1,12 +1,12 @@
 class Api::BillIssuedsController < Api::ApiController
-  before_action :set_project, only: [:index], if: -> { params.key? :project_id }
-  before_action :set_bill   , only: [:update]
+  before_action :set_project, only: [:index, :create], if: -> { params.key? :project_id }
+  before_action :set_bill   , only: [:show, :update, :destroy]
 
   def index
     @bills = if @project
-                @project.bills
+              @project.bills
              else
-                Bill.all.includes(:project)
+               Bill.all.includes(:project)
              end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
@@ -23,14 +23,14 @@ class Api::BillIssuedsController < Api::ApiController
 
   def search_result
     @bills = if params[:start].present? && params[:end].present?
-                Bill.between(params[:start], params[:end]).includes(:project)
-              elsif params[:start].present?
-                Bill.gteq_start_on(params[:start]).includes(:project)
-              elsif params[:end].present?
-                Bill.lteq_end_on(params[:end]).includes(:project)
-              else
-                Bill.all.includes(:project)
-              end
+               Bill.between(params[:start], params[:end]).includes(:project)
+             elsif params[:start].present?
+               Bill.gteq_start_on(params[:start]).includes(:project)
+             elsif params[:end].present?
+               Bill.lteq_end_on(params[:end]).includes(:project)
+             else
+               Bill.all.includes(:project)
+             end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end

@@ -42,6 +42,7 @@
         td.bill_issueds_list__tbl__item--deposit_on      v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--confirm
           = button_tag class: 'bill_issueds_list__tbl__item--confirmbtn', \
-            'type' => 'button', 'v-text' => 'buttonText', 'v-on:click' => 'changeButton' do
+            'type' => 'button', 'v-text' => 'buttonText', 'v-on:click.prevent' => 'changeButton(bill.id)' do
+        = form_tag nil, class: 'bill_issueds_list__tbl__item'
         td.bill_issueds_list__tbl__item--memo             
           = text_area_tag :memo, nil, 'v-model' => 'bill.memo'
