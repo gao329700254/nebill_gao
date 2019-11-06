@@ -166,7 +166,7 @@
                 - if @bill.unapplied_bill? || @bill.cancelled_bill?
                   = button_tag '申請', class: 'bill_show__form__btn--submit'
                 - if @bill.sent_back_bill?
-                  = button_tag '再申請', name: 'reapply', class: 'bill_show__form__btn--submit'
+                  = button_tag '再申請', name: 'reapply', value: 'reapply', class: 'bill_show__form__btn--submit'
           = form_for @bill_applicant do |form|
             - if @bill.pending_bill?
               .approval_show__detail__update__action
