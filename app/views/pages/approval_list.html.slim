@@ -10,52 +10,47 @@
       .approval_list__search__date__created_at
         = label_tag :created_at, t('page.approval_list.fill_date_form')
         = date_field_tag :created_at, (params[:created_at] ? params[:created_at] : nil), 'v-model' => "created_at", 'v-on:keydown.enter' => 'search'
-      .approval_list__search__date__btn
-        = button_tag 'v-on:click.prevent' => 'search', class: 'approval_list__search__date__btn--search' do
-          = fa_icon 'fa-search', text: t('page.approval_list.search')
+      .approval_list__search__date__blank
       - if can? :manage, Approval
         .approval_list__search__date__btn
-          = button_tag 'v-on:click' => 'showApprovalNew', class: 'approval_list__search__date__btn--new_approval' do
+          = link_to approval_new_path, type: 'button', class: 'approval_list__search__date__btn--new_approval' do
             = fa_icon 'check', text: t('page.approval_new.title')
     .approval_list__search__radio
       = radio_button_tag :all_status, '', (!params[:status] || params[:status] ==  ''), id: 'all_status', 'v-model' => 'status', \
                          'v-on:keydown.enter' => 'search'
       = label_tag :all_status, t('page.approval_list.status_type.all')
-      = radio_button_tag :pending, t('page.approval_list.status_type.pending'), (params[:status] ==  t('page.approval_list.status_type.pending')), \
-                         id: 'pending', 'v-model' => 'status', 'v-on:keydown.enter' => 'search'
+      = radio_button_tag :pending, 'pending', (params[:status] ==  'pending'), id: 'pending', 'v-model' => 'status', \
+                         'v-on:keydown.enter' => 'search'
       = label_tag :pending, t('page.approval_list.status_type.pending')
-      = radio_button_tag :permission, t('page.approval_list.status_type.permission'), (params[:status] ==  t('page.approval_list.status_type.permission')), \
-                         id: 'permission', 'v-model' => 'status', 'v-on:keydown.enter' => 'search'
+      = radio_button_tag :permission, 'permission', (params[:status] ==  'permission'), id: 'permission', 'v-model' => 'status', \
+                         'v-on:keydown.enter' => 'search'
       = label_tag :permission, t('page.approval_list.status_type.permission')
-      = radio_button_tag :disconfirm, t('page.approval_list.status_type.disconfirm'), (params[:status] ==  t('page.approval_list.status_type.disconfirm')), \
-                         id: 'disconfirm', 'v-model' => 'status', 'v-on:keydown.enter' => 'search'
+      = radio_button_tag :disconfirm, 'disconfirm', (params[:status] ==  'disconfirm'), id: 'disconfirm', 'v-model' => 'status', \
+                         'v-on:keydown.enter' => 'search'
       = label_tag :disconfirm, t('page.approval_list.status_type.disconfirm')
-      = radio_button_tag :invalid, t('page.approval_list.status_type.invalid'), (params[:status] ==  t('page.approval_list.status_type.invalid')), \
-                         id: 'invalid', 'v-model' => 'status', 'v-on:keydown.enter' => 'search'
+      = radio_button_tag :invalid, 'invalid', (params[:status] ==  'invalid'), id: 'invalid', 'v-model' => 'status', \
+                         'v-on:keydown.enter' => 'search'
       = label_tag :invalid, t('page.approval_list.status_type.invalid')
     .approval_list__search__radio
       = radio_button_tag :all_category, '', (!params[:category] || params[:category] ==  ''), id: 'all_category', 'v-model' => 'category',\
                          'v-on:keyup.enter' => 'search'
       = label_tag :all_category, t('page.approval_list.category_type.all')
-      = radio_button_tag :contract_relationship, t('page.approval_list.category_type.contract_relationship'), \
-                         (params[:category] ==  t('page.approval_list.category_type.contract_relationship')), id: 'contract_relationship', \
+      = radio_button_tag :contract_relationship, 'contract_relationship', (params[:category] ==  'contract_relationship'), id: 'contract_relationship', \
                          'v-model' => 'category', 'v-on:keyup.enter' => 'search'
       = label_tag :contract_relationship, t('page.approval_list.category_type.contract_relationship')
-      = radio_button_tag :new_client, t('page.approval_list.category_type.new_client'), \
-                         (params[:category] ==  t('page.approval_list.category_type.new_client')), id: 'new_client', 'v-model' => 'category', \
+      = radio_button_tag :new_client, 'new_client', (params[:category] ==  'new_client'), id: 'new_client', 'v-model' => 'category', \
                          'v-on:keyup.enter' => 'search'
       = label_tag :new_client, t('page.approval_list.category_type.new_client')
-      = radio_button_tag :consumables, t('page.approval_list.category_type.consumables'), \
-                         (params[:category] ==  t('page.approval_list.category_type.consumables')), id: 'consumables', \
+      = radio_button_tag :consumables, 'consumables', (params[:category] ==  'consumables'), id: 'consumables', \
                          'v-model' => 'category', 'v-on:keyup.enter' => 'search'
       = label_tag :consumables, t('page.approval_list.category_type.consumables')
-      = radio_button_tag :other_purchasing, t('page.approval_list.category_type.other_purchasing'), \
-                         (params[:category] ==  t('page.approval_list.category_type.other_purchasing')), id: 'other_purchasing', 'v-model' => 'category', \
+      = radio_button_tag :other_purchasing, 'other_purchasing', (params[:category] ==  'other_purchasing'), id: 'other_purchasing', 'v-model' => 'category', \
                          'v-on:keyup.enter' => 'search'
       = label_tag :other_purchasing, t('page.approval_list.category_type.other_purchasing')
-      = radio_button_tag :other, t('page.approval_list.category_type.other'), (params[:category] ==  t('page.approval_list.category_type.other')), \
-                         id: 'other', 'v-model' => 'category', 'v-on:keyup.enter' => 'search'
+      = radio_button_tag :other, 'other', (params[:category] ==  'other'), id: 'other', 'v-model' => 'category', 'v-on:keyup.enter' => 'search'
       = label_tag :other, t('page.approval_list.category_type.other')
+    = button_tag 'v-on:click.prevent' => 'search', class: 'approval_list__search__date__btn--search' do
+      = fa_icon 'fa-search', text: t('page.approval_list.search')
   table.approval_list__tbl
     thead.approval_list__tbl__head
       tr.approval_list__tbl__head__row

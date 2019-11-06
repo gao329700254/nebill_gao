@@ -10,7 +10,6 @@ $ ->
       created_at: ''
       category: ''
     methods:
-      showApprovalNew: -> window.location = '/approvals/new'
       # coffeelint: disable=no_empty_param_list
       search: () ->
         window.location = "/approvals/list?status=#{@status}&category=#{@category}&created_at=#{@created_at}&search_keywords=#{@search_keywords}"

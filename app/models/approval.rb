@@ -67,9 +67,15 @@ class Approval < ApplicationRecord
     approval_users.map(&:change_invalid)
   end
 
-  class << self
-    def related_approval_where_created_on(id, created_at)
-      related_approval(id).where_created_on(created_at)
-    end
+  def self.search_approval(current_user:, search_created_at: nil)
+    result = if current_user.can?(:allread, Approval)
+               Approval.all
+             else
+               Approval.related_approval(current_user.id)
+                       .includes(:users, created_user: :employee, approval_group: :users)
+                       .references(approval_group: :users)
+             end
+
+    search_created_at.present? ? result.where_created_on(search_created_at) : result
   end
 end
