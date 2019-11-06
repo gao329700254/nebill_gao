@@ -217,6 +217,8 @@ RSpec.describe 'bills request' do
   end
 
   describe 'PATCH /api/bills/:id' do
+    subject { patch path, params: params }
+
     context 'with exist bill id' do
       let(:project) { create(:project) }
       let(:bill)    { create(:bill, project: project) }
@@ -240,9 +242,7 @@ RSpec.describe 'bills request' do
         end
 
         it 'update the bill' do
-          expect do
-            patch path, params: params
-          end.to change { bill.reload && bill.updated_at }
+          expect { subject }.to change { bill.reload && bill.updated_at }
 
           expect(bill.project).to                  eq project
           expect(bill.cd).to                       eq 'BILL-1'
@@ -258,7 +258,7 @@ RSpec.describe 'bills request' do
         end
 
         it 'return success code and message' do
-          patch path, params: params
+          subject
 
           expect(response).to be_success
           expect(response.status).to eq 201
@@ -286,13 +286,11 @@ RSpec.describe 'bills request' do
         end
 
         it 'do not update the bill' do
-          expect do
-            patch path, params: params
-          end.not_to change { bill.reload && bill.updated_at }
+          expect { subject }.not_to change { bill.reload && bill.updated_at }
         end
 
         it 'return 422 Unprocessable Entity code and message' do
-          patch path, params: params
+          subject
 
           expect(response).not_to be_success
           expect(response.status).to eq 422
@@ -300,18 +298,16 @@ RSpec.describe 'bills request' do
           expect(json['message']).to eq '請求が更新できませんでした'
         end
       end
-    end
 
-    context 'with not exist project id' do
-      let(:path) { '/api/bills/0' }
+      context 'status is "approved"' do
+        let(:params) { { bill: { status: 'issued' } } }
 
-      it 'return 404 Not Found code and message' do
-        patch path
+        before { bill.approved_bill! }
 
-        expect(response).not_to be_success
-        expect(response.status).to eq 404
-
-        expect(json['message']).to eq 'リソースが見つかりませんでした'
+        it 'update status to "issued"' do
+          subject
+          expect(bill.reload.status).to eq "issued"
+        end
       end
     end
   end

@@ -7,10 +7,13 @@
 #bill_show.bill_show
   = hidden_field_tag :bill_id, @bill.id, 'v-model' => 'billId'
 
-  .bill_show__last_updated_at
-    = t('page.bill_show.last_updated_at')
-    span v-text='bill.updated_at'
-    span v-text='bill.whodunnit' 'v-if'=>'bill.whodunnit'
+  .bill_show__top_menu
+    .bill_show__indicator
+      = link_to t('helpers.go_back_to_list'), bill_list_path
+    .bill_show__last_updated_at
+      = t('page.bill_show.last_updated_at')
+      span v-text='bill.updated_at'
+      span v-text='bill.whodunnit' 'v-if'=>'bill.whodunnit'
   .bill_show__details
     = form_tag nil, class: 'bill_show__form'
       .bill_show__form__container
@@ -67,9 +70,11 @@
               = button_tag 'v-on:click.prevent' => 'submit', 'v-if' => 'editMode', class: 'bill_show__form__btn--submit' do
                 = fa_icon 'pencil-square', text: t('helpers.submit.update')
             - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill?
-              = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
-              class: 'bill_show__form__btn--delete' do
-                = fa_icon 'trash', text: '削除'
+              = button_tag 'v-on:click.prevent' => 'destroy', class: 'bill_show__form__btn--delete' do
+                = fa_icon 'trash', text: t('helpers.delete')
+          - if @bill.approved_bill?
+            = button_tag 'v-on:click.prevent' => 'issue', class: 'bill_show__form__btn--issue' do
+              = fa_icon 'pencil-square', text: t('helpers.submit.issue')
         / / TODO(maeda):請求書内訳編集フォーム
         / .bill_show__detail__form
         /   = '内訳編集エリア'
@@ -155,8 +160,9 @@
               .approval_show__detail__update__action
                 = hidden_field_tag :bill_id, @bill.id
                 = select_tag :user_id,
-                    options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name), include_blank: true
-                = text_area_tag :comment
+                    options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name),
+                    prompt: t('page.bill.select_placeholder')
+                = text_area_tag :comment, '', placeholder: t('page.bill.comment_placeholder')
                 - if @bill.unapplied_bill? || @bill.cancelled_bill?
                   = button_tag '申請', class: 'bill_show__form__btn--submit'
                 - if @bill.sent_back_bill?

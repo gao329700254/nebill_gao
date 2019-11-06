@@ -319,6 +319,7 @@ ja:
       pdf:      PDF
       repeat:   続けて入力
       download: 出力
+      issue:    発行済みに更新
     edit: 編集
     cancel: キャンセル
     show_history: 履歴から読み込み
@@ -329,6 +330,7 @@ ja:
     unauthorized: 許可されていません
     plus: 追加
     exchange: 入替
+    go_back_to_list: ◀ 一覧に戻る
   number:
     currency:
       format:
@@ -552,8 +554,8 @@ ja:
         sent_back:  差し戻し
         cancelled:  取り消し
         issued:     発行済み
-      comment_placeholder: コメントを入力してください
-      approver_select_placeholder: 一段目承認者を選択してください
+      comment_placeholder: コメントを入力
+      select_placeholder: 一段目承認者を選択
     client_new:
       title: 取引先新規作成
       legal_check: リーガルチェック

@@ -74,6 +74,23 @@ $ ->
               toastr.error('', json.message)
         finally
           submit.prop('disabled', false)
+      issue: ->
+        $.ajax
+          url: "/api/bills/#{@billId}.json"
+          type: 'PATCH'
+          data:
+            bill:
+              status: 'issued'
+        .done (response) =>
+          toastr.success('', response.message)
+          @loadBill()
+          @editMode = false
+        .fail (response) =>
+          json = response.responseJSON
+          if _.has(json, 'errors')
+            toastr.error(json.errors.full_messages.join('<br>'), json.message)
+          else
+            toastr.error('', json.message)
       destroy: ->
         try
           destroy = $('.bill_show__form__btn--delete')
