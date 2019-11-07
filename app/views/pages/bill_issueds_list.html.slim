@@ -24,8 +24,8 @@
         th.bill_issueds_list__tbl__item--amount          = t('activerecord.attributes.bill.amount')
         th.bill_issueds_list__tbl__item--payment_type    = t('activerecord.attributes.project.payment_type')
         th.bill_issueds_list__tbl__item--deposit_on      = t('activerecord.attributes.bill.deposit_on')
+        th.bill_issueds_list__tbl__item--memo            = t('activerecord.attributes.bill.memo')
         th.bill_issueds_list__tbl__item--confirm         = t('activerecord.attributes.bill.confirm')
-        td.bill_issueds_list__tbl__item--memo            = t('activerecord.attributes.bill.memo')
     tbody.bill_issueds_list__tbl__body
       tr.bill_issueds_list__tbl__body__row [
         v-bind:class = "bill.deposit_on ? 'bill_issueds_list__tbl__body__row--deposited'
@@ -40,9 +40,8 @@
         td.bill_issueds_list__tbl__item--amount          v-text='bill.amount.toLocaleString()' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--payment_type    v-text='bill.payment_type' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--deposit_on      v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
-        td.bill_issueds_list__tbl__item--confirm
-          = button_tag class: 'bill_issueds_list__tbl__item--confirmbtn', \
-            'type' => 'button', 'v-text' => 'buttonText', 'v-on:click.prevent' => 'changeButton(bill.id)' do
-        = form_tag nil, class: 'bill_issueds_list__tbl__item'
         td.bill_issueds_list__tbl__item--memo             
           = text_area_tag :memo, nil, 'v-model' => 'bill.memo'
+        td.bill_issueds_list__tbl__item--confirm
+          = button_tag class: 'bill_issueds_list__tbl__item--confirmbtn', \
+            'type' => 'submit', 'v-text' => 'buttonText', 'v-on:click.prevent' => 'submit(bill.id)' do
