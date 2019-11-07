@@ -10,6 +10,7 @@ $ ->
       created_at: ''
       category: ''
     methods:
-      # coffeelint: disable=no_empty_param_list
+      #coffeelint: disable=no_empty_param_list
       search: () ->
         window.location = "/approvals/list?status=#{@status}&category=#{@category}&created_at=#{@created_at}&search_keywords=#{@search_keywords}"
+      #coffeelint: enable=no_empty_param_list
