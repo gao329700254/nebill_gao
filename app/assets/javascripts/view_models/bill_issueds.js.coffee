@@ -15,19 +15,8 @@ $ ->
       billId: undefined
     methods:
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
-      loadBillIssued: (billId) ->
-        $.ajax 
-          url: "/api/bill_issueds/#{billId}.json"
-          .done (response) =>
-            @billOriginal = response
-            @bill = $.extend(true, {}, @billOriginal)
-          .fail (response) =>
-            console.error response
       submit: (billId) ->
-        console.log(Object.keys(@list)) #["0", "1", "2"]
-        console.log(@list[0]['id']) #23 id取得できる
-        console.log("#{billId}") #選択したid取れている
-        console.log(@list[key]['id'])
+        console.log(@list)
         try
           $.ajax
             url: "/api/bill_issueds/#{billId}.json"
@@ -46,6 +35,15 @@ $ ->
               toastr.error(json.errors.full_messages.join('<br>'), json.message)
             else
               toastr.error('', json.message)
+      loadBillIssued: (billId) ->
+        $.ajax 
+          url: "/api/bill_issueds/#{billId}.json"
+          type: 'PATCH'
+          .done (response) =>
+            @billOriginal = response
+            @bill = $.extend(true, {}, @billOriginal)
+          .fail (response) =>
+            console.error response
       search: ->
         try
           search = $('.bill_list__search__date__btn--search')
@@ -67,7 +65,5 @@ $ ->
           type: 'GET'
         .done (response) =>
           @list = response
-
     compiled: ->
       @LoadIssuedBillsList()
-
