@@ -10,12 +10,10 @@ RSpec.describe Bill do
   it { is_expected.to respond_to(:acceptance_on) }
   it { is_expected.to respond_to(:payment_type) }
   it { is_expected.to respond_to(:bill_on) }
-  it { is_expected.to respond_to(:deposit_on) }
+  it { is_expected.to respond_to(:expected_deposit_on) }
   it { is_expected.to respond_to(:memo) }
 
   it { is_expected.to belong_to(:project) }
-  it { is_expected.to have_many(:users).through(:user_members) }
-  it { is_expected.to have_many(:partners).through(:partner_members) }
 
   it { is_expected.to validate_presence_of(:cd) }
   it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }

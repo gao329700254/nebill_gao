@@ -3,10 +3,17 @@
   $gray: #c0c0c0;
   $emerald: #bee6db;
   /****************************************************************************/
-  padding: 3rem;
   line-height: 1.2rem;
   font-family: sans-serif;
   font-size: .8rem;
+
+  .page_break {
+    page-break-after: always;
+
+    &:last-child {
+      page-break-after: avoid;
+    }
+  }
 
   &__header {
     &--today {
@@ -20,17 +27,21 @@
     }
 
     &__cuon {
-      float: left;
-      margin: 0 1rem 0 15rem;
+      width: 100%;
+      text-align: right;
 
-      &__item,
-      %bill_pdf__header__cuon__item {
-        margin-left: 1rem;
-        text-align: right;
+      &__items {
+        display: inline-block;
 
-        &--bill_cd {
-          @extend %bill_pdf__header__cuon__item;
-          border-bottom: solid 1px;
+        &__item,
+        %bill_pdf__header__cuon__item {
+          margin-left: 1rem;
+          text-align: right;
+
+          &--bill_cd {
+            @extend %bill_pdf__header__cuon__item;
+            border-bottom: solid 1px;
+          }
         }
       }
 
@@ -45,7 +56,8 @@
     }
 
     &__company_seal {
-      padding-top: 1rem;
+      display: inline-block;
+      padding-left: 2%;
       height: 8rem;
     }
 

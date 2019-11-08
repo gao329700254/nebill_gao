@@ -16,8 +16,8 @@ RSpec.describe Xlsx::BillFile do
       expect(worksheet[5][0].value).to  eq I18n.t("enumerize.defaults.payment_type.#{bill.payment_type}")
       expect(worksheet[6][0].value).to  eq bill.amount
       expect(worksheet[7][0].value).to  eq 110
-      expect(worksheet[8][0].value).to  eq 8
-      expect(worksheet[9][0].value).to  eq 118
+      expect(worksheet[8][0].value).to  eq 11
+      expect(worksheet[9][0].value).to  eq 121
       expect(worksheet[10][0].value).to eq 0
       expect(worksheet[11][0].value).to eq 0
       expect(worksheet[12][0].value).to eq project.billing_company_name || ''

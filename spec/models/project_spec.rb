@@ -152,4 +152,95 @@ RSpec.describe Project do
       end
     end
   end
+
+  describe 'calc_expected_deposit_on' do
+    subject { project.calc_expected_deposit_on(payment_type, bill_on) }
+
+    let(:project) { create(:contracted_project) }
+    let(:bill_on) { Time.zone.now }
+
+    context 'payment-type: bill_on_15th_and_payment_on_end_of_next_month' do
+      let(:payment_type) { 'bill_on_15th_and_payment_on_end_of_next_month' }
+
+      context 'today is day 14th' do
+        let(:bill_on) { Time.zone.parse('2019-09-14') }
+        it { is_expected.to eq Date.parse('2019-10-31') }
+      end
+
+      context 'today is day 16th' do
+        let(:bill_on) { Time.zone.parse('2019-09-16') }
+        it { is_expected.to eq Date.parse('2019-11-30') }
+      end
+    end
+
+    context 'payment-type: bill_on_20th_and_payment_on_end_of_next_month' do
+      let(:payment_type) { 'bill_on_20th_and_payment_on_end_of_next_month' }
+
+      context 'today is day 19th' do
+        let(:bill_on) { Time.zone.parse('2019-09-19') }
+        it { is_expected.to eq Date.parse('2019-10-31') }
+      end
+
+      context 'today is day 21th' do
+        let(:bill_on) { Time.zone.parse('2019-09-21') }
+        it { is_expected.to eq Date.parse('2019-11-30') }
+      end
+    end
+
+    context 'payment-type: bill_on_end_of_month_and_payment_on_end_of_next_month' do
+      let(:payment_type) { 'bill_on_end_of_month_and_payment_on_end_of_next_month' }
+      let(:bill_on)      { Time.zone.parse('2019-09-30') }
+
+      it { is_expected.to eq Date.parse('2019-10-31') }
+    end
+
+    context 'payment-type: bill_on_end_of_month_and_payment_on_15th_of_month_after_next' do
+      let(:payment_type) { 'bill_on_end_of_month_and_payment_on_15th_of_month_after_next' }
+      let(:bill_on)      { Time.zone.parse('2019-09-30') }
+
+      it { is_expected.to eq Date.parse('2019-11-15') }
+    end
+
+    context 'payment-type: bill_on_end_of_month_and_payment_on_20th_of_month_after_next' do
+      let(:payment_type) { 'bill_on_end_of_month_and_payment_on_20th_of_month_after_next' }
+      let(:bill_on)      { Time.zone.parse('2019-09-30') }
+
+      it { is_expected.to eq Date.parse('2019-11-20') }
+    end
+
+    context 'payment-type: bill_on_end_of_month_and_payment_on_end_of_month_after_next' do
+      let(:payment_type) { 'bill_on_end_of_month_and_payment_on_end_of_month_after_next' }
+      let(:bill_on)      { Time.zone.parse('2019-09-30') }
+
+      it { is_expected.to eq Date.parse('2019-11-30') }
+    end
+
+    context 'payment-type: bill_on_end_of_month_and_payment_on_35th' do
+      let(:payment_type) { 'bill_on_end_of_month_and_payment_on_35th' }
+
+      context 'last day of next month is 30' do
+        let(:bill_on) { Time.zone.parse('2019-08-31') }
+        it { is_expected.to eq Date.parse('2019-10-05') }
+      end
+
+      context 'last day of next month is 31' do
+        let(:bill_on) { Time.zone.parse('2019-09-30') }
+        it { is_expected.to eq Date.parse('2019-11-04') }
+      end
+    end
+
+    context 'payment-type: bill_on_end_of_month_and_payment_on_45th' do
+      let(:payment_type) { 'bill_on_end_of_month_and_payment_on_45th' }
+
+      context 'last day of next month is 30' do
+        let(:bill_on) { Time.zone.parse('2019-08-31') }
+        it { is_expected.to eq Date.parse('2019-10-15') }
+      end
+
+      context 'last day of next month is 31' do
+        let(:bill_on) { Time.zone.parse('2019-09-30') }
+        it { is_expected.to eq Date.parse('2019-11-14') }
+      end
+    end
+  end
 end

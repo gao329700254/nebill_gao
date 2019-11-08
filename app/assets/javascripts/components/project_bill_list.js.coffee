@@ -4,7 +4,6 @@ $ ->
     props: ['projectId']
     data: ->
       list: undefined
-      sortKey: 'created_at'
       project:
         status: undefined
     methods:

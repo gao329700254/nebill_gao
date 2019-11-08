@@ -4,9 +4,9 @@ class Api::BillsController < Api::ApiController
 
   def index
     @bills = if @project
-               @project.bills
+               @project.bills.order(created_at: :desc)
              else
-               Bill.all.includes(:project)
+               Bill.includes(:project).order(created_at: :desc)
              end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
@@ -14,6 +14,9 @@ class Api::BillsController < Api::ApiController
 
   def create
     @bill = @project.bills.build(bill_param)
+
+    # 請求データの作成時に、作成者＝申請者も作成する
+    @bill_applicant = @bill.build_applicant(user_id: @current_user.id)
     @bill.save!
 
     render_action_model_success_message(@bill, :create)
@@ -82,8 +85,10 @@ private
       :acceptance_on,
       :payment_type,
       :bill_on,
+      :expected_deposit_on,
       :deposit_on,
       :memo,
+      :status,
     )
   end
 

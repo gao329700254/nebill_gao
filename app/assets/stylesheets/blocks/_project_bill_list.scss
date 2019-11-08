@@ -38,6 +38,11 @@
       %bill_list__tbl__item {
         @include list_tbl__item;
 
+        &--status {
+          @extend %bill_list__tbl__item;
+          @include span-columns(2);
+        }
+
         &--cd {
           @extend %bill_list__tbl__item;
           @include span-columns(2);
@@ -49,17 +54,17 @@
           text-align: right;
         }
 
-        &--payment_type {
-          @extend %bill_list__tbl__item;
-          @include span-columns(3);
-        }
-
         &--bill_on {
           @extend %bill_list__tbl__item;
-          @include span-columns(3);
+          @include span-columns(2);
         }
 
-        &--deposit_on {
+        &--expected_deposit_on {
+          @extend %bill_list__tbl__item;
+          @include span-columns(2);
+        }
+
+        &--applicant_name {
           @extend %bill_list__tbl__item;
           @include span-columns(2);
         }

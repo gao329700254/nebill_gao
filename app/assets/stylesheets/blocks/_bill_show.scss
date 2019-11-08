@@ -6,20 +6,55 @@
   padding: $base-spacing;
   color: $white-ft-color;
 
+  &__top_menu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+
+  &__indicator {
+    padding-top: 1rem;
+    font-size: $small-font-size * .9;
+
+    a {
+      color: $grey;
+    }
+  }
+
   &__last_updated_at {
+    padding-right: 1rem;
     text-align: right;
+  }
+
+  .approval_show__detail__approval_user_list__tbl {
+    margin-bottom: 3rem;
+
+    &__body__row {
+      margin: .5rem 0;
+    }
+  }
+
+  .bill_show__details {
+    display: flex;
+    flex-flow: row wrap;
+    padding-top: 2rem;
+  }
+
+  .bill_show_approval_actions_container {
+    padding: 0 1rem;
+    width: 50%;
   }
 
   &__form {
     @include outer-container;
+    width: 50%;
+
     &__container {
       @include row;
-      &__group {
-        @include span-columns(6);
-      }
     }
 
     &__item {
+      margin-right: 5rem;
       margin-bottom: $small-spacing;
 
       #{$all-text-inputs-disabled},
@@ -32,6 +67,13 @@
         border-left-color: $white-bg-color;
         box-shadow: none;
         background-color: $white-bg-color;
+        width: 100%;
+      }
+
+      a {
+        border-bottom: $base-border;
+        padding-left: .8rem;
+        width: 100%;
       }
     }
 
@@ -39,9 +81,37 @@
       &--edit,
       &--cancel,
       &--submit,
+      &--issue,
       &--download,
       &--delete {
         @include btn--primary;
+      }
+
+      &--approve {
+        border: solid 2px $active-action-color;
+        background-color: $active-action-color;
+        height: 2.5rem;
+        color: $white;
+
+        &:hover,
+        &:focus {
+          transition: .4s;
+          text-shadow: -6px 0 15px #fffff0d4, 6px 0 15px #fffff0d4;
+        }
+      }
+
+      &--sent_back {
+        $disconfirm_back: #c9c9c9;
+        border: solid 2px $black;
+        background-color: $disconfirm_back;
+        height: 2.5rem;
+        color: $black;
+
+        &:hover,
+        &:focus {
+          background-color: $light-grey;
+          color: $white;
+        }
       }
     }
 

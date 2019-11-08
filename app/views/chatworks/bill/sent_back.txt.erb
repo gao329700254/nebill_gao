@@ -1,0 +1,12 @@
+[To:<%= to_user.chatwork_id %>] <%= to_user.chatwork_name %>さん
+[info]
+  [title]
+    申請「<%= bill.cd %>: <%= bill.project.name %>」が差し戻しされました。
+  [/title]
+  [info]
+    <%= from_user.user.name %> ： <%= from_user.comment %>
+
+    以下のリンクをクリックして、内容を確認ください。
+    <%=  Rails.application.routes.url_helpers.approval_show_url(bill, ActionMailer::Base.default_url_options) %>
+  [/info]
+[/info]

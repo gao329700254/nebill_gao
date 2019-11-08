@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191007083806) do
+ActiveRecord::Schema.define(version: 20191031050805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(version: 20191007083806) do
     t.string   "project_id"
     t.integer  "created_user_id",              null: false
     t.string   "notes"
-    t.string   "approved_type"
     t.integer  "approved_id"
+    t.string   "approved_type"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "status"
@@ -79,18 +79,42 @@ ActiveRecord::Schema.define(version: 20191007083806) do
     t.index ["approved_type", "approved_id"], name: "index_approvals_on_approved_type_and_approved_id", using: :btree
   end
 
+  create_table "bill_applicants", force: :cascade do |t|
+    t.string   "comment"
+    t.integer  "user_id",    null: false
+    t.integer  "bill_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bill_id"], name: "index_bill_applicants_on_bill_id", using: :btree
+    t.index ["user_id"], name: "index_bill_applicants_on_user_id", using: :btree
+  end
+
+  create_table "bill_approval_users", force: :cascade do |t|
+    t.integer  "role",                    null: false
+    t.integer  "status",     default: 10, null: false
+    t.string   "comment"
+    t.integer  "user_id",                 null: false
+    t.integer  "bill_id",                 null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["bill_id"], name: "index_bill_approval_users_on_bill_id", using: :btree
+    t.index ["user_id"], name: "index_bill_approval_users_on_user_id", using: :btree
+  end
+
   create_table "bills", force: :cascade do |t|
-    t.integer  "project_id",                null: false
-    t.string   "cd",                        null: false
-    t.date     "delivery_on",               null: false
-    t.date     "acceptance_on",             null: false
-    t.date     "bill_on"
+    t.integer  "project_id",                       null: false
+    t.string   "cd",                               null: false
+    t.date     "delivery_on",                      null: false
+    t.date     "acceptance_on",                    null: false
+    t.date     "bill_on",                          null: false
     t.date     "deposit_on"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.text     "memo"
-    t.integer  "amount",        default: 0, null: false
-    t.string   "payment_type"
+    t.integer  "amount",              default: 0,  null: false
+    t.string   "payment_type",                     null: false
+    t.date     "expected_deposit_on",              null: false
+    t.integer  "status",              default: 10, null: false
     t.index ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
   end
 
@@ -332,6 +356,10 @@ ActiveRecord::Schema.define(version: 20191007083806) do
   add_foreign_key "approval_groups", "users", on_delete: :nullify
   add_foreign_key "approval_users", "approvals", on_delete: :cascade
   add_foreign_key "approval_users", "users", on_delete: :cascade
+  add_foreign_key "bill_applicants", "bills"
+  add_foreign_key "bill_applicants", "users"
+  add_foreign_key "bill_approval_users", "bills"
+  add_foreign_key "bill_approval_users", "users"
   add_foreign_key "bills", "projects", on_delete: :cascade
   add_foreign_key "expense_approval_users", "expense_approvals", on_delete: :nullify
   add_foreign_key "expense_approval_users", "users", on_delete: :nullify

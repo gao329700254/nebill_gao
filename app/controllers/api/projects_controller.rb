@@ -90,15 +90,22 @@ class Api::ProjectsController < Api::ApiController
   # rubocop:enable Metrics/AbcSize
 
   def bill_default_values
-    now = Time.zone.now
+    # 正規表現でマッチした部分を用いて、請求日を算出する
+    now                   = Time.zone.now
     @project.payment_type =~ /\Abill_on_(.+)_and_payment_on_(.+)\z/
+    bill_on               = view_context.calc_date(now, Regexp.last_match(1))
+
+    # 支払い条件と請求日から入金予定日を算出する
+    expected_deposit_on   = @project.calc_expected_deposit_on(@project.payment_type, bill_on)
+
     result = {
-      amount:         @project.amount,
-      delivery_on:    @project.end_on,
-      acceptance_on:  @project.end_on,
-      payment_type:   @project.payment_type,
-      bill_on:        view_context.calc_date(now, Regexp.last_match(1)),
-      deposit_on:     nil,
+      cd:                  @project.generate_bill_cd,
+      amount:              @project.amount,
+      delivery_on:         @project.end_on,
+      acceptance_on:       @project.end_on,
+      payment_type:        @project.payment_type,
+      bill_on:             bill_on,
+      expected_deposit_on: expected_deposit_on,
     }
 
     render json: result, status: :ok

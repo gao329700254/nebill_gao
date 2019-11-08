@@ -5,11 +5,12 @@
 == render 'components/agreement_approval_list'
 == render 'components/agreement_client_list'
 == render 'components/agreement_project_list'
+== render 'components/agreement_bill_list'
 == render 'components/agreement_expense_approval_list'
 
 #agreement_list.agreement_list
   .agreement_list__menu_bar
-    = hidden_field_tag :current_vuew, @current_view, 'v-model' => 'currentView'
+    = hidden_field_tag :current_view, @current_view, 'v-model' => 'currentView'
     ul.agreement_list__menu_bar__list
       = link_to nil, 'v-on:click.prevent' => "viewShow('agreement_approval_list')"
         li :class = "currentView === 'agreementApprovalList' ? 'agreement_list__menu_bar__item--active' : 'agreement_list__menu_bar__item'"
@@ -21,6 +22,9 @@
       = link_to nil, 'v-on:click.prevent' => "viewShow('agreement_project_list')"
         li :class = "currentView === 'agreementProjectList' ? 'agreement_list__menu_bar__item--active' : 'agreement_list__menu_bar__item'"
           span.agreement_list__menu_bar__item__title = t('page.agreement.component.project_list')
+      = link_to nil, 'v-on:click.prevent' => "viewShow('agreement_bill_list')"
+        li :class = "currentView === 'agreementBillList' ? 'agreement_list__menu_bar__item--active' : 'agreement_list__menu_bar__item'"
+          span.agreement_list__menu_bar__item__title = t('page.agreement.component.bill_list')
       = link_to nil, 'v-on:click.prevent' => "viewShow('agreement_expense_approval_list')"
         li :class = "currentView === 'agreementExpenseApprovalList' ? 'agreement_list__menu_bar__item--active' : 'agreement_list__menu_bar__item'"
           span.agreement_list__menu_bar__item__title = t('page.agreement.component.expense_approval_list')

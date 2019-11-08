@@ -1,6 +1,6 @@
 class BillDecorator < Draper::Decorator
   delegate_all
-  CONSUMPTION_TAX = 0.08
+  CONSUMPTION_TAX = 0.1
 
   def pdf_bill_no
     I18n.t('pdf.bill.number') + cd

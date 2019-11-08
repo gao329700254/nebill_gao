@@ -52,6 +52,12 @@
 #                 expense_approval_show GET    /expense/approval/:expense_approval_id/show(.:format)       pages#expense_approval_show
 #                 expense_approval_edit GET    /expense/approval/:expense_approval_id/edit(.:format)       pages#expense_approval_edit
 #                             bill_list GET    /bills/list(.:format)                                       pages#bill_list
+#                       bill_applicants POST   /bills/bill_applicants(.:format)                            bill_applicants#create
+#                        bill_applicant PATCH  /bills/bill_applicants/:id(.:format)                        bill_applicants#update
+#                                       PUT    /bills/bill_applicants/:id(.:format)                        bill_applicants#update
+#                   bill_approval_users POST   /bills/bill_approval_users(.:format)                        bill_approval_users#create
+#                    bill_approval_user PATCH  /bills/bill_approval_users/:id(.:format)                    bill_approval_users#update
+#                                       PUT    /bills/bill_approval_users/:id(.:format)                    bill_approval_users#update
 #                             bill_show GET    /bills/:bill_id/show(.:format)                              pages#bill_show
 #                         bill_download GET    /bills/:bill_id/xlsx(.:format)                              bills/xlsx#download
 #                     bill_download_pdf GET    /bills/:bill_id/pdf(.:format)                               bills/pdf#download
@@ -183,6 +189,7 @@
 #                     api_approval_list GET    /api/agreements/approval_list(.:format)                     api/agreements#approval_list
 #                       api_client_list GET    /api/agreements/client_list(.:format)                       api/agreements#client_list
 #                      api_project_list GET    /api/agreements/project_list(.:format)                      api/agreements#project_list
+#                         api_bill_list GET    /api/agreements/bill_list(.:format)                         api/agreements#bill_list
 #             api_expense_approval_list GET    /api/agreements/expense_approval_list(.:format)             api/agreements#expense_approval_list
 #                    api_approval_files POST   /api/approval_files(.:format)                               api/approval_files#create
 #
@@ -256,6 +263,8 @@ Rails.application.routes.draw do
   end
   scope path: 'bills' do
     get 'list', to: 'pages#bill_list', as: 'bill_list'
+    resources :bill_applicants,     only: [:create, :update]
+    resources :bill_approval_users, only: [:create, :update]
   end
   scope path: 'bills/:bill_id' do
     get 'show', to: 'pages#bill_show', as: 'bill_show'

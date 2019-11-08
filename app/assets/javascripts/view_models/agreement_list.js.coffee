@@ -14,5 +14,7 @@ $ ->
     agreementList.currentView = 'agreementClientList'
   page 'agreement_project_list', (ctx) ->
     agreementList.currentView = 'agreementProjectList'
+  page 'agreement_bill_list', (ctx) ->
+    agreementList.currentView = 'agreementBillList'
   page 'agreement_expense_approval_list', (ctx) ->
     agreementList.currentView = 'agreementExpenseApprovalList'

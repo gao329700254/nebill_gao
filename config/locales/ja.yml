@@ -111,15 +111,25 @@ ja:
       project_group:
         name: 名前
       bill:
-        project: プロジェクト
-        cd: 請求番号
-        amount:         請求金額
-        delivery_on:    納品日
-        acceptance_on:  検収日
-        payment_type:   支払条件
-        bill_on:        請求日
-        deposit_on:     入金日
-        memo:           メモ
+        project:             プロジェクト
+        cd:                  請求番号
+        amount:              請求金額
+        delivery_on:         納品日
+        acceptance_on:       検収日
+        payment_type:        支払条件
+        bill_on:             請求日
+        expected_deposit_on: 入金予定日
+        deposit_on:          入金日
+        memo:                メモ
+        status:              ステータス
+      bill_applicant:
+        comment: コメント
+        user_id: 申請者
+      bill_approval_user:
+        role:    役割
+        status:  ステータス
+        user_id: 承認者
+        comment: コメント
       project_file_group:
         name: 名前
       approval_user:
@@ -194,6 +204,7 @@ ja:
       default: "%Y/%m/%d"
       long: "%Y年%m月%d日(%a)"
       short: "%m/%d"
+      bill_cd: "%y%m"
     month_names:
     -
     - 1月
@@ -308,6 +319,7 @@ ja:
       pdf:      PDF
       repeat:   続けて入力
       download: 出力
+      issue:    発行済みに更新
     edit: 編集
     cancel: キャンセル
     show_history: 履歴から読み込み
@@ -318,6 +330,7 @@ ja:
     unauthorized: 許可されていません
     plus: 追加
     exchange: 入替
+    go_back_to_list: ◀ 一覧に戻る
   number:
     currency:
       format:
@@ -424,6 +437,21 @@ ja:
     send_email:
       success: 'メールを送信しました'
       fail: 'メールを送信できませんでした'
+    apply:
+      success: '%{model}を申請しました'
+      fail:    '%{model}を申請できませんでした'
+    cancel:
+      confirm: "本当に取り消してよろしいですか？\n取り消し後は、修正して再申請が可能です。"
+      success: '%{model}の申請を取り消しました'
+      fail:    '%{model}の申請を取り消しできませんでした'
+    approve:
+      confirm: '本当に承認してよろしいですか？'
+      success: '%{model}を承認しました'
+      fail: '%{model}を承認できませんでした'
+    send_back:
+      confirm: "本当に差し戻ししてよろしいですか？"
+      success: '%{model}を差し戻ししました'
+      fail: '%{model}を差し戻しできませんでした'
   # enum_helpで使用するロケール情報
   enums:
     expense_approval:
@@ -438,6 +466,24 @@ ja:
         pending:   承認待ち
         waiting:   ファイル添付待ち
         published: 承認済み
+    bill:
+      status:
+        unapplied: 未申請
+        pending:   承認待ち
+        approved:  承認済み
+        sent_back: 差し戻し
+        cancelled: 取り消し
+        issued:    発行済み
+    bill_approval_user:
+      role:
+        primary:   一段目承認者
+        secondary: 二段目承認者
+      status:
+        unapplied: 未申請
+        pending:   承認待ち
+        approved:  承認済み
+        sent_back: 差し戻し
+        cancelled: 取り消し
   enumerize:
     defaults:
       contract_type:
@@ -499,6 +545,17 @@ ja:
     home:
       title: ホーム
       description: シンプルで高機能なプロジェクト管理システム
+    bill:
+      status:
+        all_status: すべて
+        unapplied:  未申請
+        pending:    承認待ち
+        approved:   承認済み
+        sent_back:  差し戻し
+        cancelled:  取り消し
+        issued:     発行済み
+      comment_placeholder: コメントを入力
+      select_placeholder: 一段目承認者を選択
     client_new:
       title: 取引先新規作成
       legal_check: リーガルチェック
@@ -739,9 +796,10 @@ ja:
     agreement:
       title: 承認ページ
       component:
-        approval_list: 稟議
-        client_list: 取引先
-        project_list: プロジェクト
+        approval_list:         稟議
+        client_list:           取引先
+        project_list:          プロジェクト
+        bill_list:             請求
         expense_approval_list: 経費
       list:
         created_by: 作成者

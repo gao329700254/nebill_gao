@@ -47,6 +47,7 @@
 #  fk_rails_...  (group_id => project_groups.id) ON DELETE => nullify
 #
 
+# rubocop:disable Metrics/ClassLength
 class Project < ApplicationRecord
   extend Enumerize
   include ProjectValidates
@@ -134,4 +135,48 @@ class Project < ApplicationRecord
       memo,
     ]
   end
+
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/AbcSize
+  def calc_expected_deposit_on(payment_type, bill_on)
+    day = payment_type[/\d+/].to_i
+
+    case payment_type
+    when 'bill_on_15th_and_payment_on_end_of_next_month' # 15日締め翌月末払い
+      if bill_on.day <= day
+        Date.parse bill_on.since(1.month).end_of_month.strftime("%Y-%m-%d")
+      else
+        Date.parse bill_on.since(2.months).end_of_month.strftime("%Y-%m-%d")
+      end
+    when 'bill_on_20th_and_payment_on_end_of_next_month' # 20日締め翌月末払い
+      if bill_on.day <= day
+        Date.parse bill_on.since(1.month).end_of_month.strftime("%Y-%m-%d")
+      else
+        Date.parse bill_on.since(2.months).end_of_month.strftime("%Y-%m-%d")
+      end
+    when 'bill_on_end_of_month_and_payment_on_end_of_next_month' # 末日締め翌月末払い
+      Date.parse bill_on.since(1.month).end_of_month.strftime("%Y-%m-%d")
+    when 'bill_on_end_of_month_and_payment_on_15th_of_month_after_next' # 末日締め翌々月15日払い
+      Date.parse bill_on.since(2.months).strftime("%Y-%m-#{day}")
+    when 'bill_on_end_of_month_and_payment_on_20th_of_month_after_next' # 末日締め翌々月20日払い
+      Date.parse bill_on.since(2.months).strftime("%Y-%m-#{day}")
+    when 'bill_on_end_of_month_and_payment_on_end_of_month_after_next' # 末日締め翌々月末払い
+      Date.parse bill_on.since(2.months).end_of_month.strftime("%Y-%m-%d")
+    when 'bill_on_end_of_month_and_payment_on_35th' # 末日締め35日払い = 翌々月5日？
+      Date.parse((bill_on + 35.days).strftime("%Y-%m-%d"))
+    when 'bill_on_end_of_month_and_payment_on_45th' # 末日締め45日払い = 翌々月15日？
+      Date.parse((bill_on + 45.days).strftime("%Y-%m-%d"))
+    end
+  end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/AbcSize
+
+  # 請求番号の末尾に、月ごとに連番2桁（01〜99）を付与する
+  def generate_bill_cd
+    bills_count = bills.where(created_at: Time.current.all_month).count
+    suffix_num  = bills_count < 100 ? bills_count + 1 : 1
+
+    "#{cd}#{I18n.l(Time.zone.today, format: :bill_cd)}#{format('%#02d', suffix_num)}"
+  end
 end
+# rubocop:enable Metrics/ClassLength

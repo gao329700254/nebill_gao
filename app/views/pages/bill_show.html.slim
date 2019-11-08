@@ -7,98 +7,188 @@
 #bill_show.bill_show
   = hidden_field_tag :bill_id, @bill.id, 'v-model' => 'billId'
 
-  .bill_show__last_updated_at
-    = t('page.bill_show.last_updated_at')
-    span v-text='bill.updated_at'
-    span v-text='bill.whodunnit' 'v-if'=>'bill.whodunnit'
-  = form_tag nil, class: 'bill_show__form'
-    .bill_show__form__container
-      .bill_show__form__container__group
-        fieldset.bill_show__form__basic
-          .bill_show__form__item
-            = label_tag :cd, Bill.human_attribute_name(:cd)
-            = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
-          .bill_show__form__item
-            = label_tag :amount, Bill.human_attribute_name(:amount)
-            = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'
-          .bill_show__form__item
-            = label_tag :delivery_on, Bill.human_attribute_name(:delivery_on)
-            = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => '!editMode'
-          .bill_show__form__item
-            = label_tag :acceptance_on, Bill.human_attribute_name(:acceptance_on)
-            = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on', ':disabled' => '!editMode'
-          .bill_show__form__item
-            = label_tag :payment_type, Bill.human_attribute_name(:payment_type)
-            = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type', ':disabled' => '!editMode'
-          .bill_show__form__item
-            = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
-            = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
-          .bill_show__form__item
-            = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
-            = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on', ':disabled' => '!editMode'
-          .bill_show__form__item
-            = label_tag :memo, Bill.human_attribute_name(:memo)
-            = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
-
-        = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
-        class: 'bill_show__form__btn--edit' do
-          = fa_icon 'edit', text: t('helpers.edit')
-        = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
-          = fa_icon 'remove', text: t('helpers.cancel')
-        = button_tag 'v-on:click.prevent' => 'submit'          , 'v-if' =>  'editMode', class: 'bill_show__form__btn--submit' do
-          = fa_icon 'pencil-square', text: t('helpers.submit.update')
-        = link_to bill_download_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
-          = fa_icon 'download', text: t('helpers.submit.excel')
-        = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
-          = fa_icon 'download', text: t('helpers.submit.pdf')
-        = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!bill.deposit_on && !editMode && project.status != "finished"',
-        class: 'bill_show__form__btn--delete' do
-          = fa_icon 'trash', text: t('helpers.delete')
-
-      .bill_show__form__member_list
-        .bill_show__form__member_list__partner
-          .bill_show__form__member_list__partner__head
-            .bill_show__form__member_list__partner__head__title
-              = t('page.bill_show.partner')
-            .bill_show__form__member_list__partner__head__member_btn
-              = button_tag 'v-on:click.prevent' => 'showPartnerNew', 'v-if' => '!bill.deposit_on && project.status != "finished"',
-              class: 'bill_show__form__member_list__partner__head__member_btn--new_partner' do
-                = fa_icon 'check', text: t('component.member_list.new_partner')
-          .bill_show__form__member_list__partner__list
-            == render 'components/bill_show_partner_member_list_tbl'
-
-            .bill_show__form__member_list__add_partner_member
-              == render 'components/bill_show__form__member_list__add_partner_member'
-
-          .bill_show__form__member_list__partner_btn
-            = button_tag 'v-on:click.prevent' => 'editModeOn', 'v-if' => '!partnerEditMode && selectedPartners.length > 0',
-            class: 'bill_show__form__member_list__partner_btn--edit' do
-              = fa_icon 'edit', text: t('helpers.edit')
-            = button_tag 'v-on:click.prevent' => 'editModeOff', 'v-if' => 'partnerEditMode', class: 'bill_show__form__member_list__partner_btn--cancel' do
-              = fa_icon 'remove', text: t('helpers.cancel')
-            = button_tag 'v-on:click.prevent' => 'editMember', 'v-if' => 'partnerEditMode', class: 'bill_show__form__member_list__partner_btn--submit' do
-              = fa_icon 'pencil-square', text: t('helpers.submit.update')
-            = button_tag 'v-if' => '!partnerEditMode && selectedPartners.length > 0', 'v-on:click.prevent' => 'deleteMember',
-            class: 'bill_show__form__member_list__partner_btn--delete' do
-              = fa_icon 'trash', text: t('helpers.delete')
-
-        .bill_show__form__member_list__user
-          = t('page.bill_show.member')
-          == render 'components/bill_show_user_member_list_tbl'
-          .bill_show__form__member_list__add_user_member
-            select.bill_show__form__member_list__add_user_member__list [
-              name='user'
-              v-model='selectedUserId'
-              v-if='!bill.deposit_on && project.status != "finished"'
-            ]
-              option v-for="user in selectableUsers" value="{{user.id}}" {{user.name}}
-            = button_tag 'v-on:click.prevent' => 'addUserMember', 'v-if' => '!bill.deposit_on && project.status != "finished"',
-            class: 'bill_show__form__member_list__add_user_member__btn--submit' do
-              = fa_icon 'check', text: t('helpers.submit.create')
-          .user_member_list__delete_member v-if="selectedUsers.length > 0"
-            = button_tag 'v-on:click.prevent' => 'deleteUserMember', 'v-if' => '!bill.deposit_on && project.status != "finished"',
-            class: 'bill_show__form__member_list__add_user_member__user_btn--delete' do
-              = fa_icon 'trash', text: t('helpers.delete')
+  .bill_show__top_menu
+    .bill_show__indicator
+      = link_to t('helpers.go_back_to_list'), bill_list_path
+    .bill_show__last_updated_at
+      = t('page.bill_show.last_updated_at')
+      span v-text='bill.updated_at'
+      span v-text='bill.whodunnit' 'v-if'=>'bill.whodunnit'
+  .bill_show__details
+    = form_tag nil, class: 'bill_show__form'
+      .bill_show__form__container
+        .bill_show__form__container__group
+          fieldset.bill_show__form__basic
+            .bill_show__form__item
+              = label_tag :status, Bill.human_attribute_name(:status)
+              = text_field_tag :status, nil, 'v-model' => 'bill.status', ':disabled' => true
+            .bill_show__form__item
+              = label_tag :cd, Bill.human_attribute_name(:cd)
+              = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :project_id, Project.human_attribute_name(:name)
+              = link_to @bill.project.name, project_show_path(@bill.project), type: 'button'
+            .bill_show__form__item
+              = label_tag :amount, Bill.human_attribute_name(:amount)
+              = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :delivery_on, Bill.human_attribute_name(:delivery_on)
+              = date_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :acceptance_on, Bill.human_attribute_name(:acceptance_on)
+              = date_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :payment_type, Bill.human_attribute_name(:payment_type)
+              = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
+              = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
+              = date_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
+              = date_field_tag :deposit_on, nil, 'v-model' => 'bill.deposit_on', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :memo, Bill.human_attribute_name(:memo)
+              = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
+          / -----------------------------------------------------
+          / 請求書発行アクション
+          / -----------------------------------------------------
+          = link_to bill_download_pdf_path, 'v-if' => '!editMode', type: 'button', class: 'bill_show__form__btn--download' do
+            = fa_icon 'download', text: 'PDF出力'
+          / -----------------------------------------------------
+          / 請求フォーム操作アクション
+          / -----------------------------------------------------
+          - if @bill_applicant.user.id == @current_user.id
+            - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill? || @bill.issued_bill?
+              = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode',
+              class: 'bill_show__form__btn--edit' do
+                = fa_icon 'edit', text: t('helpers.edit')
+              = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
+                = fa_icon 'remove', text: t('helpers.cancel')
+              = button_tag 'v-on:click.prevent' => 'submit', 'v-if' => 'editMode', class: 'bill_show__form__btn--submit' do
+                = fa_icon 'pencil-square', text: t('helpers.submit.update')
+            - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill?
+              = button_tag 'v-on:click.prevent' => 'destroy', class: 'bill_show__form__btn--delete' do
+                = fa_icon 'trash', text: t('helpers.delete')
+          - if @bill.approved_bill?
+            = button_tag 'v-on:click.prevent' => 'issue', class: 'bill_show__form__btn--issue' do
+              = fa_icon 'pencil-square', text: t('helpers.submit.issue')
+        / / TODO(maeda):請求書内訳編集フォーム
+        / .bill_show__detail__form
+        /   = '内訳編集エリア'
+        /   .div
+        /     table.approval_show__detail__approval_user_list__tbl
+        /       thead.approval_show__detail__approval_user_list__tbl__head
+        /         tr.approval_show__detail__approval_user_list__tbl__head__row
+        /           th.approval_show__detail__approval_user_list__item--approval_user_name =  'ご請求金額'
+        /           th.approval_show__detail__approval_user_list__item--approval_user_status = '整合性チェック'
+        /       tbody.approval_show__detail__approval_user_list__tbl__body
+        /         tr.approval_show__detail__approval_user_list__tbl__head__row
+        /           td.approval_show__detail__approval_user_list__item--approval_user_name   = '請求金額＝小計＋消費税＋経費の合計金額を表示'
+        /           td.approval_show__detail__approval_user_list__item--approval_user_status = '左の値とプロジェクトから取得した請求金額が一致するか否か判断し、その結果をここに表示する'
+        /   table.approval_show__detail__approval_user_list__tbl
+        /     thead.approval_show__detail__approval_user_list__tbl__head
+        /       tr.approval_show__detail__approval_user_list__tbl__head__row
+        /         th.approval_show__detail__approval_user_list__item--approval_user_name =  '内訳'
+        /         th.approval_show__detail__approval_user_list__item--approval_user_status = '金額'
+        /     tbody.approval_show__detail__approval_user_list__tbl__body
+        /       tr.approval_show__detail__approval_user_list__tbl__body__row
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field :comment, '',
+        /           placeholder: '手入力', class: 'approval_show__detail__update__action__text'
+        /         td.approval_show__detail__approval_user_list__item--approval_user_status = text_field :comment, '',
+        /           placeholder: '手入力', class: 'approval_show__detail__update__action__text'
+        /       tr.approval_show__detail__approval_user_list__tbl__body__row
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '超過分'
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
+        /           placeholder: '手入力', class: 'approval_show__detail__update__action__text'
+        /       tr.approval_show__detail__approval_user_list__tbl__body__row
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '小計'
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
+        /           placeholder: '内訳と超過分の金額を自動集計する', class: 'approval_show__detail__update__action__text'
+        /       tr.approval_show__detail__approval_user_list__tbl__body__row
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '消費税'
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
+        /           placeholder: '小計に対する消費税を自動算出する', class: 'approval_show__detail__update__action__text'
+        /       tr.approval_show__detail__approval_user_list__tbl__body__row
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '経費（交通費）'
+        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
+        /           placeholder: '手入力、デフォルト値は「0」', class: 'approval_show__detail__update__action__text'
+        /   = button_tag '追加', class: 'approval_show__detail__update__action__btn--permission'
+        /     = fa_icon 'plus', text: t('helpers.plus')
+    .bill_show_approval_actions_container
+      / -----------------------------------------------------
+      / 請求書申請者テーブル
+      / -----------------------------------------------------
+      .bill_show__detail__approval_user_list
+        table.approval_show__detail__approval_user_list__tbl
+          thead.approval_show__detail__approval_user_list__tbl__head
+            tr.approval_show__detail__approval_user_list__tbl__head__row
+              th.approval_show__detail__approval_user_list__item--approval_user_name = BillApplicant.human_attribute_name(:user_id)
+              th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApplicant.human_attribute_name(:comment)
+          tbody.approval_show__detail__approval_user_list__tbl__body
+            tr.approval_show__detail__approval_user_list__tbl__body__row
+              td.approval_show__detail__approval_user_list__item--approval_user_name = @bill_applicant.user.name
+              td.approval_show__detail__approval_user_list__item--approval_user_comment = @bill_applicant.comment
+      / -----------------------------------------------------
+      / 請求書承認者テーブル
+      / -----------------------------------------------------
+      - if @bill_approvers.present?
+        .bill_show__detail__approval_user_list
+          table.approval_show__detail__approval_user_list__tbl
+            thead.approval_show__detail__approval_user_list__tbl__head
+              tr.approval_show__detail__approval_user_list__tbl__head__row
+                th.approval_show__detail__approval_user_list__item--approval_user_name = BillApprovalUser.human_attribute_name(:role)
+                th.approval_show__detail__approval_user_list__item--approval_user_name = BillApprovalUser.human_attribute_name(:user_id)
+                th.approval_show__detail__approval_user_list__item--approval_user_status = BillApprovalUser.human_attribute_name(:status)
+                th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApprovalUser.human_attribute_name(:comment)
+            tbody.approval_show__detail__approval_user_list__tbl__body
+              - @bill_approvers.each do |approver|
+                tr.approval_show__detail__approval_user_list__tbl__body__row
+                  td.approval_show__detail__approval_user_list__item--approval_user_name = approver.role_i18n
+                  td.approval_show__detail__approval_user_list__item--approval_user_name = approver.user.name
+                  td.approval_show__detail__approval_user_list__item--approval_user_status = approver.status_i18n
+                  td.approval_show__detail__approval_user_list__item--approval_user_comment = approver.comment
+      / -----------------------------------------------------
+      / 申請者用アクション
+      / -----------------------------------------------------
+      - if @bill_applicant.user.id == @current_user.id
+        .bill_approval_show__detail__update
+          - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
+            = form_tag bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
+              .approval_show__detail__update__action
+                = hidden_field_tag :bill_id, @bill.id
+                = select_tag :user_id,
+                    options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name),
+                    prompt: t('page.bill.select_placeholder')
+                = text_area_tag :comment, '', placeholder: t('page.bill.comment_placeholder')
+                - if @bill.unapplied_bill? || @bill.cancelled_bill?
+                  = button_tag '申請', class: 'bill_show__form__btn--submit'
+                - if @bill.sent_back_bill?
+                  = button_tag '再申請', name: 'reapply', value: 'reapply', class: 'bill_show__form__btn--submit'
+          = form_for @bill_applicant do |form|
+            - if @bill.pending_bill?
+              .approval_show__detail__update__action
+                = form.hidden_field :bill_id
+                = form.button '取消', data: { confirm: I18n.t("action.cancel.confirm") }, class: 'bill_show__form__btn--cancel'
+      / -----------------------------------------------------
+      / 承認者用アクション
+      / -----------------------------------------------------
+      - if @current_approver.present?
+        .bill_approval_show__detail__update
+          - if @current_approver.pending_bill?
+            = form_tag bill_approval_users_path(@bill), class: 'bill_show__detail__approval_user_list' do
+              .approval_show__detail__update__action
+                = hidden_field_tag :bill_id, @bill.id
+                = text_area_tag :comment, '', placeholder: t('page.bill.comment_placeholder')
+                = button_tag '承認', class: 'bill_show__form__btn--approve'
+          - if @current_approver.pending_bill? || (@current_approver.approved_bill? && @bill.secondary_approver.pending_bill?)
+            = form_for @current_approver do |form|
+              .approval_show__detail__update__action
+                = form.hidden_field :bill_id
+                = form.text_area :comment, value: '', placeholder: t('page.bill.comment_placeholder')
+                = form.button '差戻', data: { confirm: I18n.t("action.send_back.confirm") }, class: 'bill_show__form__btn--sent_back'
 
   component [
     :is        = "'partnerNew'"
