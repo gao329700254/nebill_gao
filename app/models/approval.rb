@@ -38,7 +38,7 @@ class Approval < ApplicationRecord
   validates :notes, length: { maximum: 2000 }
   validates :approval_approval_group, presence: true, if: -> { approvaler_type.group? }
 
-  enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, invalid: 40 }, default: :pending
+  enumerize :status, in: { pending: 10, permission: 20, disconfirm: 30, invalid: 40 }, default: :pending, predicates: true
   enumerize :category, in: { contract_relationship: 10, new_client: 20, consumables: 30, other_purchasing: 40, other: 50 }, default: :other
   enumerize :approvaler_type, in: { user: 10, group: 20 }, default: :user
 

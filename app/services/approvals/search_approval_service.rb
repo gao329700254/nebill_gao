@@ -1,4 +1,4 @@
-class Approvals::SortApprovalService < BaseService
+class Approvals::SearchApprovalService < BaseService
   attr_reader :approval
 
   def initialize(params:, current_user:)
@@ -12,9 +12,9 @@ class Approvals::SortApprovalService < BaseService
 
   def call
     @approvals = Approval.search_approval(current_user: @current_user, search_created_at: @created_at).includes(:created_user).only_approval.to_a
-    sort_by_keywords
-    sort_by_status
-    sort_by_category
+    search_by_keywords
+    search_by_status
+    search_by_category
     @approvals = Approval.where(id: @approvals.map(&:id)).order(created_at: :desc).page(@page).per(20)
   end
 
@@ -22,7 +22,7 @@ private
 
   # rubocop:disable Metrics/CyclomaticComplexity
   # rubocop:disable Metrics/PerceivedComplexity
-  def sort_by_keywords
+  def search_by_keywords
     if @search_keywords && @search_keywords != ''
       search_keywords = @search_keywords.sub(/\A[[:space:]]+/, "").split(/[[:blank:]]+/)
       if search_keywords.count == 1
@@ -38,11 +38,11 @@ private
   # rubocop:enable Metrics/CyclomaticComplexity
   # rubocop:enable Metrics/PerceivedComplexity
 
-  def sort_by_status
-    @approvals.select! { |app| app.status == @status } if @status && @status != ''
+  def search_by_status
+    @approvals.select! { |app| app.status == @status } if @status.present?
   end
 
-  def sort_by_category
-    @approvals.select! { |app| app.category == @category } if @category && @category != ''
+  def search_by_category
+    @approvals.select! { |app| app.category == @category } if @category.present?
   end
 end
