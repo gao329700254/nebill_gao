@@ -41,7 +41,7 @@
         td.bill_issueds_list__tbl__item--payment_type    v-text='bill.payment_type' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--deposit_on      v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--confirm
-          = button_tag class: 'bill_issueds_list__tbl__item--confirmbtn', \
+          = button_tag id: "{{bill.id}}", class: 'bill_issueds_list__tbl__item--confirmbtn', \
             'type' => 'submit', 'v-text' => 'buttonText', 'v-on:click.prevent' => 'submit(bill)' do
         td.bill_issueds_list__tbl__item--memo             
           = text_area_tag :"memo-{{bill.id}}", nil, 'v-model' => 'bill.memo'
