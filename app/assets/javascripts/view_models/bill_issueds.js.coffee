@@ -15,35 +15,33 @@ $ ->
       billId: undefined
     methods:
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
-      submit: (billId) ->
-        console.log(@list)
+      loadBillIssued: (billId) ->
+        $.ajax 
+          url: "/api/bill_issueds/#{billId}.json"
+        .done (response) =>
+          @billOriginal = response
+          @bill = $.extend(true, {}, @billOriginal)
+        .fail (response) =>
+          console.error response
+      submit: (bill) ->
         try
           $.ajax
-            url: "/api/bill_issueds/#{billId}.json"
+            url: "/api/bill_issueds/#{bill.id}.json"
             type: 'PATCH'
             data: {
               bill: {
-                memo: @list[2].memo
+                memo: bill.memo
               }
             }
           .done (response) =>
             toastr.success('', response.message)
-            @loadBillIssued()
+            @loadBillIssued(bill.id)
           .fail (response) =>
             json = response.responseJSON
             if _.has(json, 'errors')
               toastr.error(json.errors.full_messages.join('<br>'), json.message)
             else
               toastr.error('', json.message)
-      loadBillIssued: (billId) ->
-        $.ajax 
-          url: "/api/bill_issueds/#{billId}.json"
-          type: 'PATCH'
-          .done (response) =>
-            @billOriginal = response
-            @bill = $.extend(true, {}, @billOriginal)
-          .fail (response) =>
-            console.error response
       search: ->
         try
           search = $('.bill_list__search__date__btn--search')
