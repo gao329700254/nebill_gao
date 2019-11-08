@@ -62,8 +62,7 @@
         th.approval_list__tbl__item--created_at        = Approval.human_attribute_name(:created_at)
     tbody.approval_list__tbl__body
       - @approvals.each do |approval|
-          tr onclick='window.location="/approvals/#{approval.id}/show"' role="link" id="approval-#{approval.id}" class="#{approval.disconfirm? \
-             || approval.invalid? ? 'approval_list__tbl__body__row approval_list__tbl__body__row--repudiation': 'approval_list__tbl__body__row'}"
+          tr onclick='window.location="/approvals/#{approval.id}/show"' role="link" id="approval-#{approval.id}" class="#{approval_tbl_class(approval)}"
             td.approval_list__tbl__item--name
               = approval.name
             td.approval_list__tbl__item--approvaler_type
