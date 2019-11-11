@@ -36,6 +36,7 @@ $ ->
           .done (response) =>
             toastr.success('', response.message)
             @loadBillIssued(bill.id)
+            # window.location = "/bills/#{bill.id}/show"
           .fail (response) =>
             json = response.responseJSON
             if _.has(json, 'errors')

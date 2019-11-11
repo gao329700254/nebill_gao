@@ -15,6 +15,13 @@
       .bill_issueds_list__search__date__btn
         = button_tag 'v-on:click.prevent' => 'search', class: 'bill_issueds_list__search__date__btn--search' do
           = fa_icon 'search', text: t('page.bill_issueds_list.search')
+  .bill_list__search__radio
+    = radio_button_tag :all_status, '', false, 'v-model' => 'status'
+    = label_tag t('page.bill.status.all_status')
+    = radio_button_tag :issued, t('page.bill.status.issued'), false, 'v-model' => 'status'
+    = label_tag t('page.bill.status.not_confirm')
+    = radio_button_tag :issued, t('page.bill.status.issued'), false, 'v-model' => 'status'
+    = label_tag t('page.bill.status.confirmed')
   table.bill_issueds_list__tbl
     thead.bill_issueds_list__tbl__head
       tr.bill_issueds_list__tbl__head__row
