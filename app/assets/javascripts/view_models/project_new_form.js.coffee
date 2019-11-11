@@ -91,7 +91,7 @@ $ ->
             contentType: false
             processData: false
           .done (response) =>
-            @project_id = response.flat()[3]
+            @project_id = response.id
             window.location = "/projects/#{@project_id}/show"
           .fail (response) =>
             json = response.responseJSON

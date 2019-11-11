@@ -29,8 +29,7 @@ private
 
   def render_action_model_flash_success_message_create(model, action)
     flash[:success] = I18n.t("action.#{action}.success", model: I18n.t("activerecord.models.#{model.class.name.underscore}"))
-    flash[:id] = model.id
-    render json: flash, status: :created
+    render(json: { id: model.id }, status: :created)
   end
 
   def render_action_model_flash_success_message(model, action)
