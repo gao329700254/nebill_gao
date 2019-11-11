@@ -122,6 +122,7 @@ ja:
         deposit_on:          入金日
         memo:                メモ
         status:              ステータス
+        confirm:             入金確認
       bill_applicant:
         comment: コメント
         user_id: 申請者
@@ -554,6 +555,8 @@ ja:
         sent_back:  差し戻し
         cancelled:  取り消し
         issued:     発行済み
+        not_confirm: 入金未確認
+        confirmed:  入金確認済
       comment_placeholder: コメントを入力
       select_placeholder: 一段目承認者を選択
     client_new:
