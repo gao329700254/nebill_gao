@@ -8,7 +8,6 @@ class Api::BillIssuedsController < Api::ApiController
              else
                Bill.all.includes(:project)
              end
-
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
