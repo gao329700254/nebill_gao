@@ -56,7 +56,7 @@
         / td.bill_issueds_list__tbl__item--memo             
         /   = text_area_tag :"memo-{{bill.id}}", nil, 'v-model' => 'bill.memo'
 
-component [
-  :is        = "'billIssuedEdit'"
-  keep-alive = true
-]
+  component [
+    :is        = "'billIssuedEdit'"
+    keep-alive = true
+  ]
