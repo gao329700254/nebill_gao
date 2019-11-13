@@ -1,0 +1,18 @@
+= form_tag nil, class:'client_personnel_new__form'
+  .client_personnel_new__form__container
+    .client_personnel_new__form__item
+      = label_tag :name, ClientPersonnel.human_attribute_name(:name)
+      = text_field_tag :name, nil, 'v-model' => 'client_personnel.name'
+    .client_personnel_new__form__item
+      = label_tag :mail, ClientPersonnel.human_attribute_name(:mail)
+      = text_field_tag :mail, nil, 'v-model' => 'client_personnel.mail'
+    .client_personnel_new__form__item
+      = label_tag :cc, ClientPersonnel.human_attribute_name(:cc)
+      = text_field_tag :cc, nil, 'v-model' => 'client_personnel.cc'
+    .client_personnel_new__form__item
+      = label_tag :phone_number, ClientPersonnel.human_attribute_name(:phone_number)
+      = text_field_tag :phone_number, nil, 'v-model' => 'client_personnel.phone_number'
+  = button_tag 'v-on:click.prevent' => 'cancel', class: 'client_personnel_new__form__cancel_btn' do
+    = fa_icon 'remove', text: t('helpers.cancel')
+  = button_tag 'v-on:click.prevent' => 'submit', class: 'client_personnel_new__form__submit_btn' do
+    = fa_icon 'check', text: t('helpers.submit.submit')

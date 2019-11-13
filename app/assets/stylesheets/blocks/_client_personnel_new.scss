@@ -1,0 +1,42 @@
+.client_personnel_new {
+  /*** variables **************************************************************/
+  /****************************************************************************/
+
+  &__outer {
+    @include modal__outer;
+    padding-top: 5em;
+
+    &__inner {
+      @include modal__outer__inner;
+
+      &__body {
+        @include modal__outer__inner__body;
+      }
+    }
+  }
+
+  &__form {
+    @include outer-container;
+    &__container {
+      @include row;
+      &__group {
+        @include span-columns(12);
+      }
+    }
+
+    &__item {
+      margin-bottom: $small-spacing;
+    }
+
+    &__submit_btn,
+    &__cancel_btn {
+      @include btn--primary;
+      margin-top: $base-spacing;
+    }
+  }
+
+  &__name__alert {
+    display: inline-block;
+    color: $red;
+  }
+}
