@@ -3,10 +3,14 @@ $ ->
     template: '#bill_issueds_edit'
     mixins: [Vue.modules.modal]
     data: ->
+      billId: undefined
       sortKey: 'cd'
       list: undefined
       buttonText: '未確認'
       bill_id: ''
+      bill: ''
+      billOriginal: undefined
+      project: ''
     methods:
       cancel: -> @modalHide()
       loadBillIssued: ->
@@ -17,10 +21,14 @@ $ ->
           @bill = $.extend(true, {}, @billOriginal)
         .fail (response) =>
           console.error response
+      loadProject: ->
+        $.ajax "/api/projects/bill/#{@bill_id}.json"
+          .done (response) =>
+            @project = response
       # submit: (bill) ->
       #   try
       #     $.ajax
-      #       url: "/api/bill_issueds/#{bill.id}.json"
+      #       url: "/api/bill_issueds/#{@bill_id}.json"
       #       type: 'PATCH'
       #       data: {
       #         bill: {
@@ -29,7 +37,7 @@ $ ->
       #       }
       #     .done (response) =>
       #       toastr.success('', response.message)
-      #       @loadBillIssued(bill.id)
+      #       @loadBillIssued(@bill_id)
       #       # window.location = "/bills/#{bill.id}/show"
       #     .fail (response) =>
       #       json = response.responseJSON
@@ -41,6 +49,6 @@ $ ->
       showBillIssuedEditEvent: (bill) -> 
         @modalShow()
         @bill_id = bill.id
-        console.log(@bill_id)
         @loadBillIssued()
+        @loadProject()
 
