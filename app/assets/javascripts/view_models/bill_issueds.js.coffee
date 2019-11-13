@@ -21,8 +21,8 @@ $ ->
         .done (response) =>
           @list = response
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
-      showBillIssuedEdit: -> 
-        @$broadcast('showBillIssuedEditEvent')
+      showBillIssuedEdit: (bill) -> 
+        @$broadcast('showBillIssuedEditEvent', bill)
       # loadBillIssued: (billId) ->
       #   $.ajax 
       #     url: "/api/bill_issueds/#{billId}.json"

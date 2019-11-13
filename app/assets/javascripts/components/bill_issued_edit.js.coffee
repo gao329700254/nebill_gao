@@ -6,18 +6,12 @@ $ ->
       sortKey: 'cd'
       list: undefined
       buttonText: '未確認'
-      billId: undefined
+      bill_id: ''
     methods:
       cancel: -> @modalHide()
-      loadIssuedBillsList: ->
+      loadBillIssued: ->
         $.ajax 
-          url: '/api/bill_issueds.json'
-          type: 'GET'
-        .done (response) =>
-          @list = response
-      loadBillIssued: (billId) ->
-        $.ajax 
-          url: "/api/bill_issueds/#{billId}.json"
+          url: "/api/bill_issueds/#{@bill_id}.json"
         .done (response) =>
           @billOriginal = response
           @bill = $.extend(true, {}, @billOriginal)
@@ -43,9 +37,10 @@ $ ->
       #         toastr.error(json.errors.full_messages.join('<br>'), json.message)
       #       else
       #         toastr.error('', json.message)
-    compiled: ->
-      @loadIssuedBillsList()
     events:
-      showBillIssuedEditEvent: -> 
+      showBillIssuedEditEvent: (bill) -> 
         @modalShow()
+        @bill_id = bill.id
+        console.log(@bill_id)
+        @loadBillIssued()
 

@@ -3,9 +3,6 @@ script type='text/x-template' id='bill_issueds_edit'
     .bill_issueds_edit__outer [
       v-bind:style = "modalActive ? modalStyle.active : modalStyle.nonActive"
       v-on:click = "modalHide"
-      v-for = "bill in list"
-      id         = "bill-{{bill.id}}"
-      track-by   = "id"
     ]
       .bill_issueds_edit__outer__inner v-on:click.stop=""
         .bill_issueds_edit__outer__inner__body
