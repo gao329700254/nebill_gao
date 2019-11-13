@@ -51,7 +51,7 @@
         td.bill_issueds_list__tbl__item--deposit_on      v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--confirm
           = button_tag id: "{{bill.id}}", class: 'bill_issueds_list__tbl__item--confirmbtn', \
-            'v-text' => 'buttonText', 'v-on:click' => 'showBillIssuedEdit' do
+            'v-text' => 'buttonText', 'v-on:click' => 'showBillIssuedEdit(bill)' do
         / td.bill_issueds_list__tbl__item--memo             
         /   = text_area_tag :"memo-{{bill.id}}", nil, 'v-model' => 'bill.memo'
 
