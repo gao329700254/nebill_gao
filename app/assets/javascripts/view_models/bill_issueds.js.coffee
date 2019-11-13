@@ -22,9 +22,7 @@ $ ->
           @list = response
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
       showBillIssuedEdit: -> 
-        console.log('aaa')
         @$broadcast('showBillIssuedEditEvent')
-
       # loadBillIssued: (billId) ->
       #   $.ajax 
       #     url: "/api/bill_issueds/#{billId}.json"

@@ -3,23 +3,49 @@ $ ->
     template: '#bill_issueds_edit'
     mixins: [Vue.modules.modal]
     data: ->
-      bill:
-        project_id:             ''
-        cd:                     ''
-        amount:                 ''
-        delivery_on:            ''
-        acceptance_on:          ''
-        payment_type:           ''
-        bill_on:                ''
-        expected_deposit_on:    ''
-        deposit_on:             ''
-        memo:                   ''
-        status:                 ''
+      sortKey: 'cd'
+      list: undefined
+      buttonText: '未確認'
+      billId: undefined
     methods:
       cancel: -> @modalHide()
-      # submit: ->
+      loadIssuedBillsList: ->
+        $.ajax 
+          url: '/api/bill_issueds.json'
+          type: 'GET'
+        .done (response) =>
+          @list = response
+      loadBillIssued: (billId) ->
+        $.ajax 
+          url: "/api/bill_issueds/#{billId}.json"
+        .done (response) =>
+          @billOriginal = response
+          @bill = $.extend(true, {}, @billOriginal)
+        .fail (response) =>
+          console.error response
+      # submit: (bill) ->
+      #   try
+      #     $.ajax
+      #       url: "/api/bill_issueds/#{bill.id}.json"
+      #       type: 'PATCH'
+      #       data: {
+      #         bill: {
+      #           memo: bill.memo
+      #         }
+      #       }
+      #     .done (response) =>
+      #       toastr.success('', response.message)
+      #       @loadBillIssued(bill.id)
+      #       # window.location = "/bills/#{bill.id}/show"
+      #     .fail (response) =>
+      #       json = response.responseJSON
+      #       if _.has(json, 'errors')
+      #         toastr.error(json.errors.full_messages.join('<br>'), json.message)
+      #       else
+      #         toastr.error('', json.message)
+    compiled: ->
+      @loadIssuedBillsList()
     events:
       showBillIssuedEditEvent: -> 
-        console.log('イベントに入った')
         @modalShow()
 
