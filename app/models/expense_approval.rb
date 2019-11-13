@@ -32,16 +32,15 @@ class ExpenseApproval < ApplicationRecord
   scope :where_created_on, -> (created_at) { where(created_at: Date.strptime(created_at).beginning_of_day..Date.strptime(created_at).end_of_day) }
   scope :appr_id, -> { maximum(:id) || 0 }
   scope :my_appr, -> (current_user) { where(created_user_id: current_user).map(&:id).sort.reverse }
+  scope :my_related_appr, lambda { |created_user_id|
+    where(id: ExpenseApprovalUser.select(:expense_approval_id).where(user_id: created_user_id)).or(where(created_user_id: created_user_id))
+  }
+
+  has_paper_trail
 
   def invalidate_approval_users
     expense_approval_user.map(&:change_invalid)
   end
-
-  scope :my_related_appr,
-        (lambda do |created_user_id|
-          where(id: ExpenseApprovalUser.select(:expense_approval_id).where(user_id: created_user_id))
-          .or(where(created_user_id: created_user_id))
-        end)
 
   def mine?(current_user)
     created_user_id == current_user.id
