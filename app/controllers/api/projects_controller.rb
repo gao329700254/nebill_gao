@@ -11,21 +11,9 @@ class Api::ProjectsController < Api::ApiController
 
   def create
     params[:project] = JSON.parse(params[:project]) if params[:project].class == String
-    @project = Project.new(project_param)
-    if @project.valid?
-      Project.transaction do
-        @project.save!
-        if params[:file]
-          @file = @project.files.build(file: params[:file], original_filename: params[:file].original_filename, file_type: 20)
-          @file.save!
-          create_approval
-          create_notice
-        end
-      end
-      render_action_model_flash_success_message_create(@project, :create)
-    else
-      render_action_model_fail_message(@project, :create)
-    end
+    @project = Project.new(project_params)
+    @project.create_in_nebill_and_sf!(params[:file])
+    render_action_model_flash_success_message_create(@project, :create)
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@project, :create)
   end
@@ -40,10 +28,7 @@ class Api::ProjectsController < Api::ApiController
   end
 
   def update
-    @project.attributes = project_param
-    @project.status = :finished if @project.unprocessed
-    @project.save!
-    edit_file if params[:file]
+    @project.update_in_nebill_and_sf!(project_params, params[:file])
 
     render_action_model_success_message(@project, :update)
   rescue ActiveRecord::RecordInvalid
@@ -113,6 +98,7 @@ class Api::ProjectsController < Api::ApiController
 
   def destroy
     if @project.destroy
+      @project.destroy_in_sf
       render_action_model_flash_success_message(@project, :destroy)
     else
       render_action_model_fail_message(@project, :destroy)
@@ -147,36 +133,6 @@ private
     @project = Project.find(params[:id])
   end
 
-  def edit_file
-    project_file = @project.files&.find_by(file_type: 20) if @project.files.present?
-    if project_file.present?
-      project_file.update!(file: params[:file], original_filename: params[:file].original_filename)
-      update_approval
-      update_notice
-    else
-      @file = @project.files.build(file: params[:file], original_filename: params[:file].original_filename, file_type: 20)
-      @file.save!
-      create_approval
-      create_notice
-    end
-  end
-
-  def create_approval
-    approval_params = {
-      name: Project.human_attribute_name(:approval_name, project: @project.name),
-      created_user_id: UserSession.find.user.id,
-      category: 10,
-      project_id: @project.id,
-      approved_id: @project.id,
-      approved_type: "Project",
-    }
-    approval_user = User.find_by(is_chief: true)
-    create_params = { user_id: approval_user.id }
-    @services ||= Approvals::CreateApprovalService.new(approval_params: approval_params, create_params: create_params)
-    return if @services.execute
-    fail
-  end
-
   def update_params
     params.permit(
       :approval_id,
@@ -201,20 +157,6 @@ private
     @project.save
   end
 
-  def create_notice
-    approval = Approval.find_by(approved_type: 'Project', approved_id: @project.id)
-    user = approval.users.first
-    ProjectMailer.assignment_user(user: user, approval: approval).deliver_now
-    Chatwork::Project.new(approval: approval, to_user: user).notify_assigned
-  end
-
-  def update_notice
-    approval = @services.approval
-    user = approval.users.first
-    ProjectMailer.update_project_approval(user: user, approval: approval).deliver_now
-    Chatwork::Project.new(approval: approval, to_user: approval.users).notify_edit
-  end
-
   def update_approval_notice
     approval = @services.approval
     if params[:button] == 'permission'
@@ -233,15 +175,8 @@ private
     params[:project][:billing_personnel_names] = billing.split(",") if billing
   end
 
-  def update_approval
-    appr_params = { approval_id: params[:approval_id], button: 'pending', comment: params[:appr_comment] }
-    @services ||= ApprovalUsers::UpdateStatusService.new(update_params: appr_params, current_user: User.find_by(is_chief: true))
-    @services.execute
-    @services.approval.update(status: 'pending')
-  end
-
   # rubocop:disable Metrics/MethodLength
-  def project_param
+  def project_params
     params.require(:project).permit(
       :group_id,
       :cd,

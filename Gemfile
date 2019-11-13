@@ -35,6 +35,7 @@ gem 'gon'
 gem "puma", "~> 3.12"
 gem 'select2-rails'
 gem 'enum_help'
+gem 'restforce'
 
 group :development do
   gem 'web-console', '~> 2.0'

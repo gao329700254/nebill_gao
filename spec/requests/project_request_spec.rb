@@ -57,6 +57,9 @@ RSpec.describe 'projects request', versioning: true do
   describe 'POST /api/projects' do
     let(:path) { "/api/projects" }
     let(:project_group) { create(:project_group) }
+    let(:sf_project_update_job) { SfProjectCrudJob.new }
+
+    before { ActiveJob::Base.queue_adapter = :test }
 
     context 'with correct parameter' do
       let(:params) do
@@ -141,6 +144,10 @@ RSpec.describe 'projects request', versioning: true do
         expect(response.status).to eq 201
 
         expect(flash['success']).to eq 'プロジェクトを作成しました'
+      end
+
+      it 'calls sf job' do
+        expect { post path, params: params }.to have_enqueued_job(SfProjectCrudJob)
       end
     end
 
@@ -340,6 +347,7 @@ RSpec.describe 'projects request', versioning: true do
       let(:project) { create(:contracted_project) }
       let(:project_group) { create(:project_group) }
       let(:path) { "/api/projects/#{project.id}" }
+      let(:sf_project_update_job) { SfProjectCrudJob.new }
 
       context 'with correct parameter' do
         let(:params) do
@@ -424,6 +432,10 @@ RSpec.describe 'projects request', versioning: true do
 
           expect(json['id']).not_to eq nil
           expect(json['message']).to eq 'プロジェクトを更新しました'
+        end
+
+        it 'calls sf job' do
+          expect { patch path, params: params }.to have_enqueued_job(SfProjectCrudJob)
         end
       end
 
@@ -593,6 +605,9 @@ RSpec.describe 'projects request', versioning: true do
     context 'with exist project id' do
       let!(:project) { create(:contracted_project) }
       let(:path) { "/api/projects/#{project.id}" }
+      let(:sf_project_update_job) { SfProjectCrudJob.new }
+
+      before { ActiveJob::Base.queue_adapter = :test }
 
       it 'delete the project' do
         expect do
@@ -603,6 +618,10 @@ RSpec.describe 'projects request', versioning: true do
         expect(response.status).to eq 201
 
         expect(flash[:success]).to eq 'プロジェクトを削除しました'
+      end
+
+      it 'calls sf job' do
+        expect { delete path }.to have_enqueued_job(SfProjectCrudJob)
       end
     end
 

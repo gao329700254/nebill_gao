@@ -35,5 +35,7 @@ module Nebill
     config.annotations.register_extensions('slim')   { |annotation|  %r{/\s*(#{annotation}):?\s*(.*?)$} }
     config.annotations.register_extensions('coffee') { |annotation|    /#\s*(#{annotation}):?\s*(.*?)$/ }
     config.assets.precompile += %w( pdf/expense.css )
+
+    config.active_job.queue_adapter = :async
   end
 end
