@@ -79,7 +79,7 @@
         text-align: right;
       }
 
-      &--payment_type {
+      &--expected_deposit_on {
         @extend %bill_list__tbl__item;
         @include span-columns(2);
       }

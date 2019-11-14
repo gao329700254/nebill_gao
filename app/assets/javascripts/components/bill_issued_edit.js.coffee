@@ -25,26 +25,29 @@ $ ->
         $.ajax "/api/projects/bill/#{@bill_id}.json"
           .done (response) =>
             @project = response
-      # submit: (bill) ->
-      #   try
-      #     $.ajax
-      #       url: "/api/bill_issueds/#{@bill_id}.json"
-      #       type: 'PATCH'
-      #       data: {
-      #         bill: {
-      #           memo: bill.memo
-      #         }
-      #       }
-      #     .done (response) =>
-      #       toastr.success('', response.message)
-      #       @loadBillIssued(@bill_id)
-      #       # window.location = "/bills/#{bill.id}/show"
-      #     .fail (response) =>
-      #       json = response.responseJSON
-      #       if _.has(json, 'errors')
-      #         toastr.error(json.errors.full_messages.join('<br>'), json.message)
-      #       else
-      #         toastr.error('', json.message)
+      submit: (bill) ->
+        try
+          $.ajax
+            url: "/api/bill_issueds/#{@bill_id}.json"
+            type: 'PATCH'
+            data: {
+              bill: {
+                deposit_on: bill.deposit_on
+                memo: bill.memo
+              }
+            }
+          .done (response) =>
+            toastr.success('', response.message)
+            @$dispatch('loadIssuedBillsList')
+            @loadBillIssued(@bill_id)
+            @modalHide()
+            location.reload()
+          .fail (response) =>
+            json = response.responseJSON
+            if _.has(json, 'errors')
+              toastr.error(json.errors.full_messages.join('<br>'), json.message)
+            else
+              toastr.error('', json.message)
     events:
       showBillIssuedEditEvent: (bill) -> 
         @modalShow()
