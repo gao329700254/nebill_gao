@@ -37,7 +37,7 @@
         th.bill_issueds_list__tbl__item--confirm                  = t('activerecord.attributes.bill.confirm')
     tbody.bill_issueds_list__tbl__body
       tr.bill_issueds_list__tbl__body__row [
-        v-bind:class = "bill.deposit_on ? 'bill_issueds_list__tbl__body__row--deposited'
+        v-bind:class = "(bill.status == '入金確認済み') ? 'bill_issueds_list__tbl__body__row--confirmed'
                                         : 'bill_issueds_list__tbl__body__row'"
         v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
         id         = "bill-{{bill.id}}"
