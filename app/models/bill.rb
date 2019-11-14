@@ -48,6 +48,11 @@ class Bill < ApplicationRecord
   validates :expected_deposit_on, presence: true
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
+  validates :deposit_on, presence: true, if: :deposit_on_valid?
+
+  def deposit_on_valid?
+    status == 'confirmed'
+  end
 
   before_save { cd.upcase! }
 
