@@ -37,7 +37,6 @@ $ ->
         $.ajax "/api/bills/#{@billId}.json"
           .done (response) =>
             @billOriginal = response
-            console.log(@billOriginal)
             @bill = $.extend(true, {}, @billOriginal)
           .fail (response) =>
             console.error response
