@@ -66,6 +66,7 @@ private
       :bill_on,
       :deposit_on,
       :memo,
+      :status,
     )
   end
 

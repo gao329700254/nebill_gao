@@ -35,7 +35,7 @@ class Bill < ApplicationRecord
   has_many   :approvers, class_name: 'BillApprovalUser', dependent: :destroy
   has_many   :users, through: :approvers
 
-  enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60 }, _suffix: :bill
+  enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60, confirmed: 70 }, _suffix: :bill
 
   has_paper_trail meta: { project_id: :project_id, bill_id: :id }
 

@@ -475,6 +475,7 @@ ja:
         sent_back: 差し戻し
         cancelled: 取り消し
         issued:    発行済み
+        confirmed: 入金確認済み
     bill_approval_user:
       role:
         primary:   一段目承認者
