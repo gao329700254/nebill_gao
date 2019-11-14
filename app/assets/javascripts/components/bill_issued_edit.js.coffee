@@ -32,13 +32,13 @@ $ ->
             type: 'PATCH'
             data: {
               bill: {
+                status: 'confirmed'
                 deposit_on: bill.deposit_on
                 memo: bill.memo
               }
             }
           .done (response) =>
             toastr.success('', response.message)
-            @$dispatch('loadIssuedBillsList')
             @loadBillIssued(@bill_id)
             @modalHide()
             location.reload()

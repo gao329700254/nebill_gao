@@ -80,7 +80,7 @@ $ ->
           type: 'PATCH'
           data:
             bill:
-              status: 'issued'
+              status: 'confirmed'
         .done (response) =>
           toastr.success('', response.message)
           @loadBill()
