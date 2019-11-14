@@ -11,4 +11,5 @@ json.array!(@bills) do |bill|
   json.deposit_on                    bill.deposit_on
   json.status                        bill.status_i18n
   json.applicant_name                bill.applicant.user.name
+  json.deposit_confirmed_memo        bill.deposit_confirmed_memo
 end

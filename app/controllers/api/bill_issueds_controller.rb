@@ -67,6 +67,7 @@ private
       :deposit_on,
       :memo,
       :status,
+      :deposit_confirmed_memo,
     )
   end
 

@@ -33,8 +33,8 @@
           = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
           = date_field_tag :"deposit_on-{{bill.deposit_on}}", nil, 'v-model' => 'bill.deposit_on'
         .bill_issueds_edit__form__item
-          = label_tag :memo, Bill.human_attribute_name(:memo)
-          = text_area_tag :"memo-{{bill.id}}", nil, 'v-model' => 'bill.memo'
+          = label_tag :deposit_confirmed_memo, Bill.human_attribute_name(:deposit_confirmed_memo)
+          = text_area_tag :"deposit_confirmed_memo-{{bill.id}}", nil, 'v-model' => 'bill.deposit_confirmed_memo'
 
         = button_tag 'v-on:click.prevent' => 'cancel', class: 'bill_show__form__btn--cancel' do
           = fa_icon 'remove', text: t('helpers.cancel')

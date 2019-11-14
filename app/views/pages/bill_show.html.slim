@@ -52,6 +52,9 @@
             .bill_show__form__item
               = label_tag :memo, Bill.human_attribute_name(:memo)
               = text_area_tag :memo, nil, 'v-model' => 'bill.memo', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :deposit_confirmed_memo, Bill.human_attribute_name(:deposit_confirmed_memo)
+              = text_area_tag :deposit_confirmed_memo, nil, 'v-model' => 'bill.deposit_confirmed_memo', ':disabled' => '!editMode'
           / -----------------------------------------------------
           / 請求書発行アクション
           / -----------------------------------------------------

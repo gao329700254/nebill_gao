@@ -87,6 +87,7 @@ private
       :memo,
       :status,
       :create_user_id,
+      :deposit_confirmed_memo,
     )
   end
 

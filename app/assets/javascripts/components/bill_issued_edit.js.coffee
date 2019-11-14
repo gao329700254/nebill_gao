@@ -34,7 +34,7 @@ $ ->
               bill: {
                 status: 'confirmed'
                 deposit_on: bill.deposit_on
-                memo: bill.memo
+                deposit_confirmed_memo: bill.deposit_confirmed_memo
               }
             }
           .done (response) =>
