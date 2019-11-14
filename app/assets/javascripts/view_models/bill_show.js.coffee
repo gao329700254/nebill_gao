@@ -37,6 +37,7 @@ $ ->
         $.ajax "/api/bills/#{@billId}.json"
           .done (response) =>
             @billOriginal = response
+            console.log(@billOriginal)
             @bill = $.extend(true, {}, @billOriginal)
           .fail (response) =>
             console.error response
@@ -53,15 +54,16 @@ $ ->
             type: 'PATCH'
             data:
               bill:
-                cd:                  @bill.cd
-                amount:              @bill.amount
-                delivery_on:         @bill.delivery_on
-                acceptance_on:       @bill.acceptance_on
-                payment_type:        @bill.payment_type
-                bill_on:             @bill.bill_on
-                expected_deposit_on: @bill.expected_deposit_on
-                deposit_on:          @bill.deposit_on
-                memo:                @bill.memo
+                cd:                     @bill.cd
+                amount:                 @bill.amount
+                delivery_on:            @bill.delivery_on
+                acceptance_on:          @bill.acceptance_on
+                payment_type:           @bill.payment_type
+                bill_on:                @bill.bill_on
+                expected_deposit_on:    @bill.expected_deposit_on
+                deposit_on:             @bill.deposit_on
+                memo:                   @bill.memo
+                deposit_confirmed_memo: @bill.deposit_confirmed_memo
           .done (response) =>
             toastr.success('', response.message)
             @loadBill()
@@ -80,7 +82,7 @@ $ ->
           type: 'PATCH'
           data:
             bill:
-              status: 'confirmed'
+              status: 'issued'
         .done (response) =>
           toastr.success('', response.message)
           @loadBill()

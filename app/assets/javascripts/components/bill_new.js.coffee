@@ -5,16 +5,17 @@ $ ->
     props: ['projectId']
     data: ->
       bill:
-        cd:                  undefined
-        amount:              undefined
-        delivery_on:         undefined
-        acceptance_on:       undefined
-        payment_type:        undefined
-        bill_on:             undefined
-        expected_deposit_on: undefined
-        deposit_on:          undefined
-        memo:                undefined
-        create_user_id:      undefined
+        cd:                     undefined
+        amount:                 undefined
+        delivery_on:            undefined
+        acceptance_on:          undefined
+        payment_type:           undefined
+        bill_on:                undefined
+        expected_deposit_on:    undefined
+        deposit_on:             undefined
+        memo:                   undefined
+        deposit_confirmed_memo: undefined
+        create_user_id:         undefined
     methods:
       cancel: -> @modalHide()
       submit: ->
@@ -46,6 +47,7 @@ $ ->
         @bill.expected_deposit_on = undefined
         @bill.memo                = undefined
         @bill.create_user_id      = undefined
+        @deposit_confirmed_memo   = undefined
     created: ->
       $.ajax "/api/projects/#{@projectId}/bill_default_values.json"
         .done (response) =>

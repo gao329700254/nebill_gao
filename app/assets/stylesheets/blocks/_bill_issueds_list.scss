@@ -81,7 +81,7 @@
 
       &--expected_deposit_on {
         @extend %bill_list__tbl__item;
-        @include span-columns(2);
+        @include span-columns(3);
       }
 
       &--deposit_on {
@@ -104,6 +104,10 @@
         @include span-columns(3);
       }
     
+      &--deposit_confirmed_memo {
+        @extend %bill_list__tbl__item;
+        @include span-columns(3);
+      }
     }
   }
 }

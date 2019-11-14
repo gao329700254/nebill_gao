@@ -27,14 +27,14 @@
   table.bill_issueds_list__tbl
     thead.bill_issueds_list__tbl__head
       tr.bill_issueds_list__tbl__head__row
-        th.bill_issueds_list__tbl__item--cd                     = t('activerecord.attributes.bill.cd')
-        th.bill_issueds_list__tbl__item--project_name           = t('activerecord.attributes.bill.project')
-        th.bill_issueds_list__tbl__item--billing_company        = t('activerecord.attributes.project.billing_company_name')
-        th.bill_issueds_list__tbl__item--amount                 = t('activerecord.attributes.bill.amount')
-        th.bill_issueds_list__tbl__item--expected_deposit_on    = t('activerecord.attributes.bill.expected_deposit_on')
-        th.bill_issueds_list__tbl__item--deposit_on             = t('activerecord.attributes.bill.deposit_on')
-        th.bill_issueds_list__tbl__item--memo                   = t('activerecord.attributes.bill.memo')
-        th.bill_issueds_list__tbl__item--confirm                = t('activerecord.attributes.bill.confirm')
+        th.bill_issueds_list__tbl__item--cd                       = t('activerecord.attributes.bill.cd')
+        th.bill_issueds_list__tbl__item--project_name             = t('activerecord.attributes.bill.project')
+        th.bill_issueds_list__tbl__item--billing_company          = t('activerecord.attributes.project.billing_company_name')
+        th.bill_issueds_list__tbl__item--amount                   = t('activerecord.attributes.bill.amount')
+        th.bill_issueds_list__tbl__item--expected_deposit_on      = t('activerecord.attributes.bill.expected_deposit_on')
+        th.bill_issueds_list__tbl__item--deposit_on               = t('activerecord.attributes.bill.deposit_on')
+        th.bill_issueds_list__tbl__item--deposit_confirmed_memo   = t('activerecord.attributes.bill.deposit_confirmed_memo')
+        th.bill_issueds_list__tbl__item--confirm                  = t('activerecord.attributes.bill.confirm')
     tbody.bill_issueds_list__tbl__body
       tr.bill_issueds_list__tbl__body__row [
         v-bind:class = "bill.deposit_on ? 'bill_issueds_list__tbl__body__row--deposited'
@@ -49,7 +49,7 @@
         td.bill_issueds_list__tbl__item--amount                 v-text='bill.amount.toLocaleString()' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--expected_deposit_on    v-text='bill.expected_deposit_on' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--deposit_on             v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
-        td.bill_issueds_list__tbl__item--memo                   v-text='bill.memo' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--deposit_confirmed_memo v-text='bill.deposit_confirmed_memo' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--confirm
           = button_tag id: "{{bill.id}}", class: 'bill_issueds_list__tbl__item--confirmbtn', \
             'v-text' => 'buttonText', 'v-on:click' => 'showBillIssuedEdit(bill)' do

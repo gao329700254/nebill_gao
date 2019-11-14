@@ -20,6 +20,7 @@ $ ->
           type: 'GET'
         .done (response) =>
           @list = response
+          console.log(@list)
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
       showBillIssuedEdit: (bill) -> 
         @$broadcast('showBillIssuedEditEvent', bill)
