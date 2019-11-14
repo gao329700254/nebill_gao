@@ -50,9 +50,11 @@
         td.bill_issueds_list__tbl__item--expected_deposit_on    v-text='bill.expected_deposit_on' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--deposit_on             v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--deposit_confirmed_memo v-text='bill.deposit_confirmed_memo' v-on:click = "linkToShow(bill.id)"
-        td.bill_issueds_list__tbl__item--confirm
+        td.bill_issueds_list__tbl__item--confirm 
           = button_tag id: "{{bill.id}}", class: 'bill_issueds_list__tbl__item--confirmbtn', \
-            'v-text' => 'buttonText', 'v-on:click' => 'showBillIssuedEdit(bill)' do
+            'v-on:click' => 'showBillIssuedEdit(bill)' , 'v-if' => 'notConfirmedStatus(bill)', 'v-text' => 'buttonTextNotConfirmed' do
+          = button_tag id: "{{bill.id}}", class: 'bill_issueds_list__tbl__item--confirmbtn', \
+            'v-on:click' => 'showBillIssuedEdit(bill)' , 'v-if' => 'ConfirmedStatus(bill)', 'v-text' => 'buttonTextConfirmed' do
 
   component [
     :is        = "'billIssuedEdit'"

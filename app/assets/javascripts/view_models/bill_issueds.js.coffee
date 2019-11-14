@@ -11,7 +11,8 @@ $ ->
       searchKeywords: undefined
       start: undefined
       end: undefined
-      buttonText: '未確認'
+      buttonTextNotConfirmed: '未確認'
+      buttonTextConfirmed: '確認済'
       billId: undefined
     methods:
       loadIssuedBillsList: ->
@@ -20,10 +21,13 @@ $ ->
           type: 'GET'
         .done (response) =>
           @list = response
-          console.log(@list)
       linkToShow: (billId) -> window.location = "/bills/#{billId}/show"
       showBillIssuedEdit: (bill) -> 
         @$broadcast('showBillIssuedEditEvent', bill)
+      notConfirmedStatus: (bill) ->
+        bill.status == '発行済み'
+      ConfirmedStatus: (bill) ->
+        bill.status == '入金確認済み'
       # loadBillIssued: (billId) ->
       #   $.ajax 
       #     url: "/api/bill_issueds/#{billId}.json"
