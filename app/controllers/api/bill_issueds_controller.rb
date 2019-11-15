@@ -3,11 +3,8 @@ class Api::BillIssuedsController < Api::ApiController
   before_action :set_bill   , only: [:show, :update, :destroy]
 
   def index
-    @bills = if @project
-               @project.bills.where(status: 'issued').or(@project.bills.where(status: 'confirmed'))
-             else
-               Bill.all.includes(:project).where(status: 'issued').or(Bill.all.includes(:project).where(status: 'confirmed'))
-             end
+    @bills = Bill.all.issued_search_result(params[:start], params[:end]).where(status: 'issued').or(Bill.all.issued_search_result(params[:start], params[:end]).where(status: 'confirmed'))
+
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
@@ -30,20 +27,6 @@ class Api::BillIssuedsController < Api::ApiController
     render_action_model_success_message(@bill, :update)
   rescue ActiveRecord::RecordInvalid
     render_action_model_fail_message(@bill, :update)
-  end
-
-  def search_result
-    @bills = if params[:start].present? && params[:end].present?
-               Bill.between(params[:start], params[:end]).includes(:project).where(status: 'issued').or(Bill.between(params[:start], params[:end]).includes(:project).where(status: 'confirmed'))
-             elsif params[:start].present?
-               Bill.gteq_start_on(params[:start]).includes(:project).where(status: 'issued').or(Bill.gteq_start_on(params[:start]).includes(:project).where(status: 'confirmed'))
-             elsif params[:end].present?
-               Bill.lteq_end_on(params[:end]).includes(:project).where(status: 'issued').or(Bill.lteq_end_on(params[:end]).includes(:project).where(status: 'confirmed'))
-             else
-               Bill.all.includes(:project).where(status: 'issued').or(Bill.all.includes(:project).where(status: 'confirmed'))
-             end
-
-    render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
 private

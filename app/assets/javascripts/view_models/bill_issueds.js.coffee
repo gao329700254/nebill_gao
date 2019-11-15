@@ -65,7 +65,7 @@ $ ->
           search = $('.bill_list__search__date__btn--search')
           search.prop('disabled', true)
           $.ajax
-            url: '/api/bill_issueds/search_result.json'
+            url: '/api/bill_issueds.json'
             type: 'POST'
             data: {
               start: @start

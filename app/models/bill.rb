@@ -136,4 +136,22 @@ class Bill < ApplicationRecord
       Chatwork::Bill.new(bill: self, to_user: applicant.user, from_user: current_approver).notify_sent_back
     end
   end
+
+#
+# == bill_issuedの検索およびindex用の処理
+# == endは予約後のため引数はbill_endとした
+# 
+
+  def self.issued_search_result(start, bill_end)
+    if start.present? && bill_end.present?
+      between(start, bill_end)
+    elsif start.present?
+      gteq_start_on(start)
+    elsif bill_end.present?
+      lteq_end_on(bill_end)
+    else
+      all
+    end
+  end
+
 end
