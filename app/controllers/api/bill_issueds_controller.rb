@@ -4,9 +4,9 @@ class Api::BillIssuedsController < Api::ApiController
 
   def index
     @bills = if @project
-               @project.bills
+               @project.bills.where(status: 'issued').or(@project.bills.where(status: 'confirmed'))
              else
-               Bill.all.includes(:project)
+               Bill.all.includes(:project).where(status: 'issued').or(Bill.all.includes(:project).where(status: 'confirmed'))
              end
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
@@ -34,13 +34,13 @@ class Api::BillIssuedsController < Api::ApiController
 
   def search_result
     @bills = if params[:start].present? && params[:end].present?
-               Bill.between(params[:start], params[:end]).includes(:project)
+               Bill.between(params[:start], params[:end]).includes(:project).where(status: 'issued').or(Bill.between(params[:start], params[:end]).includes(:project).where(status: 'confirmed'))
              elsif params[:start].present?
-               Bill.gteq_start_on(params[:start]).includes(:project)
+               Bill.gteq_start_on(params[:start]).includes(:project).where(status: 'issued').or(Bill.gteq_start_on(params[:start]).includes(:project).where(status: 'confirmed'))
              elsif params[:end].present?
-               Bill.lteq_end_on(params[:end]).includes(:project)
+               Bill.lteq_end_on(params[:end]).includes(:project).where(status: 'issued').or(Bill.lteq_end_on(params[:end]).includes(:project).where(status: 'confirmed'))
              else
-               Bill.all.includes(:project)
+               Bill.all.includes(:project).where(status: 'issued').or(Bill.all.includes(:project).where(status: 'confirmed'))
              end
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
