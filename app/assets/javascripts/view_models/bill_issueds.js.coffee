@@ -9,11 +9,15 @@ $ ->
         'project.billing_company_name': 'like'
       list: undefined
       searchKeywords: undefined
+      status: ''
       start: undefined
       end: undefined
       buttonTextNotConfirmed: '未確認'
       buttonTextConfirmed: '確認済'
       billId: undefined
+    watch:
+      status: (checkedStatus) ->
+        localStorage.status = checkedStatus
     methods:
       loadIssuedBillsList: ->
         $.ajax 

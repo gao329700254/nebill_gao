@@ -22,11 +22,12 @@
     = label_tag t('page.bill.status.all_status')
     = radio_button_tag :issued, t('page.bill.status.issued'), false, 'v-model' => 'status'
     = label_tag t('page.bill.status.not_confirm')
-    = radio_button_tag :issued, t('page.bill.status.issued'), false, 'v-model' => 'status'
+    = radio_button_tag :confirmed, t('page.bill.status.confirmed'), false, 'v-model' => 'status'
     = label_tag t('page.bill.status.confirmed')
   table.bill_issueds_list__tbl
     thead.bill_issueds_list__tbl__head
       tr.bill_issueds_list__tbl__head__row
+        th.bill_issueds_list__tbl__item--cd                       = "テスト確認用"
         th.bill_issueds_list__tbl__item--cd                       = t('activerecord.attributes.bill.cd')
         th.bill_issueds_list__tbl__item--project_name             = t('activerecord.attributes.bill.project')
         th.bill_issueds_list__tbl__item--billing_company          = t('activerecord.attributes.project.billing_company_name')
@@ -39,10 +40,11 @@
       tr.bill_issueds_list__tbl__body__row [
         v-bind:class = "(bill.status == '入金確認済み') ? 'bill_issueds_list__tbl__body__row--confirmed'
                                         : 'bill_issueds_list__tbl__body__row'"
-        v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1"
+        v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1 | filterBy status in 'status'"
         id         = "bill-{{bill.id}}"
         track-by   = "id"
       ]
+        td.bill_issueds_list__tbl__item--cd                     v-text='bill.status' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--cd                     v-text='bill.cd' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--project_name           v-text='bill.project.name' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--billing_company        v-text='bill.project.billing_company_name' v-on:click = "linkToShow(bill.id)"
