@@ -5,7 +5,7 @@ RSpec.feature 'Approval List Page', js: true do
   given!(:per)     { 20 }
   background do
     login user, with_capybara: true
-    create_list(:approval, per, created_user_id: user.id)
+    create_list(:approval, per, :user_approval, created_user_id: user.id)
     visit approval_list_path
   end
 
@@ -20,7 +20,7 @@ RSpec.feature 'Approval List Page', js: true do
   end
 
   context "with over per records" do
-    background { create(:approval, created_user_id: user.id) }
+    background { create(:approval, :user_approval, created_user_id: user.id) }
 
     scenario "paginates records" do
       visit current_path

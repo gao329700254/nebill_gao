@@ -44,7 +44,7 @@ class Approval < ApplicationRecord
 
   scope :only_approval, -> { where(approved: nil, approved_id: nil) }
   scope :where_created_on, -> (created_on) { where(created_at: Date.strptime(created_on).beginning_of_day..Date.strptime(created_on).end_of_day) }
-  scope :related_approval, -> (id) { where('created_user_id = ? OR approval_users.user_id = ? OR users_approval_groups.id = ?', id, id, id) }
+  scope :related_approval, -> (id) { joins(:approval_users).where('created_user_id = ? OR approval_users.user_id = ?', id, id) }
 
   after_touch :check_and_update_user_status, if: -> { approvaler_type.user? }
   after_touch :check_and_update_group_status, if: -> { approvaler_type.group? }
@@ -72,8 +72,7 @@ class Approval < ApplicationRecord
                Approval.all
              else
                Approval.related_approval(current_user.id)
-                       .includes(:users, created_user: :employee, approval_group: :users)
-                       .references(approval_group: :users)
+                       .includes(:created_user)
              end
 
     search_created_at.present? ? result.where_created_on(search_created_at) : result

@@ -15,7 +15,7 @@ class Approvals::SearchApprovalService < BaseService
     if @search_keywords.present?
       search_keywords = @search_keywords.sub(/\A[[:space:]]+/, "").split(/[[:blank:]]+/)
       search_keywords.each do |keyword|
-        relation = approvals.joins(created_user: :employee)
+        relation = approvals.joins(created_user: :employee).includes(:created_user)
         approvals = relation.where(['approvals.name LIKE ?', "%#{keyword}%"]).or(relation.where(['employees.name LIKE ?', "%#{keyword}%"]))
       end
     end
