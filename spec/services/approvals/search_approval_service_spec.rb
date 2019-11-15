@@ -3,35 +3,25 @@ require 'rails_helper'
 RSpec.describe Approvals::SearchApprovalService do
   let!(:current_user)     { create(:user) }
   let!(:other_user)       { create(:user) }
-  let!(:approval_params1) { { created_user_id: current_user.id, name: "abcdefg", created_at: "2020-10-10", status: "pending",    category: "new_client" } }
-  let!(:approval_params2) { { created_user_id: current_user.id, name: "ghijklm", created_at: "2019-10-10", status: "disconfirm", category: "other" } }
-  let!(:approval_params3) { { created_user_id: other_user.id } }
+  let!(:approval1)        { create(:approval, :user_approval, created_user_id: current_user.id, name: "abcdefg",
+                                   created_at: "2020-10-10", status: "pending", category: "new_client") }
+  let!(:approval2)        { create(:approval, :user_approval, created_user_id: current_user.id, name: "ghijklm",
+                                   created_at: "2019-10-10", status: "disconfirm", category: "other") }
+  let!(:approval3)        { create(:approval, :user_approval, created_user_id: other_user.id) }
+
+
 
   subject { Approvals::SearchApprovalService.new(params: search_params, current_user: current_user).execute }
 
-  before do
-    create_list(:approval, 20, :user_approval, approval_params1)
-    create_list(:approval, 20, :user_approval, approval_params2)
-    create_list(:approval, 10, :user_approval, approval_params3)
-  end
-
-  shared_examples_for 'approval_params1' do
-    it 'should be approvals with approval_params1' do
-      expect(subject.count).to eq 20
-      subject.each do |result|
-        expect(result.created_user_id).to eq current_user.id
-        expect(result.name).to eq "abcdefg"
-      end
+  shared_examples_for 'approval1' do
+    it 'should be approval1' do
+      is_expected.to eq [approval1]
     end
   end
 
-  shared_examples_for 'approval_params2' do
-    it 'should be approvals with approval_params2' do
-      expect(subject.count).to eq 20
-      subject.each do |result|
-        expect(result.created_user_id).to eq current_user.id
-        expect(result.name).to eq "ghijklm"
-      end
+  shared_examples_for 'approval2' do
+    it 'should be approval2' do
+      is_expected.to eq [approval2]
     end
   end
 
@@ -46,8 +36,10 @@ RSpec.describe Approvals::SearchApprovalService do
           page:              '',
         }
       end
-
-      it_behaves_like 'approval_params1'
+      
+      it 'should be approvals' do
+        is_expected.to eq [approval1, approval2]
+      end
     end
 
     context 'search with page' do
@@ -61,13 +53,17 @@ RSpec.describe Approvals::SearchApprovalService do
         }
       end
 
-      it_behaves_like 'approval_params2'
+      before do
+        create_list(:approval, 19, :user_approval, created_user_id: current_user.id, created_at: "2020-10-10")
+      end
+
+      it_behaves_like 'approval2'
     end
 
     context 'search with one search_keyword' do
       let(:search_params) do
         {
-          search_keywords:   'm',
+          search_keywords:   'a',
           created_at:        '',
           status:            '',
           category:          '',
@@ -75,7 +71,7 @@ RSpec.describe Approvals::SearchApprovalService do
         }
       end
 
-      it_behaves_like 'approval_params2'
+      it_behaves_like 'approval1'
     end
 
     context 'search with two search_keywords' do
@@ -89,7 +85,7 @@ RSpec.describe Approvals::SearchApprovalService do
         }
       end
 
-      it_behaves_like 'approval_params2'
+      it_behaves_like 'approval2'
     end
 
     context 'search with created_at' do
@@ -103,7 +99,7 @@ RSpec.describe Approvals::SearchApprovalService do
         }
       end
 
-      it_behaves_like 'approval_params2'
+      it_behaves_like 'approval2'
     end
 
     context 'search with status' do
@@ -117,7 +113,7 @@ RSpec.describe Approvals::SearchApprovalService do
         }
       end
 
-      it_behaves_like 'approval_params2'
+      it_behaves_like 'approval2'
     end
 
     context 'search with category' do
@@ -131,7 +127,7 @@ RSpec.describe Approvals::SearchApprovalService do
         }
       end
 
-      it_behaves_like 'approval_params2'
+      it_behaves_like 'approval2'
     end
   end
 end
