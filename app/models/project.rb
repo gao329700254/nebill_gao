@@ -59,6 +59,7 @@ class Project < ApplicationRecord
   has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy
   has_many :approvals, as: :approved
   has_many :user_members
+  has_many :employees, through: :members
   has_many :partner_members
   has_many :users, through: :user_members
   has_many :partners, through: :partner_members

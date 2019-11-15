@@ -61,12 +61,12 @@
               .expense_edit__form__fill
                 .expense_edit__form__fill--select
                   = f.label :payment_type, Expense.human_attribute_name(:project_id)
-                  select name='expense[project_id]' id='project_id' v-model='selected_project'
+                  select name='expense[project_id]' v-model='selected_employee_project'
                     option [
-                      v-for = "project in project_list"
+                      v-for = "project in employee_project_list"
                       v-bind:value = "project.id"
                     ]
-                      = "{{project.name}}"
+                      = "{{project.cd}}" + ':' + "{{project.name}}"
                 .expense_edit__form__fill--btn
                   = button_tag type: 'button', 'v-on:click' => 'setProjectModal', class: 'expense_edit__form__fill--btn--set_project' do
                     = fa_icon 'search'
