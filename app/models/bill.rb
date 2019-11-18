@@ -67,13 +67,12 @@ class Bill < ApplicationRecord
 
   #
   # == bill_issued時の入金予定日の期間検索の処理
-  # 
+  #
   scope :expected_deposit_on_between, lambda { |expected_deposit_on_start_on, expected_deposit_on_end_on|
     where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)).where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on))
   }
   scope :gteq_expected_deposit_on_start_on, -> (expected_deposit_on_start_on) { where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)) }
   scope :lteq_expected_deposit_on_end_on, -> (expected_deposit_on_end_on) { where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on)) }
-
 
   def bill_on_cannot_predate_delivery_on
     return if bill_on.nil? || delivery_on.nil? || bill_on >= delivery_on
@@ -150,11 +149,10 @@ class Bill < ApplicationRecord
     end
   end
 
-#
-# == bill_issuedの検索およびindex用の処理
-# == endは予約後のため引数はbill_endとした
-# 
-
+  #
+  # == bill_issuedの検索およびindex用の処理
+  # == endは予約後のため引数はbill_endとした
+  #
   def self.issued_search_result(expected_deposit_on_start, expected_deposit_on_end)
     if expected_deposit_on_start.present? && expected_deposit_on_end.present?
       expected_deposit_on_between(expected_deposit_on_start, expected_deposit_on_end)
@@ -166,5 +164,4 @@ class Bill < ApplicationRecord
       all
     end
   end
-
 end
