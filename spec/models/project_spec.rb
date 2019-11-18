@@ -54,6 +54,11 @@ RSpec.describe Project do
       is_expected.to be_invalid
     end
 
+    it 'should not require end_on to regular contract project' do
+      project.is_regular_contract = true
+      is_expected.not_to validate_presence_of(:end_on)
+    end
+
     describe '#billing' do
       subject { project.billing }
       its(:company_name)    { is_expected.to eq project.billing_company_name }
