@@ -57,7 +57,7 @@ class Bill < ApplicationRecord
   before_save { cd.upcase! }
 
   #
-  # == 期間検索の処理
+  # == 請求日期間検索の処理
   #
   scope :between, lambda { |start_on, end_on|
     where(Bill.arel_table[:bill_on].gteq(start_on)).where(Bill.arel_table[:bill_on].lteq(end_on))
@@ -65,7 +65,9 @@ class Bill < ApplicationRecord
   scope :gteq_start_on, -> (start_on) { where(Bill.arel_table[:bill_on].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Bill.arel_table[:bill_on].lteq(end_on)) }
 
-  #bill_issued時の期間検索の処理
+  #
+  # == bill_issued時の入金予定日の期間検索の処理
+  # 
   scope :expected_deposit_on_between, lambda { |expected_deposit_on_start_on, expected_deposit_on_end_on|
     where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)).where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on))
   }
