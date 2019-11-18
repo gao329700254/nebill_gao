@@ -10,8 +10,8 @@ $ ->
       list: undefined
       searchKeywords: undefined
       status: ''
-      start: undefined
-      end: undefined
+      expected_deposit_on_start: undefined
+      expected_deposit_on_end: undefined
       buttonTextNotConfirmed: '未確認'
       buttonTextConfirmed: '確認済'
       billId: undefined
@@ -68,8 +68,8 @@ $ ->
             url: '/api/bill_issueds.json'
             type: 'POST'
             data: {
-              start: @start
-              end: @end
+              expected_deposit_on_start: @expected_deposit_on_start
+              expected_deposit_on_end: @expected_deposit_on_end
             }
           .done (response) =>
             @list = response

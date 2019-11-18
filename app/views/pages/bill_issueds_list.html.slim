@@ -10,10 +10,10 @@
   .bill_issueds_list__search
     .bill_issueds_list__search__date
       .bill_issueds_list__search__date__start
-        = label_tag :start, t('page.bill_issueds_list.fill_date_form')
-        = date_field_tag :start, nil, 'v-model' => "start"
+        = label_tag :expected_deposit_on_start, t('page.bill_issueds_list.fill_date_form')
+        = date_field_tag :expected_deposit_on_start, nil, 'v-model' => "expected_deposit_on_start"
       .bill_issueds_list__search__date__end
-        = date_field_tag :end, nil, 'v-model' => "end"
+        = date_field_tag :expected_deposit_on_end, nil, 'v-model' => "expected_deposit_on_end"
       .bill_issueds_list__search__date__btn
         = button_tag 'v-on:click.prevent' => 'search', class: 'bill_issueds_list__search__date__btn--search' do
           = fa_icon 'search', text: t('page.bill_issueds_list.search')

@@ -56,11 +56,22 @@ class Bill < ApplicationRecord
 
   before_save { cd.upcase! }
 
+  #
+  # == 期間検索の処理
+  #
   scope :between, lambda { |start_on, end_on|
     where(Bill.arel_table[:bill_on].gteq(start_on)).where(Bill.arel_table[:bill_on].lteq(end_on))
   }
   scope :gteq_start_on, -> (start_on) { where(Bill.arel_table[:bill_on].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Bill.arel_table[:bill_on].lteq(end_on)) }
+
+  #bill_issued時の期間検索の処理
+  scope :expected_deposit_on_between, lambda { |expected_deposit_on_start_on, expected_deposit_on_end_on|
+    where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)).where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on))
+  }
+  scope :gteq_expected_deposit_on_start_on, -> (expected_deposit_on_start_on) { where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)) }
+  scope :lteq_expected_deposit_on_end_on, -> (expected_deposit_on_end_on) { where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on)) }
+
 
   def bill_on_cannot_predate_delivery_on
     return if bill_on.nil? || delivery_on.nil? || bill_on >= delivery_on
@@ -142,13 +153,13 @@ class Bill < ApplicationRecord
 # == endは予約後のため引数はbill_endとした
 # 
 
-  def self.issued_search_result(start, bill_end)
-    if start.present? && bill_end.present?
-      between(start, bill_end)
-    elsif start.present?
-      gteq_start_on(start)
-    elsif bill_end.present?
-      lteq_end_on(bill_end)
+  def self.issued_search_result(expected_deposit_on_start, expected_deposit_on_end)
+    if expected_deposit_on_start.present? && expected_deposit_on_end.present?
+      expected_deposit_on_between(expected_deposit_on_start, expected_deposit_on_end)
+    elsif expected_deposit_on_start.present?
+      gteq_expected_deposit_on_start_on(expected_deposit_on_start)
+    elsif expected_deposit_on_end.present?
+      lteq_expected_deposit_on_end_on(expected_deposit_on_end)
     else
       all
     end

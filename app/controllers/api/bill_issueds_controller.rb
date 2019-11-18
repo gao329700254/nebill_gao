@@ -3,7 +3,7 @@ class Api::BillIssuedsController < Api::ApiController
   before_action :set_bill   , only: [:show, :update, :destroy]
 
   def index
-    @bills = Bill.all.issued_search_result(params[:start], params[:end]).where(status: 'issued').or(Bill.all.issued_search_result(params[:start], params[:end]).where(status: 'confirmed'))
+    @bills = Bill.all.issued_search_result(params[:expected_deposit_on_start], params[:expected_deposit_on_end]).where(status: 'issued').or(Bill.all.issued_search_result(params[:expected_deposit_on_start], params[:expected_deposit_on_end]).where(status: 'confirmed'))
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
