@@ -343,6 +343,9 @@ RSpec.describe 'projects request', versioning: true do
   end
 
   describe 'PATCH /api/projects/:id' do
+
+    before { ActiveJob::Base.queue_adapter = :test }
+
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
       let(:project_group) { create(:project_group) }
