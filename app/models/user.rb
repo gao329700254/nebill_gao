@@ -51,7 +51,7 @@ class User < ApplicationRecord
   has_many :expense_approval_users
   has_many :expense_approvals, through: :expense_approval_users
 
-  enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50, outer: 60 }, default: :general, scope: true
+  enumerize :role, in: { general: 10, superior: 30, backoffice: 40, admin: 50, outer: 60 }, default: :general, scope: true, predicates: true
 
   validates :name, presence: true, on: :update
   validates :provider, uniqueness: { scope: :uid }, allow_nil: true

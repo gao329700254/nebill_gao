@@ -73,10 +73,10 @@ class Bill < ApplicationRecord
     approvers.secondary_role.first
   end
 
-  def make_bill_application!(comment, user_id, reapply)
+  def make_bill_application!(applicant_id, comment, user_id, reapply)
     ActiveRecord::Base.transaction do
+      build_applicant(comment: comment, user_id: applicant_id).save!
       pending_bill!
-      applicant.update!(comment: comment)
 
       # 承認者の洗い替え
       approvers.destroy_all if reapply.present?
@@ -98,6 +98,7 @@ class Bill < ApplicationRecord
   def cancel_bill_application!
     ActiveRecord::Base.transaction do
       cancelled_bill!
+      applicant.destroy!
       approvers.destroy_all
     end
   end

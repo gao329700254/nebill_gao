@@ -10,5 +10,5 @@ json.array!(@bills) do |bill|
   json.expected_deposit_on           bill.expected_deposit_on
   json.deposit_on                    bill.deposit_on
   json.status                        bill.status_i18n
-  json.applicant_name                bill.applicant.user.name
+  json.applicant_name                bill.applicant.user.name if bill.applicant.present?
 end
