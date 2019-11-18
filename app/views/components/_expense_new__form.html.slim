@@ -62,7 +62,7 @@
             .expense_new__form__fill
               .expense_new__form__fill--select
                 = label_tag :project_id, Expense.human_attribute_name(:project_id)
-                select v-model= "selected_employee_project"
+                select v-model= "selected_employee_project" id="project_id"
                   option [
                     v-for = "project in employee_project_list"
                     v-bind:value = "project.id"
