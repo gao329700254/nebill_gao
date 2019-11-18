@@ -11,7 +11,7 @@ module ProjectValidates
       contracted.validates :contract_on         , presence: true
       contracted.validates :contract_type       , presence: true
       contracted.validates :status              , presence: true
-      contracted.validates :end_on              , presence: true
+      contracted.validates :end_on              , presence: true, unless: :is_regular_contract
       contracted.validates :amount              , presence: true, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
       contracted.validates :payment_type        , presence: true
       contracted.validates :orderer_company_name   , presence: true
