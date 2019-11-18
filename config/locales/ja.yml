@@ -667,7 +667,7 @@ ja:
     bill_issueds_list:
       title: 入金確認一覧
       search_form_placeholder: 'ID,プロジェクト名,請求先会社名で検索できます'
-      fill_date_form: 請求日検索
+      fill_date_form: 入金予定日検索
       search: 検索
       confirm: 確認済
       not_confirm: 未確認
