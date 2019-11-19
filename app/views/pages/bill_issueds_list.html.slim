@@ -27,7 +27,6 @@
   table.bill_issueds_list__tbl
     thead.bill_issueds_list__tbl__head
       tr.bill_issueds_list__tbl__head__row
-        th.bill_issueds_list__tbl__item--cd                       = "テスト確認用"
         th.bill_issueds_list__tbl__item--cd                       = t('activerecord.attributes.bill.cd')
         th.bill_issueds_list__tbl__item--project_name             = t('activerecord.attributes.bill.project')
         th.bill_issueds_list__tbl__item--billing_company          = t('activerecord.attributes.project.billing_company_name')
@@ -44,7 +43,6 @@
         id         = "bill-{{bill.id}}"
         track-by   = "id"
       ]
-        td.bill_issueds_list__tbl__item--cd                     v-text='bill.status' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--cd                     v-text='bill.cd' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--project_name           v-text='bill.project.name' v-on:click = "linkToShow(bill.id)"
         td.bill_issueds_list__tbl__item--billing_company        v-text='bill.project.billing_company_name' v-on:click = "linkToShow(bill.id)"
