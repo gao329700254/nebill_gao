@@ -9,14 +9,6 @@ class Api::BillIssuedsController < Api::ApiController
   end
 
   def show
-    latest_version = Version.where(bill_id: @bill.id).order(:created_at).last
-    if latest_version
-      @last_updated_at = latest_version.created_at
-      @user = User.find(latest_version.whodunnit) if latest_version && latest_version.whodunnit
-    else
-      @last_updated_at = @bill.updated_at
-    end
-
     render 'show', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
@@ -41,14 +33,8 @@ private
 
   def bill_param
     params.require(:bill).permit(
-      :cd,
-      :amount,
-      :delivery_on,
-      :acceptance_on,
-      :payment_type,
-      :bill_on,
+      :id,
       :deposit_on,
-      :memo,
       :status,
       :deposit_confirmed_memo,
     )
