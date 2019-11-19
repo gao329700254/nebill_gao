@@ -1,6 +1,6 @@
 class Api::BillIssuedsController < Api::ApiController
-  before_action :set_project, only: [:index, :create], if: -> { params.key? :project_id }
-  before_action :set_bill   , only: [:show, :update, :destroy]
+  before_action :set_project, only: [:index], if: -> { params.key? :project_id }
+  before_action :set_bill   , only: [:show, :update]
 
   def index
     @bills = Bill.all.issued_search_result(params[:expected_deposit_on_start], params[:expected_deposit_on_end]).where(status: 'issued').or(Bill.all.issued_search_result(params[:expected_deposit_on_start], params[:expected_deposit_on_end]).where(status: 'confirmed'))
@@ -38,12 +38,5 @@ private
       :status,
       :deposit_confirmed_memo,
     )
-  end
-
-  def bill_index_project_cols
-    [
-      :name,
-      :billing_company_name,
-    ]
   end
 end
