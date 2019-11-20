@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20191031050805
+# Schema version: 20191120034837
 #
 # Table name: bills
 #
@@ -17,6 +17,7 @@
 #  payment_type        :string           not null
 #  expected_deposit_on :date             not null
 #  status              :integer          default("unapplied"), not null
+#  create_user_id      :integer          not null
 #
 # Indexes
 #
@@ -29,6 +30,7 @@
 
 class Bill < ApplicationRecord
   belongs_to :project
+  belongs_to :create_user, class_name: 'User'
   has_one    :applicant, class_name: 'BillApplicant', dependent: :destroy
   has_many   :approvers, class_name: 'BillApprovalUser', dependent: :destroy
   has_many   :users, through: :approvers
@@ -65,6 +67,11 @@ class Bill < ApplicationRecord
     errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on'))
   end
 
+  # 作成者とバックオフィスユーザは、編集・削除・申請・取消が可能
+  def verify_operational_ability(current_user)
+    create_user_id == current_user.id || current_user.backoffice?
+  end
+
   def primary_approver
     approvers.primary_role.first
   end
@@ -75,7 +82,7 @@ class Bill < ApplicationRecord
 
   def make_bill_application!(applicant_id, comment, user_id, reapply)
     ActiveRecord::Base.transaction do
-      build_applicant(comment: comment, user_id: applicant_id).save!
+      build_applicant(user_id: applicant_id, comment: comment).save!
       pending_bill!
 
       # 承認者の洗い替え

@@ -10,5 +10,6 @@ FactoryBot.define do
     memo                    { Faker::Lorem.sentence }
     amount                  { rand(10) * (10 ** rand(3)) * 10_000 }
     status                  { "unapplied" }
+    create_user_id          { FactoryBot.create(:user).id }
   end
 end

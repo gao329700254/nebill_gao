@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191031050805) do
+ActiveRecord::Schema.define(version: 20191120034837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20191031050805) do
     t.string   "payment_type",                     null: false
     t.date     "expected_deposit_on",              null: false
     t.integer  "status",              default: 10, null: false
+    t.integer  "create_user_id",                   null: false
     t.index ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
   end
 

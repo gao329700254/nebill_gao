@@ -14,6 +14,7 @@ $ ->
         expected_deposit_on: undefined
         deposit_on:          undefined
         memo:                undefined
+        create_user_id:      undefined
     methods:
       cancel: -> @modalHide()
       submit: ->
@@ -44,6 +45,7 @@ $ ->
         @bill.bill_on             = undefined
         @bill.expected_deposit_on = undefined
         @bill.memo                = undefined
+        @bill.create_user_id      = undefined
     created: ->
       $.ajax "/api/projects/#{@projectId}/bill_default_values.json"
         .done (response) =>
