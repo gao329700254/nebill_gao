@@ -86,6 +86,7 @@ private
       :deposit_on,
       :memo,
       :status,
+      :create_user_id,
     )
   end
 

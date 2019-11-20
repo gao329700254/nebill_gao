@@ -162,6 +162,7 @@ RSpec.describe 'bills request' do
             bill_on:             '2016-01-04',
             expected_deposit_on: '2016-01-05',
             memo:                'memo',
+            create_user_id:      user.id,
           },
         }
       end
@@ -182,6 +183,7 @@ RSpec.describe 'bills request' do
         expect(bill.expected_deposit_on.to_s).to eq '2016-01-05'
         expect(bill.memo).to                     eq 'memo'
         expect(bill.status).to                   eq 'unapplied'
+        expect(bill.create_user_id).to           eq user.id
       end
     end
 
@@ -197,6 +199,7 @@ RSpec.describe 'bills request' do
             bill_on:             '2016-01-04',
             expected_deposit_on: '2016-01-05',
             memo:                'memo',
+            create_user_id:      user.id,
           },
         }
       end

@@ -1,6 +1,6 @@
 class BillApplicantsController < ApplicationController
   # 申請者による、「申請」アクション
-  # 申請時に承認者を設定する
+  # 申請時に申請者、承認者を設定する
   def create
     @bill = Bill.find(params[:bill_id])
     @bill.make_bill_application!(@current_user.id, params[:comment], params[:user_id], params[:reapply])

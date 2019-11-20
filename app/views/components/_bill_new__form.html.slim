@@ -1,4 +1,5 @@
 = form_tag nil, class: 'bill_new__form'
+  = hidden_field_tag :create_user_id, @current_user.id, 'v-model' => 'bill.create_user_id'
   .bill_new__form__container
     .bill_new__form__container__group
       .bill_new__form__item--cd
