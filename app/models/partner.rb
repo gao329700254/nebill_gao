@@ -20,11 +20,9 @@
 class Partner < ApplicationRecord
   acts_as :employee
 
+  belongs_to :client, optional: true
+
   has_many :members, through: :employee, class_name: 'PartnerMember'
 
-  validates :cd          , presence: true, uniqueness: { case_sensitive: false }
-  validates :name        , presence: true
-  validates :company_name, presence: true
-
-  before_save { cd.upcase! }
+  validates :name, presence: true
 end

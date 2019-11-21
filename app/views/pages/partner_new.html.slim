@@ -1,0 +1,25 @@
+= javascript_include_tag 'view_models/partner_new'
+
+- provide(:title, t('page.partner_new.title'))
+
+#partner_new
+  = form_tag nil, class: 'partner_new__form'
+    .partner_new__form__item
+      = label_tag :name, t('activerecord.attributes.partner.name')
+      = text_field_tag :name, nil, 'v-model' => 'partner.name'
+    .partner_new__form__item
+      = label_tag :email, t('activerecord.attributes.partner.email')
+      = email_field_tag :email, nil, 'v-model' => 'partner.email'
+
+    .partner_new__form__item
+      = label_tag :client_info, t('activerecord.attributes.partner.client_info')
+
+      select#client_id[v-model="client.id" @change="loadSelectedClient"]
+        option v-for="client_option in allClients" value="{{client_option.id}}" {{ client_option.cd + ' ' + client_option.company_name }}
+
+      = text_field_tag :client_info, nil, 'v-model' => 'client.client_info', ':disabled' => 'true'
+
+    = button_tag 'v-on:click.prevent' => 'cancel', class: 'partner_new__form__btn' do
+      = fa_icon 'remove', text: t('helpers.cancel')
+    = button_tag 'v-on:click.prevent' => 'submit', class: 'partner_new__form__btn' do
+      = fa_icon 'check', text: t('helpers.submit.create')

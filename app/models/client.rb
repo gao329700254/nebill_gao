@@ -20,6 +20,7 @@
 class Client < ApplicationRecord
   has_many :approvals, as: :approved
   has_many :files, class_name: 'ClientFile', dependent: :destroy
+  has_many :partners, dependent: :destroy
   accepts_nested_attributes_for :files, allow_destroy: true
 
   has_paper_trail

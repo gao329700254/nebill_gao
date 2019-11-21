@@ -272,7 +272,11 @@ Rails.application.routes.draw do
     get 'pdf', to: 'bills/pdf#download', as: 'bill_download_pdf'
   end
   get 'project_groups', to: 'pages#project_groups'
-  get 'partners'      , to: 'pages#partners'
+  scope path: 'partners' do
+    get 'list', to: 'pages#partner_list', as: 'partner_list'
+    get 'new', to: 'pages#partner_new', as: 'partner_new'
+    get ':partner_id/show', to: 'pages#partner_show', as: 'partner_show'
+  end
   scope path: 'agreements' do
     get 'list', to: 'pages#agreement_list', as: 'agreement_list'
   end

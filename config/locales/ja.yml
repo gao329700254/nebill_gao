@@ -37,6 +37,7 @@ ja:
       partner:
         <<: *employee
         cd: ID
+        client_info: 取引先情報
         company_name: 会社名
         address:      住所
         zip_code:     郵便番号
@@ -683,8 +684,14 @@ ja:
       confirm: 確認済
       not_confirm: 未確認
       memo: メモ
-    partners:
+    partner_list:
       title: パートナー一覧
+      new: パートナー新規作成
+    partner_new:
+      title: パートナー新規作成
+      client: 取引先情報
+    partner_show:
+      title: パートナー情報
     approval_list:
       title: 稟議一覧
       search_form_placeholder: '件名,作成者で検索できます'
@@ -830,7 +837,6 @@ ja:
         created_at: 作成日
   component:
     member_list:
-      new_partner: パートナーを新規登録
       partner: パートナー
       user: メンバー
   pdf:

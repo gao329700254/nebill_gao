@@ -1,7 +1,8 @@
-.partner_new {
+.partner_show {
+  padding: $base-spacing;
+
   &__form {
     @include outer-container;
-    padding: 1.5rem;
 
     &__item {
       margin-bottom: $small-spacing;
@@ -35,6 +36,11 @@
 
     &__btn {
       @include btn--default;
+
+      &_link_to_list {
+        @include btn--default;
+        margin-bottom: 1rem;
+      }
     }
   }
 }

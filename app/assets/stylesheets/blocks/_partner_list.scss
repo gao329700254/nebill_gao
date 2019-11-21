@@ -1,0 +1,55 @@
+.partner {
+  @include row;
+  padding: $base-spacing;
+
+  &_new_btn {
+    @include btn--primary;
+    float: right;
+  }
+
+  &_list {
+    @include span-columns(12);
+
+    &__tbl {
+      @include list_tbl;
+
+      &__head {
+        &__row {
+          @include list_tbl__head__row;
+        }
+      }
+
+      &__body {
+        @include list_tbl__body;
+
+        &__row {
+          @include list_tbl__body__row;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $theme-lighen-color;
+          }
+        }
+      }
+
+      &__item,
+      %partner_list__tbl__item {
+        @include list_tbl__item;
+        &--name {
+          @extend %partner_list__tbl__item;
+          @include span-columns(2);
+        }
+
+        &--company_name {
+          @extend %partner_list__tbl__item;
+          @include span-columns(5);
+        }
+
+        &--email {
+          @extend %partner_list__tbl__item;
+          @include span-columns(5);
+        }
+      }
+    }
+  }
+}

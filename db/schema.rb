@@ -252,14 +252,12 @@ ActiveRecord::Schema.define(version: 20191124083511) do
   end
 
   create_table "partners", force: :cascade do |t|
-    t.string   "company_name", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.string   "cd",           null: false
-    t.string   "address"
-    t.string   "zip_code"
-    t.string   "phone_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "cd"
+    t.integer  "client_id"
     t.index ["cd"], name: "index_partners_on_cd", using: :btree
+    t.index ["client_id"], name: "index_partners_on_client_id", using: :btree
   end
 
   create_table "payee_accounts", force: :cascade do |t|

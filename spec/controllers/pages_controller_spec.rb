@@ -68,18 +68,18 @@ RSpec.describe PagesController do
     end
   end
 
-  describe 'GET #partners' do
+  describe 'GET #partner_list' do
     context 'when not logged in' do
-      before { get :partners }
+      before { get :partner_list }
 
       it { is_expected.to redirect_to root_path }
     end
     context 'when logged in' do
       let(:user) { create(:user) }
       before { login(user) }
-      before { get :partners }
+      before { get :partner_list }
 
-      it { is_expected.to render_template :partners }
+      it { is_expected.to render_template :partner_list }
     end
   end
 

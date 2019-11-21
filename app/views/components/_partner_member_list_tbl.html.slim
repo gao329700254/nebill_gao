@@ -12,18 +12,16 @@ table.partner_member_list__tbl
   tbody.partner_member_list__tbl__body
     tr.partner_member_list__tbl__body__row [
       v-for = "partner in partners"
-      v-bind:class = "partner.selected ? 'partner_member_list__tbl__body__row--selected'
+      v-bind:class = "partner.selected && !editMode ? 'partner_member_list__tbl__body__row--selected'
                                        : 'partner_member_list__tbl__body__row'"
       id = "partner-{{partner.id}}"
       track-by     = "id"
     ]
       td.partner_member_list__tbl__item--name
-        div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
+        .partner_member_list__tbl__item--name--non_edit
           input type="checkbox" name="selected" v-model="partner.selected" v-if='!editMode'
-        div v-bind:class = "[editMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
-          = text_field_tag :name, nil, 'v-model' => 'partner.name', ':disabled' => 'true'
-      td.partner_member_list__tbl__item--email
-        = text_field_tag :unit_price, nil, 'v-model' => 'partner.email', ':disabled' => 'true'
+        .partner_member_list__tbl__item--name--non_edit[] {{ partner.name }}
+      td.partner_member_list__tbl__item--email[] {{ partner.email }}
       td.partner_member_list__tbl__item--unit_price
         = text_field_tag :unit_price, nil, 'v-model' => 'partner.unit_price', ':disabled' => 'true'
       td.partner_member_list__tbl__item--working_rate

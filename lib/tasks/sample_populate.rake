@@ -8,9 +8,9 @@ namespace :db do
           projects
           bills
           bill_details
-          partners
           members
           clients
+          partners
           project_file_groups
           project_files
           default_expense_items
@@ -54,7 +54,8 @@ namespace :db do
       Bill.destroy_all
 
       Project.where(contracted: true).all.each do |project|
-        FactoryBot.create(:bill, project: project, amount: project.amount)
+        bill = FactoryBot.create(:bill, project: project, amount: project.amount)
+        FactoryBot.create(:bill_applicant, user: FactoryBot.create(:user), bill: bill)
       end
     end
 
@@ -63,13 +64,6 @@ namespace :db do
 
       Bill.all.each do |bill|
         FactoryBot.create(:bill_detail, bill: bill, amount: bill.amount)
-      end
-    end
-
-    def populate_partners(num = 3, company_num = 10)
-      Partner.destroy_all
-      company_num.times do
-        FactoryBot.create_list(:partner, num, company_name: Faker::Company.name)
       end
     end
 
@@ -89,6 +83,11 @@ namespace :db do
     def populate_clients(num = 5)
       Client.destroy_all
       FactoryBot.create_list(:client, num, :published)
+    end
+
+    def populate_partners
+      Partner.destroy_all
+      10.times { FactoryBot.create(:partner, client_id: Client.pluck(:id).sample) }
     end
 
     def populate_project_file_groups(num = 3)

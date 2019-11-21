@@ -1,14 +1,41 @@
 require 'rails_helper'
 
 RSpec.describe 'partner request' do
-  let!(:user) { create(:user) }
+  let!(:user)  { create(:user) }
+  let(:client1) { create(:client) }
+  let(:client2) { create(:client) }
+  let(:client3) { create(:client) }
 
   before { login(user) }
 
+  describe 'POST /api/partners' do
+    let(:path) { '/api/partners' }
+    let(:params) do
+      {
+        partner: {
+          name:      'name',
+          email:     'sample@sample.com',
+          client_id: client1.id,
+        },
+      }
+    end
+
+    it 'creates a new partner' do
+      expect do
+        post path, params: params
+      end.to change(Partner, :count).by(1)
+
+      partner = Partner.first
+      expect(partner.name).to   eq 'name'
+      expect(partner.email).to  eq 'sample@sample.com'
+      expect(partner.client).to eq client1
+    end
+  end
+
   describe 'GET /api/partners' do
-    let!(:partner1) { create(:partner) }
-    let!(:partner2) { create(:partner) }
-    let!(:partner3) { create(:partner) }
+    let!(:partner1) { create(:partner, client: client1) }
+    let!(:partner2) { create(:partner, client: client2) }
+    let!(:partner3) { create(:partner, client: client3) }
     let(:path) { '/api/partners' }
 
     it 'return a list of partners' do
@@ -18,10 +45,12 @@ RSpec.describe 'partner request' do
       expect(response.status).to eq 200
       expect(json.count).to eq 3
 
+      json.sort_by! { |x| x['id'].to_i }
+
       expect(json[0]['id']).to           eq partner1.id
       expect(json[0]['name']).to         eq partner1.name
       expect(json[0]['email']).to        eq partner1.email
-      expect(json[0]['company_name']).to eq partner1.company_name
+      expect(json[0]['client']['id']).to eq partner1.client.id
       expect(json[0]['created_at']).to   eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       expect(json[0]['updated_at']).to   eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
     end
@@ -30,9 +59,9 @@ RSpec.describe 'partner request' do
   describe 'GET /api/projects/:project_id/partners' do
     context 'with exist projects id' do
       let(:project) { create(:project) }
-      let!(:partner1) { create(:partner, :with_project, project: project) }
-      let!(:partner2) { create(:partner, :with_project, project: project) }
-      let!(:partner3) { create(:partner, :with_project, project: project) }
+      let!(:partner1) { create(:partner, :with_project, client: client1, project: project) }
+      let!(:partner2) { create(:partner, :with_project, client: client2, project: project) }
+      let!(:partner3) { create(:partner, :with_project, client: client3, project: project) }
       let!(:partner4) { create(:partner, :with_project) }
       let(:path) { "/api/projects/#{project.id}/partners" }
 
@@ -47,6 +76,7 @@ RSpec.describe 'partner request' do
 
         expect(json[0]['id']).to                       eq partner1.id
         expect(json[0]['name']).to                     eq partner1.name
+        expect(json[0]['client']['id']).to             eq partner1.client.id
         expect(json[0]['member']['unit_price']).to     eq partner1.members[0].unit_price
         expect(json[0]['member']['min_limit_time']).to eq partner1.members[0].min_limit_time
         expect(json[0]['member']['max_limit_time']).to eq partner1.members[0].max_limit_time
@@ -56,6 +86,7 @@ RSpec.describe 'partner request' do
 
         expect(json[1]['id']).to                       eq partner2.id
         expect(json[1]['name']).to                     eq partner2.name
+        expect(json[1]['client']['id']).to             eq partner2.client.id
         expect(json[1]['member']['unit_price']).to     eq partner2.members[0].unit_price
         expect(json[1]['member']['min_limit_time']).to eq partner2.members[0].min_limit_time
         expect(json[1]['member']['max_limit_time']).to eq partner2.members[0].max_limit_time
@@ -65,6 +96,7 @@ RSpec.describe 'partner request' do
 
         expect(json[2]['id']).to                       eq partner3.id
         expect(json[2]['name']).to                     eq partner3.name
+        expect(json[2]['client']['id']).to             eq partner3.client.id
         expect(json[2]['member']['unit_price']).to     eq partner3.members[0].unit_price
         expect(json[2]['member']['min_limit_time']).to eq partner3.members[0].min_limit_time
         expect(json[2]['member']['max_limit_time']).to eq partner3.members[0].max_limit_time
@@ -91,9 +123,9 @@ RSpec.describe 'partner request' do
   describe 'GET /api/projects/:project_id/partners' do
     context 'with exist project id' do
       let(:project) { create(:contracted_project) }
-      let!(:partner1) { create(:partner, :with_project, project: project) }
-      let!(:partner2) { create(:partner, :with_project, project: project) }
-      let!(:partner3) { create(:partner, :with_project, project: project) }
+      let!(:partner1) { create(:partner, :with_project, client: client1, project: project) }
+      let!(:partner2) { create(:partner, :with_project, client: client2, project: project) }
+      let!(:partner3) { create(:partner, :with_project, client: client3, project: project) }
       let!(:partner4) { create(:partner_member, project: project, partner: partner3) }
       let(:path) { "/api/projects/#{project.id}/partners" }
 
@@ -109,21 +141,22 @@ RSpec.describe 'partner request' do
         expect(json[0]['id']).to           eq partner1.id
         expect(json[0]['name']).to         eq partner1.name
         expect(json[0]['email']).to        eq partner1.email
-        expect(json[0]['company_name']).to eq partner1.company_name
+        expect(json[0]['client']['id']).to eq partner1.client.id
+        expect(json[0]['client']['id']).to eq partner1.client.id
         expect(json[0]['created_at']).to   eq partner1.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[0]['updated_at']).to   eq partner1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
 
         expect(json[1]['id']).to           eq partner2.id
         expect(json[1]['name']).to         eq partner2.name
         expect(json[1]['email']).to        eq partner2.email
-        expect(json[1]['company_name']).to eq partner2.company_name
+        expect(json[1]['client']['id']).to eq partner2.client.id
         expect(json[1]['created_at']).to   eq partner2.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[1]['updated_at']).to   eq partner2.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
 
         expect(json[2]['id']).to           eq partner3.id
         expect(json[2]['name']).to         eq partner3.name
         expect(json[2]['email']).to        eq partner3.email
-        expect(json[2]['company_name']).to eq partner3.company_name
+        expect(json[2]['client']['id']).to eq partner3.client.id
         expect(json[2]['created_at']).to   eq partner3.created_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
         expect(json[2]['updated_at']).to   eq partner3.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
       end
@@ -146,16 +179,16 @@ RSpec.describe 'partner request' do
   describe 'PATCH /api/partners/:partner_id' do
     context 'with exist partner' do
       let!(:partner) { create(:partner) }
-      let(:path) { "/api/partners/#{partner.id}" }
+      let(:path)     { "/api/partners/#{partner.id}" }
 
       context 'with correct parameter' do
         let(:params) do
           {
             partner: {
-              id:    partner.id,
-              name: 'name',
-              email: 'sample@sample.com',
-              company_name: 'company_name',
+              id:        partner.id,
+              name:      'name',
+              email:     'sample@sample.com',
+              client_id: client1.id,
             },
           }
         end
@@ -168,7 +201,7 @@ RSpec.describe 'partner request' do
           expect(partner.id).to eq partner.id
           expect(partner.name).to eq 'name'
           expect(partner.email).to eq 'sample@sample.com'
-          expect(partner.company_name).to eq 'company_name'
+          expect(partner.client).to eq client1
 
           expect(response).to be_success
           expect(response.status).to eq 201
@@ -215,6 +248,17 @@ RSpec.describe 'partner request' do
 
         expect(json['message']).to eq 'リソースが見つかりませんでした'
       end
+    end
+  end
+
+  describe 'DELETE /api/partners/:id' do
+    let!(:partner) { create(:partner) }
+    let(:path)     { "/api/partners/#{partner.id}" }
+
+    it 'destroys the partner' do
+      expect do
+        delete path
+      end.to change(Partner, :count).by(-1)
     end
   end
 end

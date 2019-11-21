@@ -8,12 +8,6 @@ RSpec.describe Partner do
 
   it { is_expected.to respond_to(:name) }
   it { is_expected.to respond_to(:email) }
-  it { is_expected.to respond_to(:company_name) }
 
   it { expect(Partner).to act_as(:employee) }
-
-  it { is_expected.to validate_presence_of(:cd) }
-  it { is_expected.to validate_uniqueness_of(:cd).case_insensitive }
-  it { is_expected.to validate_presence_of(:name) }
-  it { is_expected.to validate_presence_of(:company_name) }
 end

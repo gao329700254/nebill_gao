@@ -1,0 +1,26 @@
+= javascript_include_tag 'view_models/partner_list'
+
+- provide(:title, t('page.partner_list.title'))
+
+#partner_list.partner
+
+  = button_to partner_new_path, method: :get, class: 'partner_new_btn' do
+    = fa_icon 'check', text: t('page.partner_list.new')
+  .partner_list
+    table.partner_list__tbl
+      thead.partner_list__tbl__head
+        tr.partner_list__tbl__head__row
+          th.partner_list__tbl__item--name  = t('activerecord.attributes.partner.name')
+          th.partner_list__tbl__item--company_name  = t('activerecord.attributes.partner.company_name')
+          th.partner_list__tbl__item--email = t('activerecord.attributes.partner.email')
+      tbody.partner_list__tbl__body
+        tr.partner_list__tbl__body__row [
+          v-for="partner in partners"
+          @click="linkToShow(partner.id)"
+        ]
+          td.partner_list__tbl__item--name
+            | {{ partner.name }}
+          td.partner_list__tbl__item--company_name
+            | {{ partner.client.company_name }}
+          td.partner_list__tbl__item--email
+            | {{ partner.email }}

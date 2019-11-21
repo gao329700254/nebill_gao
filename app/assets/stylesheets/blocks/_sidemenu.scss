@@ -18,6 +18,7 @@
     @include justify-content(center);
     @include padding($base-spacing null);
     position: relative;
+    z-index: 1;
     color: $light-black-ft-non-accent-color;
     &:hover { color: $light-black-ft-color; }
     &:hover &__submenu {
