@@ -60,7 +60,7 @@
           / -----------------------------------------------------
           / 請求フォーム操作アクション
           / -----------------------------------------------------
-          - if @bill.verify_operational_ability(@current_user)
+          - if can? :update, @bill
             - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill? || @bill.issued_bill?
               = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode',
               class: 'bill_show__form__btn--edit' do
@@ -155,7 +155,7 @@
       / 申請者用アクション
       / -----------------------------------------------------
       .bill_approval_show__detail__update
-        - if @bill.verify_operational_ability(@current_user)
+        - if @bill.create_user_id == @current_user.id || @current_user.backoffice?
           - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
             = form_tag bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
               .approval_show__detail__update__action
@@ -168,7 +168,7 @@
                   = button_tag '申請', class: 'bill_show__form__btn--submit'
                 - if @bill.sent_back_bill?
                   = button_tag '再申請', name: 'reapply', value: 'reapply', class: 'bill_show__form__btn--submit'
-        - if @bill.verify_operational_ability(@current_user) && @bill.pending_bill?
+        - if can?(:update, @bill_applicant) && @bill.pending_bill?
           = form_tag bill_applicant_path(@bill.applicant), method: :patch do
             .approval_show__detail__update__action
               = hidden_field_tag :bill_id, @bill.id

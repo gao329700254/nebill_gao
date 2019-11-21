@@ -67,11 +67,6 @@ class Bill < ApplicationRecord
     errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on'))
   end
 
-  # 作成者とバックオフィスユーザは、編集・削除・申請・取消が可能
-  def verify_operational_ability(current_user)
-    create_user_id == current_user.id || current_user.backoffice?
-  end
-
   def primary_approver
     approvers.primary_role.first
   end

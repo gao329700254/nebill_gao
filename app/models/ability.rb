@@ -39,14 +39,12 @@ private
     can :manage, UserMember
     can :manage, ProjectFile
     can :manage, Member
-    can :manage, Bill
-    can :manage, BillApplicant
-    can :manage, BillApprovalUser
     can :manage, ApprovalsSearch
     can :manage, ProjectCd
 
     approval_ability
     expense_abilty user
+    bill_ability user
 
     can :read, ProjectFileGroup
     can :create, ProjectFileGroup
@@ -56,8 +54,6 @@ private
     can :update, Partner
     can :read, User
     can :cd, ProjectCd
-    can :search_result, Bill
-    can :download, Bill
     can :download, Xlsx
     can :download, Pdf
     # NEBILL-328 ability.rbのエラー原因の調査
@@ -95,5 +91,15 @@ private
     can [:renewal, :ex_create], ExpenseApproval, status: %w(pending disconfirm), created_user_id: user.id # 承認待ちまたは差し戻しの場合、更新できる
 
     can :manage, ExpenseApprovalUser
+  end
+
+  def bill_ability(user)
+    can [:read, :create, :search_result], Bill
+    can [:update, :destroy], Bill,             create_user_id: user.id
+    can :create,             BillApplicant
+    can :update,             BillApplicant,    bill: { create_user_id: user.id }
+    can :manage,             BillApprovalUser
+    can :search_result,      Bill
+    can :download,           Bill
   end
 end
