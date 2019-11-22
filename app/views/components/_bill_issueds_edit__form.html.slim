@@ -5,6 +5,10 @@
         .bill_issueds_edit__form__item
           = label_tag :status, Bill.human_attribute_name(:status)
           = text_field_tag :status, nil, 'v-model' => 'bill.status', ':disabled' => '!editMode'
+        /
+        /== 現在モーダルに表示している項目は一部で、2019.11.22現在backofficeの方に表示項目の確認とれていないのでコメントアウトしている
+        /== 確認取れ次第コメントアウトしている部分は削除する
+        /
         / .bill_issueds_edit__form__item
         /   = label_tag :cd, Project.human_attribute_name(:cd)
         /   = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => true
