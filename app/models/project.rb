@@ -59,6 +59,7 @@ class Project < ApplicationRecord
   has_many :file_groups, class_name: 'ProjectFileGroup', dependent: :destroy
   has_many :approvals, as: :approved
   has_many :user_members
+  has_many :employees, through: :members
   has_many :partner_members
   has_many :users, through: :user_members
   has_many :partners, through: :partner_members
@@ -188,8 +189,12 @@ class Project < ApplicationRecord
         create_approval
         create_notice
       end
-      SfProjectCrudJob.perform_later(project_cd: cd, action: 'create_or_update')
     end
+    SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(
+      project_cd: cd,
+      user_names: user_members.map { |m| m.user.name },
+      action: 'create_project',
+    )
   end
 
   def create_approval
@@ -234,7 +239,7 @@ class Project < ApplicationRecord
       self.status = :finished if unprocessed
       save!
       edit_file(file_params) if file_params.present?
-      SfProjectCrudJob.perform_later(project_cd: cd, action: 'create_or_update')
+      SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(project_cd: cd, action: 'update_project')
     end
   end
 
@@ -253,7 +258,7 @@ class Project < ApplicationRecord
   end
 
   def destroy_in_sf
-    SfProjectCrudJob.perform_later(project_cd: cd, action: 'destroy')
+    SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(project_cd: cd, action: 'destroy_project')
   end
 end
 # rubocop:enable Metrics/ClassLength

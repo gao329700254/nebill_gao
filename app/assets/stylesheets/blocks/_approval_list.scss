@@ -13,6 +13,10 @@
       @include display(flex);
       margin-bottom: $base-spacing;
 
+      &__blank {
+        @include span-columns(3);
+      }
+
       &__created_at {
         @include span-columns(6);
       }
@@ -21,9 +25,13 @@
         @include span-columns(3);
         margin-top: $base-spacing;
 
-        &--search,
         &--new_approval {
           @include btn--default;
+        }
+
+        &--search {
+          @include btn--default;
+          width: 150px;
         }
       }
     }

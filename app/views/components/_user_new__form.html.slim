@@ -2,7 +2,7 @@
   .user_new__form__container
     .user_new__form__container__group
       .user_new__form__item
-        = label_tag :name, t('activerecord.attributes.user.name')
+        = label_tag :name, t('activerecord.attributes.user.name') + '  (TeamSpiritに該当ユーザが存在する場合では、ここの名前はTeamSpiritユーザ名にスペースも含めて一致するようにしてください)'
         = text_field_tag :name, nil, 'v-model' => 'user.name'
       .user_new__form__item
         = label_tag :email, t('activerecord.attributes.user.email')

@@ -33,7 +33,7 @@ private
   def defaultcan(user)
     can :manage, Agreement
     can :manage, Page
-    can [:read, :create, :update, :destroy, :statuses], Client
+    can [:read, :create, :update, :destroy, :statuses, :published_clients], Client
     can :manage, Project
     can :manage, ProjectGroup
     can :manage, UserMember

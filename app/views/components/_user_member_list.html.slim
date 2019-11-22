@@ -13,7 +13,7 @@ script type='text/x-template' id='user_member_list'
           v-for        = "user in users | orderBy 'name'"
           id           = "user-{{user.id}}"
           track-by     = "id"
-          v-bind:class = "user.selected ? 'user_member_list__tbl__body__row--selected'
+          v-bind:class = "user.selected && !editMode ? 'user_member_list__tbl__body__row--selected'
                                         : 'user_member_list__tbl__body__row'"
         ]
 
@@ -21,10 +21,10 @@ script type='text/x-template' id='user_member_list'
             div v-bind:class = "[editMode ? '' : 'user_member_list__tbl__item--name--non_edit']"
               input type="checkbox" name='selected' v-model='user.selected' v-if='!editMode'
             div v-bind:class = "[editMode ? '' : 'user_member_list__tbl__item--name--non_edit']"
-              = text_field_tag :name, nil, 'v-model' => 'user.name', ':disabled' => 'true'
+              | {{ user.name }}
             div v-bind:class = "[partnerEditMode ? '' : 'partner_member_list__tbl__item--name--non_edit']"
           td.user_member_list__tbl__item--email
-            = text_field_tag :email, nil, 'v-model' => 'user.email', ':disabled' => 'true'
+            | {{ user.email }}
           td.user_member_list__tbl__item--man_month
             = text_field_tag :man_month, nil, 'v-model' => 'user.man_month', ':disabled' => 'true'
           td.user_member_list__tbl__item--period

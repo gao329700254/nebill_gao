@@ -28,7 +28,7 @@ Rails.application.routes.draw do
         get ':id/select_status', to: "projects#select_status"
         get ':id/last_updated_at', to: "projects#last_updated_at"
         get 'load_partner_user', to: "projects#load_partner_user"
-        post ':id/member_partner', to: "projects#member_partner"
+        post ':id/members_and_partners', to: "projects#members_and_partners"
       end
       collection do
         get 'bill/:bill_id', to: "projects#show"
@@ -82,6 +82,7 @@ Rails.application.routes.draw do
       post "expense_history", to: "expenses#expense_history"
       post "set_project", to: "expenses#set_project"
       post "expense_transportation", to: "expenses#expense_transportation"
+      post "employee_load_projects", to: "expenses#employee_load_projects"
       post "load_expense", to: "expenses#load_expense"
     end
     scope path: 'files/:files_id' do

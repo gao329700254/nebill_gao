@@ -36,6 +36,7 @@ gem "puma", "~> 3.12"
 gem 'select2-rails'
 gem 'enum_help'
 gem 'restforce'
+gem 'kaminari'
 
 group :development do
   gem 'web-console', '~> 2.0'
@@ -46,7 +47,7 @@ group :development do
   gem 'rails-erd'
   gem 'annotate'
   gem 'bullet'
-  gem 'rubocop'  , require: false
+  gem 'rubocop',   require: false
   gem 'slim_lint', require: false
   gem 'scss_lint', require: false
   gem 'coffeelint'
