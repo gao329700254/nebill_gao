@@ -96,14 +96,14 @@
 
       &--confirmbtn {
         @include btn--default;
-        padding: 0.5rem;
+        padding: .5rem;
       }
 
       &--memo {
         @extend %bill_list__tbl__item;
         @include span-columns(3);
       }
-    
+
       &--deposit_confirmed_memo {
         @extend %bill_list__tbl__item;
         @include span-columns(3);
