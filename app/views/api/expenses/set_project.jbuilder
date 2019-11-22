@@ -1,2 +1,3 @@
 json.id            @project.id
-json.name          "#{@project.cd} #{@project.name}"
+json.cd            @project.cd
+json.name          @project.name

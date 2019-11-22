@@ -26,7 +26,8 @@ $ ->
       fix_amount: ''
       arrow: '→'
       checked: false
-      selected_project: ''
+      selected_employee_project: ''
+      employee_project_list: []
       project_list: []
       files: []
       return:
@@ -53,7 +54,7 @@ $ ->
             form.append('expense[arrival_location]', @expense.arrival_location)
           form.append('expense[amount]', @defaule_expense_items.standard_amount)
           form.append('expense[payment_type]', @expense.payment_type)
-          form.append('expense[project_id]', @selected_project) if @selected_project
+          form.append('expense[project_id]', @selected_employee_project) if @selected_employee_project
           form.append('expense[notes]', @expense.notes)
           form.append('fix_amount', @fix_amount)
           $.ajax
@@ -142,6 +143,15 @@ $ ->
           @arrow = '↔️'
         else
           @arrow = '→'
+      employeeLoadProjects: (e) ->
+        $.ajax
+          url: '/api/expenses/employee_load_projects.json'
+          type: 'POST'
+          data: {
+            project_id: e
+          }
+        .done (response) =>
+          @employee_project_list = response
       setProject: (e) ->
         try
           $.ajax
@@ -151,8 +161,9 @@ $ ->
               project_id: e
             }
           .done (response) =>
-            @project_list.push(response)
-            @selected_project = response.id
+            @employee_project_list.push(response)
+            @employee_project_list = _.uniq(@employee_project_list, 'cd')
+            @selected_employee_project = response.id
       setProjectModal: -> @$broadcast('showExpenseNewEvent')
       showExpenseTransportation: -> @$broadcast('showExpenseTransportationEvent')
       showExpenseHistory: -> @$dispatch('showExpenseHistoryEvent')
@@ -160,6 +171,7 @@ $ ->
       showExpenseNewEvent: (val) ->
         @modalShow()
         @expense_approval_id = val
+        @employeeLoadProjects()
         @loadExpense()
       loadProject: (projectId) -> @setProject(projectId)
     compiled: ->
