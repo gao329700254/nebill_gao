@@ -5,6 +5,12 @@
       .bill_new__form__item--cd
         = label_tag :cd, Bill.human_attribute_name(:cd)
         = text_field_tag :cd, nil, 'v-model' => 'bill.cd'
+      .bill_new__form__item--project_name
+        = label_tag :project_name, Bill.human_attribute_name(:project_name)
+        = text_field_tag :project_name, nil, 'v-model' => 'bill.project_name'
+      .bill_new__form__item--company_name
+        = label_tag :company_name, Bill.human_attribute_name(:company_name)
+        = text_field_tag :company_name, nil, 'v-model' => 'bill.company_name'
       .bill_new__form__item--amount
         = label_tag :amount, Bill.human_attribute_name(:amount)
         = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount'
@@ -20,6 +26,9 @@
       .bill_new__form__item--bill_on
         = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
         = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on'
+      .bill_new__form__item--issue_on
+        = label_tag :issue_on, Bill.human_attribute_name(:issue_on)
+        = date_field_tag :issue_on, nil, 'v-model' => 'bill.issue_on'
       .bill_new__form__item--expected_deposit_on
         = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
         = date_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on'

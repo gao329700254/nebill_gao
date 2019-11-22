@@ -11,13 +11,15 @@ class BillDecorator < Draper::Decorator
   end
 
   def pdf_billing_company_name
-    [project.billing_company_name, I18n.t('pdf.bill.onchu')].compact.join
+    [company_name, I18n.t('pdf.bill.onchu')].join
   end
 
   def pdf_price_include_tax
     price_include_tax.to_s(:delimited)
   end
 
+  # TODO(maeda): 経費、精算分も加算必要
+  # 内訳編集実装時に加算修正予定
   def pdf_total_price
     (amount + price_include_tax).to_s(:delimited)
   end

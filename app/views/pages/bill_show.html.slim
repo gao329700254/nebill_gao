@@ -26,8 +26,12 @@
               = label_tag :cd, Bill.human_attribute_name(:cd)
               = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => '!editMode'
             .bill_show__form__item
-              = label_tag :project_id, Project.human_attribute_name(:name)
-              = link_to @bill.project.name, project_show_path(@bill.project), type: 'button'
+              = label_tag :project_name, Bill.human_attribute_name(:project_name)
+              = text_field_tag :project_name, nil, 'v-model' => 'bill.project_name', 'v-if' => 'editMode', ':disabled' => '!editMode'
+              = link_to @bill.project_name, project_show_path(@bill.project), type: 'button', 'v-else' => '!editMode'
+            .bill_show__form__item
+              = label_tag :company_name, Bill.human_attribute_name(:company_name)
+              = text_field_tag :company_name, nil, 'v-model' => 'bill.company_name', ':disabled' => '!editMode'
             .bill_show__form__item
               = label_tag :amount, Bill.human_attribute_name(:amount)
               = text_field_tag :amount, nil, 'v-numeric' => 'bill.amount', ':disabled' => '!editMode'
@@ -43,6 +47,9 @@
             .bill_show__form__item
               = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
               = date_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = label_tag :issue_on, Bill.human_attribute_name(:issue_on)
+              = date_field_tag :issue_on, nil, 'v-model' => 'bill.issue_on', ':disabled' => '!editMode'
             .bill_show__form__item
               = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
               = date_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on', ':disabled' => '!editMode'

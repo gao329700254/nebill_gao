@@ -1,8 +1,8 @@
 #bill_pdf.bill_pdf
   / 請求書
   .bill_pdf__header.page_break
-    - @today = Time.zone.today.strftime("%Y/%m/%d")
-    .bill_pdf__header--today = @today
+    - @issue_date = I18n.l(@bill.issue_on, format: :ymd)
+    .bill_pdf__header--issue_date = @issue_date
     .bill_pdf__header--billing_company_name = @bill.pdf_billing_company_name
     .bill_pdf__header__cuon
       .bill_pdf__header__cuon__items
@@ -20,7 +20,7 @@
       .bill_pdf__body__note = t('pdf.bill.note')
       .bill_pdf__body__subject
         .bill_pdf__body__subject--title = t('pdf.subject_title')
-        span.bill_pdf__body__subject--project_name = @bill.project.name
+        span.bill_pdf__body__subject--project_name = @bill.project_name
       .bill_pdf__body__price
         .bill_pdf__body__price--title = t('pdf.charged_price')
         .bill_pdf__body__price--subject = @bill.pdf_total_price_yen
@@ -29,12 +29,12 @@
     .bill_pdf__footer
       .bill_pdf__footer--limit
         .bill_pdf__footer--limit--right = t('pdf.bill.limit')
-        span.bill_pdf__footer--limit--left = I18n.t("enumerize.defaults.payment_type.#{@bill.payment_type}")
+        span.bill_pdf__footer--limit--left = I18n.l(@bill.expected_deposit_on, format: :long)
       .bill_pdf__footer--bank
         .bill_pdf__footer--bank--right = t('pdf.bill.bank')
         span.bill_pdf__footer--bank--left = t('pdf.bill.bank_ufj')
       .bill_pdf__footer--fee = t('pdf.bill.fee')
 
-  == render 'pdf/accept', locals: { today: @today }
+  == render 'pdf/accept', locals: { issue_date: @issue_date }
 
 = wicked_pdf_stylesheet_link_tag 'pdf/bill'

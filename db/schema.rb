@@ -117,6 +117,9 @@ ActiveRecord::Schema.define(version: 20191120034837) do
     t.integer  "status",                 default: 10, null: false
     t.text     "deposit_confirmed_memo"
     t.integer  "create_user_id",                      null: false
+    t.string   "project_name",                        null: false
+    t.string   "company_name",                        null: false
+    t.date     "issue_on"
     t.index ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
   end
 

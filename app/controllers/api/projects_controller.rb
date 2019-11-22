@@ -83,8 +83,12 @@ class Api::ProjectsController < Api::ApiController
     # 支払い条件と請求日から入金予定日を算出する
     expected_deposit_on   = @project.calc_expected_deposit_on(@project.payment_type, bill_on)
 
+    # TODO(maeda)：
+    # 請求先会社名については、[NEBILL-337]取引先担当者機能が実装されたのちに、修正が必要
     result = {
       cd:                  @project.generate_bill_cd,
+      project_name:        @project.name,
+      company_name:        @project.billing_company_name,
       amount:              @project.amount,
       delivery_on:         @project.end_on,
       acceptance_on:       @project.end_on,
