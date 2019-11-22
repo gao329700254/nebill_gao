@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe 'projects request', versioning: true do
   let!(:user) { create(:user) }
 
-  before { login(user) }
+  before do
+    login(user)
+    ActiveJob::Base.queue_adapter = :test
+  end
 
   describe 'GET /api/projects' do
     let!(:project1) { create(:contracted_project, cd: '17D001', is_regular_contract: true) }
@@ -57,9 +60,6 @@ RSpec.describe 'projects request', versioning: true do
   describe 'POST /api/projects' do
     let(:path) { "/api/projects" }
     let(:project_group) { create(:project_group) }
-    let(:sf_project_update_job) { SfProjectCrudJob.new }
-
-    before { ActiveJob::Base.queue_adapter = :test }
 
     context 'with correct parameter' do
       let(:params) do
@@ -147,7 +147,7 @@ RSpec.describe 'projects request', versioning: true do
       end
 
       it 'calls sf job' do
-        expect { post path, params: params }.to have_enqueued_job(SfProjectCrudJob)
+        expect { post path, params: params }.to have_enqueued_job(SfProjectAndWorkItemCrudJob)
       end
     end
 
@@ -350,7 +350,6 @@ RSpec.describe 'projects request', versioning: true do
       let(:project) { create(:contracted_project) }
       let(:project_group) { create(:project_group) }
       let(:path) { "/api/projects/#{project.id}" }
-      let(:sf_project_update_job) { SfProjectCrudJob.new }
 
       context 'with correct parameter' do
         let(:params) do
@@ -438,7 +437,7 @@ RSpec.describe 'projects request', versioning: true do
         end
 
         it 'calls sf job' do
-          expect { patch path, params: params }.to have_enqueued_job(SfProjectCrudJob)
+          expect { patch path, params: params }.to have_enqueued_job(SfProjectAndWorkItemCrudJob)
         end
       end
 
@@ -608,9 +607,6 @@ RSpec.describe 'projects request', versioning: true do
     context 'with exist project id' do
       let!(:project) { create(:contracted_project) }
       let(:path) { "/api/projects/#{project.id}" }
-      let(:sf_project_update_job) { SfProjectCrudJob.new }
-
-      before { ActiveJob::Base.queue_adapter = :test }
 
       it 'delete the project' do
         expect do
@@ -624,7 +620,7 @@ RSpec.describe 'projects request', versioning: true do
       end
 
       it 'calls sf job' do
-        expect { delete path }.to have_enqueued_job(SfProjectCrudJob)
+        expect { delete path }.to have_enqueued_job(SfProjectAndWorkItemCrudJob)
       end
     end
 

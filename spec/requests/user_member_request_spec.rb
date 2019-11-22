@@ -5,7 +5,10 @@ RSpec.describe 'user members request' do
   let!(:project) { create(:contracted_project) }
   let!(:bill) { create(:bill) }
 
-  before { login(user) }
+  before do
+    login(user)
+    ActiveJob::Base.queue_adapter = :test
+  end
 
   describe 'POST /api/user_members/:project_id/:user_id' do
     let(:path) { "/api/user_members/#{project.id}/#{user.employee.id}" }
@@ -25,6 +28,10 @@ RSpec.describe 'user members request' do
 
       expect(project.users).to include user
     end
+
+    it 'enqueues an sf job' do
+      expect { post path, params: params }.to have_enqueued_job(SfProjectAndWorkItemCrudJob)
+    end
   end
 
   describe 'DELETE /api/user_members/:project_id/:user_id' do
@@ -41,6 +48,10 @@ RSpec.describe 'user members request' do
         expect(response.status).to eq 201
 
         expect(json['message']).to eq 'メンバーを削除しました'
+      end
+
+      it 'enqueues an sf job' do
+        expect { delete path }.to have_enqueued_job(SfProjectAndWorkItemCrudJob)
       end
     end
 
