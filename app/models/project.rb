@@ -174,10 +174,10 @@ class Project < ApplicationRecord
 
   # 請求番号の末尾に、月ごとに連番2桁（01〜99）を付与する
   def generate_bill_cd
-    bills_count = bills.where(created_at: Time.current.all_month).count
-    suffix_num  = bills_count < 100 ? bills_count + 1 : 1
+    latest_suffix = bills.where(created_at: Time.current.all_month).pluck(:cd).map { |cd| cd.slice(-2, 2) }.max.to_i
+    next_suffix   = latest_suffix < 99 ? latest_suffix + 1 : 1
 
-    "#{cd}#{I18n.l(Time.zone.today, format: :bill_cd)}#{format('%#02d', suffix_num)}"
+    "#{cd}#{I18n.l(Time.zone.today, format: :bill_cd)}#{format('%#02d', next_suffix)}"
   end
 
   def create_in_nebill_and_sf!(file_param)

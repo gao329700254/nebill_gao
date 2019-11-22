@@ -115,8 +115,9 @@ RSpec.describe 'bills request' do
         expect(response.status).to eq 200
 
         expect(json['id']).to                  eq bill.id
-        expect(json['project_id']).to          eq bill.project_id
         expect(json['cd']).to                  eq bill.cd
+        expect(json['project_name']).to        eq bill.project_name
+        expect(json['company_name']).to        eq bill.company_name
         expect(json['amount']).to              eq bill.amount
         expect(json['delivery_on']).to         eq bill.delivery_on.strftime("%Y-%m-%d")
         expect(json['acceptance_on']).to       eq bill.acceptance_on.strftime("%Y-%m-%d")
@@ -147,7 +148,7 @@ RSpec.describe 'bills request' do
   end
 
   describe 'POST /api/projects/:project_id/bill' do
-    let(:project) { create(:project) }
+    let(:project) { create(:contracted_project) }
     let(:path) { "/api/projects/#{project.id}/bills" }
 
     context 'with correct parameter' do
@@ -155,6 +156,8 @@ RSpec.describe 'bills request' do
         {
           bill: {
             cd:                  'BILL-1',
+            project_name:        project.name,
+            company_name:        project.billing_company_name,
             amount:              100_000,
             delivery_on:         '2016-01-01',
             acceptance_on:       '2016-01-02',
@@ -173,8 +176,10 @@ RSpec.describe 'bills request' do
         end.to change(Bill, :count).by(1)
 
         bill = Bill.first
-        expect(bill.project).to eq project
-        expect(bill.cd).to eq 'BILL-1'
+        expect(bill.project).to                  eq project
+        expect(bill.cd).to                       eq 'BILL-1'
+        expect(bill.project_name).to             eq project.name
+        expect(bill.company_name).to             eq project.billing_company_name
         expect(bill.amount).to                   eq 100_000
         expect(bill.delivery_on.to_s).to         eq '2016-01-01'
         expect(bill.acceptance_on.to_s).to       eq '2016-01-02'
@@ -225,11 +230,14 @@ RSpec.describe 'bills request' do
           {
             bill: {
               cd:                  'BILL-1',
+              project_name:        'updated_project_name',
+              company_name:        'updated_company_name',
               amount:              100_000,
               delivery_on:         '2016-01-01',
               acceptance_on:       '2016-01-02',
               payment_type:        'bill_on_15th_and_payment_on_end_of_next_month',
               bill_on:             '2016-01-04',
+              issue_on:            '2016-01-04',
               expected_deposit_on: '2016-01-05',
               deposit_on:          '2016-01-05',
               memo:                'memo',
@@ -242,11 +250,14 @@ RSpec.describe 'bills request' do
 
           expect(bill.project).to                  eq project
           expect(bill.cd).to                       eq 'BILL-1'
+          expect(bill.project_name).to             eq 'updated_project_name'
+          expect(bill.company_name).to             eq 'updated_company_name'
           expect(bill.amount).to                   eq 100_000
           expect(bill.delivery_on.to_s).to         eq '2016-01-01'
           expect(bill.acceptance_on.to_s).to       eq '2016-01-02'
           expect(bill.payment_type).to             eq 'bill_on_15th_and_payment_on_end_of_next_month'
           expect(bill.bill_on.to_s).to             eq '2016-01-04'
+          expect(bill.issue_on.to_s).to            eq '2016-01-04'
           expect(bill.expected_deposit_on.to_s).to eq '2016-01-05'
           expect(bill.deposit_on.to_s).to          eq '2016-01-05'
           expect(bill.memo).to                     eq 'memo'

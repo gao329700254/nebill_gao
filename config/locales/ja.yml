@@ -831,7 +831,6 @@ ja:
     charged_price: 'ご請求金額:'
     uchiwake: 内訳
     price: 金額
-    # ここ、必要か検討
     period: '期間: '
     exceed: '超過分: 基準H　実働: H ※0.5単位 @/H'
     subtotal: 小計
