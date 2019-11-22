@@ -48,11 +48,7 @@ class Bill < ApplicationRecord
   validates :expected_deposit_on, presence: true
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
-  validates :deposit_on, presence: true, if: :deposit_on_valid?
-
-  def deposit_on_valid?
-    status == 'confirmed'
-  end
+  validates :deposit_on, presence: true, if: proc { status == 'confirmed' }
 
   before_save { cd.upcase! }
 
@@ -69,9 +65,11 @@ class Bill < ApplicationRecord
   # == bill_issued時の入金予定日の期間検索の処理
   #
   scope :expected_deposit_on_between, lambda { |expected_deposit_on_start_on, expected_deposit_on_end_on|
-    where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)).where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on))
+    where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on))\
+      .where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on))
   }
-  scope :gteq_expected_deposit_on_start_on, -> (expected_deposit_on_start_on) { where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)) }
+  scope :gteq_expected_deposit_on_start_on,\
+        -> (expected_deposit_on_start_on) { where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)) }
   scope :lteq_expected_deposit_on_end_on, -> (expected_deposit_on_end_on) { where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on)) }
 
   def bill_on_cannot_predate_delivery_on
