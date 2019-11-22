@@ -14,7 +14,7 @@ $ ->
     methods:
       cancel: -> @modalHide()
       loadBillIssued: ->
-        $.ajax 
+        $.ajax
           url: "/api/bill_issueds/#{@bill_id}.json"
         .done (response) =>
           @billOriginal = response
@@ -49,9 +49,8 @@ $ ->
             else
               toastr.error('', json.message)
     events:
-      showBillIssuedEditEvent: (bill) -> 
+      showBillIssuedEditEvent: (bill) ->
         @modalShow()
         @bill_id = bill.id
         @loadBillIssued()
         @loadProject()
-
