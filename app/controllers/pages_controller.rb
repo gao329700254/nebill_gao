@@ -55,6 +55,7 @@ class PagesController < ApplicationController
   end
 
   def approval_list
+    @approvals = Approvals::SearchApprovalService.new(params: params, current_user: current_user).execute
   end
 
   def approval_show

@@ -1,0 +1,43 @@
+$border-color: #dee2e6;
+$hovered-color: #cccccc;
+$current-color: #ffffff;
+$current-hovered-color: #000000;
+$gap-border-color: #dee2e6;
+$gap-background-color: #f8f8f8;
+
+.pagination {
+  margin-top: 1rem;
+  list-style: none;
+  text-align: center;
+
+  span {
+    display: inline-block;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    width: 35px;
+    text-align: center;
+
+    &:hover {
+      background-color: $hovered-color;
+    }
+  }
+
+  .current {
+    border: 1px solid $theme-color;
+    background-color: $theme-color;
+    color: $current-color;
+
+    &:hover {
+      color: $current-hovered-color;
+    }
+  }
+
+  .gap {
+    border: 1px solid $gap-border-color;
+    background-color: $gap-background-color;
+  }
+
+  a {
+    display: block;
+  }
+}
