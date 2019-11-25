@@ -60,7 +60,7 @@
           / -----------------------------------------------------
           / 請求フォーム操作アクション
           / -----------------------------------------------------
-          - if @bill_applicant.user.id == @current_user.id
+          - if can? :update, @bill
             - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill? || @bill.issued_bill?
               = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode',
               class: 'bill_show__form__btn--edit' do
@@ -121,16 +121,17 @@
       / -----------------------------------------------------
       / 請求書申請者テーブル
       / -----------------------------------------------------
-      .bill_show__detail__approval_user_list
-        table.approval_show__detail__approval_user_list__tbl
-          thead.approval_show__detail__approval_user_list__tbl__head
-            tr.approval_show__detail__approval_user_list__tbl__head__row
-              th.approval_show__detail__approval_user_list__item--approval_user_name = BillApplicant.human_attribute_name(:user_id)
-              th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApplicant.human_attribute_name(:comment)
-          tbody.approval_show__detail__approval_user_list__tbl__body
-            tr.approval_show__detail__approval_user_list__tbl__body__row
-              td.approval_show__detail__approval_user_list__item--approval_user_name = @bill_applicant.user.name
-              td.approval_show__detail__approval_user_list__item--approval_user_comment = @bill_applicant.comment
+      - if @bill_applicant.present?
+        .bill_show__detail__approval_user_list
+          table.approval_show__detail__approval_user_list__tbl
+            thead.approval_show__detail__approval_user_list__tbl__head
+              tr.approval_show__detail__approval_user_list__tbl__head__row
+                th.approval_show__detail__approval_user_list__item--approval_user_name = BillApplicant.human_attribute_name(:user_id)
+                th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApplicant.human_attribute_name(:comment)
+            tbody.approval_show__detail__approval_user_list__tbl__body
+              tr.approval_show__detail__approval_user_list__tbl__body__row
+                td.approval_show__detail__approval_user_list__item--approval_user_name = @bill_applicant.user.name
+                td.approval_show__detail__approval_user_list__item--approval_user_comment = @bill_applicant.comment
       / -----------------------------------------------------
       / 請求書承認者テーブル
       / -----------------------------------------------------
@@ -153,8 +154,8 @@
       / -----------------------------------------------------
       / 申請者用アクション
       / -----------------------------------------------------
-      - if @bill_applicant.user.id == @current_user.id
-        .bill_approval_show__detail__update
+      .bill_approval_show__detail__update
+        - if @bill.create_user_id == @current_user.id || @current_user.backoffice?
           - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
             = form_tag bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
               .approval_show__detail__update__action
@@ -167,11 +168,12 @@
                   = button_tag '申請', class: 'bill_show__form__btn--submit'
                 - if @bill.sent_back_bill?
                   = button_tag '再申請', name: 'reapply', value: 'reapply', class: 'bill_show__form__btn--submit'
-          = form_for @bill_applicant do |form|
-            - if @bill.pending_bill?
-              .approval_show__detail__update__action
-                = form.hidden_field :bill_id
-                = form.button '取消', data: { confirm: I18n.t("action.cancel.confirm") }, class: 'bill_show__form__btn--cancel'
+        - if can?(:update, @bill_applicant) && @bill.pending_bill?
+          = form_tag bill_applicant_path(@bill.applicant), method: :patch do
+            .approval_show__detail__update__action
+              = hidden_field_tag :bill_id, @bill.id
+              = hidden_field_tag :bill_applicant_id, @bill.applicant.id
+              = button_tag '取消', data: { confirm: I18n.t("action.cancel.confirm") }, class: 'bill_show__form__btn--cancel'
       / -----------------------------------------------------
       / 承認者用アクション
       / -----------------------------------------------------

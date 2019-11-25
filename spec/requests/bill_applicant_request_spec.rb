@@ -31,10 +31,14 @@ RSpec.describe BillApplicantsController, type: :request do
       expect(BillApplicant.find_by(bill_id: bill.id).comment).to eq '申請します。'
     end
 
+    it 'create applicant using current login user' do
+      expect(BillApplicant.count).to eq 1
+      expect(BillApplicant.first.user_id).to eq user.id
+    end
+
     it 'create primary approver' do
       expect(BillApprovalUser.count).to eq 1
       expect(BillApprovalUser.first.user_id).to eq project_member.id
-      expect(BillApprovalUser.first.status).to eq 'pending'
     end
   end
 
@@ -46,9 +50,8 @@ RSpec.describe BillApplicantsController, type: :request do
     let(:path)   { "/bills/bill_applicants/#{applicant.id}" }
     let(:params) do
       {
-        bill_applicant: {
-          bill_id: bill.id,
-        },
+        bill_id: bill.id,
+        bill_applicant: applicant.id,
         commit: '取消',
         id:     applicant.id,
       }
@@ -72,6 +75,10 @@ RSpec.describe BillApplicantsController, type: :request do
         expect(Bill.find(bill.id).status).to eq 'cancelled'
       end
 
+      it 'applicant is deleted' do
+        expect(BillApplicant.where(bill_id: bill.id).count).to eq 0
+      end
+
       it 'all approvers are deleted' do
         expect(BillApprovalUser.where(bill_id: bill.id).count).to eq 0
       end
@@ -85,6 +92,10 @@ RSpec.describe BillApplicantsController, type: :request do
 
       it 'update bill status to cancel' do
         expect(Bill.find(bill.id).status).to eq 'cancelled'
+      end
+
+      it 'applicant is deleted' do
+        expect(BillApplicant.where(bill_id: bill.id).count).to eq 0
       end
 
       it 'all approvers are deleted' do

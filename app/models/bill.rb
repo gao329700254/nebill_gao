@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20191031050805
+# Schema version: 20191120034837
 #
 # Table name: bills
 #
@@ -17,6 +17,7 @@
 #  payment_type        :string           not null
 #  expected_deposit_on :date             not null
 #  status              :integer          default("unapplied"), not null
+#  create_user_id      :integer          not null
 #
 # Indexes
 #
@@ -29,6 +30,7 @@
 
 class Bill < ApplicationRecord
   belongs_to :project
+  belongs_to :create_user, class_name: 'User'
   has_one    :applicant, class_name: 'BillApplicant', dependent: :destroy
   has_many   :approvers, class_name: 'BillApprovalUser', dependent: :destroy
   has_many   :users, through: :approvers
@@ -73,10 +75,10 @@ class Bill < ApplicationRecord
     approvers.secondary_role.first
   end
 
-  def make_bill_application!(comment, user_id, reapply)
+  def make_bill_application!(applicant_id, comment, user_id, reapply)
     ActiveRecord::Base.transaction do
+      build_applicant(user_id: applicant_id, comment: comment).save!
       pending_bill!
-      applicant.update!(comment: comment)
 
       # 承認者の洗い替え
       approvers.destroy_all if reapply.present?
@@ -98,6 +100,7 @@ class Bill < ApplicationRecord
   def cancel_bill_application!
     ActiveRecord::Base.transaction do
       cancelled_bill!
+      applicant.destroy!
       approvers.destroy_all
     end
   end
