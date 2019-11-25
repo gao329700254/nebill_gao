@@ -190,6 +190,15 @@ RSpec.describe 'bills request' do
         expect(bill.status).to                   eq 'unapplied'
         expect(bill.create_user_id).to           eq user.id
       end
+
+      it 'create default detail' do
+        post path, params: params
+
+        bill = Bill.first
+        expect(bill.details.count).to eq 1
+        expect(bill.details.first.content).to eq bill.project.name
+        expect(bill.details.first.amount).to eq bill.amount
+      end
     end
 
     context 'with uncorrect parameter' do

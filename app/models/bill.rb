@@ -1,23 +1,25 @@
 # == Schema Information
-# Schema version: 20191120034837
+# Schema version: 20191124083511
 #
 # Table name: bills
 #
-#  id                  :integer          not null, primary key
-#  project_id          :integer          not null
-#  cd                  :string           not null
-#  delivery_on         :date             not null
-#  acceptance_on       :date             not null
-#  bill_on             :date             not null
-#  deposit_on          :date
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  memo                :text
-#  amount              :integer          default(0), not null
-#  payment_type        :string           not null
-#  expected_deposit_on :date             not null
-#  status              :integer          default("unapplied"), not null
-#  create_user_id      :integer          not null
+#  id                     :integer          not null, primary key
+#  project_id             :integer          not null
+#  cd                     :string           not null
+#  delivery_on            :date             not null
+#  acceptance_on          :date             not null
+#  bill_on                :date             not null
+#  deposit_on             :date
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  memo                   :text
+#  amount                 :integer          default(0), not null
+#  payment_type           :string           not null
+#  expected_deposit_on    :date             not null
+#  status                 :integer          default("unapplied"), not null
+#  create_user_id         :integer          not null
+#  expense                :integer          default(0), not null
+#  require_acceptance     :boolean          default(TRUE)
 #
 # Indexes
 #
@@ -34,6 +36,7 @@ class Bill < ApplicationRecord
   has_one    :applicant, class_name: 'BillApplicant', dependent: :destroy
   has_many   :approvers, class_name: 'BillApprovalUser', dependent: :destroy
   has_many   :users, through: :approvers
+  has_many   :details, class_name: 'BillDetail', dependent: :destroy
 
   enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60, confirmed: 70 }, _suffix: :bill
 
@@ -88,6 +91,26 @@ class Bill < ApplicationRecord
 
   def secondary_approver
     approvers.secondary_role.first
+  end
+
+  def build_default_detail
+    details.build(content: project.name, amount: amount)
+  end
+
+  def recreate_all_details!(new_details, expense)
+    ActiveRecord::Base.transaction do
+      details.destroy_all
+
+      new_details.each do |detail|
+        errors.add(:base, I18n.t('errors.messages.require_bill_details_content')) if detail[:content].empty?
+        details.create!(
+          content: detail[:content],
+          amount:  detail[:amount].present? ? detail[:amount]: nil,
+        )
+      end
+
+      update!(expense: expense)
+    end
   end
 
   def make_bill_application!(applicant_id, comment, user_id, reapply)

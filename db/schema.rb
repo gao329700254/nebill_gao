@@ -101,25 +101,36 @@ ActiveRecord::Schema.define(version: 20191124083511) do
     t.index ["user_id"], name: "index_bill_approval_users_on_user_id", using: :btree
   end
 
+  create_table "bill_details", force: :cascade do |t|
+    t.string   "content",    null: false
+    t.integer  "amount"
+    t.integer  "bill_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bill_id"], name: "index_bill_details_on_bill_id", using: :btree
+  end
+
   create_table "bills", force: :cascade do |t|
-    t.integer  "project_id",                          null: false
-    t.string   "cd",                                  null: false
-    t.date     "delivery_on",                         null: false
-    t.date     "acceptance_on",                       null: false
-    t.date     "bill_on",                             null: false
+    t.integer  "project_id",                            null: false
+    t.string   "cd",                                    null: false
+    t.date     "delivery_on",                           null: false
+    t.date     "acceptance_on",                         null: false
+    t.date     "bill_on",                               null: false
     t.date     "deposit_on"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.text     "memo"
-    t.integer  "amount",                 default: 0,  null: false
-    t.string   "payment_type",                        null: false
-    t.date     "expected_deposit_on",                 null: false
-    t.integer  "status",                 default: 10, null: false
+    t.integer  "amount",                 default: 0,    null: false
+    t.string   "payment_type",                          null: false
+    t.date     "expected_deposit_on",                   null: false
+    t.integer  "status",                 default: 10,   null: false
     t.text     "deposit_confirmed_memo"
-    t.integer  "create_user_id",                      null: false
-    t.string   "project_name",                        null: false
-    t.string   "company_name",                        null: false
+    t.string   "project_name",                          null: false
+    t.string   "company_name",                          null: false
     t.date     "issue_on"
+    t.integer  "create_user_id",                        null: false
+    t.integer  "expense",                default: 0,    null: false
+    t.boolean  "require_acceptance",     default: true
     t.index ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
   end
 
@@ -365,6 +376,7 @@ ActiveRecord::Schema.define(version: 20191124083511) do
   add_foreign_key "bill_applicants", "users"
   add_foreign_key "bill_approval_users", "bills"
   add_foreign_key "bill_approval_users", "users"
+  add_foreign_key "bill_details", "bills"
   add_foreign_key "bills", "projects", on_delete: :cascade
   add_foreign_key "expense_approval_users", "expense_approvals", on_delete: :nullify
   add_foreign_key "expense_approval_users", "users", on_delete: :nullify

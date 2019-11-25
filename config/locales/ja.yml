@@ -126,9 +126,11 @@ ja:
         deposit_confirmed_memo: 入金備考
         status:                 ステータス
         confirm:                入金確認
+        expense:                経費
+        require_acceptance:     検収書同封
       bill_applicant:
         comment: コメント
-        user_id: 申請者
+        user_id: 名前
       bill_approval_user:
         role:    役割
         status:  ステータス
@@ -307,6 +309,7 @@ ja:
       expense_approval_is_empty: 申請を選択してください。
       unselected: を選択してください。
       presence_check_box: は必ずチェックしてください
+      require_bill_details_content: 内訳は必ず入力してください
     template:
       body: 次の項目を確認してください
       header:
@@ -336,6 +339,8 @@ ja:
     plus: 追加
     exchange: 入替
     go_back_to_list: ◀ 一覧に戻る
+    matching_bill_details:    '請求金額と内訳小計が一致しています。'
+    mismatching_bill_details: '請求金額と内訳小計が不一致です。'
   number:
     currency:
       format:
@@ -482,8 +487,8 @@ ja:
         confirmed: 入金確認済み
     bill_approval_user:
       role:
-        primary:   一段目承認者
-        secondary: 二段目承認者
+        primary:   承認者1
+        secondary: 承認者2
       status:
         unapplied: 未申請
         pending:   承認待ち
@@ -563,7 +568,7 @@ ja:
         not_confirm: 入金未確認
         confirmed:  入金確認済
       comment_placeholder: コメントを入力
-      select_placeholder: 一段目承認者を選択
+      select_placeholder: 承認者1を選択
     client_new:
       title: 取引先新規作成
       legal_check: リーガルチェック
@@ -835,7 +840,7 @@ ja:
     exceed: '超過分: 基準H　実働: H ※0.5単位 @/H'
     subtotal: 小計
     tax: 消費税
-    expenses: 経費（交通費）
+    expenses: 経費
     expense:
       use_date: 利用日
       notes: 概要

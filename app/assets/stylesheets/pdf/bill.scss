@@ -116,6 +116,7 @@
     width: 100%;
     border-collapse: collapse;
     font-size: .6rem;
+    // table-layout: fixed;
 
     &__head {
       &__row {
@@ -124,6 +125,14 @@
 
         &__item {
           border: solid 1px;
+        }
+
+        .left {
+          width: 80%;
+        }
+
+        .right {
+          width: 20%;
         }
       }
     }

@@ -27,10 +27,33 @@
   }
 
   .approval_show__detail__approval_user_list__tbl {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 
     &__body__row {
       margin: .5rem 0;
+    }
+
+    .money {
+      text-align: right;
+    }
+
+    .non_edit {
+      font-weight: bold;
+    }
+
+    .non_edit,
+    .computed {
+      padding: .4rem .6rem;
+    }
+  }
+
+  .approval_show__detail__approval_user_list__item--approval_user_btn {
+    width: .5rem;
+    text-align: center;
+
+    button {
+      margin: 0;
+      padding: 0;
     }
   }
 
@@ -43,6 +66,70 @@
   .bill_show_approval_actions_container {
     padding: 0 1rem;
     width: 50%;
+
+    th {
+      margin: 0;
+      border-bottom: none;
+      background-color: $light-grey-bg-color;
+      padding: .4rem .6rem;
+    }
+
+    tr {
+      margin: 0;
+      height: 2.5rem;
+    }
+
+    .section_title {
+      margin-bottom: 1rem;
+      font-size: large;
+      font-weight: bold;
+    }
+
+    .button_wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: .5rem;
+    }
+
+    .bill_show__detail__form {
+      &__matching_sum,
+      &__mismatching_sum {
+        margin-bottom: 1rem;
+        border-radius: .5rem;
+        padding: .7rem;
+      }
+
+      &__matching_sum {
+        border: solid 1px $light-green-color;
+        background-color: $pale-green-bg-color;
+        color: $green;
+      }
+
+      &__mismatching_sum {
+        border: solid 1px $light-red-color;
+        background-color: $pale-red-bg-color;
+        color: $red;
+      }
+
+      &__actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .approval_show__detail__approval_user_list__item--approval_user_btn {
+      margin: 0;
+      padding: 0;
+    }
+
+    input:disabled {
+      border-top-color: $white-bg-color;
+      border-right-color: $white-bg-color;
+      border-bottom-color: $white-bg-color;
+      border-left-color: $white-bg-color;
+      box-shadow: none;
+    }
   }
 
   &__form {
@@ -79,12 +166,15 @@
 
     &__btn {
       &--edit,
-      &--cancel,
       &--submit,
+      &--detail-update,
       &--issue,
-      &--download,
-      &--delete {
+      &--download {
         @include btn--primary;
+      }
+
+      &--detail-update {
+        height: 2.5rem;
       }
 
       &--approve {
@@ -100,199 +190,19 @@
         }
       }
 
+      &--cancel,
+      &--detail-cancel,
+      &--delete,
       &--sent_back {
-        $disconfirm_back: #c9c9c9;
-        border: solid 2px $black;
-        background-color: $disconfirm_back;
+        $disconfirm_back: #686868;
+        border: solid 2px $disconfirm_back;
         height: 2.5rem;
-        color: $black;
+        color: $disconfirm_back;
 
         &:hover,
         &:focus {
           background-color: $light-grey;
           color: $white;
-        }
-      }
-    }
-
-    &__member_list {
-      @include span-columns(6);
-
-      &__partner {
-        @include list_tbl;
-
-        &__head {
-          @include list_tbl__head__row;
-          border-color: $white-bg-color;
-
-          &__title {
-            float: left;
-          }
-
-          &__member_btn {
-            &--new_partner {
-              @include btn--primary;
-              float: right;
-            }
-          }
-        }
-
-        &__list {
-          &__tbl {
-            @include list_tbl;
-
-            &__head {
-              &__row {
-                @include list_tbl__head__row;
-              }
-            }
-
-            &__body {
-              @include list_tbl__body;
-              &__row {
-                @include list_tbl__body__row;
-
-                #{$all-text-inputs-disabled},
-                select:disabled,
-                textarea:disabled {
-                  border-bottom: $base-border;
-                  border-radius: 0;
-                  border-color: $white-bg-color;
-                  box-shadow: none;
-                  background-color: $white-bg-color;
-                }
-
-                &--selected {
-                  @include list_tbl__body__row;
-                  background-color: $yellow;
-
-                  #{$all-text-inputs-disabled},
-                  select:disabled,
-                  textarea:disabled {
-                    border-bottom: $base-border;
-                    border-radius: 0;
-                    border-color: $yellow-bg-color;
-                    box-shadow: none;
-                    background-color: $yellow-bg-color;
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        &__item {
-          &--name {
-            @include span-columns(3);
-            &--non_edit {
-              display: table-cell;
-            }
-          }
-
-          &--unit_price {
-            @include span-columns(2);
-          }
-
-          &--working_rate {
-            @include span-columns(3);
-          }
-
-          &--min_limit_time {
-            @include span-columns(2);
-          }
-
-          &--max_limit_time {
-            @include span-columns(2);
-          }
-        }
-      }
-
-      &__user {
-        margin-top: 5rem;
-
-        &__tbl {
-          @include list_tbl;
-
-          &__head {
-            &__row {
-              @include list_tbl__head__row;
-            }
-          }
-
-          &__body {
-            @include list_tbl__body;
-
-            &__row,
-            %user_member_list__tbl__body__row {
-              @include list_tbl__body__row;
-              font-size: $base-font-size;
-
-              &--selected {
-                @extend %user_member_list__tbl__body__row;
-                background-color: $yellow;
-              }
-            }
-          }
-
-          &__item,
-          %user_member_list__tbl__item {
-            @include list_tbl__item;
-
-            &--name {
-              @extend %user_member_list__tbl__item;
-              @include span-columns(4);
-            }
-
-            &--email {
-              @extend %user_member_list__tbl__item;
-              @include span-columns(8);
-            }
-          }
-        }
-      }
-
-      &__add_user_member {
-        @include display(flex);
-
-        &__list {
-          flex: 1;
-        }
-
-        &__btn {
-          &--submit {
-            @include btn--primary;
-          }
-        }
-
-        &__user_btn {
-          &--delete {
-            @include btn--primary;
-          }
-        }
-      }
-
-      &__add_partner_member {
-        @include display(flex);
-
-        &__form {
-          &__list,
-          &__item {
-            flex: 1;
-          }
-        }
-
-        &__btn {
-          @include btn--primary;
-          width: 100%;
-        }
-      }
-
-      &__partner_btn {
-        &--delete,
-        &--edit,
-        &--cancel,
-        &--submit {
-          @include btn--default;
         }
       }
     }

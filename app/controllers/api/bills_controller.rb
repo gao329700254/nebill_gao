@@ -14,6 +14,7 @@ class Api::BillsController < Api::ApiController
 
   def create
     @bill = @project.bills.build(bill_param)
+    @bill.build_default_detail
     @bill.save!
 
     render_action_model_success_message(@bill, :create)
@@ -89,6 +90,7 @@ private
       :deposit_on,
       :memo,
       :status,
+      :require_acceptance,
       :create_user_id,
       :deposit_confirmed_memo,
     )
