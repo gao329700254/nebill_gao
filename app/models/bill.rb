@@ -35,7 +35,7 @@ class Bill < ApplicationRecord
   has_many   :approvers, class_name: 'BillApprovalUser', dependent: :destroy
   has_many   :users, through: :approvers
 
-  enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60 }, _suffix: :bill
+  enum status: { unapplied: 10, pending: 20, approved: 30, sent_back: 40, cancelled: 50, issued: 60, confirmed: 70 }, _suffix: :bill
 
   has_paper_trail meta: { project_id: :project_id, bill_id: :id }
 
@@ -48,14 +48,29 @@ class Bill < ApplicationRecord
   validates :expected_deposit_on, presence: true
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
+  validates :deposit_on, presence: true, if: proc { status == 'confirmed' }
 
   before_save { cd.upcase! }
 
+  #
+  # == 請求日期間検索の処理
+  #
   scope :between, lambda { |start_on, end_on|
     where(Bill.arel_table[:bill_on].gteq(start_on)).where(Bill.arel_table[:bill_on].lteq(end_on))
   }
   scope :gteq_start_on, -> (start_on) { where(Bill.arel_table[:bill_on].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Bill.arel_table[:bill_on].lteq(end_on)) }
+
+  #
+  # == bill_issued時の入金予定日の期間検索の処理
+  #
+  scope :expected_deposit_on_between, lambda { |expected_deposit_on_start_on, expected_deposit_on_end_on|
+    where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on))\
+      .where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on))
+  }
+  scope :gteq_expected_deposit_on_start_on,\
+        -> (expected_deposit_on_start_on) { where(Bill.arel_table[:expected_deposit_on].gteq(expected_deposit_on_start_on)) }
+  scope :lteq_expected_deposit_on_end_on, -> (expected_deposit_on_end_on) { where(Bill.arel_table[:expected_deposit_on].lteq(expected_deposit_on_end_on)) }
 
   def bill_on_cannot_predate_delivery_on
     return if bill_on.nil? || delivery_on.nil? || bill_on >= delivery_on
@@ -129,6 +144,22 @@ class Bill < ApplicationRecord
       approvers.each(&:sent_back_bill!)
 
       Chatwork::Bill.new(bill: self, to_user: applicant.user, from_user: current_approver).notify_sent_back
+    end
+  end
+
+  #
+  # == bill_issuedの検索およびindex用の処理
+  # == endは予約後のため引数はbill_endとした
+  #
+  def self.issued_search_result(expected_deposit_on_start, expected_deposit_on_end)
+    if expected_deposit_on_start.present? && expected_deposit_on_end.present?
+      expected_deposit_on_between(expected_deposit_on_start, expected_deposit_on_end)
+    elsif expected_deposit_on_start.present?
+      gteq_expected_deposit_on_start_on(expected_deposit_on_start)
+    elsif expected_deposit_on_end.present?
+      lteq_expected_deposit_on_end_on(expected_deposit_on_end)
+    else
+      all
     end
   end
 end

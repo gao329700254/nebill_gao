@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(version: 20191120034837) do
     t.string   "project_id"
     t.integer  "created_user_id",              null: false
     t.string   "notes"
-    t.integer  "approved_id"
     t.string   "approved_type"
+    t.integer  "approved_id"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "status"
@@ -102,20 +102,21 @@ ActiveRecord::Schema.define(version: 20191120034837) do
   end
 
   create_table "bills", force: :cascade do |t|
-    t.integer  "project_id",                       null: false
-    t.string   "cd",                               null: false
-    t.date     "delivery_on",                      null: false
-    t.date     "acceptance_on",                    null: false
-    t.date     "bill_on",                          null: false
+    t.integer  "project_id",                          null: false
+    t.string   "cd",                                  null: false
+    t.date     "delivery_on",                         null: false
+    t.date     "acceptance_on",                       null: false
+    t.date     "bill_on",                             null: false
     t.date     "deposit_on"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.text     "memo"
-    t.integer  "amount",              default: 0,  null: false
-    t.string   "payment_type",                     null: false
-    t.date     "expected_deposit_on",              null: false
-    t.integer  "status",              default: 10, null: false
-    t.integer  "create_user_id",                   null: false
+    t.integer  "amount",                 default: 0,  null: false
+    t.string   "payment_type",                        null: false
+    t.date     "expected_deposit_on",                 null: false
+    t.integer  "status",                 default: 10, null: false
+    t.text     "deposit_confirmed_memo"
+    t.integer  "create_user_id",                      null: false
     t.index ["cd"], name: "index_bills_on_cd", unique: true, using: :btree
   end
 

@@ -38,4 +38,26 @@ RSpec.describe Bill do
       expect(bill.errors[:bill_on]).to include(I18n.t("errors.messages.wrong_bill_on_predate_acceptance_on"))
     end
   end
+
+  describe 'Scope' do
+    let!(:bill1) { create(:bill, delivery_on: 3.months.ago) }
+    let!(:bill2) { create(:bill, delivery_on: 4.months.ago) }
+    let!(:bill3) { create(:bill, delivery_on: 5.months.ago) }
+    let!(:bill4) { create(:bill, delivery_on: 6.months.ago) }
+
+    context 'expected_deposit_on_between' do
+      subject { Bill.expected_deposit_on_between(2.months.ago + 5.days, 1.month.ago + 5.days) }
+      it { is_expected.to include bill1, bill2 }
+    end
+
+    context 'gteq_expected_deposit_on_start_on' do
+      subject { Bill.gteq_expected_deposit_on_start_on(1.month.ago) }
+      it { is_expected.to include bill1 }
+    end
+
+    context 'lteq_expected_deposit_on_end_on' do
+      subject { Bill.lteq_expected_deposit_on_end_on(1.month.ago) }
+      it { is_expected.to include bill2, bill3, bill4 }
+    end
+  end
 end

@@ -1,0 +1,46 @@
+= form_tag nil, class: 'bill_issueds_edit__form'
+  .bill_issueds_edit__form__container
+    .bill_issueds_edit__form__container__group
+      fieldset.bill_issueds_edit__form__basic
+        .bill_issueds_edit__form__item
+          = label_tag :status, Bill.human_attribute_name(:status)
+          = text_field_tag :status, nil, 'v-model' => 'bill.status', ':disabled' => '!editMode'
+        /
+        /== 現在モーダルに表示している項目は一部で、2019.11.22現在backofficeの方に表示項目の確認とれていないのでコメントアウトしている
+        /== 確認取れ次第コメントアウトしている部分は削除する
+        /
+        / .bill_issueds_edit__form__item
+        /   = label_tag :cd, Project.human_attribute_name(:cd)
+        /   = text_field_tag :cd, nil, 'v-model' => 'bill.cd', ':disabled' => true
+        / .bill_issueds_edit__form__item
+        /   = label_tag :project_id, Project.human_attribute_name(:name)
+        /   = text_field_tag :project_id, nil, 'v-model' => 'project.name', ':disabled' => true
+        / .bill_issueds_edit__form__item
+        /   = label_tag :amount, Bill.human_attribute_name(:amount)
+        /   = text_field_tag :amount, nil, 'v-model' => 'bill.amount', ':disabled' => true
+        / .bill_issueds_edit__form__item
+        /   = label_tag :delivery_on, Bill.human_attribute_name(:delivery_on)
+        /   = text_field_tag :delivery_on, nil, 'v-model' => 'bill.delivery_on', ':disabled' => true
+        / .bill_issueds_edit__form__item
+        /   = label_tag :acceptance_on, Bill.human_attribute_name(:acceptance_on)
+        /   = text_field_tag :acceptance_on, nil, 'v-model' => 'bill.acceptance_on', ':disabled' => true
+        / .bill_issueds_edit__form__item
+        /   = label_tag :payment_type, Bill.human_attribute_name(:payment_type)
+        /   = select_tag :payment_type, options_for_select(Project.payment_type.options), 'v-model' => 'bill.payment_type', ':disabled' => true
+        / .bill_issueds_edit__form__item
+        /   = label_tag :bill_on, Bill.human_attribute_name(:bill_on)
+        /   = text_field_tag :bill_on, nil, 'v-model' => 'bill.bill_on', ':disabled' => true
+        .bill_issueds_edit__form__item
+          = label_tag :expected_deposit_on, Bill.human_attribute_name(:expected_deposit_on)
+          = text_field_tag :expected_deposit_on, nil, 'v-model' => 'bill.expected_deposit_on', ':disabled' => true
+        .bill_issueds_edit__form__item
+          = label_tag :deposit_on, Bill.human_attribute_name(:deposit_on)
+          = date_field_tag :"deposit_on-{{bill.deposit_on}}", nil, 'v-model' => 'bill.deposit_on'
+        .bill_issueds_edit__form__item
+          = label_tag :deposit_confirmed_memo, Bill.human_attribute_name(:deposit_confirmed_memo)
+          = text_area_tag :"deposit_confirmed_memo-{{bill.id}}", nil, 'v-model' => 'bill.deposit_confirmed_memo'
+
+        = button_tag 'v-on:click.prevent' => 'cancel', class: 'bill_show__form__btn--cancel' do
+          = fa_icon 'remove', text: t('helpers.cancel')
+        = button_tag 'v-on:click.prevent' => 'submit(bill)', class: 'bill_show__form__btn--submit' do
+          = fa_icon 'pencil-square', text: t('helpers.submit.update')

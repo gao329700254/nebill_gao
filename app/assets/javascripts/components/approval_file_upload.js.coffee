@@ -29,7 +29,7 @@ $ ->
       deleteFile: (index) ->
         deletedFile = @approvalFiles.splice(index, 1)
         @deletedFiles.push deletedFile[0]
-      approvalFileDownloadUrl: (id)->
+      approvalFileDownloadUrl: (id) ->
         "/api/files/#{id}/approval_file_download"
       uploadFile: (files) ->
         form = new FormData()

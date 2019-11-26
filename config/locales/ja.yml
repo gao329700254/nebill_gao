@@ -111,17 +111,19 @@ ja:
       project_group:
         name: 名前
       bill:
-        project:             プロジェクト
-        cd:                  請求番号
-        amount:              請求金額
-        delivery_on:         納品日
-        acceptance_on:       検収日
-        payment_type:        支払条件
-        bill_on:             請求日
-        expected_deposit_on: 入金予定日
-        deposit_on:          入金日
-        memo:                メモ
-        status:              ステータス
+        project:                  プロジェクト
+        cd:                       請求番号
+        amount:                   請求金額
+        delivery_on:              納品日
+        acceptance_on:            検収日
+        payment_type:             支払条件
+        bill_on:                  請求日
+        expected_deposit_on:      入金予定日
+        deposit_on:               入金日
+        memo:                     メモ
+        deposit_confirmed_memo:   入金備考
+        status:                   ステータス
+        confirm:                  入金確認
       bill_applicant:
         comment: コメント
         user_id: 申請者
@@ -474,6 +476,7 @@ ja:
         sent_back: 差し戻し
         cancelled: 取り消し
         issued:    発行済み
+        confirmed: 入金確認済み
     bill_approval_user:
       role:
         primary:   一段目承認者
@@ -554,6 +557,8 @@ ja:
         sent_back:  差し戻し
         cancelled:  取り消し
         issued:     発行済み
+        not_confirm: 入金未確認
+        confirmed:  入金確認済
       comment_placeholder: コメントを入力
       select_placeholder: 一段目承認者を選択
     client_new:
@@ -659,6 +664,14 @@ ja:
       search_form_placeholder: 'ID,プロジェクト名,請求先会社名で検索できます'
       fill_date_form: 請求日検索
       search: 検索
+    bill_issueds_list:
+      title: 入金確認一覧
+      search_form_placeholder: 'ID,プロジェクト名,請求先会社名で検索できます'
+      fill_date_form: 入金予定日検索
+      search: 検索
+      confirm: 確認済
+      not_confirm: 未確認
+      memo: メモ
     partners:
       title: パートナー一覧
     approval_list:

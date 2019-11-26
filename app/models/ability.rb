@@ -67,6 +67,7 @@ private
     can :manage, :all
     can :allread, Approval
     can :allread, ExpenseApproval
+    can :allread, BillIssued
     cannot :reapproval, ExpenseApproval, status: [10, 20, 40] # 差し戻しの場合、再申請できる
   end
 
