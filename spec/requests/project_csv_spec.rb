@@ -81,15 +81,15 @@ RSpec.describe 'projects download csv' do
       before { subject }
       it 'returns hit project' do
         expect(csv.size).to  eq 1
-        expect(csv[0][0]).to eq I18n.t('page.project_list.project_status.progress')
-        expect(csv[0][1]).to eq hit_project.cd
-        expect(csv[0][2]).to eq hit_project.name
-        expect(csv[0][3]).to eq hit_project.orderer_company_name
-        expect(csv[0][4]).to eq hit_project.amount&.to_s(:delimited)
-        expect(csv[0][5]).to eq '済'
-        expect(csv[0][6]).to eq hit_project.start_on.to_s
-        expect(csv[0][7]).to eq hit_project.end_on.to_s
-        expect(csv[0][8]).to eq hit_project.memo
+        expect(csv[0][0]&.encode).to eq I18n.t('page.project_list.project_status.progress')
+        expect(csv[0][1]&.encode).to eq hit_project.cd
+        expect(csv[0][2]&.encode).to eq hit_project.name
+        expect(csv[0][3]&.encode).to eq hit_project.orderer_company_name
+        expect(csv[0][4]&.encode).to eq hit_project.amount&.to_s(:delimited)
+        expect(csv[0][5]&.encode).to eq '済'
+        expect(csv[0][6]&.encode).to eq hit_project.start_on.to_s
+        expect(csv[0][7]&.encode).to eq hit_project.end_on.to_s
+        expect(csv[0][8]&.encode).to eq hit_project.memo
       end
     end
   end
