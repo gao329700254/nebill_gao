@@ -6,7 +6,8 @@ class Bills::PdfController < ApplicationController
     render pdf:      pdf_file_name,
            template: "pdf/bill.html.slim",
            encoding: 'UTF-8',
-           page_size: 'A4'
+           page_size: 'A4',
+           show_as_html: params.key?('debug')
   end
 
 private

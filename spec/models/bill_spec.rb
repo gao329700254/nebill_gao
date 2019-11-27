@@ -23,6 +23,30 @@ RSpec.describe Bill do
 
   it { is_expected.to be_versioned }
 
+  describe 'details validation' do
+    let!(:detail_01) { create(:bill_detail, bill: bill) }
+    let!(:detail_02) { create(:bill_detail, bill: bill) }
+    let!(:detail_03) { create(:bill_detail, bill: bill) }
+    let!(:detail_04) { create(:bill_detail, bill: bill) }
+    let!(:detail_05) { create(:bill_detail, bill: bill) }
+    let!(:detail_06) { create(:bill_detail, bill: bill) }
+    let!(:detail_07) { create(:bill_detail, bill: bill) }
+    let!(:detail_08) { create(:bill_detail, bill: bill) }
+    let!(:detail_09) { create(:bill_detail, bill: bill) }
+    let!(:detail_10) { create(:bill_detail, bill: bill) }
+    let!(:detail_11) { create(:bill_detail, bill: bill) }
+    let!(:detail_12) { create(:bill_detail, bill: bill) }
+    let!(:detail_13) { create(:bill_detail, bill: bill) }
+    let!(:detail_14) { create(:bill_detail, bill: bill) }
+    let!(:detail_15) { create(:bill_detail, bill: bill) }
+
+    it 'cannot create new detail record' do
+      bill.reload.details.build(content: 'content', amount: 1234, display_order: 16)
+      bill.valid?
+      expect(bill.errors.full_messages).to eq ['内訳を15行以上作成することはできません']
+    end
+  end
+
   describe "#bill_on_cannot_predate_delivery_on" do
     it "bill_on should not predate delivery_on" do
       bill.bill_on = bill.delivery_on - 1

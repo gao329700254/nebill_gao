@@ -26,11 +26,84 @@
     text-align: right;
   }
 
-  .approval_show__detail__approval_user_list__tbl {
-    margin-bottom: 2rem;
+  .bill_show__details {
+    display: flex;
+    flex-flow: row wrap;
+    padding-top: 2rem;
+  }
 
-    &__body__row {
-      margin: .5rem 0;
+  .bill_show_approval_actions_container {
+    padding: 0 1rem;
+    width: 50%;
+
+    .bill_show_list {
+      margin-bottom: $small-spacing;
+
+      &__tbl {
+        @include list_tbl;
+        margin-bottom: 2rem;
+
+        &__head {
+
+          &__row {
+            @include list_tbl__head__row;
+          }
+        }
+
+        &__body {
+
+          &__row {
+            @include list_tbl__body__row;
+            margin: .5rem 0;
+            word-break: break-word;
+            white-space: normal;
+          }
+        }
+      }
+
+      &__item {
+        &--approver_role {
+          @include span-columns(1);
+        }
+
+        &--approver_status,
+        &--applicant_name,
+        &--approver_name {
+          @include span-columns(1.5);
+        }
+
+        &--applicant_comment,
+        &--approver_comment {
+          @include span-columns(3.5);
+          word-break: break-word;
+          white-space: pre-wrap;
+        }
+
+        &--detail_label {
+          @include span-columns(8);
+        }
+
+        &--detail_value {
+          @include span-columns(2.5);
+        }
+
+        &--detail_btn {
+          @include span-columns(.5);
+          text-align: center;
+        }
+      }
+    }
+
+    th {
+      margin: 0;
+      border-bottom: none;
+      background-color: $light-grey-bg-color;
+      padding: .4rem .6rem;
+    }
+
+    tr {
+      margin: 0;
+      height: 2.5rem;
     }
 
     .money {
@@ -44,39 +117,6 @@
     .non_edit,
     .computed {
       padding: .4rem .6rem;
-    }
-  }
-
-  .approval_show__detail__approval_user_list__item--approval_user_btn {
-    width: .5rem;
-    text-align: center;
-
-    button {
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  .bill_show__details {
-    display: flex;
-    flex-flow: row wrap;
-    padding-top: 2rem;
-  }
-
-  .bill_show_approval_actions_container {
-    padding: 0 1rem;
-    width: 50%;
-
-    th {
-      margin: 0;
-      border-bottom: none;
-      background-color: $light-grey-bg-color;
-      padding: .4rem .6rem;
-    }
-
-    tr {
-      margin: 0;
-      height: 2.5rem;
     }
 
     .section_title {
@@ -118,11 +158,6 @@
       }
     }
 
-    .approval_show__detail__approval_user_list__item--approval_user_btn {
-      margin: 0;
-      padding: 0;
-    }
-
     input:disabled {
       border-top-color: $white-bg-color;
       border-right-color: $white-bg-color;
@@ -130,6 +165,15 @@
       border-left-color: $white-bg-color;
       box-shadow: none;
     }
+  }
+
+  .approval_tbl td {
+    padding: 0 .6rem;
+  }
+
+  .detail_button {
+    margin: 0;
+    padding: 0;
   }
 
   &__form {

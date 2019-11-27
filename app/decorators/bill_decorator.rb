@@ -1,7 +1,6 @@
 class BillDecorator < Draper::Decorator
   delegate_all
   CONSUMPTION_TAX = 0.1
-  MAX_ROW_COUNT   = 15
 
   def pdf_bill_no
     I18n.t('pdf.bill.number') + cd
@@ -34,13 +33,13 @@ class BillDecorator < Draper::Decorator
   end
 
   def pdf_empty_rows
-    MAX_ROW_COUNT - details.count
+    Bill::MAX_DETAIL_COUNT - details.count
   end
 
 private
 
   def subtotal_price
-    details.pluck(:amount).compact.sum
+    details.sum(:amount)
   end
 
   def price_include_tax

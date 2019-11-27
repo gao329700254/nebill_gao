@@ -13,8 +13,9 @@ json.deposit_on             @bill.deposit_on
 json.memo                   @bill.memo
 json.deposit_confirmed_memo @bill.deposit_confirmed_memo
 json.status                 @bill.status_i18n
+json.expense                @bill.expense
 json.require_acceptance     @bill.require_acceptance
-json.details                @bill.details
+json.details                @bill.details.order(:display_order), :id, :content, :amount
 json.created_at             @bill.created_at
 json.updated_at             I18n.l(@last_updated_at.in_time_zone('Tokyo'))
 json.whodunnit              '（' + @user.name + '）' if @user

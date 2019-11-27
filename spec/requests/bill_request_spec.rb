@@ -195,9 +195,10 @@ RSpec.describe 'bills request' do
         post path, params: params
 
         bill = Bill.first
-        expect(bill.details.count).to eq 1
-        expect(bill.details.first.content).to eq bill.project.name
-        expect(bill.details.first.amount).to eq bill.amount
+        expect(bill.details.count).to               eq 1
+        expect(bill.details.first.content).to       eq bill.project.name
+        expect(bill.details.first.amount).to        eq bill.amount
+        expect(bill.details.first.display_order).to eq 1
       end
     end
 

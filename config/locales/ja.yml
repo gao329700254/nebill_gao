@@ -128,6 +128,9 @@ ja:
         confirm:                入金確認
         expense:                経費
         require_acceptance:     検収書同封
+        details:                内訳
+      bill_detail:
+        content: 内訳
       bill_applicant:
         comment: コメント
         user_id: 名前
@@ -310,6 +313,7 @@ ja:
       unselected: を選択してください。
       presence_check_box: は必ずチェックしてください
       require_bill_details_content: 内訳は必ず入力してください
+      details_reach_maxium: "を%{count}行以上作成することはできません"
     template:
       body: 次の項目を確認してください
       header:

@@ -102,11 +102,12 @@ ActiveRecord::Schema.define(version: 20191124083511) do
   end
 
   create_table "bill_details", force: :cascade do |t|
-    t.string   "content",    null: false
+    t.string   "content"
     t.integer  "amount"
-    t.integer  "bill_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "display_order", null: false
+    t.integer  "bill_id",       null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["bill_id"], name: "index_bill_details_on_bill_id", using: :btree
   end
 

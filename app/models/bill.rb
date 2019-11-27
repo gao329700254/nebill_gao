@@ -30,7 +30,10 @@
 #  fk_rails_...  (project_id => projects.id) ON DELETE => cascade
 #
 
+# rubocop:disable Metrics/ClassLength
 class Bill < ApplicationRecord
+  MAX_DETAIL_COUNT = 15
+
   belongs_to :project
   belongs_to :create_user, class_name: 'User'
   has_one    :applicant, class_name: 'BillApplicant', dependent: :destroy
@@ -49,6 +52,7 @@ class Bill < ApplicationRecord
   validates :payment_type       , presence: true
   validates :bill_on            , presence: true
   validates :expected_deposit_on, presence: true
+  validates :details            , length: { maximum: MAX_DETAIL_COUNT, message: I18n.t('errors.messages.details_reach_maxium'), count: MAX_DETAIL_COUNT }
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
   validates :deposit_on, presence: true, if: proc { status == 'confirmed' }
@@ -85,6 +89,14 @@ class Bill < ApplicationRecord
     errors.add(:bill_on, I18n.t('errors.messages.wrong_bill_on_predate_acceptance_on'))
   end
 
+  def editable_state?
+    unapplied_bill? || cancelled_bill? || sent_back_bill?
+  end
+
+  def authorized_user?(current_user)
+    create_user_id == current_user.id || applicant&.id == current_user.id || current_user.backoffice?
+  end
+
   def primary_approver
     approvers.primary_role.first
   end
@@ -94,22 +106,24 @@ class Bill < ApplicationRecord
   end
 
   def build_default_detail
-    details.build(content: project.name, amount: amount)
+    details.build(content: project.name, amount: amount, display_order: 1)
   end
 
   def recreate_all_details!(new_details, expense)
     ActiveRecord::Base.transaction do
       details.destroy_all
 
-      new_details.each do |detail|
+      new_details.each.with_index(1) do |detail, index|
         errors.add(:base, I18n.t('errors.messages.require_bill_details_content')) if detail[:content].empty?
-        details.create!(
-          content: detail[:content],
-          amount:  detail[:amount].present? ? detail[:amount]: nil,
+        details.build(
+          content:       detail[:content],
+          amount:        detail[:amount].present? ? detail[:amount]: nil,
+          display_order: index,
         )
       end
+      self[:expense] = expense
 
-      update!(expense: expense)
+      save!
     end
   end
 
@@ -186,3 +200,4 @@ class Bill < ApplicationRecord
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
