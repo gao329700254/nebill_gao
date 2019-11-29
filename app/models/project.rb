@@ -250,7 +250,7 @@ class Project < ApplicationRecord
       update_approval
       update_notice
     else
-      @file = @project.files.build(file: file_param, original_filename: file_param.original_filename, file_type: 20)
+      @file = files.build(file: file_param, original_filename: file_param.original_filename, file_type: 20)
       @file.save!
       create_approval
       create_notice
