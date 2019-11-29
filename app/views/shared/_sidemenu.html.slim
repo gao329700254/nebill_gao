@@ -20,6 +20,10 @@ nav.sidemenu
           = link_to bill_list_path
             li.sidemenu__item__submenu__item
               span.sidemenu__item__submenu__item__page_title = t('page.bill_list.title')
+          - if can? :allread, BillIssued
+            = link_to bill_issueds_list_path
+                li.sidemenu__item__submenu__item
+                  span.sidemenu__item__submenu__item__page_title = t('page.bill_issueds_list.title')
           = link_to partners_path
             li.sidemenu__item__submenu__item
               span.sidemenu__item__submenu__item__page_title = t('page.partners.title')

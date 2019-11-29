@@ -1,9 +1,9 @@
 class BillApplicantsController < ApplicationController
   # 申請者による、「申請」アクション
-  # 申請時に承認者を設定する
+  # 申請時に申請者、承認者を設定する
   def create
     @bill = Bill.find(params[:bill_id])
-    @bill.make_bill_application!(params[:comment], params[:user_id], params[:reapply])
+    @bill.make_bill_application!(@current_user.id, params[:comment], params[:user_id], params[:reapply])
 
     show_success_message(:apply, params[:bill_id])
   rescue ActiveRecord::RecordInvalid
@@ -14,11 +14,10 @@ class BillApplicantsController < ApplicationController
   # 取消した時、未申請時と同じように、修正・承認者選択ができるようにする
   # 申請時に改めて承認者を選び直すため、取消時に設定済みの承認者を削除する
   def update
-    bill_id = params[:bill_applicant][:bill_id]
-    @bill   = Bill.find(bill_id)
+    @bill = Bill.find(params[:bill_id])
     @bill.cancel_bill_application!
 
-    show_success_message(:cancel, bill_id)
+    show_success_message(:cancel, params[:bill_id])
   rescue ActiveRecord::RecordInvalid
     show_failure_message(:cancel)
   end
