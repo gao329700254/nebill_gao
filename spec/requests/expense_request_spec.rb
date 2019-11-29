@@ -25,6 +25,11 @@ RSpec.describe Expense, type: :request do
       it 'can reapply "disconfirm" expense approval' do
         expect(expense_approval.reload.status).to eq "pending"
       end
+
+      it 'updates the status of all expense_approval_users to pending' do
+        is_expected_result = expense_approval.expense_approval_user.all? { |approval_user| approval_user.status == :pending }
+        expect(is_expected_result).to eq true
+      end
     end
   end
 
