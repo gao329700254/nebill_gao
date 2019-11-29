@@ -18,7 +18,7 @@ private
     select_by_start_on_and_end_on
     select_by_status
     select_by_unprocessed
-    sort
+    @projects = Projects::SortService.new(@projects).execute
   end
 
   def select_by_contracted
@@ -52,11 +52,5 @@ private
 
   def select_by_unprocessed
     @projects = @projects.where(unprocessed: true) if params[:status] == 'unprocessed'
-  end
-
-  def sort
-    return if @projects.blank?
-    @projects = @projects.group_by { |p| p.cd[2] }.sort.to_h.values
-    @projects = @projects.map { |projects| projects.sort_by(&:cd).reverse }.flatten
   end
 end

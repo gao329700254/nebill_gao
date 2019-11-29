@@ -57,7 +57,7 @@
                          : project.status === '#{t('enumerize.defaults.status.unreceive_order')}'
                            ? 'project_list__tbl__body__row--uncontracted'
                            : 'project_list__tbl__body__row'"
-        v-for      = "project in list | selectBy searchKeywords selectSchema | filterBycontractStatus contractStatus | filterByprojectStatus projectStatus"
+        v-for      = "project in projects | selectBy searchKeywords selectSchema | filterBycontractStatus contractStatus | filterByprojectStatus projectStatus"
         id         = "project-{{project.id}}"
         v-on:click = "linkToShow(project.id)"
         track-by   = "id"

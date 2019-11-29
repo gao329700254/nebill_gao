@@ -104,9 +104,18 @@ class Project < ApplicationRecord
 
   before_save { cd.upcase! }
 
-  scope :between, lambda { |start_on, end_on|
-    where(Project.arel_table[:start_on].gteq(start_on)).where(Project.arel_table[:end_on].lteq(end_on))
+  scope :select_by_start_on_and_end_on, lambda { |start_on, end_on|
+    if start_on.present? && end_on.present?
+      Project.between(start_on, end_on)
+    elsif start_on.present?
+      Project.gteq_start_on(start_on)
+    elsif end_on.present?
+      Project.lteq_end_on(end_on)
+    else
+      Project.all
+    end
   }
+  scope :between, -> (start_on, end_on) { Project.gteq_start_on(start_on).lteq_end_on(end_on) }
   scope :gteq_start_on, -> (start_on) { where(Project.arel_table[:start_on].gteq(start_on)) }
   scope :lteq_end_on, -> (end_on) { where(Project.arel_table[:end_on].lteq(end_on)) }
 
