@@ -46,7 +46,7 @@ pipelines:
       - step: *test
       - step: *lint
   branches:
-    develop:
+    staging:
       - step: *build
       - parallel:
         - step: *test
