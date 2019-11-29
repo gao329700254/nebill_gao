@@ -1,0 +1,62 @@
+= javascript_include_tag 'view_models/bill_issueds'
+
+- provide(:title, t('page.bill_issueds_list.title'))
+
+== render 'components/bill_issueds_edit'
+
+#bill_issueds_list.bill_issueds_list
+  = search_field_tag :search, nil, 'v-model' => "searchKeywords", \
+                     placeholder: t('page.bill_issueds_list.search_form_placeholder'), lazy: true, class: 'bill_issueds_list__search'
+  .bill_issueds_list__search
+    .bill_issueds_list__search__date
+      .bill_issueds_list__search__date__start
+        = label_tag :expected_deposit_on_start, t('page.bill_issueds_list.fill_date_form')
+        = date_field_tag :expected_deposit_on_start, nil, 'v-model' => "expected_deposit_on_start"
+      .bill_issueds_list__search__date__end
+        = date_field_tag :expected_deposit_on_end, nil, 'v-model' => "expected_deposit_on_end"
+      .bill_issueds_list__search__date__btn
+        = button_tag 'v-on:click.prevent' => 'search', class: 'bill_issueds_list__search__date__btn--search' do
+          = fa_icon 'search', text: t('page.bill_issueds_list.search')
+  .bill_list__search__radio
+    = radio_button_tag :all_status, '', false, 'v-model' => 'status'
+    = label_tag t('page.bill.status.all_status')
+    = radio_button_tag :issued, t('page.bill.status.issued'), false, 'v-model' => 'status'
+    = label_tag t('page.bill.status.not_confirm')
+    = radio_button_tag :confirmed, t('page.bill.status.confirmed'), false, 'v-model' => 'status'
+    = label_tag t('page.bill.status.confirmed')
+  table.bill_issueds_list__tbl
+    thead.bill_issueds_list__tbl__head
+      tr.bill_issueds_list__tbl__head__row
+        th.bill_issueds_list__tbl__item--cd                       = t('activerecord.attributes.bill.cd')
+        th.bill_issueds_list__tbl__item--project_name             = t('activerecord.attributes.bill.project')
+        th.bill_issueds_list__tbl__item--billing_company          = t('activerecord.attributes.project.billing_company_name')
+        th.bill_issueds_list__tbl__item--amount                   = t('activerecord.attributes.bill.amount')
+        th.bill_issueds_list__tbl__item--expected_deposit_on      = t('activerecord.attributes.bill.expected_deposit_on')
+        th.bill_issueds_list__tbl__item--deposit_on               = t('activerecord.attributes.bill.deposit_on')
+        th.bill_issueds_list__tbl__item--deposit_confirmed_memo   = t('activerecord.attributes.bill.deposit_confirmed_memo')
+        th.bill_issueds_list__tbl__item--confirm                  = t('activerecord.attributes.bill.confirm')
+    tbody.bill_issueds_list__tbl__body
+      tr.bill_issueds_list__tbl__body__row [
+        v-bind:class = "(bill.status == '入金確認済み') ? 'bill_issueds_list__tbl__body__row--confirmed'
+                                        : 'bill_issueds_list__tbl__body__row'"
+        v-for = "bill in list | selectBy searchKeywords selectSchema | orderBy sortKey -1 | filterBy status in 'status'"
+        id         = "bill-{{bill.id}}"
+        track-by   = "id"
+      ]
+        td.bill_issueds_list__tbl__item--cd                     v-text='bill.cd' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--project_name           v-text='bill.project.name' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--billing_company        v-text='bill.project.billing_company_name' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--amount                 v-text='bill.amount.toLocaleString()' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--expected_deposit_on    v-text='bill.expected_deposit_on' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--deposit_on             v-text='bill.deposit_on' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--deposit_confirmed_memo v-text='bill.deposit_confirmed_memo' v-on:click = "linkToShow(bill.id)"
+        td.bill_issueds_list__tbl__item--confirm
+          = button_tag id: "{{bill.id}}", class: 'bill_issueds_list__tbl__item--confirmbtn', \
+            'v-on:click' => 'showBillIssuedEdit(bill)' , 'v-if' => 'notConfirmedStatus(bill)', 'v-text' => 'buttonTextNotConfirmed' do
+          = button_tag id: "{{bill.id}}", class: 'bill_issueds_list__tbl__item--confirmbtn', \
+            'v-on:click' => 'showBillIssuedEdit(bill)' , 'v-if' => 'ConfirmedStatus(bill)', 'v-text' => 'buttonTextConfirmed' do
+
+  component [
+    :is        = "'billIssuedEdit'"
+    keep-alive = true
+  ]

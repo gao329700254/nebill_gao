@@ -43,7 +43,7 @@
         th.bill_list__tbl__item--applicant_name      = BillApplicant.human_attribute_name(:user_id)
     tbody.bill_list__tbl__body
       tr.bill_list__tbl__body__row [
-        v-bind:class = "bill.deposit_on ? 'bill_list__tbl__body__row--deposited'
+        v-bind:class = "(bill.status == '入金確認済み') ? 'bill_list__tbl__body__row--confirmed'
                                         : 'bill_list__tbl__body__row'"
         v-for = "bill in list | selectBy searchKeywords selectSchema | filterBy status in 'status'"
         id         = "bill-{{bill.id}}"

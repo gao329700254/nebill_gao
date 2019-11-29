@@ -104,7 +104,7 @@
                   .approval_show__detail__update__action
                     = text_area_tag :comment, '', class: 'approval_show__detail__update__action__text',
                                       placeholder: t('page.approval_show.comment_placeholder')
-                    = button_tag 'permission', data: { disable_with: t('page.approval_show.wait') } ,
+                    = button_tag 'permission', data: { confirm: t('action.permission.confirm'), disable_with: t('page.approval_show.wait') } ,
                                                 class: 'approval_show__detail__update__action__btn--permission',
                                                 value: 'permission' do
                       = fa_icon 'check', text: t('page.approval_show.permission')
