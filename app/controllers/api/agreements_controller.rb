@@ -5,7 +5,7 @@ class Api::AgreementsController < Api::ApiController
                          .where('approval_users.status = 10')
                          .includes([[created_user: :employee], :approval_users])
                          .references(:approval_users)
-    render template: 'api/approvals/index', formats: 'json', handlers: 'jbuilder', status: :ok
+    render template: 'api/agreements/agreement_index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
   def client_list
