@@ -23,7 +23,7 @@
 class BillDetail < ApplicationRecord
   belongs_to :bill
 
-  validates :content      , presence: true, if: proc { |detail| detail.amount.present? }
+  validates :content      , presence: true, if: :amount
   validates :content      , length: { maximum: 50 }
   validates :display_order, presence: true
 end

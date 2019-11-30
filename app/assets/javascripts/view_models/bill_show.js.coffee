@@ -72,8 +72,7 @@ $ ->
         else
           0
       addColumn: (index) ->
-        defaultColumn = { content: '', amount: null }
-        @details.splice(index + 1, 0, defaultColumn)
+        @details.push({content: '', amount: null})
       removeColumn: (index) ->
         @details.splice(index, 1)
       createDetails: ->

@@ -102,7 +102,6 @@
               th.bill_show_list__item--detail_label =  '内訳'
               th.bill_show_list__item--detail_value.money = '金額'
               th.bill_show_list__item--detail_btn
-              th.bill_show_list__item--detail_btn
           tbody.bill_show_list__tbl__body
             tr.bill_show_list__tbl__head__row.non_border [
               v-for="(index, detail) in details"
@@ -113,31 +112,30 @@
               td.bill_show_list__item--detail_value
                 = text_field_tag :amount, nil, 'v-numeric' => 'detail.amount', ':disabled' => '!editDetail', class: 'money'
               td.bill_show_list__item--detail_btn
-                = button_tag 'v-on:click.prevent' => 'removeColumn(index)', ':disabled' => '!editDetail', class: 'detail_button' do
+                = button_tag 'v-on:click.prevent' => 'removeColumn(index)', ':disabled' => '!editDetail || index === 0', class: 'detail_button' do
                   = fa_icon 'trash'
-              td.bill_show_list__item--detail_btn
+            tr.bill_show_list__tbl__head__row
+              td.bill_show_list__item--detail_label
+              td.bill_show_list__item--detail_value.money.computed
                 = button_tag 'v-on:click.prevent' => 'addColumn(index)', ':disabled' => '!editDetail', class: 'detail_button' do
                   = fa_icon 'plus'
+              td.bill_show_list__item--detail_btn
             tr.bill_show_list__tbl__head__row
               td.bill_show_list__item--detail_label.non_edit = t('pdf.subtotal')
               td.bill_show_list__item--detail_value.money.computed v-numeric='subtotalAmount'
               td.bill_show_list__item--detail_btn
-              td.bill_show_list__item--detail_btn
             tr.bill_show_list__tbl__head__row
               td.bill_show_list__item--detail_label.non_edit = t('pdf.tax')
               td.bill_show_list__item--detail_value.money.computed v-numeric='consumptionTax'
-              td.bill_show_list__item--detail_btn
               td.bill_show_list__item--detail_btn
             tr.bill_show_list__tbl__head__row
               td.bill_show_list__item--detail_label.non_edit = t('pdf.expenses')
               td.bill_show_list__item--detail_value
                 = text_field_tag :expense, nil, 'v-numeric' => 'bill.expense', ':disabled' => '!editDetail', class: 'money'
               td.bill_show_list__item--detail_btn
-              td.bill_show_list__item--detail_btn
             tr.bill_show_list__tbl__head__row
               td.bill_show_list__item--detail_label.non_edit = t('pdf.price')
               td.bill_show_list__item--detail_value.money.computed v-numeric='totalAmount'
-              td.bill_show_list__item--detail_btn
               td.bill_show_list__item--detail_btn
         - if @bill.authorized_user?(@current_user) && @bill.editable_state?
           .bill_show__detail__form__actions
