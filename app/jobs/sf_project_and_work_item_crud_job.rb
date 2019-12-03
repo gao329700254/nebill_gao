@@ -6,7 +6,7 @@ class SfProjectAndWorkItemCrudJob < ActiveJob::Base
     return if Rails.application.secrets.sf_username.blank?
 
     @project_cd = params[:project_cd]
-    @user_names = params[:user_names]
+    @user_members_name = params[:user_members_name]
 
     exec_action(params[:action])
   end
@@ -15,17 +15,19 @@ private
 
   def exec_action(action)
     case action
-    when 'create_project'
-      sf_client.create_project(nebill_project)
-      sf_client.create_work_item_and_details(sf_project_info, work_item_info_hash)
-    when 'update_project'
-      sf_client.update_project(sf_project_info[:sf_project_id], nebill_project)
+    when 'create_or_update_project'
+      if sf_project_info.blank?
+        sf_client.create_project(nebill_project)
+        sf_client.create_work_item_and_details(sf_project_info, work_item_info_hash)
+      else
+        sf_client.update_project(sf_project_info[:sf_project_id], nebill_project)
+      end
     when 'destroy_project'
       sf_client.destroy_project(sf_project_info[:sf_project_id])
     when 'create_work_item_and_details'
       sf_client.create_work_item_and_details(sf_project_info, work_item_info_hash)
     when 'destroy_work_item_and_details'
-      sf_client.destroy_work_item_and_details(work_item_info_hash[@user_names.first][:work_item_id])
+      sf_client.destroy_work_item_and_details(work_item_info_hash[@user_members_name.first][:work_item_id])
     end
   end
 

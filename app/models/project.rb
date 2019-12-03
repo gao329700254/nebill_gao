@@ -192,8 +192,8 @@ class Project < ApplicationRecord
     end
     SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(
       project_cd: cd,
-      user_names: user_members.map { |m| m.user.name },
-      action: 'create_project',
+      user_members_name: user_members.map { |m| m.user.name },
+      action: 'create_or_update_project',
     )
   end
 
@@ -239,7 +239,7 @@ class Project < ApplicationRecord
       self.status = :finished if unprocessed
       save!
       edit_file(file_params) if file_params.present?
-      SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(project_cd: cd, action: 'update_project')
+      SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(project_cd: cd, action: 'create_or_update_project')
     end
   end
 
