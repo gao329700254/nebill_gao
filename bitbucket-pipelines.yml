@@ -6,6 +6,7 @@ definitions:
       name: build
       caches:
         - bundler
+        - bundle-config
       services:
         - postgres
       script:
@@ -16,7 +17,6 @@ definitions:
       <<: *build
       name: test
       script:
-        - bundle check --path=vendor/bundle || bundle install -j4 --path=vendor/bundle
         - RAILS_ENV='test' bundle exec rake db:schema:load
         - bundle exec rspec --order rand
         - RAILS_ENV=test bundle exec teaspoon
@@ -24,13 +24,13 @@ definitions:
       <<: *build
       name: lint
       script:
-        - bundle check --path=vendor/bundle || bundle install -j4 --path=vendor/bundle
         - bundle exec rubocop --format simple
         - bundle exec rake coffeelint
         - bundle exec rake slim_lint
         - bundle exec rake scss_lint
   caches:
     bundler: vendor
+    bundle-config: /usr/local/bundle
   services:
     postgres:
       image: postgres
