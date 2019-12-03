@@ -7,7 +7,7 @@ RSpec.describe Approval, type: :model do
     let(:approval1)   { create(:approval, :user_approval, created_user: current_user, created_at: "2019-10-10") }
     let(:approval2)   { create(:approval, :user_approval, created_user: current_user, created_at: "2019-11-11") }
 
-    subject { Approval.search_approval(current_user: current_user, search_created_at: search_created_at) }
+    subject { described_class.search_approval(current_user: current_user, search_created_at: search_created_at) }
 
     context 'with role is general' do
       let(:current_user) { create(:user) }
@@ -37,6 +37,7 @@ RSpec.describe Approval, type: :model do
         let(:search_created_at) { nil }
 
         it do
+
           is_expected.to eq [approval1, approval2, approval3]
         end
       end
