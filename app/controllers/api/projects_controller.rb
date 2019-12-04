@@ -53,26 +53,12 @@ class Api::ProjectsController < Api::ApiController
     render 'last_updated_at', formats: 'json', handlers: 'jbuilder', status: :ok
   end
 
-  # rubocop:disable Metrics/AbcSize
   def search_result
-    @projects = if params[:start].present? && params[:end].present?
-                  Project.between(params[:start], params[:end])
-                elsif params[:start].present?
-                  Project.gteq_start_on(params[:start])
-                elsif params[:end].present?
-                  Project.lteq_end_on(params[:end])
-                else
-                  Project.all
-                end
-
-    @projects = @projects.sort_by do |i|
-      year, identifier, sequence, contract = *i.cd.scan(/(.{2})(.)(.{3})(.*)/).first
-      next identifier, year, sequence, contract
-    end
+    @projects = Project.select_by_start_on_and_end_on(params[:start], params[:end])
+    @projects = Projects::SortService.new(@projects).execute
 
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
   end
-  # rubocop:enable Metrics/AbcSize
 
   def bill_default_values
     # 正規表現でマッチした部分を用いて、請求日を算出する

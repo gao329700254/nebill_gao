@@ -6,7 +6,7 @@ $ ->
         cd: 'like'
         name: 'like'
         orderer_company_name: 'like'
-      list: undefined
+      projects: undefined
       searchKeywords: undefined
       contractStatus: []
       projectStatus: []
@@ -26,13 +26,9 @@ $ ->
               end: @end
             }
           .done (response) =>
-            @list = @reverseList(response)
+            @projects = response
         finally
           search.prop('disabled', false)
-      reverseList: (list) ->
-        compareUpdatedAt = (a, b) ->
-          if b.updated_at >= a.updated_at then 1 else -1
-        sortedList = list.slice().sort(compareUpdatedAt)
       download: ->
         formData = new FormData()
         formData.append('status', @projectStatus)

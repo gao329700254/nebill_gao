@@ -8,18 +8,22 @@ RSpec.describe 'projects request', versioning: true do
     ActiveJob::Base.queue_adapter = :test
   end
 
-  describe 'GET /api/projects' do
-    let!(:project1) { create(:contracted_project, cd: '17D001', is_regular_contract: true) }
-    let!(:project2) { create(:contracted_project, cd: '17D002', status: :finished) }
+  describe 'POST /api/projects/search_result' do
+    subject { post path, params: params }
+    let!(:project1)            { create(:contracted_project, cd: '17D001', is_regular_contract: true) }
+    let!(:project2)            { create(:contracted_project, cd: '17D002', status: :receive_order) }
+    let!(:project3)            { create(:contracted_project, cd: '17B001', status: :receive_order) }
+    let!(:finished_project)    { create(:contracted_project, cd: '17D003', status: :finished) }
+    let!(:unprocessed_project) { create(:contracted_project, cd: '17D004', unprocessed: true) }
     let(:params) { { today: Time.zone.now } }
     let(:path) { "/api/projects/search_result" }
 
-    it 'return a list of projects' do
-      post path, params: params
+    before { subject }
 
+    it 'returns a list of projects' do
       expect(response).to be_success
       expect(response.status).to eq 200
-      expect(json.count).to eq 2
+      expect(json.count).to eq 5
 
       expect(json[0]['id']).to                       eq project1.id
       expect(json[0]['group_id']).to                 eq project1.group_id
@@ -54,6 +58,14 @@ RSpec.describe 'projects request', versioning: true do
       expect(json[0]['orderer_memo']).to             eq project1.orderer_memo
       expect(json[0]['created_at']).to               eq project1.created_at.strftime("%Y/%m/%d %H:%M:%S")
       expect(json[0]['updated_at']).to               eq project1.updated_at.strftime("%Y-%m-%dT%H:%M:%S.%L%:z")
+    end
+
+    it 'returns projects in correct order' do
+      expect(json[0]['id']).to eq project1.id
+      expect(json[1]['id']).to eq project2.id
+      expect(json[2]['id']).to eq project3.id
+      expect(json[3]['id']).to eq finished_project.id
+      expect(json[4]['id']).to eq unprocessed_project.id
     end
   end
 
