@@ -1,6 +1,33 @@
 require 'rails_helper'
 
 RSpec.describe Api::AgreementsController, type: :request do
+
+  describe 'GET /api/agreements/approval_list' do
+    let!(:user) { create(:user) }
+    before { login(user) }
+
+    subject do
+      get '/api/agreements/approval_list'
+    end
+
+    # ログインユーザーが承認者で「承認待ち」の稟議
+    let!(:approval_A) { create(:approval, status: :pending, created_user_id: created_user.id) }
+    # ログインユーザーが承認者で「承認済み」の稟議
+    let!(:approval_B) { create(:approval, status: :permission, created_user_id: created_user.id) }
+
+    let!(:created_user)      { create(:user) }
+
+    let!(:approval_userA)     { create(:approval_user, approval: approval_A, user: user, status: :pending) }
+    let!(:approval_userB)     { create(:approval_user, approval: approval_B, user: user, status: :permission) }
+
+    it 'ログインユーザーが承認者で承認待ち稟議のみが表示される' do
+      subject
+      expect(response).to be_success
+      expect(json.length).to eq(1)
+      expect(json.first['id']).to eq approval_A.id
+    end
+  end
+
   describe 'GET /api/agreements/bill_list' do
     subject do
       get '/api/agreements/bill_list'
