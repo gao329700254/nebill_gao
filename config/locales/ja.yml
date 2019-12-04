@@ -312,7 +312,6 @@ ja:
       expense_approval_is_empty: 申請を選択してください。
       unselected: を選択してください。
       presence_check_box: は必ずチェックしてください
-      require_bill_details_content: 内訳は必ず入力してください
       details_reach_maxium: "を%{count}行以上作成することはできません"
     template:
       body: 次の項目を確認してください

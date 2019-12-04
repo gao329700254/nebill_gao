@@ -18,17 +18,17 @@ RSpec.describe 'bill details request' do
             content:       "detail_1",
             amount:        40_000_000,
             display_order: 1,
-            bill_id:       177,
+            bill_id:       bill.id,
           },
           "1" => {
             id:            51,
             content:       "detail_2",
             amount:        1234,
             display_order: 2,
-            bill_id:       177,
+            bill_id:       bill.id,
           },
         },
-        bill_id: 177,
+        bill_id: bill.id,
       }
     end
 

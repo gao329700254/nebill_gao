@@ -1,7 +1,7 @@
 class Bills::PdfController < ApplicationController
   def download
     @bill    = Bill.find(params[:bill_id]).decorate
-    @details = @bill.details
+    @details = @bill.details.order(:display_order)
 
     render pdf:      pdf_file_name,
            template: "pdf/bill.html.slim",

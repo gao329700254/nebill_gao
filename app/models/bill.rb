@@ -52,7 +52,7 @@ class Bill < ApplicationRecord
   validates :payment_type       , presence: true
   validates :bill_on            , presence: true
   validates :expected_deposit_on, presence: true
-  validates :details            , length: { maximum: MAX_DETAIL_COUNT, message: I18n.t('errors.messages.details_reach_maxium'), count: MAX_DETAIL_COUNT }
+  validates :details            , length: { maximum: MAX_DETAIL_COUNT, message: :details_reach_maxium }
   validate  :bill_on_cannot_predate_delivery_on
   validate  :bill_on_cannot_predate_acceptance_on
   validates :deposit_on, presence: true, if: proc { status == 'confirmed' }
@@ -114,7 +114,6 @@ class Bill < ApplicationRecord
       details.destroy_all
 
       new_details.each.with_index(1) do |detail, index|
-        errors.add(:base, I18n.t('errors.messages.require_bill_details_content')) if detail[:content].empty?
         details.build(
           content:       detail[:content],
           amount:        detail[:amount].present? ? detail[:amount]: nil,
