@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 class Api::ExpensesController < Api::ApiController
+  before_action :set_expense_approval, only: [:reapproval]
+
   def index
     @expense_approval = ExpenseApproval.my_appr(@current_user.id)
     render 'index', formats: 'json', handlers: 'jbuilder', status: :ok
@@ -106,15 +108,8 @@ class Api::ExpensesController < Api::ApiController
   end
 
   def reapproval
-    @expense_approval = ExpenseApproval.find(params[:selectedApproval])
-    @expense_approval.transaction do
-      @expense_approval.update!(status: 10)
-      @expense_approval.users.each do |user|
-        ExpenseApprovalMailer.update_expense_approval(user: user, expense_approval: @expense_approval).deliver_now
-      end
-      Chatwork::ExpenseApproval.new(expense_approval: @expense_approval, to_user: @expense_approval.users).notify_edit
-    end
-    render_action_model_flash_success_message(@expense_approval, :update)
+    @expense_approval.reapproval!
+    render_action_model_success_message(@expense_approval, :update)
   rescue
     render_action_model_fail_message(@expense_approval, :update)
   end
@@ -208,6 +203,10 @@ private
       :is_round_trip,
       :project_id,
     )
+  end
+
+  def set_expense_approval
+    @expense_approval = ExpenseApproval.find(params[:selectedApproval])
   end
 
   def add_params

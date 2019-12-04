@@ -88,7 +88,14 @@ $ ->
             data:
               selectedApproval: @selectedApproval
           .done (response) =>
+            toastr.success('', response.message)
             @loadChoiceExpenseApproval()
+          .fail (response) =>
+            json = response.responseJSON
+            if _.has(json, 'errors')
+              toastr.error(json.errors.full_messages.join('<br>'), json.message)
+            else
+              toastr.error('', json.message)
       InvalidApproval: ->
         if(confirm($('#header__invalid_confirm_message').val()))
           $.ajax

@@ -55,4 +55,15 @@ class ExpenseApproval < ApplicationRecord
 
     search_created_at.present? ? result.where_created_on(search_created_at) : result
   end
+
+  def reapproval!
+    ExpenseApproval.transaction do
+      update!(status: :pending)
+      expense_approval_user.each do |approval_user|
+        approval_user.update!(status: :pending)
+        ExpenseApprovalMailer.update_expense_approval(user: approval_user.user, expense_approval: self).deliver_now
+      end
+      Chatwork::ExpenseApproval.new(expense_approval: self, to_user: users).notify_edit
+    end
+  end
 end
