@@ -1,6 +1,6 @@
 / 検収書
 .bill_pdf__header--accept.page_break
-  .bill_pdf__header--today = @today
+  .bill_pdf__header--issue_date = @issue_date
   .bill_pdf__header--billing_company_name = t('pdf.accept.company')
   .bill_pdf__header__cuon--accept
     .bill_pdf__header__cuon--accept--project_no = @bill.pdf_project_no
@@ -10,7 +10,7 @@
     .bill_pdf__body__note = t('pdf.accept.note')
     .bill_pdf__body__subject
       .bill_pdf__body__subject--title = t('pdf.subject_title')
-      span.bill_pdf__body__subject--project_name = @bill.project.name
+      span.bill_pdf__body__subject--project_name = @bill.project_name
     .bill_pdf__body__price
       .bill_pdf__body__price--title = t('pdf.charged_price')
       .bill_pdf__body__price--subject = @bill.pdf_total_price_yen

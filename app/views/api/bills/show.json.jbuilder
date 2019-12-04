@@ -1,11 +1,13 @@
-json.id                  @bill.id
-json.project_id          @bill.project_id
+json.id                     @bill.id
 json.cd                     @bill.cd
+json.project_name           @bill.project_name
+json.company_name           @bill.company_name
 json.amount                 @bill.amount
 json.delivery_on            @bill.delivery_on
 json.acceptance_on          @bill.acceptance_on
 json.payment_type           @bill.payment_type
 json.bill_on                @bill.bill_on
+json.issue_on               @bill.issue_on
 json.expected_deposit_on    @bill.expected_deposit_on
 json.deposit_on             @bill.deposit_on
 json.memo                   @bill.memo

@@ -77,11 +77,14 @@ private
   def bill_param
     params.require(:bill).permit(
       :cd,
+      :project_name,
+      :company_name,
       :amount,
       :delivery_on,
       :acceptance_on,
       :payment_type,
       :bill_on,
+      :issue_on,
       :expected_deposit_on,
       :deposit_on,
       :memo,

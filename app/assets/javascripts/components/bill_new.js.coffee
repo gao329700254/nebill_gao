@@ -6,11 +6,14 @@ $ ->
     data: ->
       bill:
         cd:                     undefined
+        project_name:           undefined
+        company_name:           undefined
         amount:                 undefined
         delivery_on:            undefined
         acceptance_on:          undefined
         payment_type:           undefined
         bill_on:                undefined
+        issue_on:               undefined
         expected_deposit_on:    undefined
         deposit_on:             undefined
         memo:                   undefined
@@ -52,6 +55,8 @@ $ ->
       $.ajax "/api/projects/#{@projectId}/bill_default_values.json"
         .done (response) =>
           @bill.cd                  = response.cd
+          @bill.project_name        = response.project_name
+          @bill.company_name        = response.company_name
           @bill.amount              = response.amount
           @bill.delivery_on         = response.delivery_on
           @bill.acceptance_on       = response.acceptance_on
