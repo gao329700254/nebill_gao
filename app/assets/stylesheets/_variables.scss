@@ -73,16 +73,24 @@ $light-black-bg-color:             $light-black;
 $light-black-ft-color:             $white;
 $light-black-ft-non-accent-color:  darken($light-black-ft-color, 30%);
 $light-black-ft-accent-color:      $theme-color;
+//// Grey
+$light-grey-bg-color: #dcdcdc;
 //// White
 $white-bg-color:             $white;
 $white-ft-color:             $black;
 $white-ft-non-accent-color: lighten($white-ft-color, 10%);
 $white-ft-accent-color:      $theme-color;
-/// blue
+//// Blue
 $light-blue-color: #5970f3;
 $dark-blue-color: #4244c4;
-/// Yellow
-$yellow-bg-color:            $yellow;
+//// Green
+$light-green-color: #a5d6a7;
+$pale-green-bg-color: #e8f5e9;
+//// Red
+$light-red-color: #ef9a9a;
+$pale-red-bg-color: #ffebee;
+//// Yellow
+$yellow-bg-color: $yellow;
 //// Base
 $base-bg-color: $white-bg-color;
 $base-border-color: $light-grey;

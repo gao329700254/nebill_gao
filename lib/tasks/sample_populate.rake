@@ -7,6 +7,7 @@ namespace :db do
           project_groups
           projects
           bills
+          bill_details
           partners
           members
           clients
@@ -52,8 +53,16 @@ namespace :db do
     def populate_bills
       Bill.destroy_all
 
-      Project.all.each do |project|
-        FactoryBot.create(:bill, project: project)
+      Project.where(contracted: true).all.each do |project|
+        FactoryBot.create(:bill, project: project, amount: project.amount)
+      end
+    end
+
+    def populate_bill_details
+      BillDetail.destroy_all
+
+      Bill.all.each do |bill|
+        FactoryBot.create(:bill_detail, bill: bill, amount: bill.amount)
       end
     end
 

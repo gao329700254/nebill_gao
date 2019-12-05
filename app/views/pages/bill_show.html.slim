@@ -62,6 +62,9 @@
             .bill_show__form__item
               = label_tag :deposit_confirmed_memo, Bill.human_attribute_name(:deposit_confirmed_memo)
               = text_area_tag :deposit_confirmed_memo, nil, 'v-model' => 'bill.deposit_confirmed_memo', ':disabled' => '!editMode'
+            .bill_show__form__item
+              = check_box_tag :require_acceptance, true, false, 'v-model' => 'bill.require_acceptance', ':disabled' => '!editMode'
+              = label_tag :require_acceptance, Bill.human_attribute_name(:require_acceptance)
           / -----------------------------------------------------
           / 請求書発行アクション
           / -----------------------------------------------------
@@ -70,117 +73,133 @@
           / -----------------------------------------------------
           / 請求フォーム操作アクション
           / -----------------------------------------------------
-          - if can? :update, @bill
-            - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill? || @bill.issued_bill?
-              = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode',
-              class: 'bill_show__form__btn--edit' do
-                = fa_icon 'edit', text: t('helpers.edit')
-              = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' =>  'editMode', class: 'bill_show__form__btn--cancel' do
-                = fa_icon 'remove', text: t('helpers.cancel')
-              = button_tag 'v-on:click.prevent' => 'submit', 'v-if' => 'editMode', class: 'bill_show__form__btn--submit' do
-                = fa_icon 'pencil-square', text: t('helpers.submit.update')
-            - if @bill.unapplied_bill? || @bill.sent_back_bill? || @bill.cancelled_bill?
-              = button_tag 'v-on:click.prevent' => 'destroy', class: 'bill_show__form__btn--delete' do
-                = fa_icon 'trash', text: t('helpers.delete')
+          - if can?(:update, @bill) && @bill.editable_state?
+            = button_tag 'v-on:click.prevent' => 'editMode = true' , 'v-if' => '!editMode', class: 'bill_show__form__btn--edit' do
+              = fa_icon 'edit', text: t('helpers.edit')
+            = button_tag 'v-on:click.prevent' => 'editMode = false', 'v-if' => 'editMode', class: 'bill_show__form__btn--cancel' do
+              = fa_icon 'remove', text: t('helpers.cancel')
+            = button_tag 'v-on:click.prevent' => 'submit', 'v-if' => 'editMode', class: 'bill_show__form__btn--submit' do
+              = fa_icon 'pencil-square', text: t('helpers.submit.update')
+            = button_tag 'v-on:click.prevent' => 'destroy', 'v-if' => '!editMode', class: 'bill_show__form__btn--delete' do
+              = fa_icon 'trash', text: t('helpers.delete')
           - if @bill.approved_bill?
-            = button_tag 'v-on:click.prevent' => 'issue', class: 'bill_show__form__btn--issue' do
-              = fa_icon 'pencil-square', text: t('helpers.submit.issue')
-        / / TODO(maeda):請求書内訳編集フォーム
-        / .bill_show__detail__form
-        /   = '内訳編集エリア'
-        /   .div
-        /     table.approval_show__detail__approval_user_list__tbl
-        /       thead.approval_show__detail__approval_user_list__tbl__head
-        /         tr.approval_show__detail__approval_user_list__tbl__head__row
-        /           th.approval_show__detail__approval_user_list__item--approval_user_name =  'ご請求金額'
-        /           th.approval_show__detail__approval_user_list__item--approval_user_status = '整合性チェック'
-        /       tbody.approval_show__detail__approval_user_list__tbl__body
-        /         tr.approval_show__detail__approval_user_list__tbl__head__row
-        /           td.approval_show__detail__approval_user_list__item--approval_user_name   = '請求金額＝小計＋消費税＋経費の合計金額を表示'
-        /           td.approval_show__detail__approval_user_list__item--approval_user_status = '左の値とプロジェクトから取得した請求金額が一致するか否か判断し、その結果をここに表示する'
-        /   table.approval_show__detail__approval_user_list__tbl
-        /     thead.approval_show__detail__approval_user_list__tbl__head
-        /       tr.approval_show__detail__approval_user_list__tbl__head__row
-        /         th.approval_show__detail__approval_user_list__item--approval_user_name =  '内訳'
-        /         th.approval_show__detail__approval_user_list__item--approval_user_status = '金額'
-        /     tbody.approval_show__detail__approval_user_list__tbl__body
-        /       tr.approval_show__detail__approval_user_list__tbl__body__row
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field :comment, '',
-        /           placeholder: '手入力', class: 'approval_show__detail__update__action__text'
-        /         td.approval_show__detail__approval_user_list__item--approval_user_status = text_field :comment, '',
-        /           placeholder: '手入力', class: 'approval_show__detail__update__action__text'
-        /       tr.approval_show__detail__approval_user_list__tbl__body__row
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '超過分'
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
-        /           placeholder: '手入力', class: 'approval_show__detail__update__action__text'
-        /       tr.approval_show__detail__approval_user_list__tbl__body__row
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '小計'
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
-        /           placeholder: '内訳と超過分の金額を自動集計する', class: 'approval_show__detail__update__action__text'
-        /       tr.approval_show__detail__approval_user_list__tbl__body__row
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '消費税'
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
-        /           placeholder: '小計に対する消費税を自動算出する', class: 'approval_show__detail__update__action__text'
-        /       tr.approval_show__detail__approval_user_list__tbl__body__row
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = '経費（交通費）'
-        /         td.approval_show__detail__approval_user_list__item--approval_user_name = text_field_tag :total, '',
-        /           placeholder: '手入力、デフォルト値は「0」', class: 'approval_show__detail__update__action__text'
-        /   = button_tag '追加', class: 'approval_show__detail__update__action__btn--permission'
-        /     = fa_icon 'plus', text: t('helpers.plus')
+            = button_tag t('helpers.submit.issue'), 'v-on:click.prevent' => 'issue', class: 'bill_show__form__btn--issue'
+    / -----------------------------------------------------
+    / 請求内訳編集テーブル
+    / -----------------------------------------------------
     .bill_show_approval_actions_container
+      .bill_show__detail__form
+        .section_title 内訳編集
+        .bill_show__detail__form__top
+          - if @bill.editable_state?
+            p.bill_show__detail__form__matching_sum v-if='checkIntegration'
+              = t('helpers.matching_bill_details')
+            p.bill_show__detail__form__mismatching_sum v-else='checkIntegration'
+              = t('helpers.mismatching_bill_details')
+        table.bill_show_list__tbl
+          thead.bill_show_list__tbl__head
+            tr.bill_show_list__tbl__head__row
+              th.bill_show_list__item--detail_label =  '内訳'
+              th.bill_show_list__item--detail_value.money = '金額'
+              th.bill_show_list__item--detail_btn
+          tbody.bill_show_list__tbl__body
+            tr.bill_show_list__tbl__head__row.non_border [
+              v-for="(index, detail) in details"
+              id   ="detail-{{detail.id}}"
+            ]
+              td.bill_show_list__item--detail_label
+                = text_field_tag :content, nil, 'v-model' => 'detail.content', ':disabled' => '!editDetail'
+              td.bill_show_list__item--detail_value
+                = text_field_tag :amount, nil, 'v-numeric' => 'detail.amount', ':disabled' => '!editDetail', class: 'money'
+              td.bill_show_list__item--detail_btn
+                = button_tag 'v-on:click.prevent' => 'removeColumn(index)', 'v-if' => 'editDetail && index !== 0', class: 'detail_button' do
+                  = fa_icon 'trash'
+            tr.bill_show_list__tbl__head__row v-if='editDetail && details.length < 15'
+              td.bill_show_list__item--detail_label
+              td.bill_show_list__item--detail_value.money.computed
+                = button_tag 'v-on:click.prevent' => 'addColumn(index)', class: 'detail_button' do
+                  = fa_icon 'plus'
+              td.bill_show_list__item--detail_btn
+            tr.bill_show_list__tbl__head__row
+              td.bill_show_list__item--detail_label.non_edit = t('pdf.subtotal')
+              td.bill_show_list__item--detail_value.money.computed v-numeric='subtotalAmount'
+              td.bill_show_list__item--detail_btn
+            tr.bill_show_list__tbl__head__row
+              td.bill_show_list__item--detail_label.non_edit = t('pdf.tax')
+              td.bill_show_list__item--detail_value.money.computed v-numeric='consumptionTax'
+              td.bill_show_list__item--detail_btn
+            tr.bill_show_list__tbl__head__row
+              td.bill_show_list__item--detail_label.non_edit = t('pdf.expenses')
+              td.bill_show_list__item--detail_value
+                = text_field_tag :expense, nil, 'v-numeric' => 'bill.expense', ':disabled' => '!editDetail', class: 'money'
+              td.bill_show_list__item--detail_btn
+            tr.bill_show_list__tbl__head__row
+              td.bill_show_list__item--detail_label.non_edit = t('pdf.price')
+              td.bill_show_list__item--detail_value.money.computed v-numeric='totalAmount'
+              td.bill_show_list__item--detail_btn
+        - if @bill.authorized_user?(@current_user) && @bill.editable_state?
+          .bill_show__detail__form__actions
+            = button_tag 'v-on:click.prevent' => 'editDetail = true', 'v-if' => '!editDetail', class: 'bill_show__form__btn--detail-update'
+              = t('helpers.edit')
+            = button_tag 'v-on:click.prevent' => 'editDetail = false', 'v-if' => 'editDetail', class: 'bill_show__form__btn--detail-cancel'
+              = t('helpers.cancel')
+            = button_tag 'v-on:click.prevent' => 'createDetails', 'v-if' => 'editDetail', class: 'bill_show__form__btn--detail-update'
+              = t('helpers.submit.update')
       / -----------------------------------------------------
       / 請求書申請者テーブル
       / -----------------------------------------------------
       - if @bill_applicant.present?
         .bill_show__detail__approval_user_list
-          table.approval_show__detail__approval_user_list__tbl
-            thead.approval_show__detail__approval_user_list__tbl__head
-              tr.approval_show__detail__approval_user_list__tbl__head__row
-                th.approval_show__detail__approval_user_list__item--approval_user_name = BillApplicant.human_attribute_name(:user_id)
-                th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApplicant.human_attribute_name(:comment)
-            tbody.approval_show__detail__approval_user_list__tbl__body
-              tr.approval_show__detail__approval_user_list__tbl__body__row
-                td.approval_show__detail__approval_user_list__item--approval_user_name = @bill_applicant.user.name
-                td.approval_show__detail__approval_user_list__item--approval_user_comment = @bill_applicant.comment
+          .section_title 申請者
+          table.bill_show_list__tbl.approval_tbl
+            thead.bill_show_list__tbl__head
+              tr.bill_show_list__tbl__head__row
+                th.bill_show_list__item--applicant_name    = BillApplicant.human_attribute_name(:user_id)
+                th.bill_show_list__item--applicant_comment = BillApplicant.human_attribute_name(:comment)
+            tbody.bill_show_list__tbl__body
+              tr.bill_show_list__tbl__head__row
+                td.bill_show_list__item--applicant_name    = @bill_applicant.user.name
+                td.bill_show_list__item--applicant_comment = @bill_applicant.comment
       / -----------------------------------------------------
       / 請求書承認者テーブル
       / -----------------------------------------------------
       - if @bill_approvers.present?
         .bill_show__detail__approval_user_list
-          table.approval_show__detail__approval_user_list__tbl
-            thead.approval_show__detail__approval_user_list__tbl__head
-              tr.approval_show__detail__approval_user_list__tbl__head__row
-                th.approval_show__detail__approval_user_list__item--approval_user_name = BillApprovalUser.human_attribute_name(:role)
-                th.approval_show__detail__approval_user_list__item--approval_user_name = BillApprovalUser.human_attribute_name(:user_id)
-                th.approval_show__detail__approval_user_list__item--approval_user_status = BillApprovalUser.human_attribute_name(:status)
-                th.approval_show__detail__approval_user_list__item--approval_user_comment = BillApprovalUser.human_attribute_name(:comment)
-            tbody.approval_show__detail__approval_user_list__tbl__body
+          .section_title 承認状況
+          table.bill_show_list__tbl.approval_tbl
+            thead.bill_show_list__tbl__head
+              tr.bill_show_list__tbl__head__row
+                th.bill_show_list__item--approver_role    = BillApprovalUser.human_attribute_name(:role)
+                th.bill_show_list__item--approver_name    = BillApprovalUser.human_attribute_name(:user_id)
+                th.bill_show_list__item--approver_status  = BillApprovalUser.human_attribute_name(:status)
+                th.bill_show_list__item--approver_comment = BillApprovalUser.human_attribute_name(:comment)
+            tbody.bill_show_list__tbl__body
               - @bill_approvers.each do |approver|
-                tr.approval_show__detail__approval_user_list__tbl__body__row
-                  td.approval_show__detail__approval_user_list__item--approval_user_name = approver.role_i18n
-                  td.approval_show__detail__approval_user_list__item--approval_user_name = approver.user.name
-                  td.approval_show__detail__approval_user_list__item--approval_user_status = approver.status_i18n
-                  td.approval_show__detail__approval_user_list__item--approval_user_comment = approver.comment
+                tr.bill_show_list__tbl__body__row
+                  td.bill_show_list__item--approver_role    = approver.role_i18n
+                  td.bill_show_list__item--approver_name    = approver.user.name
+                  td.bill_show_list__item--approver_status  = approver.status_i18n
+                  td.bill_show_list__item--approver_comment = approver.comment
       / -----------------------------------------------------
       / 申請者用アクション
       / -----------------------------------------------------
       .bill_approval_show__detail__update
-        - if @bill.create_user_id == @current_user.id || @current_user.backoffice?
-          - if @bill.unapplied_bill? || @bill.cancelled_bill? || @bill.sent_back_bill?
-            = form_tag bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
-              .approval_show__detail__update__action
-                = hidden_field_tag :bill_id, @bill.id
-                = select_tag :user_id,
-                    options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name),
-                    prompt: t('page.bill.select_placeholder')
-                = text_area_tag :comment, '', placeholder: t('page.bill.comment_placeholder')
-                - if @bill.unapplied_bill? || @bill.cancelled_bill?
-                  = button_tag '申請', class: 'bill_show__form__btn--submit'
-                - if @bill.sent_back_bill?
-                  = button_tag '再申請', name: 'reapply', value: 'reapply', class: 'bill_show__form__btn--submit'
-        - if can?(:update, @bill_applicant) && @bill.pending_bill?
-          = form_tag bill_applicant_path(@bill.applicant), method: :patch do
+        - if @bill.authorized_user?(@current_user) && @bill.editable_state?
+          .section_title 申請
+          = form_tag bill_applicants_path(@bill), class: 'bill_show__detail__approval_user_list' do
             .approval_show__detail__update__action
+              = hidden_field_tag :bill_id, @bill.id
+              = select_tag :user_id,
+                  options_from_collection_for_select(User.where.not(id: @current_user.id).without_role('outer'), :id, :name),
+                  prompt: t('page.bill.select_placeholder')
+              = text_area_tag :comment, '', placeholder: t('page.bill.comment_placeholder')
+              - if @bill.unapplied_bill? || @bill.cancelled_bill?
+                = button_tag '申請', class: 'bill_show__form__btn--submit'
+              - if @bill.sent_back_bill?
+                = button_tag '再申請', name: 'reapply', value: 'reapply', class: 'bill_show__form__btn--submit'
+        - if @bill.authorized_user?(@current_user) && @bill.pending_bill?
+          = form_tag bill_applicant_path(@bill.applicant), method: :patch do
+            .button_wrapper
               = hidden_field_tag :bill_id, @bill.id
               = hidden_field_tag :bill_applicant_id, @bill.applicant.id
               = button_tag '取消', data: { confirm: I18n.t("action.cancel.confirm") }, class: 'bill_show__form__btn--cancel'
@@ -201,8 +220,3 @@
                 = form.hidden_field :bill_id
                 = form.text_area :comment, value: '', placeholder: t('page.bill.comment_placeholder')
                 = form.button '差戻', data: { confirm: I18n.t("action.send_back.confirm") }, class: 'bill_show__form__btn--sent_back'
-
-  component [
-    :is        = "'partnerNew'"
-    keep-alive = true
-  ]

@@ -97,6 +97,7 @@ private
   def bill_ability(user)
     can [:read, :create, :search_result], Bill
     can [:update, :destroy], Bill,             create_user_id: user.id
+    can :manage,             BillDetail
     can :create,             BillApplicant
     can :update,             BillApplicant,    bill: { create_user_id: user.id }
     can :manage,             BillApprovalUser

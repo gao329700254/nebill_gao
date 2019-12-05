@@ -1,7 +1,8 @@
 class Bills::PdfController < ApplicationController
-  before_action :set_bill, only: [:download]
-
   def download
+    @bill    = Bill.find(params[:bill_id]).decorate
+    @details = @bill.details.order(:display_order)
+
     render pdf:      pdf_file_name,
            template: "pdf/bill.html.slim",
            encoding: 'UTF-8',
@@ -13,9 +14,5 @@ private
 
   def pdf_file_name
     [t('pdf.bill.title'), @bill.project.billing_company_name, @bill.cd].compact.join("_")
-  end
-
-  def set_bill
-    @bill = Bill.find(params[:bill_id]).decorate
   end
 end

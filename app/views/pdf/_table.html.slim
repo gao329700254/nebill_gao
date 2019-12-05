@@ -1,31 +1,29 @@
 table.bill_pdf__tbl
   thead.bill_pdf__tbl__head
     tr.bill_pdf__tbl__head__row
-      th.bill_pdf__tbl__head__row__item = t('pdf.uchiwake')
-      th.bill_pdf__tbl__head__row__item = t('pdf.price')
+      th.bill_pdf__tbl__head__row__item.left = t('pdf.uchiwake')
+      th.bill_pdf__tbl__head__row__item.right = t('pdf.price')
   tbody.bill_pdf__tbl__body
-    tr.bill_pdf__tbl__body__row
-      td.bill_pdf__tbl__body__row__item--right = @bill.project_name
-      td.bill_pdf__tbl__body__row__item--left = @bill.amount.to_s(:delimited)
-    tr.bill_pdf__tbl__body__row
-      td.bill_pdf__tbl__body__row__item--right--period = @bill.pdf_period
-      td.bill_pdf__tbl__body__row__item--left
-    tr.bill_pdf__tbl__body__row
-      td.bill_pdf__tbl__body__row__item--right--time = t('pdf.exceed')
-      td.bill_pdf__tbl__body__row__item--left = '0'
-    - 12.times do
+    - @details.each do |detail|
+      = content_tag :tr, '', class: 'bill_pdf__tbl__body__row'
+        = content_tag :td, detail.content, class: 'bill_pdf__tbl__body__row__item--right'
+        - if detail.amount.nil?
+          = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item--left'
+        - else
+          = content_tag :td, detail.amount.to_s(:delimited), class: 'bill_pdf__tbl__body__row__item--left'
+    - @bill.pdf_empty_rows.times do
       = content_tag :tr, '', class: 'bill_pdf__tbl__body__row'
         = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item--right'
         = content_tag :td, '', class: 'bill_pdf__tbl__body__row__item--left'
     tr.bill_pdf__tbl__body__row__bottom
       td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.subtotal')
-      td.bill_pdf__tbl__body__row__bottom__item--left = @bill.amount.to_s(:delimited)
+      td.bill_pdf__tbl__body__row__bottom__item--left = @bill.pdf_subtotal_price
     tr.bill_pdf__tbl__body__row__bottom
       td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.tax')
       td.bill_pdf__tbl__body__row__bottom__item--left = @bill.pdf_price_include_tax
     tr.bill_pdf__tbl__body__row__bottom
       td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.expenses')
-      td.bill_pdf__tbl__body__row__bottom__item--left = '0'
+      td.bill_pdf__tbl__body__row__bottom__item--left = @bill.expense.to_s(:delimited)
     tr.bill_pdf__tbl__body__row__bottom
       td.bill_pdf__tbl__body__row__bottom__item--right = t('pdf.total')
       td.bill_pdf__tbl__body__row__bottom__item--left = @bill.pdf_total_price

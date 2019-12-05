@@ -35,6 +35,7 @@
         span.bill_pdf__footer--bank--left = t('pdf.bill.bank_ufj')
       .bill_pdf__footer--fee = t('pdf.bill.fee')
 
-  == render 'pdf/accept', locals: { issue_date: @issue_date }
+  - if @bill.require_acceptance
+    == render 'pdf/accept', locals: { issue_date: @issue_date }
 
 = wicked_pdf_stylesheet_link_tag 'pdf/bill'
