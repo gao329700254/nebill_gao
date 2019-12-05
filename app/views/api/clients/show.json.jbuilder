@@ -19,3 +19,4 @@ else
   json.nda             @client.files[1]
   json.basic_c         @client.files[0]
 end
+json.client_info    @client.attributes.slice(*%w(company_name address zip_code phone_number)).values.join(', ')

@@ -3,10 +3,6 @@ FactoryBot.define do
     sequence(:cd) { |n| "CD-#{n}" }
     name         { Faker::Name.name }
     email        { Faker::Internet.safe_email }
-    company_name { Faker::Company.name }
-    address      { "#{Faker::Address.city} #{Faker::Address.secondary_address}" }
-    zip_code     { Faker::Address.zip_code }
-    phone_number { Faker::PhoneNumber.phone_number }
 
     trait :with_project do
       transient { project { create(:project) } }

@@ -24,9 +24,9 @@ nav.sidemenu
             = link_to bill_issueds_list_path
                 li.sidemenu__item__submenu__item
                   span.sidemenu__item__submenu__item__page_title = t('page.bill_issueds_list.title')
-          = link_to partners_path
+          = link_to partner_list_path
             li.sidemenu__item__submenu__item
-              span.sidemenu__item__submenu__item__page_title = t('page.partners.title')
+              span.sidemenu__item__submenu__item__page_title = t('page.partner_list.title')
     - if can? :read, Approval
       li.sidemenu__item
         = fa_icon 'check-square 2x', class: 'sidemenu__item__icon'

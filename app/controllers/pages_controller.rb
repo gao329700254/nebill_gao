@@ -51,7 +51,14 @@ class PagesController < ApplicationController
   def bill_list
   end
 
-  def partners
+  def partner_list
+  end
+
+  def partner_new
+  end
+
+  def partner_show
+    @partner = Partner.find(params[:partner_id])
   end
 
   def approval_list

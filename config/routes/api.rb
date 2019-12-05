@@ -22,7 +22,7 @@ Rails.application.routes.draw do
         get 'roles', to: "users#roles"
       end
     end
-    resources :partners, only: [:index, :create, :update]
+    resources :partners
     resources :projects, only: [:index, :create, :show, :update, :destroy], shallow: true do
       collection do
         get ':id/select_status', to: "projects#select_status"

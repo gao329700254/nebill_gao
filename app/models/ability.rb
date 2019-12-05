@@ -49,9 +49,7 @@ private
     can :read, ProjectFileGroup
     can :create, ProjectFileGroup
 
-    can :read, Partner
-    can :create, Partner
-    can :update, Partner
+    can :manage, Partner
     can :read, User
     can :cd, ProjectCd
     can :download, Xlsx
