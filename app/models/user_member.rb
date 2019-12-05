@@ -43,7 +43,7 @@ class UserMember < Member
   def create_in_sf
     SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(
       project_cd: Project.find(project_id).cd,
-      user_names: [user.name],
+      user_members_name: [user.name],
       action: 'create_work_item_and_details',
     )
   end
@@ -51,7 +51,7 @@ class UserMember < Member
   def destroy_in_sf
     SfProjectAndWorkItemCrudJob.set(wait: 1.second).perform_later(
       project_cd: Project.find(project_id).cd,
-      user_names: [user.name],
+      user_members_name: [user.name],
       action: 'destroy_work_item_and_details',
     )
   end
