@@ -1,17 +1,34 @@
-# nebill
+環境構築手順
+1. homebrewのインストール
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+2. postgresのインストール(https://qiita.com/gooddoog/items/1f986c1a6c0f253bd4e2)
+3. phantomjs(featureテストを実行するために必要)
+brew install phantomjs
+4. node/bowerのインストール(bower-railsを使うために必要)
+brew install nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+nodebrew install-binary stable
+nodebrew use stable
+npm install bower -g
+5. git clone
+git clone git@bitbucket.org:bitbucketcuon/nebill.git
+6. install
+bundle install --path=vendor/bundle
+bundle exec rake bower:install
+rm vendor/assets/bower_components/toastr/toastr.scss #エラーの原因になるためtoastr.scssを削除
+7. DBの作成
+createdb nebill_development #DBの作成
+psql nebill_development #postgresのnebill_developmentにログイン
+nebill_development=# CREATE USER nebill; #postgresの中でnebillというユーザを作成
+nebill_development=# ALTER ROLE nebill WITH SUPERUSER; #nebillの権限をSUPERUSに変更
+nebill_development=# ALTER DATABASE nebill_development OWNER TO nebill; #nebill_developmentの所有者をnebillに変更
+nebill_development=# [control] + Dで抜ける
+8. db:create
+(git cloneしたディレクトリに入ってから)
+bundle exec rake db:create
+9. seed
+bundle exec rake db:seed
+Input admin user emailと聞かれたら自分のメールアドレスを入力する。
 
-[![wercker status](https://app.wercker.com/status/e26313bf02ace0511f7b4f573a99f37f/m/master "wercker status")](https://app.wercker.com/project/byKey/e26313bf02ace0511f7b4f573a99f37f)
-
-**neat + bill = nebill**
-
-### 環境変数について
-
-dev環境にて環境変数が必要の場合は.envファイルを作成して変数を設定してください
-本番環境ではherokuの環境変数機能を使用しているため.envは必要ありません
-
-## chatwork-hookの設定方法
-
-1. ngrokをインストール
-2. `ngrok http 3000` でngrokを起動する。
-3. https://www.chatwork.com/service/packages/chatwork/subpackages/webhook/list.php にアクセスして、botちゃんのchatwork webhookに2で起動したngrokのurlを登録する。
-4. トークンの値を環境変数 CHATWORK_WEB_HOOK_TOKEN に追加する。
+10. sample data
+bundle exec rake db:sample:populate all=true
